@@ -26,26 +26,32 @@
     <?php include 'template1_footer.php' ?>
 
 
-    <?php
-    include 'connect.php';
+<?php
+include 'connect.php';
 
-    $jsonSections = [];
+$jsonSections = [];
 
-    // Fetch data for three sections
-    for ($i = 1; $i <= 3; $i++) {
-        $sql = "SELECT content FROM elements WHERE section_owner = '$i'";
-        $result = mysqli_query($conn, $sql);
-        $content = json_decode(mysqli_fetch_assoc($result)['content'] ?? '{}', true);
+for ($i = 1; $i <= 3; $i++) {
+    // Fetch title and paragraph for each section
+    $sqlTitle = "SELECT content FROM elements WHERE section_owner = '$i' AND element_name = 'Title text'";
+    $sqlPara = "SELECT content FROM elements WHERE section_owner = '$i' AND element_name = 'Paragraph text'";
 
-        $jsonSections[] = [
-            'section' => $i,
-            'title' => $content['title'] ?? '',
-            'paragraph' => $content['paragraph'] ?? ''
-        ];
-    }
+    $resultTitle = mysqli_query($conn, $sqlTitle);
+    $resultPara = mysqli_query($conn, $sqlPara);
 
-    echo "<script>const sections = " . json_encode($jsonSections) . ";</script>";
-    ?>
+    $titleData = json_decode(mysqli_fetch_assoc($resultTitle)['content'] ?? '{}', true);
+    $paraData = json_decode(mysqli_fetch_assoc($resultPara)['content'] ?? '{}', true);
+
+    $jsonSections[] = [
+        'section' => $i,
+        'title' => $titleData['title'] ?? 'Untitled Section',
+        'paragraph' => $paraData['paragraph'] ?? 'No content available.'
+    ];
+}
+
+echo "<script>const sections = " . json_encode($jsonSections) . ";</script>";
+?>
+
 
     <script>
         const container = document.getElementById('content');

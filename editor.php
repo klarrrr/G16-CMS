@@ -54,59 +54,84 @@
 
     <?php
 
-    include 'connect.php'; // database file 
+include 'connect.php'; // database file 
 
-    if (isset($_POST["save_btn"])) {
-        if (!empty($_POST["first_title"]) || !empty($_POST["first_paragraph"])) {
-            $section1 = json_encode([
-                "title" => $_POST["first_title"],
-                "paragraph" => $_POST["first_paragraph"]
-            ]);
-            $sql1 = "UPDATE elements SET content = ? WHERE section_owner = '1' AND element_name = 'Title text'";
-            $stmt1 = mysqli_prepare($conn, $sql1);
-            mysqli_stmt_bind_param($stmt1, "s", $section1);
-            mysqli_stmt_execute($stmt1);
-        }
-
-        if (!empty($_POST["second_title"]) || !empty($_POST["second_paragraph"])) {
-            $section2 = json_encode([
-                "title" => $_POST["second_title"],
-                "paragraph" => $_POST["second_paragraph"]
-            ]);
-            $sql2 = "UPDATE elements SET content = ? WHERE section_owner = '2' AND element_name = 'Title text'";
-            $stmt2 = mysqli_prepare($conn, $sql2);
-            mysqli_stmt_bind_param($stmt2, "s", $section2);
-            mysqli_stmt_execute($stmt2);
-        }
-
-        if (!empty($_POST["third_title"]) || !empty($_POST["third_paragraph"])) {
-            $section3 = json_encode([
-                "title" => $_POST["third_title"],
-                "paragraph" => $_POST["third_paragraph"]
-            ]);
-            $sql3 = "UPDATE elements SET content = ? WHERE section_owner = '3' AND element_name = 'Title text'";
-            $stmt3 = mysqli_prepare($conn, $sql3);
-            mysqli_stmt_bind_param($stmt3, "s", $section3);
-            mysqli_stmt_execute($stmt3);
-        }
+if (isset($_POST["save_btn"])) {
+    // Section 1
+    if (!empty($_POST["first_title"])) {
+        $title1 = json_encode(["title" => $_POST["first_title"]]);
+        $sql = "UPDATE elements SET content = ? WHERE section_owner = '1' AND element_name = 'Title text'";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "s", $title1);
+        mysqli_stmt_execute($stmt);
     }
 
-    // Retrieve sections data from the database
-    $jsonSections = [];
-    for ($i = 1; $i <= 3; $i++) {
-        $sql = "SELECT content FROM elements WHERE section_owner = '$i' AND element_name = 'Title text'";
-        $result = mysqli_query($conn, $sql);
-        $data = json_decode(mysqli_fetch_assoc($result)['content'] ?? '{}', true);
-        $jsonSections[] = [
-            'section' => $i,
-            'title' => $data['title'] ?? 'Untitled Section',
-            'paragraph' => $data['paragraph'] ?? 'No content available.'
-        ];
+    if (!empty($_POST["first_paragraph"])) {
+        $para1 = json_encode(["paragraph" => $_POST["first_paragraph"]]);
+        $sql = "UPDATE elements SET content = ? WHERE section_owner = '1' AND element_name = 'Paragraph text'";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "s", $para1);
+        mysqli_stmt_execute($stmt);
     }
 
-    // Send the data to JavaScript
-    echo "<script>const previewSections = " . json_encode($jsonSections) . ";</script>";
-    ?>
+    // Section 2
+    if (!empty($_POST["second_title"])) {
+        $title2 = json_encode(["title" => $_POST["second_title"]]);
+        $sql = "UPDATE elements SET content = ? WHERE section_owner = '2' AND element_name = 'Title text'";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "s", $title2);
+        mysqli_stmt_execute($stmt);
+    }
+
+    if (!empty($_POST["second_paragraph"])) {
+        $para2 = json_encode(["paragraph" => $_POST["second_paragraph"]]);
+        $sql = "UPDATE elements SET content = ? WHERE section_owner = '2' AND element_name = 'Paragraph text'";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "s", $para2);
+        mysqli_stmt_execute($stmt);
+    }
+
+    // Section 3
+    if (!empty($_POST["third_title"])) {
+        $title3 = json_encode(["title" => $_POST["third_title"]]);
+        $sql = "UPDATE elements SET content = ? WHERE section_owner = '3' AND element_name = 'Title text'";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "s", $title3);
+        mysqli_stmt_execute($stmt);
+    }
+
+    if (!empty($_POST["third_paragraph"])) {
+        $para3 = json_encode(["paragraph" => $_POST["third_paragraph"]]);
+        $sql = "UPDATE elements SET content = ? WHERE section_owner = '3' AND element_name = 'Paragraph text'";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "s", $para3);
+        mysqli_stmt_execute($stmt);
+    }
+}
+
+// Retrieve sections data from the database
+$jsonSections = [];
+for ($i = 1; $i <= 3; $i++) {
+    $sqlTitle = "SELECT content FROM elements WHERE section_owner = '$i' AND element_name = 'Title text'";
+    $sqlPara = "SELECT content FROM elements WHERE section_owner = '$i' AND element_name = 'Paragraph text'";
+
+    $resultTitle = mysqli_query($conn, $sqlTitle);
+    $resultPara = mysqli_query($conn, $sqlPara);
+
+    $dataTitle = json_decode(mysqli_fetch_assoc($resultTitle)['content'] ?? '{}', true);
+    $dataPara = json_decode(mysqli_fetch_assoc($resultPara)['content'] ?? '{}', true);
+
+    $jsonSections[] = [
+        'section' => $i,
+        'title' => $dataTitle['title'] ?? 'Untitled Section',
+        'paragraph' => $dataPara['paragraph'] ?? 'No content available.'
+    ];
+}
+
+
+// Send the data to JavaScript
+echo "<script>const previewSections = " . json_encode($jsonSections) . ";</script>";
+?>
 
     <script>
         // Populate the form fields 
