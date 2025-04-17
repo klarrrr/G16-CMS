@@ -13,10 +13,10 @@
         }
 
         header {
-            background: #ff7eb9;
+            background:rgb(255, 255, 255);
             padding: 1rem 2rem;
-            color: white;
-            font-size: 1.5rem;
+            color: #555;
+            font-size: 1.6rem;
             font-weight: bold;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
@@ -26,25 +26,27 @@
             grid-template-columns: 1fr 1fr;
             gap: 30px;
             padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .form-container, .preview-container {
             background: white;
             padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
         }
 
         h2 {
             margin-top: 0;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             color: #333;
         }
 
         form h3 {
             margin-top: 1.5rem;
-            font-size: 1.1rem;
-            color: #555;
+            font-size: 1.2rem;
+            color: #444;
         }
 
         input[type="text"], textarea {
@@ -55,57 +57,108 @@
             margin-bottom: 15px;
             border-radius: 6px;
             font-size: 1rem;
+            background-color: #f9f9f9;
+            transition: border 0.3s ease-in-out;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            border-color:rgb(95, 95, 95);
         }
 
         input[type="submit"] {
-            background: #ff7eb9;
+            background:rgb(105, 105, 105);
             border: none;
             padding: 10px 20px;
             color: white;
             font-weight: bold;
             border-radius: 6px;
             cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color:rgb(75, 75, 75);
+        }
+
+        .preview-container {
+            padding: 20px;
+        }
+
+        .preview-container h1 {
+            font-size: 1.8rem;
+            color: #444;
+            font-weight: bold;
+        }
+
+        .preview-container p {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 10px;
         }
 
         .preview-container section {
             margin-bottom: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            padding: 20px;
+            transition: transform 0.3s ease-in-out;
         }
 
-        .preview-container h1 {
-            font-size: 20px;
-            color: #444;
+        .preview-container section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
         }
 
-        .preview-container p {
-            font-size: 14px;
-            color: #666;
+        .preview-container section h1 {
+            font-size: 1.6rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .preview-container section p {
+            font-size: 1rem;
+            color: #555;
         }
 
         nav {
-            background-color: #ffb6c1;
-            padding: 10px 15px;
+            background-color: #f1f1f1;
+            padding: 15px 20px;
             border-radius: 6px;
             margin-bottom: 20px;
+        }
+
+        nav p {
+            font-weight: bold;
         }
 
         nav ul {
             display: flex;
             list-style: none;
             padding: 0;
-            gap: 20px;
+            gap: 25px;
             margin: 0;
+            justify-content: center;
         }
 
         nav ul li {
-            font-weight: bold;
+            color: black;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        nav ul li:hover {
+            color:rgb(170, 170, 170);
         }
 
         iframe {
             width: 100%;
-            height: 400px;
+            height: 500px;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             margin-top: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         @media (max-width: 900px) {
@@ -120,7 +173,7 @@
     <header>CMS Content Editor</header>
 
     <div class="main-container">
-        <!-- FORM -->
+        <!-- FORMS -->
         <div class="form-container">
             <h2>Edit Sections</h2>
             <form action="" method="post">
@@ -140,7 +193,7 @@
             </form>
         </div>
 
-        <!-- PREVIEW -->
+        <!-- PREVIEW OF THE WEBSITE (UPDATE SO THAT IT IS DYNAMIC) -->
         <div class="preview-container">
             <h2>In-Page Preview</h2>
             <nav>
@@ -156,14 +209,8 @@
         </div>
     </div>
 
-    <!-- IFRAME PREVIEW -->
-    <div style="padding: 2rem;">
-        <h2 style="text-align: center;">Live Template Preview</h2>
-        <iframe id="livePreview" src="template.php"></iframe>
-    </div>
-
     <?php
-    include 'connect.php'; // Include database connection file
+    include 'connect.php'; // database file 
 
     if (isset($_POST["update_btn"])) {
         if (!empty($_POST["first_title"]) || !empty($_POST["first_paragraph"])) {
@@ -199,8 +246,6 @@
             mysqli_stmt_execute($stmt3);
         }
 
-        // After update, refresh the iframe
-        echo "<script>setTimeout(() => document.getElementById('livePreview').contentWindow.location.reload(), 300);</script>";
     }
 
     // Retrieve sections data from the database
