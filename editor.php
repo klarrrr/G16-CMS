@@ -16,7 +16,7 @@
     <header>
         <h1>CMS Content Editor</h1>
         <!-- TODO : Make this dynamic, go to whatever the user's project link is -->
-        <a href="template1.php" target="_blank">View Full Site</a>
+        <a href="template1_home.php" target="_blank">View Full Site</a>
     </header>
     <div class="main-container">
         <!-- FORMS -->
@@ -27,34 +27,33 @@
                 <div>
                     <h3>Section 1</h3>
                     <input type="text" name="first_title" placeholder="Title"><br>
-                    <textarea name="first_paragraph" rows="4" placeholder="Paragraph"></textarea>
+                    <textarea name="first_paragraph" rows="4" placeholder="Paragraph" style="resize: none;"></textarea>
                 </div>
 
                 <div>
                     <h3>Section 2</h3>
                     <input type="text" name="second_title" placeholder="Title"><br>
-                    <textarea name="second_paragraph" rows="4" placeholder="Paragraph"></textarea>
+                    <textarea name="second_paragraph" rows="4" placeholder="Paragraph" style="resize: none;"></textarea>
                 </div>
 
                 <div>
                     <h3>Section 3</h3>
                     <input type="text" name="third_title" placeholder="Title"><br>
-                    <textarea name="third_paragraph" rows="4" placeholder="Paragraph"></textarea>
+                    <textarea name="third_paragraph" rows="4" placeholder="Paragraph" style="resize: none;"></textarea>
                 </div>
-                <input id="save_btn" value="Save Changes" name="save_btn" onclick="loadContent();" type="submit">
+                <input id="save_btn" value="Save Changes" name="save_btn" onclick="refreshFrame();" type="submit">
             </form>
         </div>
 
         <!-- PREVIEW OF THE WEBSITE -->
         <div class="preview-container">
             <h2>In-Page Preview</h2>
-            <div id="website_viewer" data-preview-screen="desktop_fit">
-                Loading...
-            </div>
+            <iframe id="website_viewer" src="template1_home.php"></iframe>
         </div>
     </div>
 
     <?php
+
     include 'connect.php'; // database file 
 
     if (isset($_POST["save_btn"])) {
@@ -112,21 +111,27 @@
     <script>
         // Populate the form fields 
         document.querySelector('input[name="first_title"]').value = previewSections[0].title;
-        document.querySelector('textarea[name="first_paragraph"]').value = previewSections[0].paragraph;
-        document.querySelector('input[name="second_title"]').value = previewSections[1].title;
-        document.querySelector('textarea[name="second_paragraph"]').value = previewSections[1].paragraph;
-        document.querySelector('input[name="third_title"]').value = previewSections[2].title;
-        document.querySelector('textarea[name="third_paragraph"]').value = previewSections[2].paragraph;
+        document.querySelector('textarea[name="first_paragraph" ]').value = previewSections[0].paragraph;
+        document.querySelector('input[name="second_title" ]').value = previewSections[1].title;
+        document.querySelector('textarea[name="second_paragraph" ]').value = previewSections[1].paragraph;
+        document.querySelector('input[name="third_title" ]').value = previewSections[2].title;
+        document.querySelector('textarea[name="third_paragraph" ]').value = previewSections[2].paragraph;
 
         // Save the details in the input
 
         // Function to refresh the website viewer
-        function loadContent() {
-            $('#website_viewer').load('template1.php');
+        // function loadContent() {
+        //     $('#website_viewer').load('template1_home.php');
+        // }
+        function refreshFrame() {
+            const iframe = document.getElementById('website_viewer');
+            iframe.src = iframe.src;
         }
 
+        refreshFrame();
+
         // Call everytime you entering the site
-        loadContent();
+        // loadContent();
     </script>
 
 </body>

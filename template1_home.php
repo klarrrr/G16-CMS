@@ -9,24 +9,22 @@
 </head>
 
 <body>
-    <nav>
-        <p>BRAND AREA</p>
-        <ul>
-            <li>Home</li>
-            <li>Services</li>
-            <li>Contact</li>
-            <li>About</li>
-        </ul>
-    </nav>
+    <?php include 'template1_nav.php' ?>
+    <div class="main_page">
+        <div class="hero">
+            <div>
+                <h1>Welcome to Title Card</h1>
+                <p>This is where your creativity begins!</p>
+            </div>
+            <button class="call_to_action_btn">Get Started</button>
+        </div>
 
-    <div class="hero">
-        <h1>Welcome to Title Card</h1>
-        <p>This is where your creativity begins!</p>
+        <div id="content">
+
+        </div>
     </div>
+    <?php include 'template1_footer.php' ?>
 
-    <div id="content">
-
-    </div>
 
     <?php
     include 'connect.php';
