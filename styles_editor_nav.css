@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Boldonse&family=Nanum+Gothic&family=Nanum+Myeongjo&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.nav_container {
+    background-color: white;
+    position: fixed;
+    width: 100vw;
+    height: 10vh;
+    top: 0;
+    border-bottom: 1px solid lightgray;
+    display: flex;
+    align-items: center;
+}
+
+.actual_nav {
+    width: 100%;
+    display: flex;
+    padding: 30px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.actual_nav h1 {
+    font-family: "Boldonse";
+    color: #161616;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.actual_nav .items {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+}
+
+.actual_nav .items li {
+    list-style: none;
+}
+
+.actual_nav .items li a {
+    font-family: "Nanum Gothic";
+    text-decoration: none;
+    color: #161616;
+    transition: 0.3s ease-in-out;
+}
+
+.actual_nav .items li a:hover {
+    transform: translateY(-1px);
+    color: #555;
+}
