@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <?php include 'nav_dashboard.php' ?>
     <div class="account_page">
         <div class="left_side">
             <video autoplay loop muted>
@@ -18,10 +19,6 @@
             <h1>contento</h1>
         </div>
         <div class="right_side">
-            <div class="dont_have_acc_container">
-                <p>Don't have an account?</p>
-                <button>Register</button>
-            </div>
             <form action="" method="post">
                 <div class="text_container">
                     <h2>Welcome to Contento!</h2>
@@ -37,8 +34,18 @@
                 </div>
                 <input type="submit" value="Login">
             </form>
-            <div class="login_account_container">
-                <p>Login account with</p>
+            <div class="login_and_dont_have_container">
+                <div class="dont_have_acc_container">
+                    <p>Don't have an account?</p>
+                    <a href="">Register</a>
+                </div>
+                <div class="login_account_container">
+                    <p>Login account with</p>
+                    <div class="icon_container">
+                        <a href=""><img src="svg/google.svg" alt="Login with google"></a>
+                        <a href=""><img src="svg/facebook.svg" alt="Login with facebook"></a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

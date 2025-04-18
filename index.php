@@ -9,18 +9,7 @@
 </head>
 
 <body>
-    <div class="nav_container_container">
-        <nav class="nav_container">
-            <a href="index.php">Contento</a>
-            <ul class="nav_items" type="none">
-                <li>Create</li>
-                <li>Projects</li>
-                <li>Archive</li>
-                <li>Settings</li>
-                <li>Account</li>
-            </ul>
-        </nav>
-    </div>
+    <?php include 'nav_dashboard.php' ?>
     <div class="hero_container">
         <div class="left_hero_container">
             <h1>CONTENTO</h1>

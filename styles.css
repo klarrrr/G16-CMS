@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Boldonse&family=Nanum+Gothic&family=Nanum+Myeongjo&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -13,49 +15,6 @@
     font-family: 'sub';
     src: url(fonts/nanum_gothic/NanumGothic-Regular.ttf);
     color: #161616;
-}
-
-@font-face {
-    font-family: 'big';
-    src: url(fonts/high-rise/HighriseFont-Demo-Regular.otf);
-    color: #161616;
-}
-
-.nav_items {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    gap: 5em;
-}
-
-.nav_items li {
-    font-weight: bold;
-}
-
-.nav_container {
-    display: grid;
-    grid-template-columns: 30% 70%;
-    background-color: white;
-    padding: 20px 50px 20px 50px;
-    height: 4vh;
-    font-family: 'sub';
-    font-size: smaller;
-    border-bottom: 1px solid #e9e9e9;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    align-items: center;
-}
-
-.nav_container_container {
-    position: fixed;
-    width: 100vw;
-}
-
-.nav_container a {
-    text-decoration: none;
-    color: #161616;
-    font-weight: bold;
-    font-family: 'main';
-    text-transform: uppercase;
 }
 
 .hero_container {
@@ -76,8 +35,10 @@
 }
 
 .left_hero_container h1 {
-    font-family: 'main';
-    font-size: 110px;
+    font-family: 'Boldonse';
+    text-transform: lowercase;
+    font-size: 6em;
+    color: #161616;
 }
 
 .left_hero_container p {
