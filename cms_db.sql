@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 16, 2025 at 06:34 PM
+-- Generation Time: Apr 19, 2025 at 03:40 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,12 +42,12 @@ CREATE TABLE `elements` (
 --
 
 INSERT INTO `elements` (`element_id`, `element_name`, `content`, `date_created`, `date_updated`, `section_owner`, `type`) VALUES
-(1, 'Title Text', 'Una', '2025-04-16 23:29:56', '2025-04-16 23:29:56', 1, 'template'),
-(2, 'Title Text', 'Pangalawa', '2025-04-16 23:30:13', '2025-04-16 23:30:13', 2, 'template'),
-(3, 'Title Text', 'Pangatlo', '2025-04-16 23:30:27', '2025-04-16 23:30:27', 3, 'template'),
-(4, 'Paragraph Text', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '2025-04-16 23:31:15', '2025-04-16 23:31:15', 1, 'template'),
-(5, 'Paragraph Text', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '2025-04-16 23:31:23', '2025-04-16 23:31:23', 2, 'template'),
-(6, 'Paragraph Text', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '2025-04-16 23:31:30', '2025-04-16 23:31:30', 3, 'template');
+(1, 'Title Text', '{\"content\":\"First Title Text\"}', '2025-04-16 23:29:56', '2025-04-16 23:29:56', 1, 'template'),
+(2, 'Title Text', '{\"content\":\"Second Title Text\"}', '2025-04-16 23:30:13', '2025-04-16 23:30:13', 2, 'template'),
+(3, 'Title Text', '{\"content\":\"Third Title Text\"}', '2025-04-16 23:30:27', '2025-04-16 23:30:27', 3, 'template'),
+(4, 'Paragraph Text', '{\"content\":\"Second Paragraph Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, consectetur dolorum facilis esse porro sint unde modi accusamus quidem, quaerat doloribus, accusantium amet fugit? Odio autem a quos voluptatum quae.\"}', '2025-04-16 23:31:15', '2025-04-16 23:31:15', 1, 'template'),
+(5, 'Paragraph Text', '{\"content\":\"Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, consectetur dolorum facilis esse porro sint unde modi accusamus quidem, quaerat doloribus, accusantium amet fugit? Odio autem a quos voluptatum quae.\"}', '2025-04-16 23:31:23', '2025-04-16 23:31:23', 2, 'template'),
+(6, 'Paragraph Text', '{\"content\":\"Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, consectetur dolorum facilis esse porro sint unde modi accusamus quidem, quaerat doloribus, accusantium amet fugit? Odio autem a quos voluptatum quae.\"}', '2025-04-16 23:31:30', '2025-04-16 23:31:30', 3, 'template');
 
 -- --------------------------------------------------------
 
@@ -130,7 +130,7 @@ CREATE TABLE `templates` (
 --
 
 INSERT INTO `templates` (`template_id`, `template_name`, `template_type`) VALUES
-(1, 'template 1', 'home');
+(1, 'Template 1', 'Portfolio');
 
 -- --------------------------------------------------------
 
