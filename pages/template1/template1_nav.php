@@ -11,6 +11,8 @@
     <nav>
         <h1>BRAND AREA</h1>
         <ul>
+            <!-- TODO : Make this dynamic -->
+            <!-- For every pages in page array in PHP, add it to this -->
             <li><a href="template1_home.php">Home</a></li>
             <li><a href="template1_services.php">Services</a></li>
             <li><a href="template1_contact.php">Contact</a></li>

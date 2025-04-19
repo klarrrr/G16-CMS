@@ -1,98 +1,118 @@
 <?php
 
-// Directory where page files are stored
-$pageDirectory = './pages/template1'; // Adjust the path as needed
-$files = array_diff(scandir($pageDirectory), array('..', '.', 'template1_nav.php', 'template1_footer.php'));
+include 'connect.php';
 
-$pages = [];
+// Algorithm that will scourge Pages Table in Database
+// SELECT every page that is related to the project that the user is currently using
+// SELECT every section that is related to the page
+// SELECT every elements that is related to the section
 
-// Filter files that match the page pattern template1_*.php
-foreach ($files as $file) {
-    if (preg_match('/^template1_([a-zA-Z0-9_]+)\.php$/', $file, $matches)) {
-        $pages[] = [
-            'id' => $matches[1],
-            'name' => ucfirst($matches[1]) // Capitalize first letter
+// $current_project = 1 // Id of the project, but since this is still testing, get the id of template 1
+$currentProject = 1; // TODO : This is temporary change to be whatver the user is going to use. In the future.
+
+// SELECT page_id, page_name FROM pages WHERE template_owner = 1; // Store this in an array
+$queryPages = "SELECT page_id, page_name FROM pages WHERE template_owner = $currentProject";
+$pages = mysqli_query($conn, $queryPages);
+
+// This is where the page id of the related pages are stored
+$pagesArray = [];
+
+// Select all the Sections related to each pages
+if ($pages) {
+    // Store to row until it reach the end of $pages
+    while ($row = mysqli_fetch_assoc($pages)) {
+        $pagesArray[$row['page_id']] = [
+            "page_name" => $row['page_name'],
+            "project_owner" => $currentProject
         ];
+    }
+    mysqli_free_result($pages);
+} else {
+    echo "Error " . mysqli_error($conn);
+}
+
+// Stores section id with its associated name
+$sectionsArray = [];
+
+foreach ($pagesArray as $pageId => $pageName) {
+    $querySections = "SELECT section_id, section_name FROM sections WHERE page_owner = $pageId";
+    $sections = mysqli_query($conn, $querySections);
+
+    // Select all the Sections related to each pages
+    if ($sections) {
+        // Store to row until it reach the end of $sections
+        while ($row = mysqli_fetch_assoc($sections)) {
+            $sectionsArray[$row['section_id']] = [
+                "section_name" => $row['section_name'],
+                "page_owner" => $pageId
+            ];
+        }
+        mysqli_free_result($sections);
+    } else {
+        echo "Error " . mysqli_error($conn);
     }
 }
 
-// ADD NEW PAGE HANDLER
-if (isset($_POST["new_page"])) {
-    $templateOption = $_POST["template_option"] ?? 'default';
-    $pageRaw = $_POST["new_page"];
-    $page = preg_replace('/[^a-zA-Z0-9_]/', '', strtolower($pageRaw));
-    $newFile = "template1_$page.php";
-    $navFile = "template1_nav.php";
+// Stores element id with its associated name and content
+$elementsArray = [];
 
-    if (!file_exists($newFile)) {
-        $pageTitle = ucfirst($page);
-        switch ($templateOption) {
-            case 'home':
-                $bodyContent = "<h1>Welcome to the Home Page</h1>
-<p>This is your homepage.</p>";
-                break;
-            case 'services':
-                $bodyContent = "<h1>Our Services</h1>
-<p>Details about what you offer.</p>";
-                break;
-            case 'contact':
-                $bodyContent = "<h1>Contact Us</h1>
-<p>Provide contact info or a form here.</p>";
-                break;
-            case 'about':
-                $bodyContent = "<h1>About Us</h1>
-<p>Tell your story here.</p>";
-                break;
-            default:
-                $bodyContent = "<h1>$pageTitle</h1>
-<p>You haven’t added any content yet.</p>";
+foreach ($sectionsArray as $sectionId => $sectionName) {
+    $queryElements = "SELECT element_id, element_name, content FROM elements WHERE section_owner = $sectionId";
+    $elements = mysqli_query($conn, $queryElements);
+
+    // Select all the Elements related to each Section
+    if ($elements) {
+        // Store to row until it reach the end of $Elements
+        while ($row = mysqli_fetch_assoc($elements)) {
+            $elementsArray[$row['element_id']] = [
+                "element_name" => $row['element_name'],
+                "element_content" => $row['content'],
+                "section_owner"      => $sectionId
+            ];
         }
+        mysqli_free_result($elements);
+    } else {
+        echo "Error " . mysqli_error($conn);
+    }
+}
 
-        $htmlTemplate = <<<HTML
-    <?php include('template1_nav.php'); ?>
+// After storing everything into ARRAYS
+// Here goes PHP algorithm that lays out everything in the array into an html file
+
+// Upper part of the HTML
+$htmlLayout = "
     <!DOCTYPE html>
-    <html lang="en">
+    <html lang='en'>
 
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>$pageTitle</title>
-        <link rel="stylesheet" href="../styles/styles_template1.css">
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <title>Template 1 : Home</title>
+        <link rel='stylesheet' href='pages/styles/styles_template1_nav.css'>
+        <link rel='stylesheet' href='pages/styles/styles_template1.css'>
     </head>
 
     <body>
-        <div class="main_page">
-            <div class="hero">
-                <div>
-                    $bodyContent
-                </div>
-                <button class="call_to_action_btn">Get Started</button>
-            </div>
+";
 
-            <div id="content">
-            </div>
-        </div>
+// Insert the NAV
+$htmlLayout .= file_get_contents('test_nav_layout.php');
 
-        <?php include('template1_footer.php'); ?>
-    </body>
+// Then the body
+ob_start();
+include 'template1_home_dynamic.php';
+$htmlLayout .= ob_get_clean();
 
-    </html>
-    HTML;
+$footer = file_get_contents('pages/template1/template1_footer.php');
+$htmlLayout .= $footer;
 
-        file_put_contents($newFile, $htmlTemplate);
-    }
+// After everything is now laid out as HTML next is CSS
+// If there is a CSS TABLE that belongs to each project or each page, that would be great
 
-    // Add new page to navigation file (template1_nav.php)
-    $navEntry = "<li><a href=\"$newFile\">" . ucfirst($page) . "</a></li>";
-    $navContent = file_get_contents($navFile);
-    if (strpos($navContent, $navEntry) === false) {
-        $updatedNav = str_replace("</ul>", " $navEntry\n</ul>", $navContent);
-        file_put_contents($navFile, $updatedNav);
-    }
+// Store the whole Blob of formatted HTML and CSS of Page in a String variable
+// if possibel store those in cache file format to reduce strain on database
+/*
+<iframe srcdoc='<?php echo htmlspecialchars($html_var); ?>'></iframe>
+*/
 
-    echo "<script>
-        alert('New page \"$page\" created.');
-        location.href = location.href;
-    </script>";
-    exit;
-}
+// Now the page is displaying in the preview website div using iframe

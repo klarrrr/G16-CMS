@@ -52,7 +52,7 @@
     cursor: pointer;
 }
 
-#editModal #modal_editor_content {
+#editModal #modalContent {
     display: flex;
     flex-direction: column;
     background: #fff;
@@ -67,19 +67,19 @@
     padding-bottom: 90px;
 }
 
-#editModal div #editForm {
+#editModal #modalContent form {
     overflow: scroll;
     display: flex;
     flex-direction: column;
 
 }
 
-#editModal div #editForm .sections_editor_container {
+#editModal #modalContent form .section-block {
     display: flex;
     flex-direction: column;
 }
 
-#editModal div #editForm input[type="submit"] {
+#editModal #modalContent form input[type="submit"] {
     position: absolute;
     align-self: center;
     width: 90%;

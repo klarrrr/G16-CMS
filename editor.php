@@ -18,13 +18,15 @@ include 'fetch_site_data_from_db.php';
     <link rel="stylesheet" href="styles_editor.css">
     <!-- CSS of Modal, the one that appears when clicking add page -->
     <link rel="stylesheet" href="editor_modal.css">
+    <!-- For Nav -->
+    <link rel="stylesheet" href="styles_editor_nav.css">
     <!-- For JQuery ito VVV -->
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <?php include 'editor_nav.php' ?>
+    <?php include 'editor_nav.php'; ?>
     <div class="main-container">
         <div class="form-container">
             <div class="edit-header">
@@ -35,21 +37,31 @@ include 'fetch_site_data_from_db.php';
             <div class="node_list_container">
                 <!-- Node List -->
                 <div class="node-list" id="nodeList">
-                    <?php foreach ($pages as $page): ?>
-                        <div class="page-node">
-                            <h3><?php echo $page['name']; ?></h3>
-                            <!-- TODO : Add small preview of page here, replace div with it -->
-                            <!-- <iframe src=""></iframe> -->
-                            <div class="view_of_page"></div>
-                            <button class="editBtn" data-id="<?php echo $page['id']; ?>">Edit</button>
+                    <!-- TODO : Fix this add dynamic insert of pages -->
+                    <!-- PHP : Get the name per item in the array of Pages -->
+                    <!-- Add a Function to a button that will edit current pages sections and elements -->
+
+                    <!-- Display The Pages -->
+                    <?php
+
+                    foreach ($pagesArray as $pageId => $pageDetails) {
+                        $pageName = ucwords(strtolower($pageDetails['page_name']));
+                        $lilPageLayout = "
+                        <div class='page-node'>
+                            <h3>$pageName</h3>
+                            <div class='view_of_page'></div>
+                            <button class='editBtn' onclick='' data-pageid='$pageId'>EDIT</button>
                         </div>
-                    <?php endforeach; ?>
+                        ";
+                        echo $lilPageLayout;
+                    }
+                    ?>
                 </div>
             </div>
         </div>
         <!-- PREVIEW OF WEBSITE -->
         <div class="preview-container">
-            <iframe id="website_viewer" src="pages/template1/template1_home.php"></iframe>
+            <iframe id="website_viewer" srcdoc="<?php echo htmlspecialchars($htmlLayout) ?>"></iframe>
         </div>
     </div>
 
@@ -77,83 +89,39 @@ include 'fetch_site_data_from_db.php';
         </div>
     </div>
 
-    <!-- Modal Editor -->
+    <!-- Modal wrapper (empty for now) -->
     <div id="editModal" class="modal">
-        <div class="modal-content" id="modal_editor_content">
-            <div class="modal_editor_header">
-                <span class="close">&times;</span>
-                <h2>Edit Page: <span id="modalPageName"></span></h2>
-            </div>
-            <form id="editForm" method="post">
-                <input type="hidden" name="selected_page" id="selectedPage">
-                <div class="sections_editor_container">
-                    <h3>Section 1</h3>
-                    <input type="text" name="first_title" id="first_title" placeholder="Title"><br>
-                    <textarea name="first_paragraph" id="first_paragraph" rows="4" placeholder="Paragraph" style="resize: none;"></textarea>
-                </div>
-
-                <div class="sections_editor_container">
-                    <h3>Section 2</h3>
-                    <input type="text" name="second_title" id="second_title" placeholder="Title"><br>
-                    <textarea name="second_paragraph" id="second_paragraph" rows="4" placeholder="Paragraph" style="resize: none;"></textarea>
-                </div>
-
-                <div class="sections_editor_container">
-                    <h3>Section 3</h3>
-                    <input type="text" name="third_title" id="third_title" placeholder="Title"><br>
-                    <textarea name="third_paragraph" id="third_paragraph" rows="4" placeholder="Paragraph" style="resize: none;"></textarea>
-                </div>
-
-                <input id="save_btn" value="Save Changes" name="save_btn" onclick="refreshFrame();" type="submit">
-            </form>
+        <div class="modal-content" id="modalContent">
+            <!-- Modal content will be injected here -->
         </div>
     </div>
 
     <script>
-        const previewSections = <?php echo json_encode($jsonSections); ?>;
-        const pages = <?php echo json_encode($pages); ?>;
+        document.addEventListener("DOMContentLoaded", function() {
+            const modal = document.getElementById("editModal");
+            const modalContent = document.getElementById("modalContent");
 
-        const nodeList = document.getElementById("nodeList");
-        const modal = document.getElementById("editModal");
-        const closeBtn = modal.querySelector(".close");
-        const modalPageName = document.getElementById("modalPageName");
+            document.getElementById("nodeList").addEventListener("click", function(e) {
+                if (e.target.classList.contains("editBtn")) {
+                    const pageId = e.target.dataset.pageid;
+                    console.log(pageId);
+                    // Fetch modal layout from PHP
+                    fetch(`get_modal_layout.php?page_id=${pageId}`)
+                        .then(res => res.text())
+                        .then(html => {
+                            modalContent.innerHTML = html;
+                            modal.style.display = "block";
+                        });
+                }
+            });
 
-        const templateModal = document.getElementById("templateModal");
-        const closeTemplate = templateModal.querySelector(".close-template");
-
-        nodeList.addEventListener("click", e => {
-            if (e.target.classList.contains("editBtn")) {
-                const pageId = e.target.dataset.id;
-                document.getElementById("selectedPage").value = pageId;
-                modalPageName.textContent = pageId;
-
-                const data = previewSections;
-                document.getElementById("first_title").value = data[0].title;
-                document.getElementById("first_paragraph").value = data[0].paragraph;
-                document.getElementById("second_title").value = data[1].title;
-                document.getElementById("second_paragraph").value = data[1].paragraph;
-                document.getElementById("third_title").value = data[2].title;
-                document.getElementById("third_paragraph").value = data[2].paragraph;
-
-                modal.style.display = "block";
-            }
+            // Optional: close logic
+            window.onclick = e => {
+                if (e.target === modal) {
+                    modal.style.display = "none";
+                }
+            };
         });
-
-        closeBtn.onclick = () => modal.style.display = "none";
-        window.onclick = e => {
-            if (e.target == modal) modal.style.display = "none";
-        }
-
-        document.getElementById('addPageBtn').addEventListener('click', function() {
-            document.getElementById("template_page_name").value = "";
-            document.getElementById("template_select").selectedIndex = 0;
-            templateModal.style.display = "block";
-        });
-
-        closeTemplate.onclick = () => templateModal.style.display = "none";
-        window.onclick = e => {
-            if (e.target == templateModal) templateModal.style.display = "none";
-        }
     </script>
 </body>
 
