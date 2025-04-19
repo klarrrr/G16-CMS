@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <?php include 'template1_nav.php'; ?>
+    <?php include '../../test_nav_layout.php'; ?>
     <div class="main_page">
         <div class="left_side_container">
             <h1>ABOUT US</h1>

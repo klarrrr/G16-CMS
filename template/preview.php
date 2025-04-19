@@ -26,10 +26,10 @@
         <ul>
             <!-- TODO : Make this dynamic -->
             <!-- For every pages in page array in PHP, add it to this -->
-            <li><a href='template1_home.php'>Home</a></li>
-            <li><a href='template1_services.php'>Services</a></li>
-            <li><a href='template1_contact.php'>Contact</a></li>
-            <li><a href='template1_about.php'>About</a></li>
+            <li><a href='template1_home_dynamic.php'>Home</a></li>
+            <li><a href='pages/template1/template1_services.php'>Services</a></li>
+            <li><a href='pages/template1/template1_contact.php'>Contact</a></li>
+            <li><a href='pages/template1/template1_about.php'>About</a></li>
         </ul>
         <button class='call_to_action_btn'>Get Started</button>
     </nav>
