@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2025 at 03:40 PM
+-- Generation Time: Apr 19, 2025 at 08:10 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,7 +42,7 @@ CREATE TABLE `elements` (
 --
 
 INSERT INTO `elements` (`element_id`, `element_name`, `content`, `date_created`, `date_updated`, `section_owner`, `type`) VALUES
-(1, 'Title Text', '{\"content\":\"First Title Text\"}', '2025-04-16 23:29:56', '2025-04-16 23:29:56', 1, 'template'),
+(1, 'Title Text', '{\"content\":\"First Title Text2\"}', '2025-04-16 23:29:56', '2025-04-16 23:29:56', 1, 'template'),
 (2, 'Title Text', '{\"content\":\"Second Title Text\"}', '2025-04-16 23:30:13', '2025-04-16 23:30:13', 2, 'template'),
 (3, 'Title Text', '{\"content\":\"Third Title Text\"}', '2025-04-16 23:30:27', '2025-04-16 23:30:27', 3, 'template'),
 (4, 'Paragraph Text', '{\"content\":\"Second Paragraph Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, consectetur dolorum facilis esse porro sint unde modi accusamus quidem, quaerat doloribus, accusantium amet fugit? Odio autem a quos voluptatum quae.\"}', '2025-04-16 23:31:15', '2025-04-16 23:31:15', 1, 'template'),
@@ -141,6 +141,7 @@ INSERT INTO `templates` (`template_id`, `template_name`, `template_type`) VALUES
 CREATE TABLE `users` (
   `user_id` int(10) UNSIGNED NOT NULL,
   `user_name` varchar(50) NOT NULL,
+  `user_email` varchar(50) NOT NULL,
   `user_pass` varchar(30) NOT NULL,
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `date_updated` datetime NOT NULL DEFAULT current_timestamp(),
@@ -151,8 +152,8 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `user_name`, `user_pass`, `date_created`, `date_updated`, `user_type`) VALUES
-(1, 'klarenz', 'helloworld', '2025-04-16 22:53:56', '2025-04-16 22:53:56', 'editor');
+INSERT INTO `users` (`user_id`, `user_name`, `user_email`, `user_pass`, `date_created`, `date_updated`, `user_type`) VALUES
+(1, 'klarenz', 'klarenzcobie99@gmail.com', 'helloworld', '2025-04-16 22:53:56', '2025-04-16 22:53:56', 'editor');
 
 --
 -- Indexes for dumped tables
@@ -197,7 +198,8 @@ ALTER TABLE `templates`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`user_id`);
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `user_email` (`user_email`);
 
 --
 -- AUTO_INCREMENT for dumped tables
