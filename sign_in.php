@@ -19,7 +19,7 @@
             <h1>contento</h1>
         </div>
         <div class="right_side">
-            <form action="" method="post">
+            <form action="account_handler.php" method="post">
                 <div class="text_container">
                     <h2>Welcome to Contento!</h2>
                     <p>Login your account</p>
@@ -32,7 +32,7 @@
                     <label for="user_pass">Password</label>
                     <input type="password" name="user_pass" id="" class="input_enter" placeholder="Enter your password">
                 </div>
-                <input type="submit" value="Login">
+                <input type="submit" value="Login" name="login_account">
             </form>
             <div class="login_and_dont_have_container">
                 <div class="dont_have_acc_container">
