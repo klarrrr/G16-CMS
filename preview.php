@@ -47,13 +47,13 @@
         <div id='content'></div>
     </div>
     <script>
-        const sections = {"1":{"section_name":"section 1","page_owner":1},"2":{"section_name":"section 2","page_owner":1},"3":{"section_name":"section 3","page_owner":1}};
-        const elements = {"1":{"element_name":"Title Text","element_content":"{\"content\":\"First Title Text\"}","section_owner":1},"4":{"element_name":"Paragraph Text","element_content":"{\"content\":\"Second Paragraph Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, consectetur dolorum facilis esse porro sint unde modi accusamus quidem, quaerat doloribus, accusantium amet fugit? Odio autem a quos voluptatum quae.\"}","section_owner":1},"2":{"element_name":"Title Text","element_content":"{\"content\":\"Second Title Text\"}","section_owner":2},"5":{"element_name":"Paragraph Text","element_content":"{\"content\":\"Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, consectetur dolorum facilis esse porro sint unde modi accusamus quidem, quaerat doloribus, accusantium amet fugit? Odio autem a quos voluptatum quae.\"}","section_owner":2},"3":{"element_name":"Title Text","element_content":"{\"content\":\"Third Title Text\"}","section_owner":3},"6":{"element_name":"Paragraph Text","element_content":"{\"content\":\"Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, consectetur dolorum facilis esse porro sint unde modi accusamus quidem, quaerat doloribus, accusantium amet fugit? Odio autem a quos voluptatum quae.\"}","section_owner":3}};
+        const impSections = {"1":{"section_name":"section 1","page_owner":1},"2":{"section_name":"section 2","page_owner":1},"3":{"section_name":"section 3","page_owner":1}};
+        const elements = {"1":{"element_name":"Title Text","element_content":"{\"content\":\"First Title Text2\"}","section_owner":1},"4":{"element_name":"Paragraph Text","element_content":"{\"content\":\"Second Paragraph Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, consectetur dolorum facilis esse porro sint unde modi accusamus quidem, quaerat doloribus, accusantium amet fugit? Odio autem a quos voluptatum quae.\"}","section_owner":1},"2":{"element_name":"Title Text","element_content":"{\"content\":\"Second Title Text\"}","section_owner":2},"5":{"element_name":"Paragraph Text","element_content":"{\"content\":\"Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, consectetur dolorum facilis esse porro sint unde modi accusamus quidem, quaerat doloribus, accusantium amet fugit? Odio autem a quos voluptatum quae.\"}","section_owner":2},"3":{"element_name":"Title Text","element_content":"{\"content\":\"Third Title Text\"}","section_owner":3},"6":{"element_name":"Paragraph Text","element_content":"{\"content\":\"Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, consectetur dolorum facilis esse porro sint unde modi accusamus quidem, quaerat doloribus, accusantium amet fugit? Odio autem a quos voluptatum quae.\"}","section_owner":3}};
         const container = document.getElementById('content');
 
-        for (const sectionId in sections) {
-            if (sections.hasOwnProperty(sectionId)) {
-                const section = sections[sectionId]['section_name'];
+        for (const sectionId in impSections) {
+            if (impSections.hasOwnProperty(sectionId)) {
+                const section = impSections[sectionId]['section_name'];
                 const sectionEl = document.createElement('section');
 
                 // Find matching elements for this section

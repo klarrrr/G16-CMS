@@ -1,7 +1,6 @@
 <?php
 include 'connect.php';
 include 'page_handler.php';
-include 'save_changes_handler.php';
 include 'fetch_site_data_from_db.php';
 ?>
 
@@ -61,7 +60,7 @@ include 'fetch_site_data_from_db.php';
         </div>
         <!-- PREVIEW OF WEBSITE -->
         <div class="preview-container">
-            <iframe id="website_viewer" srcdoc="<?php echo htmlspecialchars($htmlLayout) ?>"></iframe>
+            <iframe id="website_viewer"></iframe>
         </div>
     </div>
 
@@ -96,6 +95,7 @@ include 'fetch_site_data_from_db.php';
         </div>
     </div>
 
+    <!-- When Edit Button is clicked on one pages -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const modal = document.getElementById("editModal");
@@ -122,6 +122,92 @@ include 'fetch_site_data_from_db.php';
                 }
             };
         });
+    </script>
+
+    <!-- When Changes are saved -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const modal = document.getElementById("editModal");
+            const modalContent = document.getElementById("modalContent");
+
+
+            // Intercept the form submit inside the modal
+            modal.addEventListener("submit", function(e) {
+                e.preventDefault(); // Stop default form submission
+
+                const form = e.target;
+                const formData = new FormData(form);
+
+                fetch("save_changes_handler.php", {
+                        method: "POST",
+                        body: formData
+                    })
+                    .then(res => res.text()) // You can also use res.json() if you return JSON
+                    .then(response => {
+                        console.log("Server Response:", response);
+
+                        // OPTIONAL: Show a toast or success message here
+                        alert("Changes saved!");
+                        refreshSite();
+                        // Close modal
+                        modal.style.display = "none";
+                    })
+                    .catch(error => {
+                        console.error("Error saving changes:", error);
+                        alert("Something went wrong.");
+                    });
+            });
+
+            // Open modal with content
+            document.getElementById("nodeList").addEventListener("click", function(e) {
+                if (e.target.classList.contains("editBtn")) {
+                    const pageId = e.target.dataset.pageid;
+
+                    fetch(`get_modal_layout.php?page_id=${pageId}`)
+                        .then(res => res.text())
+                        .then(html => {
+                            modalContent.innerHTML = html;
+                            modal.style.display = "block";
+                        });
+                }
+            });
+
+
+
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            };
+        });
+    </script>
+
+    <script>
+        // Grab the website viewer
+        /** @type {HTMLIFrameElement} */
+        const previewSite = document.getElementById('website_viewer');
+        // Grab the actual site
+        const theSite = <?php echo json_encode($htmlLayout); ?>;
+
+        function refreshSite() {
+            const oldIframe = document.getElementById('website_viewer');
+
+            // Remove old iframe
+            oldIframe.remove();
+
+            // Create a new iframe
+            const newIframe = document.createElement('iframe');
+            newIframe.id = 'website_viewer';
+
+            document.querySelector('.preview-container').appendChild(newIframe); // Or wherever you're placing it
+
+            const doc = newIframe.contentDocument || newIframe.contentWindow.document;
+            doc.open();
+            doc.write(theSite); // inject the updated site
+            doc.close();
+        }
+
+        refreshSite();
     </script>
 </body>
 

@@ -10,13 +10,13 @@
         <div id='content'></div>
     </div>
     <script>
-        const sections = <?php echo json_encode($sectionsArray); ?>;
+        const impSections = <?php echo json_encode($sectionsArray); ?>;
         const elements = <?php echo json_encode($elementsArray); ?>;
         const container = document.getElementById('content');
 
-        for (const sectionId in sections) {
-            if (sections.hasOwnProperty(sectionId)) {
-                const section = sections[sectionId]['section_name'];
+        for (const sectionId in impSections) {
+            if (impSections.hasOwnProperty(sectionId)) {
+                const section = impSections[sectionId]['section_name'];
                 const sectionEl = document.createElement('section');
 
                 // Find matching elements for this section
