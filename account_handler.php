@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $row = mysqli_fetch_assoc($result);
 
         if ($row) {
-            header("Location: editor.php");
+            header("Location: template/editor.php");
             exit();
         } else {
             echo "<script>alert('Something wrong with email or password');</script>";
