@@ -1,0 +1,87 @@
+/* Template Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 999;
+}
+
+#templateModal div {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    padding: 30px;
+    margin: 10% auto;
+    width: 50%;
+    position: relative;
+    border-radius: 8px;
+    gap: 30px;
+}
+
+#templateModal div h2 {}
+
+#templateModal div form {
+    display: flex;
+    flex-direction: column;
+}
+
+#templateModal div form select {
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.modal .close-template {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+/* Modal Editor */
+
+.modal .close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+#editModal #modalContent {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    margin: 3% auto;
+    width: 70%;
+    height: 70%;
+    position: relative;
+    border-radius: 8px;
+
+    padding: 30px;
+    gap: 30px;
+    padding-bottom: 90px;
+}
+
+#editModal #modalContent form {
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+
+}
+
+#editModal #modalContent form .section-block {
+    display: flex;
+    flex-direction: column;
+}
+
+#editModal #modalContent form input[type="submit"] {
+    position: absolute;
+    align-self: center;
+    width: 90%;
+    bottom: 30px;
+}
