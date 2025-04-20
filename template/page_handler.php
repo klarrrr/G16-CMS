@@ -57,7 +57,7 @@ foreach ($pagesArray as $pageId => $pageName) {
 $elementsArray = [];
 
 foreach ($sectionsArray as $sectionId => $sectionName) {
-    $queryElements = "SELECT element_id, element_name, content FROM elements WHERE section_owner = $sectionId";
+    $queryElements = "SELECT element_id, element_name, element_type, content FROM elements WHERE section_owner = $sectionId";
     $elements = mysqli_query($conn, $queryElements);
 
     // Select all the Elements related to each Section
@@ -67,6 +67,7 @@ foreach ($sectionsArray as $sectionId => $sectionName) {
             $elementsArray[$row['element_id']] = [
                 "element_name" => $row['element_name'],
                 "element_content" => $row['content'],
+                "element_type" => $row['element_type'],
                 "section_owner"      => $sectionId
             ];
         }
@@ -105,14 +106,3 @@ $htmlLayout .= ob_get_clean();
 
 $footer = file_get_contents('pages/template1/template1_footer.php');
 $htmlLayout .= $footer;
-
-// After everything is now laid out as HTML next is CSS
-// If there is a CSS TABLE that belongs to each project or each page, that would be great
-
-// Store the whole Blob of formatted HTML and CSS of Page in a String variable
-// if possibel store those in cache file format to reduce strain on database
-/*
-<iframe srcdoc='<?php echo htmlspecialchars($html_var); ?>'></iframe>
-*/
-
-// Now the page is displaying in the preview website div using iframe

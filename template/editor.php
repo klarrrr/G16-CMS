@@ -183,29 +183,20 @@ include 'fetch_site_data_from_db.php';
     </script>
 
     <script>
-        // Grab the website viewer
-        /** @type {HTMLIFrameElement} */
-        const previewSite = document.getElementById('website_viewer');
-        // Grab the actual site
-        const theSite = <?php echo json_encode($htmlLayout); ?>;
-
         function refreshSite() {
-            const oldIframe = document.getElementById('website_viewer');
+            /** @type {HTMLIFrameElement} */
+            const iframe = document.getElementById('website_viewer');
+            const doc = iframe.contentDocument || iframe.contentWindow.document;
 
-            // Remove old iframe
-            oldIframe.remove();
-
-            // Create a new iframe
-            const newIframe = document.createElement('iframe');
-            newIframe.id = 'website_viewer';
-
-            document.querySelector('.preview-container').appendChild(newIframe); // Or wherever you're placing it
-
-            const doc = newIframe.contentDocument || newIframe.contentWindow.document;
-            doc.open();
-            doc.write(theSite); // inject the updated site
-            doc.close();
+            fetch('template1_home_dynamic.php')
+                .then(res => res.text())
+                .then(html => {
+                    doc.open();
+                    doc.write(html);
+                    doc.close();
+                });
         }
+
 
         refreshSite();
     </script>

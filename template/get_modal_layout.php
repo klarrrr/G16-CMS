@@ -28,12 +28,39 @@ function buildModalLayout($page_id, $pageName, $sections, $elements)
             foreach ($elements as $elementId => $element) {
                 if ($element['section_owner'] == $sectionId) {
                     $decoded = json_decode($element['element_content'], true);
-                    if ($element['element_name'] == "Title Text") {
-                        $value = $decoded['content'];
-                        $output .= "<input type='text' name='elements[$elementId]' value='$value' placeholder='Title'><br>";
-                    } elseif ($element['element_name'] == "Paragraph Text") {
-                        $value = $decoded['content'];
-                        $output .= "<textarea name='elements[$elementId]' rows='4' style='resize:none;'>$value</textarea><br>";
+                    $value = $decoded['content'];
+                    $placeholder = $element['element_name'];
+                    $elementType = $element['element_type'];
+                    $titleElementType = ucwords(strtolower($elementType));
+                    $output .= "<h3>$titleElementType</h3>";
+
+                    /* 
+                    
+                    * WHEN YOU WANT TO ADD ELEMENT TYPES TO EDIT ADD IT HERE
+                    * SAVE CHANGES HANDLER IS ALREADY DYNAMIC SO NO NEED TO ADD IT THERE
+                    * TEMPLATE HOME DYNAMIC IS WHERE YOU EDIT THE SECTIONS
+
+                    */
+
+                    switch ($elementType) {
+                        case 'title':
+                            $output .= "<input type='text' name='elements[$elementId]' value='$value' placeholder='$placeholder'><br>";
+                            break;
+                        case 'paragraph':
+                            $output .= "<textarea name='elements[$elementId]' rows='4' style='resize:none;' placeholder='$placeholder'>$value</textarea><br>";
+                            break;
+                        case 'button':
+                            $output .= "<input type='text' name='elements[$elementId]' value='$value' placeholder='Button Label'><br>";
+                            break;
+                        case 'image':
+                            $output .= "<input type='url' name='elements[$elementId]' value='$value' placeholder='Image URL'><br>";
+                            break;
+                        case 'sub':
+                            $output .= "<input type='text' name='elements[$elementId]' value='$value' placeholder='$placeholder'><br>";
+                            break;
+                        default:
+                            $output .= "<input type='text' name='elements[$elementId]' value='$value' placeholder='$placeholder'><br>";
+                            break;
                     }
                 }
             }
