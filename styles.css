@@ -1,0 +1,105 @@
+@font-face {
+    font-family: "boldonse";
+    src: url(font/Boldonse-Regular.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    /* To keep the elements from flowing outside and generating a scrollbar */
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden;
+}
+
+/* Navigation */
+
+.nav-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+nav {
+    display: flex;
+    width: 100%;
+    padding: 0px 30px 0px 30px;
+    border-bottom: 1px solid lightgray;
+    height: 7vh;
+    justify-content: center;
+    align-items: center;
+
+}
+
+nav ul {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+nav ul li {
+    list-style: none;
+    color: #161616;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #161616;
+    display: inline;
+}
+
+nav ul li a img {
+    height: 25px;
+    color: #161616;
+}
+
+nav ul li h1 {
+    font-family: "boldonse";
+    font-size: 1em;
+    color: #161616;
+}
+
+/* Second Nav */
+
+.second-nav-container nav ul {
+    justify-content: center;
+    gap: 30px;
+}
+
+/* Main Page */
+
+.main-page {
+    width: 100vw;
+    display: grid;
+    grid-template-columns: 25% 75%;
+    height: 86vh;
+}
+
+/* Edit Page Section */
+
+.edit-page-details {
+    border-right: 1px solid lightgray;
+}
+
+.choose-page-container {
+    border-bottom: 1px solid lightgray;
+    height: 10vh;
+}
+
+.page-details-container {
+    overflow-y: scroll;
+}
+
+/* Preview Site Page */
+
+.preview-site {
+    height: 100%;
+    width: 100%;
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+}
