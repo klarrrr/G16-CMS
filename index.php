@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Content Management System</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="cms-preview-styles.css">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 
@@ -43,6 +44,7 @@
                 </select>
                 <!-- ADD PAGE BTN -->
                 <button id="add-page-btn">Add Page</button>
+                <button id="add-element-btn">Add Element</button>
             </div>
             <!-- EDIT PAGE DETAILS CONTAINERS -->
             <div id="edit-details-box" class="page-details-container">
