@@ -1,4 +1,4 @@
-<?php file_put_contents('preview.php', $htmlLayout); ?>
+<!-- <?php file_put_contents('preview.php', $htmlLayout); ?> -->
 <div class="nav_container">
     <nav class="actual_nav">
         <a href="../index.php" id="contento">contento</a>

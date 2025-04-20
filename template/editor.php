@@ -1,7 +1,5 @@
 <?php
 include 'connect.php';
-include 'page_handler.php';
-include 'fetch_site_data_from_db.php';
 ?>
 
 <!-- MAIN EDITOR PAGE -->
@@ -19,9 +17,6 @@ include 'fetch_site_data_from_db.php';
     <link rel="stylesheet" href="editor_modal.css">
     <!-- For Nav -->
     <link rel="stylesheet" href="styles_editor_nav.css">
-    <!-- For JQuery ito VVV -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js"
-        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -43,16 +38,23 @@ include 'fetch_site_data_from_db.php';
                     <!-- Display The Pages -->
                     <?php
 
-                    foreach ($pagesArray as $pageId => $pageDetails) {
-                        $pageName = ucwords(strtolower($pageDetails['page_name']));
-                        $lilPageLayout = "
-                        <div class='page-node'>
-                            <h3>$pageName</h3>
-                            <div class='view_of_page'></div>
-                            <button class='editBtn' onclick='' data-pageid='$pageId'>EDIT</button>
-                        </div>
-                        ";
-                        echo $lilPageLayout;
+                    $projectData = json_decode(file_get_contents('api/get_project_structure.php'), true);
+
+                    if (!$projectData || !isset($projectData['pages'])) {
+                        echo "Failed to load pages. Raw output:<pre>$projectData</pre>";
+                    } else {
+                        foreach ($projectData['pages'] as $page) {
+                            $pageId = $page['page_id'];
+                            $pageName = ucwords(strtolower($page['page_name']));
+
+                            echo "
+                            <div class='page-node'>
+                                <h3>$pageName</h3>
+                                <div class='view_of_page'></div>
+                                <button class='editBtn' data-pageid='$pageId'>EDIT</button>
+                            </div>
+                            ";
+                        }
                     }
                     ?>
                 </div>

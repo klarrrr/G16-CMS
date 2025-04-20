@@ -41,6 +41,41 @@
             const container = document.getElementById('content');
             container.innerHTML = ''; // Clear existing
 
+            const navContainer = document.createElement('div');
+            navContainer.classList.add('nav-container'); // optional for styling
+
+            const actualNav = document.createElement('nav');
+            actualNav.classList.add('navbar'); // optional class
+
+            const uList = document.createElement('ul');
+
+            // Build a Navigation Bar here
+            for (const nav of data.navigation) {
+                const item = document.createElement('li');
+                const link = document.createElement('a');
+
+                link.textContent = nav['element_name'];
+                link.href = "page_handler.php?page=${nav['page_slug']}";
+                link.style = "color: black;";
+
+                // You can add href based on slug if available
+                // link.href = `page_handler.php?page=${nav['element_slug']}`;
+
+                item.appendChild(link);
+                uList.appendChild(item);
+            }
+
+            // Append the full nav structure
+            actualNav.appendChild(uList);
+            navContainer.appendChild(actualNav);
+
+            // Finally, append to body
+            // document.body.appendChild(navContainer);
+            const mainPage = document.querySelector('.main_page');
+            document.body.insertBefore(navContainer, mainPage);
+
+
+
             // Build sections dynamically
             const sectionMap = {};
 
@@ -83,6 +118,8 @@
                     parentSection?.appendChild(i);
                 }
             }
+
+            // Build a footer here
         }
 
         loadPageContent();
