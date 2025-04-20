@@ -105,12 +105,16 @@ include 'fetch_site_data_from_db.php';
                 if (e.target.classList.contains("editBtn")) {
                     const pageId = e.target.dataset.pageid;
                     console.log(pageId);
+
                     // Fetch modal layout from PHP
                     fetch(`get_modal_layout.php?page_id=${pageId}`)
                         .then(res => res.text())
                         .then(html => {
                             modalContent.innerHTML = html;
                             modal.style.display = "block";
+
+                            // Attach tab switching logic after modal is loaded
+
                         });
                 }
             });
@@ -123,6 +127,7 @@ include 'fetch_site_data_from_db.php';
             };
         });
     </script>
+
 
     <!-- When Changes are saved -->
     <script>

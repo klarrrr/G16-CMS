@@ -17,8 +17,11 @@ function buildModalLayout($page_id, $pageName, $sections, $elements)
                 <span class='close' onclick='document.getElementById(\"editModal\").style.display=\"none\";'>&times;</span>
                 <h2>Edit Page: $pageName</h2>
             </div>
+
             <form method='post' action='save_changes_handler.php'>
-                <input type='hidden' name='page_id' value='$page_id'>";
+                <input type='hidden' name='page_id' value='$page_id'>
+                
+                ";
 
     foreach ($sections as $sectionId => $sectionDetail) {
         if ($sectionDetail['page_owner'] == $page_id) {
@@ -68,10 +71,18 @@ function buildModalLayout($page_id, $pageName, $sections, $elements)
         }
     }
 
-    $output .= "<input type='submit' value='Save Changes'>
-            </form>";
+    $output .= "<div class='modal-footer'>
+        <input type='submit' value='Save Changes'>
+    </div>
+    </form>";
 
     return $output;
 }
+
+function isValidHexColor($color)
+{
+    return preg_match('/^#[0-9A-Fa-f]{6}$/', $color);
+}
+
 
 echo buildModalLayout($page_id, $pageName, $sectionsArray, $elementsArray);
