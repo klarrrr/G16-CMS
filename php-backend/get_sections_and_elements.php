@@ -1,8 +1,14 @@
 <?php
 include 'connect.php';
 
-// Get Page Owner ID from JS (set to static for now)
-$pageOwner = 1;
+// Post Page ID here
+$pageOwner = $_POST['page_id'] ?? null;
+
+// check
+if (!$pageOwner) {
+    echo json_encode(['error' => 'No page ID provided']);
+    exit;
+}
 
 // Store sections and elements
 $sectionsArray = [];

@@ -10,6 +10,7 @@
 </head>
 
 <body>
+    <!-- ACTUAL NAV OF CMS WEBSITE -->
     <div class="nav-container">
         <nav>
             <ul>
@@ -21,6 +22,7 @@
             </ul>
         </nav>
     </div>
+    <!-- USER WEBSITE NAV -->
     <div class="second-nav-container">
         <nav>
             <ul>
@@ -32,22 +34,28 @@
         </nav>
     </div>
     <div class="main-page">
+        <!-- CHOOSE AND EDIT DETAILS CONTAINER -->
         <div class="edit-page-details">
+            <!-- CHOOSE PAGE CONTAINER -->
             <div class="choose-page-container">
+                <!-- CHOOSE PAGE BOX -->
                 <select name="" id="select-pages">
                 </select>
+                <!-- ADD PAGE BTN -->
                 <button id="add-page-btn">Add Page</button>
             </div>
-            <div class="page-details-container"></div>
+            <!-- EDIT PAGE DETAILS CONTAINERS -->
+            <div class="page-details-container">
+                <h2>Edit Page Details</h2>
+            </div>
+            <div class="preview-site" id="preview-site-box">
+                <!-- PREVIEW SITE HERE -->
+            </div>
         </div>
-        <div class="preview-site">
-            <iframe src="example.php" frameborder="0"></iframe>
-        </div>
-    </div>
-    <!-- Populate the Selection Input of all the pages -->
-    <script src="scripts/populate_selection_page.js"></script>
-    <!-- When Selection Input changes pages -->
-    <script src="scripts/on_select_page_change.js"></script>
+        <!-- Populate the Selection Input of all the pages -->
+        <script src="scripts/populate_selection_page.js"></script>
+        <!-- When Selection Input changes pages -->
+        <script src="scripts/build_preview_site.js"></script>
 </body>
 
 </html>

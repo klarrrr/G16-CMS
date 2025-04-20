@@ -4,7 +4,7 @@ $.ajax({
     type: "POST",
     url: '../php-backend/populate_selection_page.php',
     dataType: 'json',
-    data: { functionname: 'add' },
+    data: {},
     success: function (obj) {
         if (!('error' in obj)) {
             const pages = obj.result;
@@ -19,6 +19,12 @@ $.ajax({
                 console.log(opt);
                 selectionBox.appendChild(opt);
             });
+
+            // Waited until AJAX success and options are added:
+            if (selectionBox.options.length > 0) {
+                selectionBox.value = selectionBox.options[0].value;
+                selectionBox.dispatchEvent(new Event('change')); // ✅ trigger change
+            }
         } else {
             console.log(obj.error);
         }

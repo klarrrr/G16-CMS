@@ -30,7 +30,6 @@ nav {
     height: 7vh;
     justify-content: center;
     align-items: center;
-
 }
 
 nav ul {
@@ -66,6 +65,12 @@ nav ul li h1 {
 .second-nav-container nav ul {
     justify-content: center;
     gap: 30px;
+    border-left: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+    height: 100%;
+    width: auto;
+    align-items: center;
+    padding: 0 30px 0 30px;
 }
 
 /* Main Page */
@@ -74,13 +79,14 @@ nav ul li h1 {
     width: 100vw;
     display: grid;
     grid-template-columns: 25% 75%;
-    height: 86vh;
+    height: 50vh;
 }
 
 /* Change Page and Page Details Container */
 
 .edit-page-details {
     border-right: 1px solid lightgray;
+    height: 100%;
 }
 
 /* Change Page Container */
@@ -121,6 +127,21 @@ nav ul li h1 {
 
 .page-details-container {
     overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    gap: 15px;
+    height: 76vh;
+}
+
+.detail_container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.detail_container>:nth-child(2n) {
+    padding: 10px;
 }
 
 /* Preview Site Page */
