@@ -130,17 +130,28 @@ nav ul li h1 {
     display: flex;
     flex-direction: column;
     padding: 15px;
-    gap: 15px;
+    gap: 50px;
     height: 76vh;
 }
 
-.detail_container {
+.section-edit-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    border: 1px solid gray;
+    padding: 15px;
+    border-radius: 3px;
+}
+
+.element-edit-group {
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
 
-.detail_container>:nth-child(2n) {
+.element-edit-group textarea {}
+
+.element-edit-group>:nth-child(2n) {
     padding: 10px;
 }
 

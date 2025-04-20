@@ -4,6 +4,7 @@ let lastPageId = null;
 
 selectBox.addEventListener('change', (event) => {
     const page_id = selectBox.value;
+    loadEditDetails(page_id);
 
     if (page_id !== lastPageId) {
         lastPageId = page_id;
@@ -40,28 +41,31 @@ function loadPreview(page_id) {
                             const el = document.createElement('div');
                             el.className = 'element';
 
-                            // You can conditionally render based on type
+                            let previewElement;
+
+                            // Conditionally render based on type
                             if (element.element_type === 'title') {
-                                const title = document.createElement('h3');
-                                title.textContent = parsedContent.content;
-                                el.appendChild(title);
+                                previewElement = document.createElement('h3');
                             } else if (element.element_type === 'paragraph') {
-                                const p = document.createElement('p');
-                                p.textContent = parsedContent.content;
-                                el.appendChild(p);
+                                previewElement = document.createElement('p');
                             } else if (element.element_type === 'button') {
-                                const btn = document.createElement('button');
-                                btn.textContent = parsedContent.content;
-                                el.appendChild(btn);
+                                previewElement = document.createElement('button');
                             } else if (element.element_type === 'sub') {
-                                const sub = document.createElement('h4');
-                                sub.textContent = parsedContent.content;
-                                el.appendChild(sub);
+                                previewElement = document.createElement('h4');
+                            }
+
+                            // Set content and identifiers
+                            if (previewElement) {
+                                previewElement.textContent = parsedContent.content;
+                                previewElement.setAttribute('data-element-id', element.element_id);
+                                previewElement.setAttribute('data-element-type', element.element_type);
+                                el.appendChild(previewElement);
                             }
 
                             sectionDiv.appendChild(el);
                         }
                     });
+
 
                     // Add the completed section to the preview box
                     previewBox.appendChild(sectionDiv);

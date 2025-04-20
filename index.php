@@ -45,7 +45,7 @@
                 <button id="add-page-btn">Add Page</button>
             </div>
             <!-- EDIT PAGE DETAILS CONTAINERS -->
-            <div class="page-details-container">
+            <div id="edit-details-box" class="page-details-container">
                 <h2>Edit Page Details</h2>
             </div>
         </div>
@@ -57,6 +57,10 @@
     <script src="scripts/populate_selection_page.js"></script>
     <!-- When Selection Input changes pages -->
     <script src="scripts/build_preview_site.js"></script>
+    <!-- Builds The Edit Details based on page -->
+    <script src="scripts/build_edit_details.js"></script>
+    <!-- Events to execute when something changed on edit details -->
+    <script src="scripts/when_input_details_change.js"></script>
 </body>
 
 </html>
