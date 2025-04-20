@@ -77,16 +77,47 @@ nav ul li h1 {
     height: 86vh;
 }
 
-/* Edit Page Section */
+/* Change Page and Page Details Container */
 
 .edit-page-details {
     border-right: 1px solid lightgray;
 }
 
+/* Change Page Container */
+
 .choose-page-container {
     border-bottom: 1px solid lightgray;
     height: 10vh;
+    display: flex;
+    padding: 15px;
+    justify-content: space-evenly;
+    gap: 15px;
 }
+
+.choose-page-container * {
+    width: 100%;
+}
+
+.choose-page-container #select-pages {
+    border: 1px solid gray;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.choose-page-container #add-page-btn {
+    border: none;
+    background-color: #161616;
+    color: white;
+    border-radius: 3px;
+    transition: 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.choose-page-container #add-page-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Page Details Container */
 
 .page-details-container {
     overflow-y: scroll;
