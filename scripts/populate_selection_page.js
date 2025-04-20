@@ -23,7 +23,7 @@ $.ajax({
             // Waited until AJAX success and options are added:
             if (selectionBox.options.length > 0) {
                 selectionBox.value = selectionBox.options[0].value;
-                selectionBox.dispatchEvent(new Event('change')); // ✅ trigger change
+                selectionBox.dispatchEvent(new Event('change')); // trigger change
             }
         } else {
             console.log(obj.error);

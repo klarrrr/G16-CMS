@@ -79,7 +79,7 @@ nav ul li h1 {
     width: 100vw;
     display: grid;
     grid-template-columns: 25% 75%;
-    height: 50vh;
+    height: 86vh;
 }
 
 /* Change Page and Page Details Container */
@@ -149,9 +149,4 @@ nav ul li h1 {
 .preview-site {
     height: 100%;
     width: 100%;
-}
-
-iframe {
-    width: 100%;
-    height: 100%;
 }

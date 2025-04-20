@@ -39,7 +39,7 @@
             <!-- CHOOSE PAGE CONTAINER -->
             <div class="choose-page-container">
                 <!-- CHOOSE PAGE BOX -->
-                <select name="" id="select-pages">
+                <select name="" id="select-pages" title="select-page">
                 </select>
                 <!-- ADD PAGE BTN -->
                 <button id="add-page-btn">Add Page</button>
@@ -48,14 +48,15 @@
             <div class="page-details-container">
                 <h2>Edit Page Details</h2>
             </div>
-            <div class="preview-site" id="preview-site-box">
-                <!-- PREVIEW SITE HERE -->
-            </div>
         </div>
-        <!-- Populate the Selection Input of all the pages -->
-        <script src="scripts/populate_selection_page.js"></script>
-        <!-- When Selection Input changes pages -->
-        <script src="scripts/build_preview_site.js"></script>
+        <div class="preview-site" id="preview-site-box">
+            <!-- PREVIEW SITE HERE -->
+        </div>
+    </div>
+    <!-- Populate the Selection Input of all the pages -->
+    <script src="scripts/populate_selection_page.js"></script>
+    <!-- When Selection Input changes pages -->
+    <script src="scripts/build_preview_site.js"></script>
 </body>
 
 </html>
