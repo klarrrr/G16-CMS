@@ -160,4 +160,5 @@ nav ul li h1 {
 .preview-site {
     height: 100%;
     width: 100%;
+    overflow-y: scroll;
 }

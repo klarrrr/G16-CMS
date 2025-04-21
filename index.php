@@ -63,6 +63,8 @@
     <script src="scripts/build_edit_details.js"></script>
     <!-- Events to execute when something changed on edit details -->
     <script src="scripts/when_input_details_change.js"></script>
+    <!-- Upload Image function -->
+    <script src="scripts/upload_image.js"></script>
 </body>
 
 </html>

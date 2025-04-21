@@ -4,7 +4,18 @@ function attachLiveUpdateListeners() {
         input.addEventListener('input', (e) => {
             const elementId = e.target.getAttribute('data-element-id');
             const elementType = e.target.getAttribute('data-element-type');
-            const newValue = e.target.value;
+
+            let newValue;
+
+            if (elementType === 'image') {
+                // Get value from hidden input
+                const hiddenInput = document.querySelector(
+                    `input.hidden-image-path[data-element-id="${elementId}"]`
+                );
+                newValue = hiddenInput ? hiddenInput.value : '';
+            } else {
+                newValue = e.target.value;
+            }
 
             // 1. Update the preview
             updatePreviewElement(elementId, elementType, newValue);
@@ -17,8 +28,11 @@ function attachLiveUpdateListeners() {
 
 function updatePreviewElement(elementId, elementType, newValue) {
     const previewEl = previewBox.querySelector(`[data-element-id="${elementId}"]`);
-    if (previewEl) {
+    if (previewEl && (elementType == 'title' || elementType == 'paragraph')) {
         previewEl.textContent = newValue;
+    } else if (previewEl && (elementType == 'image')) {
+        previewEl.src = '../upload-images/' + newValue;
+        console.log(newValue)
     }
 }
 

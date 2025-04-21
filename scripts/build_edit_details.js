@@ -42,12 +42,54 @@ function loadEditDetails(page_id) {
 
                             if (element.element_type === 'paragraph') {
                                 inputField = document.createElement('textarea');
-                            } else {
+                            } else if (element.element_type === 'title') {
                                 inputField = document.createElement('input');
                                 inputField.type = 'text';
+                            } else if (element.element_type === 'image') {
+                                // File input
+                                inputField = document.createElement('input');
+                                inputField.type = 'file';
+                                inputField.accept = 'image/png, image/gif, image/jpeg';
+
+                                // Hidden input to store current image path
+                                const hiddenField = document.createElement('input');
+                                hiddenField.type = 'hidden';
+                                hiddenField.value = parsedContent.content;
+                                hiddenField.setAttribute('data-element-id', element.element_id);
+                                hiddenField.setAttribute('data-element-type', element.element_type);
+                                hiddenField.classList.add('hidden-image-path');
+
+                                // Image preview
+                                const imgPreview = document.createElement('img');
+                                imgPreview.src = '../upload-images/' + parsedContent.content;
+                                imgPreview.alt = element.element_name;
+                                imgPreview.style.maxWidth = '200px';
+                                imgPreview.style.display = 'block';
+                                imgPreview.style.marginTop = '10px';
+
+                                // Handle new file selection
+                                inputField.addEventListener('change', function (e) {
+                                    const file = e.target.files[0];
+                                    if (file) {
+                                        const reader = new FileReader();
+                                        reader.onload = function (evt) {
+                                            imgPreview.src = evt.target.result; // Show preview
+                                        }
+                                        reader.readAsDataURL(file);
+
+                                        // You can now send the file to the server via AJAX + FormData
+                                        uploadImageFile(element.element_id, file);
+                                    }
+                                });
+
+                                elementWrapper.appendChild(inputField);
+                                elementWrapper.appendChild(hiddenField);
+                                elementWrapper.appendChild(imgPreview);
                             }
 
-                            inputField.value = parsedContent.content;
+                            if (element.element_type !== 'image') {
+                                inputField.value = parsedContent.content;
+                            }
                             inputField.id = `element-${element.element_id}`;
                             inputField.setAttribute('data-element-id', element.element_id);
                             inputField.setAttribute('data-element-type', element.element_type);

@@ -2,7 +2,7 @@
 include 'connect.php';
 
 // Post Page ID here
-$pageOwner = $_POST['page_id'] ?? null;
+$pageOwner = $_POST['page_id'] ?? 1;
 
 // check
 if (!$pageOwner) {

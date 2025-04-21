@@ -52,9 +52,17 @@ function loadPreview(page_id) {
                                 previewElement = document.createElement('button');
                             } else if (element.element_type === 'sub') {
                                 previewElement = document.createElement('h4');
+                            } else if (element.element_type === 'image') {
+                                previewElement = document.createElement('img');
                             }
 
                             // Set content and identifiers
+                            if (previewElement && (element.element_type == 'image')) {
+                                previewElement.src = '../upload-images/' + parsedContent.content;
+                                previewElement.setAttribute('data-element-id', element.element_id);
+                                previewElement.setAttribute('data-element-type', element.element_type);
+                                el.appendChild(previewElement);
+                            }
                             if (previewElement) {
                                 previewElement.textContent = parsedContent.content;
                                 previewElement.setAttribute('data-element-id', element.element_id);
