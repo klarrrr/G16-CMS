@@ -108,6 +108,7 @@ nav ul li h1 {
     border: 1px solid gray;
     border-radius: 3px;
     cursor: pointer;
+    -webkit-padding-start: 10px;
 }
 
 .choose-page-container #add-article-page-btn {
@@ -149,7 +150,9 @@ nav ul li h1 {
     gap: 5px;
 }
 
-.element-edit-group textarea {}
+.element-edit-group textarea {
+    resize: none;
+}
 
 .element-edit-group>:nth-child(2n) {
     padding: 10px;

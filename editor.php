@@ -70,7 +70,8 @@
     <!-- <script src="scripts/add_article_page_with_container.js"></script> -->
     <!-- Add Article Button, adds it to edit details and live preview -->
     <script src="scripts/add_article.js"></script>
-
+    <!-- Builder Function -->
+    <script src="scripts/add_article_builder_function.js"></script>
 </body>
 
 </html>
