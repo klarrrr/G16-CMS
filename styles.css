@@ -110,7 +110,7 @@ nav ul li h1 {
     cursor: pointer;
 }
 
-.choose-page-container #add-page-btn {
+.choose-page-container #add-article-page-btn {
     border: none;
     background-color: #161616;
     color: white;
@@ -119,7 +119,7 @@ nav ul li h1 {
     cursor: pointer;
 }
 
-.choose-page-container #add-page-btn:hover {
+.choose-page-container #add-article-page-btn:hover {
     transform: translateY(-2px);
 }
 

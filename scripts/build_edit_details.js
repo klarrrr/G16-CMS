@@ -89,6 +89,10 @@ function loadEditDetails(page_id) {
 
                             if (element.element_type !== 'image') {
                                 inputField.value = parsedContent.content;
+                                if (element.element_type === 'paragraph') {
+                                    inputField.rows = 25;
+                                    inputField.style = 'resize: none; line-height: 1.5em;'
+                                }
                             }
                             inputField.id = `element-${element.element_id}`;
                             inputField.setAttribute('data-element-id', element.element_id);

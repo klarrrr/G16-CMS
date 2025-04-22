@@ -10,16 +10,17 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body class="body">
+    <div class="float-cards" style='display: none;'></div>
     <!-- ACTUAL NAV OF CMS WEBSITE -->
     <div class="nav-container">
         <nav>
             <ul>
-                <li><a href=""><img src="svg/menu-svgrepo-com.svg" alt=""></a></li>
+                <li><a href="#"><img src="svg/menu-svgrepo-com.svg" alt=""></a></li>
                 <li>
                     <h1>contento</h1>
                 </li>
-                <li><a href=""><img src="svg/circle-user-svgrepo-com.svg" alt=""></a></li>
+                <li><a href="#"><img src="svg/circle-user-svgrepo-com.svg" alt=""></a></li>
             </ul>
         </nav>
     </div>
@@ -27,10 +28,10 @@
     <div class="second-nav-container">
         <nav>
             <ul>
-                <li><a href="">Pages</a></li>
-                <li><a href="">Design</a></li>
-                <li><a href="">Settings</a></li>
-                <li><a href="">Domain</a></li>
+                <li><a href="#">Pages</a></li>
+                <li><a href="#">Design</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Domain</a></li>
             </ul>
         </nav>
     </div>
@@ -43,8 +44,8 @@
                 <select name="" id="select-pages" title="select-page">
                 </select>
                 <!-- ADD PAGE BTN -->
-                <button id="add-page-btn">Add Page</button>
-                <button id="add-element-btn">Add Element</button>
+                <button id="add-article-page-btn">Add Article Page</button>
+                <!-- <button id="add-element-btn">Add Element</button> -->
             </div>
             <!-- EDIT PAGE DETAILS CONTAINERS -->
             <div id="edit-details-box" class="page-details-container">
@@ -65,6 +66,11 @@
     <script src="scripts/when_input_details_change.js"></script>
     <!-- Upload Image function -->
     <script src="scripts/upload_image.js"></script>
+    <!-- Add Article Page with Floating Container Function -->
+    <!-- <script src="scripts/add_article_page_with_container.js"></script> -->
+    <!-- Add Article Button, adds it to edit details and live preview -->
+    <script src="scripts/add_article.js"></script>
+
 </body>
 
 </html>
