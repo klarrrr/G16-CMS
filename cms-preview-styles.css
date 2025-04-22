@@ -20,7 +20,7 @@
     --button-cursor: pointer;
 
     --preview-section-gap: 15px;
-    --image-size: 500px;
+    --image-size: 100%;
 }
 
 .preview-site {
@@ -58,5 +58,5 @@
 }
 
 .preview-site .preview-section .element img {
-    height: var(--image-size);
+    width: var(--image-size);
 }

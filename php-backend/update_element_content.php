@@ -1,5 +1,5 @@
 <?php
-require_once 'connect.php';
+include 'connect.php';
 
 if (isset($_POST['element_id']) && isset($_POST['new_content'])) {
     $element_id = $_POST['element_id'];
