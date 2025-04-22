@@ -35,7 +35,7 @@
         <!-- Website Details Container -->
         <div class="website_details_container">
             <div class="">
-                <label for="website_name">Website Name:</label>
+                <label for="website_name">Website Nameee:</label>
                 <input type="text" name="website_name">
             </div>
             <div class="">
