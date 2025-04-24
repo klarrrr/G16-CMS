@@ -1,10 +1,21 @@
-function buildEditDetails(elements) {
+function buildEditDetails(elements, section) {
     const sectionWrapper = document.createElement('div');
     sectionWrapper.className = 'section-edit-wrapper';
+    sectionWrapper.setAttribute('edit-det-section-id', section.section_id);
+
+    const titleAndOptionsContainer = document.createElement('div');
+    titleAndOptionsContainer.style.display = 'flex';
+    titleAndOptionsContainer.style.flexDirection = 'row';
+    titleAndOptionsContainer.style.justifyContent = 'space-between';
 
     const sectionTitle = document.createElement('h3');
     sectionTitle.textContent = 'Article';
-    sectionWrapper.appendChild(sectionTitle);
+    titleAndOptionsContainer.appendChild(sectionTitle);
+
+    // Makes the delete Button inside the function and returns it here
+    titleAndOptionsContainer.appendChild(makeDeleteButton(section));
+
+    sectionWrapper.appendChild(titleAndOptionsContainer);
 
     elements.forEach(element => {
         const parsedContent = JSON.parse(element.content);
@@ -87,10 +98,11 @@ function buildEditDetails(elements) {
     attachLiveUpdateListeners();
 }
 
-function buildPreviewSite(elements) {
+function buildPreviewSite(elements, sections) {
     const sectionDiv = document.createElement('div');
     sectionDiv.className = 'preview-section';
-    sectionDiv.name = elements[0].section_owner;
+    sectionDiv.setAttribute('prev-section-id', sections.section_id);
+    sectionDiv.name = sections.section_name;
 
     elements.forEach(element => {
         const parsedContent = JSON.parse(element.content);

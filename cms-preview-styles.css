@@ -1,8 +1,8 @@
 :root {
     --section-margin: 2rem;
-    --section-padding: 5rem;
-    --section-border: 1px solid #ddd;
-    --section-bg: #f9f9f9;
+    --section-padding: 3rem;
+    /* --section-bg: #f9f9f9; */
+    --section-bg: none;
     --site-display: flex;
     --site-flex-direction: column;
     --site-gap: 50px;
@@ -26,8 +26,7 @@
 .preview-site {
     margin-bottom: var(--section-margin);
     padding: var(--section-padding);
-    border: var(--section-border);
-    background: var(--section-bg);
+    /* background: var(--section-bg); */
     display: var(--site-display);
     flex-direction: var(--site-flex-direction);
     gap: var(--site-gap);

@@ -30,49 +30,8 @@ function loadEditDetails(page_id) {
                     sectionTitle.textContent = section.section_name;
                     titleAndOptionsContainer.appendChild(sectionTitle);
 
-                    // More Options
-                    const deleteBtn = document.createElement('img');
-                    deleteBtn.src = '../svg/delete.svg';
-                    deleteBtn.className = 'del-article-btn';
-                    deleteBtn.style.width = '1.5em';
-                    deleteBtn.style.cursor = 'pointer';
-                    deleteBtn.style.backgroundColor = 'red';
-                    deleteBtn.style.borderRadius = '3px';
-                    deleteBtn.style.padding = '5px';
-                    deleteBtn.style.transition = '0.2s ease-in-out'
-                    deleteBtn.setAttribute('data-section-id', section.section_id);
-
-                    deleteBtn.addEventListener('click', () => {
-                        $.ajax({
-                            type: 'POST',
-                            url: '../php-backend/delete_article_page.php',
-                            dataType: 'json',
-                            data: {
-                                section_id: section.section_id
-                            },
-                            success: function (res) {
-
-                                const editDetSect = Array.from(document.querySelectorAll('*')).find(el =>
-                                    el.getAttribute('edit-det-section-id') == section.section_id
-                                );
-
-                                editDetSect.remove();
-
-                                const livePrevSect = Array.from(document.querySelectorAll('*')).find(el =>
-                                    el.getAttribute('prev-section-id') == section.section_id
-                                );
-
-                                livePrevSect.remove();
-
-                            },
-
-                            error: function (error) {
-                                console.log("Error on Adding Delete Event," + error);
-                            }
-                        });
-                    });
-
-                    titleAndOptionsContainer.appendChild(deleteBtn);
+                    // Makes the delete Button inside the function and returns it here
+                    titleAndOptionsContainer.appendChild(makeDeleteButton(section));
 
                     sectionWrapper.appendChild(titleAndOptionsContainer);
 

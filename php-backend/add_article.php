@@ -2,7 +2,7 @@
 include 'connect.php';
 
 // Post Page ID here
-$pageOwner = $_POST['page_id'] ?? null;
+$pageOwner = $_POST['page_id'] ?? 1;
 
 // check
 if (!$pageOwner) {
@@ -39,11 +39,24 @@ while ($row = mysqli_fetch_assoc($result)) {
     $elementsArray[] = $row;
 }
 
+$sectionsArray = [];
+
+// Gets all the elements that are related to the recently inserted Section
+$stmt4 = $conn->prepare("SELECT * FROM sections WHERE page_owner = $pageOwner AND section_id = (SELECT MAX(section_id) FROM sections);");
+$stmt4->execute();
+$result = $stmt4->get_result();
+
+while ($row = mysqli_fetch_assoc($result)) {
+    $sectionsArray[] = $row;
+}
+
 $stmt1->close();
 $stmt2->close();
 $stmt3->close();
+$stmt4->close();
 $conn->close();
 
 echo json_encode([
-    'elements' => $elementsArray
+    'elements' => $elementsArray,
+    'sections' => $sectionsArray
 ]);

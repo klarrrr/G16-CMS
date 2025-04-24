@@ -13,32 +13,42 @@
 <body class="body">
     <div class="float-cards" style='display: none;'></div>
     <!-- ACTUAL NAV OF CMS WEBSITE -->
-    <?php include 'editor-nav.php'; ?>
-    <div class="main-page">
-        <!-- CHOOSE AND EDIT DETAILS CONTAINER -->
-        <div class="edit-page-details">
-            <!-- CHOOSE PAGE CONTAINER -->
-            <div class="choose-page-container">
-                <!-- CHOOSE PAGE BOX -->
-                <select name="" id="select-pages" title="select-page">
-                </select>
-                <!-- ADD PAGE BTN -->
-                <button id="add-article-page-btn">Add Article Page</button>
-                <!-- <button id="add-element-btn">Add Element</button> -->
+    <div class="left-editor-container">
+        <?php include 'editor-nav.php'; ?>
+    </div>
+    <div class="right-editor-container">
+        <?php include 'editor-website-editor-nav.php' ?>
+        <div class="main-page" id='main-page'>
+            <!-- CHOOSE AND EDIT DETAILS CONTAINER -->
+            <div class="edit-page-details">
+                <!-- CHOOSE PAGE CONTAINER -->
+                <div class="choose-page-container">
+                    <!-- CHOOSE PAGE BOX -->
+                    <select name="" id="select-pages" title="select-page">
+                    </select>
+                    <!-- ADD PAGE BTN -->
+                    <button id="add-article-page-btn">Add Article Page</button>
+                    <!-- <button id="add-element-btn">Add Element</button> -->
+                </div>
+                <!-- EDIT PAGE DETAILS CONTAINERS -->
+                <div id="edit-details-box" class="page-details-container">
+                    <h2>Edit Page Details</h2>
+                </div>
             </div>
-            <!-- EDIT PAGE DETAILS CONTAINERS -->
-            <div id="edit-details-box" class="page-details-container">
-                <h2>Edit Page Details</h2>
+            <div class="preview-site" id="preview-site-box">
+                <!-- PREVIEW SITE HERE -->
             </div>
-        </div>
-        <div class="preview-site" id="preview-site-box">
-            <!-- PREVIEW SITE HERE -->
         </div>
     </div>
+
+    <!-- Script for Menu Button on Top Left -->
+    <script src="scripts/menu_button.js"></script>
     <!-- Populate the Selection Input of all the pages -->
     <script src="scripts/populate_selection_page.js"></script>
     <!-- When Selection Input changes pages -->
     <script src="scripts/build_preview_site.js"></script>
+    <!-- When Delete Button for each section is clicked -->
+    <script src="scripts/delete_btn.js"></script>
     <!-- Builds The Edit Details based on page -->
     <script src="scripts/build_edit_details.js"></script>
     <!-- Events to execute when something changed on edit details -->
@@ -51,8 +61,7 @@
     <script src="scripts/add_article.js"></script>
     <!-- Builder Function -->
     <script src="scripts/add_article_builder_function.js"></script>
-    <!-- When Delete Button for each section is clicked -->
-    <script src="scripts/delete_btn.js"></script>
+
 </body>
 
 </html>

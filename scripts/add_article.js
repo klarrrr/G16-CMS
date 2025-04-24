@@ -12,8 +12,9 @@ addArticBtn.addEventListener('click', () => {
         success: function (res) {
             // res - PHP Returnee object
             const recentElements = res.elements;
-            buildEditDetails(recentElements);
-            buildPreviewSite(recentElements);
+            const recentSection = res.sections[0];
+            buildEditDetails(recentElements, recentSection);
+            buildPreviewSite(recentElements, recentSection);
         },
         error: function (error) {
             console.log(error);
