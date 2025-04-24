@@ -158,6 +158,10 @@ nav ul li h1 {
     padding: 10px;
 }
 
+.del-article-btn:hover {
+    transform: translateY(-1px);
+}
+
 /* Preview Site Page */
 
 .preview-site {

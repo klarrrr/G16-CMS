@@ -32,6 +32,7 @@ function loadPreview(page_id) {
                 sections.forEach(section => {
                     const sectionDiv = document.createElement('div');
                     sectionDiv.className = 'preview-section';
+                    sectionDiv.setAttribute('prev-section-id', section.section_id);
                     sectionDiv.name = section.section_id;
 
                     // Add Elements to this Section
@@ -61,6 +62,8 @@ function loadPreview(page_id) {
                                 previewElement.src = '../upload-images/' + parsedContent.content;
                                 previewElement.setAttribute('data-element-id', element.element_id);
                                 previewElement.setAttribute('data-element-type', element.element_type);
+                                previewElement.style.border = '1px solid lightgray';
+                                previewElement.style.borderRadius = '3px';
                                 el.appendChild(previewElement);
                             }
                             if (previewElement) {

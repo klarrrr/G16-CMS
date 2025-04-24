@@ -13,28 +13,7 @@
 <body class="body">
     <div class="float-cards" style='display: none;'></div>
     <!-- ACTUAL NAV OF CMS WEBSITE -->
-    <div class="nav-container">
-        <nav>
-            <ul>
-                <li><a href="#"><img src="svg/menu-svgrepo-com.svg" alt=""></a></li>
-                <li>
-                    <h1>contento</h1>
-                </li>
-                <li><a href="#"><img src="svg/circle-user-svgrepo-com.svg" alt=""></a></li>
-            </ul>
-        </nav>
-    </div>
-    <!-- USER WEBSITE NAV -->
-    <div class="second-nav-container">
-        <nav>
-            <ul>
-                <li><a href="#">Pages</a></li>
-                <li><a href="#">Design</a></li>
-                <li><a href="#">Settings</a></li>
-                <li><a href="#">Domain</a></li>
-            </ul>
-        </nav>
-    </div>
+    <?php include 'editor-nav.php'; ?>
     <div class="main-page">
         <!-- CHOOSE AND EDIT DETAILS CONTAINER -->
         <div class="edit-page-details">
@@ -72,6 +51,8 @@
     <script src="scripts/add_article.js"></script>
     <!-- Builder Function -->
     <script src="scripts/add_article_builder_function.js"></script>
+    <!-- When Delete Button for each section is clicked -->
+    <script src="scripts/delete_btn.js"></script>
 </body>
 
 </html>
