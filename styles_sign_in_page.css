@@ -25,6 +25,7 @@
     position: absolute;
     color: #fefefe;
     border-radius: 25px;
+    user-select: none;
 }
 
 .left_side video {
