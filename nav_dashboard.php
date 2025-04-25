@@ -11,14 +11,14 @@
 <body>
     <div class="nav_container_container">
         <nav class="nav_container">
-            <a href="index.php" id="contento">contento</a>
             <ul class="nav_items" type="none">
-                <li><a href="">Create</a></li>
-                <li><a href="">Projects</a></li>
-                <li><a href="">Archive</a></li>
-                <li><a href="">Page Design</a></li>
-                <li><a href="">Settings</a></li>
-                <li><a href="sign_in.php">Sign In</a></li>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="#">Contact</a></li>
+                <li>
+                    <h1 id='contento'>contento</h1>
+                </li>
+                <li><a href="#">About</a></li>
+                <li><a href="sign_in_page.php">Sign In</a></li>
             </ul>
         </nav>
     </div>

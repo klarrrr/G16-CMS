@@ -13,10 +13,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $row = mysqli_fetch_assoc($result);
 
         if ($row) {
-            header("Location: template/editor.php");
-            exit();
+            session_start();
+            $_SESSION['email'] = $row['user_email'];
+            $_SESSION['user_id'] = $row['user_id'];
+
+            $storedEmail = $_SESSION['email'];
+            $storedId = $_SESSION['user_id'];
+
+            echo "<script>alert('$storedEmail'); alert('$storedId')</script>";
         } else {
             echo "<script>alert('Something wrong with email or password');</script>";
+            // header("Location: ../sign_in.php");
         }
     }
 }
