@@ -2,8 +2,14 @@
     <nav id='second-nav'>
         <h1>contento</h1>
         <ul>
-            <li><a href="#">Pages</a></li>
-            <li><a href="#">Design</a></li>
+            <li><a href="#" id="nav-pages">Pages</a></li>
+            <li class="dropdown">
+                <a href="#">Design</a>
+                <ul class="dropdown-menu">
+                    <li><a href="#" id="nav-fonts">Fonts</a></li>
+                    <li><a href="#" id="nav-colors">Colors</a></li>
+                </ul>
+            </li>
             <li><a href="#">Archive</a></li>
             <li><a href="#">Settings</a></li>
             <li><a href="#">Domain</a></li>
