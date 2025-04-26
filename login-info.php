@@ -13,8 +13,8 @@
     <div class="info-section">
       <p class="info-title">Account email:</p>
       <div class="email-input">
-        <input type="text" id="myInput" disabled>
-        <button onclick="enableInput()" class='bx bxs-edit'></button>
+        <input type="text" id="myEmailInput" disabled>
+        <button onclick="enableEmailInput()" class='bx bxs-edit'></button>
       </div>
       <div class="confirmed">Confirmed</div>
     </div>
@@ -23,9 +23,9 @@
       <p class="info-title">Password:</p>
       <div class="password-input">
         <input type="password" id="myPassInput" disabled>
-        <button onclick="enableInput()" class='bx bxs-edit'></button>
+        <button onclick="enablePassInput()" class='bx bxs-edit'></button>
       </div>
-      <button class="save-btn">Save Changes</button>
+      <button onclick="disableAllInput()" id="save-button" class="save-btn">Save Changes</button>
     </div>
   
   </div>
