@@ -38,8 +38,10 @@ margin-top: 5px;
 
 .password-input {
 position: relative;
+display: flex;
 }
 
+/* Email Input Style */
 .email-input {
     display: flex;
 }
@@ -51,10 +53,9 @@ font-size: 14px;
 border: 1px solid #ccc;
 border-radius: 4px;
 background-color: #f9f9f9;
-position: relative;
-z-index: 1;
 }
 
+/* Email Edit */
 .email-input button {
     border: none;
     font-size: 20px;   
@@ -69,8 +70,9 @@ z-index: 1;
     transform: translateY(-2px) scale(1.05);
 }
 
+/* Password Input Style */
 .password-input input {
-width: 100%;
+width: 95%;
 padding: 10px;
 font-size: 14px;
 border: 1px solid #ccc;
@@ -78,9 +80,23 @@ border-radius: 4px;
 background-color: #f9f9f9;
 }
 
+/* Password Edit */
+.password-input button {
+border: none;
+font-size: 20px;   
+background-color: transparent;
+margin-left: 5px;
+transition: .2s ease-in-out;
+color: #555;
+}
 
+.password-input button:hover {
+color: black;
+transform: translateY(-2px) scale(1.05);
+}
 
-.edit-btn {
+/* Save Changes Button */
+.save-btn {
 background-color: #ff5c00;
 color: white;
 padding: 8px 16px;

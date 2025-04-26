@@ -22,9 +22,10 @@
     <div class="info-section">
       <p class="info-title">Password:</p>
       <div class="password-input">
-        <input type="password">
+        <input type="password" id="myPassInput" disabled>
+        <button onclick="enableInput()" class='bx bxs-edit'></button>
       </div>
-      <button class="edit-btn">Edit Password</button>
+      <button class="save-btn">Save Changes</button>
     </div>
   
   </div>
