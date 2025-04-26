@@ -1,0 +1,92 @@
+body {
+font-family: "Segoe UI", sans-serif;
+background-color: #f5f5f5cd;
+margin: 0;
+padding: 40px;
+}
+
+.container {
+max-width: 700px;
+margin: auto;
+background-color: white;
+padding: 40px;
+border-radius: 8px;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+font-size: 28px;
+color: #333;
+margin-bottom: 30px;
+}
+
+.info-section {
+margin-bottom: 30px;
+}
+
+.info-title {
+font-weight: bold;
+margin-bottom: 5px;
+color: #555;
+}
+
+.confirmed {
+color: #4CAF50;
+font-size: 14px;
+margin-top: 5px;
+}
+
+.password-input {
+position: relative;
+}
+
+.email-input {
+    display: flex;
+}
+
+.email-input input {
+width: 95%;
+padding: 10px;
+font-size: 14px;
+border: 1px solid #ccc;
+border-radius: 4px;
+background-color: #f9f9f9;
+position: relative;
+z-index: 1;
+}
+
+.email-input button {
+    border: none;
+    font-size: 20px;   
+    background-color: transparent;
+    margin-left: 5px;
+    transition: .2s ease-in-out;
+    color: #555;
+}
+
+.email-input button:hover {
+    color: black;
+    transform: translateY(-2px) scale(1.05);
+}
+
+.password-input input {
+width: 100%;
+padding: 10px;
+font-size: 14px;
+border: 1px solid #ccc;
+border-radius: 4px;
+background-color: #f9f9f9;
+}
+
+
+
+.edit-btn {
+background-color: #ff5c00;
+color: white;
+padding: 8px 16px;
+font-size: 14px;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+margin-top: 10px;
+}

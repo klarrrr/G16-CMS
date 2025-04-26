@@ -1,0 +1,165 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Body */
+body {
+    background-color: #F2F2F2;
+}
+
+.main-container {
+    display: grid;
+    grid-template-columns: 20% 50%;
+    border-radius: 8px;
+    padding: 60px 30px 30px 20px;
+}
+
+.settings-choices {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    margin-right: 10px;
+    border-radius: 5px;
+    padding: 45px;
+}
+
+.settings-choices h3 {
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+.settings-choices ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+.settings-choices li {
+    padding: 10px 0;
+    font-weight: bold;
+}
+
+.settings-choices button {
+    color: red;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Right Panel - Profile */
+.my-profile {
+    background-color: #d9f6a3;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.theme-toggle {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+.theme-toggle button {
+    background-color: #ccc;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+/* Profile Picture Section */
+.profile-picture {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-picture input[type="image"] {
+    width: 100px;
+    height: 100px;
+    background-color: peachpuff;
+    border-radius: 50%;
+    border: 2px solid #333;
+    margin-bottom: 10px;
+}
+
+.custom-file-upload {
+    color: #333;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.profile-picture button {
+    background: none;
+    border: none;
+    color: red;
+    cursor: pointer;
+}
+
+/* Personal Info Section */
+.perso-info {
+    margin-bottom: 20px;
+}
+
+.perso-info h5 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.bio {
+    font-size: 14px;
+    color: #333;
+}
+
+/* Input Fields */
+.input-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.input-fields input[type="text"],
+.input-fields input[type="email"] {
+    padding: 10px;
+    border: 1px solid #333;
+    background-color: #a2d6f9;
+    font-weight: bold;
+}
+
+.input-fields input::placeholder {
+    color: #333;
+}
+
+/* Save Buttons */
+.save-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.save-buttons input[type="button"] {
+    padding: 10px 20px;
+    border: none;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.save-buttons input[type="button"]:first-child {
+    background-color: #5caeff;
+    color: white;
+}
+
+.save-buttons input[type="button"]:last-child {
+    background-color: #ffc2b3;
+    color: red;
+    border: 1px solid red;
+}
