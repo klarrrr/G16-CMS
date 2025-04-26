@@ -24,24 +24,24 @@
                     <!-- CHOOSE PAGE CONTAINER -->
                     <div class="choose-page-container">
                         <!-- CHOOSE PAGE BOX -->
-                        <select name="" id="select-pages" title="select-page">
-                        </select>
+                        <select name="" id="select-pages" title="select-page"></select>
                         <!-- ADD PAGE BTN -->
                         <button id="add-article-page-btn">Add Article Page</button>
                         <!-- <button id="add-element-btn">Add Element</button> -->
                     </div>
                     <!-- EDIT PAGE DETAILS CONTAINERS -->
-    <div id="edit-details-box" class="page-details-container">
-        <h2>Edit Page Details</h2>
-    </div>
-    <!-- Include Font Settings Box -->
-    <?php include 'font-settings.php'; ?>
-
-    <!-- Include Color Settings Box -->
-    <?php include 'color-settings.php'; ?>
-
-</div>
-
+                    <div id="edit-details-box" class="page-details-container">
+                        <h2>Edit Page Details</h2>
+                    </div>
+                    <!-- Include Font Settings Box -->
+                    <?php include 'font-settings.php'; ?>
+                    <!-- Include Color Settings Box -->
+                    <?php include 'color-settings.php'; ?>
+                </div>
+            </div>
+            <!-- This is where the Preview Site will show -->
+            <div id='preview-site-box' class='preview-site'></div>
+        </div>
         <!-- Script for Menu Button on Top Left -->
         <script src="scripts/menu_button.js"></script>
         <!-- Populate the Selection Input of all the pages -->
@@ -64,7 +64,6 @@
         <script src="scripts/add_article_builder_function.js"></script>
         <!-- Design Dropdown -->
         <script src="scripts/nav_panel_switcher.js"></script>
-
     </body>
 
     </html>

@@ -76,8 +76,6 @@ function loadPreview(page_id) {
                             sectionDiv.appendChild(el);
                         }
                     });
-
-
                     // Add the completed section to the preview box
                     previewBox.appendChild(sectionDiv);
                 });
