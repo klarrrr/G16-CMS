@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lundayan : Contact</title>
+    <link rel="stylesheet" href="styles-lundayan-site.css">
+    <link rel="icon" href="pics/lundayan-logo.png">
+</head>
+
+<body>
+    <?php include 'lundayan-site-nav.php'; ?>
+    <main>
+        <section class="hero">
+            <h1>CONTACT US</h1>
+            <p>Send us a message</p>
+        </section>
+        <div class="news-banner">
+            <div class="scrolling-text">
+                <span> | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | </span>
+            </div>
+        </div>
+        <section class="contact">
+            <div class="contact-title-container">
+                <div class="send-container-title">
+                    <p>Contact Us</p>
+                    <h2>Join us in Creating Something Great</h2>
+                </div>
+                <div class="img-container">
+                    <img src="pics/lundayan-logo.png" alt="" id='lundayan-logo'>
+                    <img src="pics/PLP_Logo.png" alt="" id='plp-logo'>
+                </div>
+            </div>
+            <div class="contact-container">
+                <div class="send-info">
+                    <div class="two-input">
+                        <input id='send-f-name' type="text" placeholder="First Name">
+                        <input id='send-l-name' type="text" placeholder="Last Name">
+                    </div>
+                    <div class="two-input">
+                        <input id='send-email' type="email" placeholder="Email">
+                        <input id='send-phone' type="number" placeholder="Phone Number">
+                    </div>
+                    <input id='send-subject' type="text" placeholder="Subject">
+                    <textarea name="" id="send-message" placeholder="Message"></textarea>
+                    <button>Send Message</button>
+                </div>
+                <div class="own-info">
+                    <div class="info-box">
+                        <div class="vertical-two">
+                            <div class="inside-two-vertical">
+                                <h3>Address</h3>
+                                <p>12-B Alcalde Jose, Pasig, 1600 Metro Manila</p>
+                            </div>
+                            <div class="inside-two-vertical">
+                                <h3>Open Time</h3>
+                                <p>Monday - Friday : 10:00-20:00</p>
+                            </div>
+                        </div>
+                        <div class="vertical-two">
+                            <div class="inside-two-vertical">
+                                <h3>Contact</h3>
+                                <p>Phone: 2-8643-1014</p>
+                                <p>Email: lundayan@plpasig.edu.ph</p>
+                            </div>
+                            <div class="inside-two-vertical">
+                                <h3>Stay Connected</h3>
+                                <div class="soc-med">
+                                    <a href="#"><img src="svg/fb.svg" alt=""></a>
+                                    <a href="#"><img src="svg/pinterest.svg" alt=""></a>
+                                    <a href="#"><img src="svg/ig.svg" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <section class="map">
+            <div class="map-container-title">
+                <p>Our location</p>
+                <h2>Visit us personally at Pamantasan ng Lungsod ng Pasig</h2>
+            </div>
+            <iframe src="https://www.google.com/maps/embed?pb=!3m2!1sen!2sph!4v1745757782841!5m2!1sen!2sph!6m8!1m7!1sz4FNKx2OpNJSW-c5VZK5aQ!2m2!1d14.56158870027559!2d121.0747112138096!3f14.589646372267358!4f10.705321812288432!5f0.4000000000000002" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </section>
+    </main>
+
+    <?php include 'lundayan-site-footer.php' ?>
+</body>
+
+</html>

@@ -1,18 +1,13 @@
 <header>
     <nav>
-        <div class="left-nav">
-            <div class="logo">LUNDAYAN</div>
-            <div class="separator"></div>
-            <ul class="nav-links">
-                <li><a href="lundayan-site-home.php">Home</a></li>
-                <li><a href="lundayan-site-bulletin.php">Bulletin</a></li>
-                <li><a href="#">Auditor Page</a></li>
-                <li><a href="#">About</a></li>
-                <li style="display: none;"><a href="#">Auditor Log</a></li>
-            </ul>
+        <div class="logo"><img src="pics/lundayan-logo.png" alt="">
+            <h1>LUNDAYAN</h1>
         </div>
-        <div class="right-nav">
-            <a href="#">Sign in</a>
-        </div>
+        <ul class="nav-links">
+            <li><a href="lundayan-site-home.php">Home</a></li>
+            <li><a href="lundayan-site-bulletin.php">Bulletin</a></li>
+            <li><a href="lundayan-site-calendar.php">Calendar</a></li>
+            <li><a href="lundayan-site-contact.php">Contact</a></li>
+        </ul>
     </nav>
 </header>
