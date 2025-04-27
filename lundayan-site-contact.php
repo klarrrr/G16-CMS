@@ -18,7 +18,7 @@
         </section>
         <div class="news-banner">
             <div class="scrolling-text">
-                <span> | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | </span>
+                <span> | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | </span>
             </div>
         </div>
         <section class="contact">
@@ -40,7 +40,7 @@
                     </div>
                     <div class="two-input">
                         <input id='send-email' type="email" placeholder="Email">
-                        <input id='send-phone' type="number" placeholder="Phone Number">
+                        <input id='send-phone' type="text" placeholder="Phone Number">
                     </div>
                     <input id='send-subject' type="text" placeholder="Subject">
                     <textarea name="" id="send-message" placeholder="Message"></textarea>
@@ -67,7 +67,7 @@
                             <div class="inside-two-vertical">
                                 <h3>Stay Connected</h3>
                                 <div class="soc-med">
-                                    <a href="#"><img src="svg/fb.svg" alt=""></a>
+                                    <a href="https://www.facebook.com/LundayanPLP" target="_blank"><img src="svg/fb.svg" alt=""></a>
                                     <a href="#"><img src="svg/pinterest.svg" alt=""></a>
                                     <a href="#"><img src="svg/ig.svg" alt=""></a>
                                 </div>

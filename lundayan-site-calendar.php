@@ -18,7 +18,7 @@
         </section>
         <div class="news-banner">
             <div class="scrolling-text">
-                <span> | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | </span>
+                <span> | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | </span>
             </div>
         </div>
         <section class="calendar">

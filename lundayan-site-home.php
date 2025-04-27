@@ -23,12 +23,7 @@
         <section class="latest-news">
             <div class="news-banner">
                 <div class="scrolling-text">
-                    <span> | LATEST NEWS | </span>
-                    <span> | LATEST NEWS | </span>
-                    <span> | LATEST NEWS | </span>
-                    <span> | LATEST NEWS | </span>
-                    <span> | LATEST NEWS | </span>
-                    <span> | LATEST NEWS | </span>
+                    <span> | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | </span>
                 </div>
             </div>
             <div class="container">
@@ -46,7 +41,7 @@
                         sustain the delivery of assured quality education to PLPians.
                     </p>
                     <!-- TODO : MAKE THIS DYNAMIC -->
-                    <a href="#">Read More</a>
+                    <a href="lundayan-site-article.php">Read More</a>
                 </div>
                 <!-- TODO : MAKE THIS DYNAMIC -->
                 <img src="pics/image.png" alt="">
@@ -54,12 +49,7 @@
 
             <div class="news-banner">
                 <div class="scrolling-text">
-                    <span> | LATEST NEWS | </span>
-                    <span> | LATEST NEWS | </span>
-                    <span> | LATEST NEWS | </span>
-                    <span> | LATEST NEWS | </span>
-                    <span> | LATEST NEWS | </span>
-                    <span> | LATEST NEWS | </span>
+                    <span> | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | </span>
                 </div>
             </div>
         </section>
