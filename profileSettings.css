@@ -14,6 +14,7 @@ body {
     grid-template-columns: 20% 50%;
     border-radius: 8px;
     padding: 60px 30px 30px 20px;
+    max-height: 100vh;
 }
 
 .settings-choices {
@@ -21,14 +22,14 @@ body {
     flex-direction: column;
     align-items: center;
     background-color: white;
+    padding-top: 50px;
     margin-right: 10px;
     border-radius: 5px;
-    padding: 45px;
 }
 
 .settings-choices h3 {
     font-size: 25px;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
 }
 
 .settings-choices ul {
@@ -41,8 +42,23 @@ body {
 }
 
 .settings-choices li {
-    padding: 10px 0;
+    padding: 10px;  
+    width: 100%; 
+    display: flex;
+    justify-content: center;
+    transition: .3s;
+}
+
+.settings-choices li:hover {
     font-weight: bold;
+    cursor: pointer;
+    background-color: #e5e5e5;
+    border-radius: 5px;
+}
+
+.settings-choices li a {
+    text-decoration: none;
+    color: black;
 }
 
 .settings-choices button {
@@ -50,30 +66,42 @@ body {
     background: none;
     border: none;
     cursor: pointer;
+    transition: .3s;
+}
+
+.settings-choices button:hover {
+    padding: 5px;
     font-weight: bold;
+    background-color: rgb(219, 191, 191);
+    border-radius: 5px;
 }
 
 /* Right Panel - Profile */
 .my-profile {
-    background-color: #d9f6a3;
+    background-color: white;
     padding: 20px;
     border-radius: 10px;
 }
 
 .theme-toggle {
-    display: flex;
-    justify-content: flex-end;
+    display: grid;
+    grid-template-columns: 80% 20%;
     margin-bottom: 10px;
 }
 
-.theme-toggle button {
+#toggleTheme {
     background-color: #ccc;
     border: none;
     border-radius: 20px;
     padding: 10px 20px;
     cursor: pointer;
+    transition: .2s ease-in-out;
 }
 
+#toggleTheme:hover {
+    color: white;
+    background-color: black;
+}
 /* Profile Picture Section */
 .profile-picture {
     display: flex;
@@ -85,7 +113,6 @@ body {
 .profile-picture input[type="image"] {
     width: 100px;
     height: 100px;
-    background-color: peachpuff;
     border-radius: 50%;
     border: 2px solid #333;
     margin-bottom: 10px;
@@ -126,12 +153,19 @@ body {
     gap: 10px;
 }
 
+
+
 .input-fields input[type="text"],
 .input-fields input[type="email"] {
     padding: 10px;
-    border: 1px solid #333;
-    background-color: #a2d6f9;
+    border: none;
+    background-color: #e5e5e5;
     font-weight: bold;
+    border-radius: 5px;
+}
+
+.input-fields input:hover {
+    background-color: #dbdbdb;
 }
 
 .input-fields input::placeholder {
@@ -154,12 +188,24 @@ body {
 }
 
 .save-buttons input[type="button"]:first-child {
-    background-color: #5caeff;
+    background-color: #333;
     color: white;
+    transition: .2s;
 }
 
 .save-buttons input[type="button"]:last-child {
     background-color: #ffc2b3;
     color: red;
-    border: 1px solid red;
+    transition: .2s;
+}
+
+.save-buttons input:first-child:hover {
+    color: #333;
+    background-color: #ccc;
+    border: 1px solid #333;
+}
+
+.save-buttons input:last-child:hover {
+    background-color: red;
+    color: #ffc2b3;
 }
