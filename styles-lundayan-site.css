@@ -30,8 +30,9 @@ header {
 }
 
 nav {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    /* justify-content: space-between; */
+    grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
 }
 
@@ -39,6 +40,7 @@ nav {
     display: flex;
     gap: 1rem;
     align-items: center;
+    justify-content: flex-start;
 }
 
 .logo h1 {
@@ -50,7 +52,7 @@ nav {
     user-select: none;
 }
 
-.logo img {
+#lundayan-logo-pic {
     height: 40px;
     -webkit-user-select: none;
     user-select: none;
@@ -66,6 +68,8 @@ nav {
     list-style: none;
     display: flex;
     gap: 2rem;
+    align-items: center;
+    justify-content: center;
 }
 
 .nav-links li a {
@@ -75,6 +79,21 @@ nav {
 }
 
 .nav-links li a:hover {
+    color: #A7FF83;
+}
+
+.sign-in {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+}
+
+.sign-in a {
+    color: #f4f4f4;
+    text-decoration: none;
+}
+
+.sign-in a:hover {
     color: #A7FF83;
 }
 
@@ -1044,4 +1063,165 @@ tbody td {
 
 .gallery-images img:hover {
     transform: scale(1.02);
+}
+
+.sign-in-main {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+}
+
+#sign-in-home {
+    position: absolute;
+    text-decoration: none;
+    color: #f4f4f4;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    margin: 1rem;
+}
+
+#sign-in-home:hover {
+    transform: scale(1.02);
+    color: #A7FF83;
+}
+
+.sign-in-title-container {
+    display: flex;
+    flex-direction: column;
+    justify-self: flex-end;
+}
+
+.sign-in-title-container h1 {
+    font-size: 4rem;
+    color: #fcb404;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.sign-in-title-container p {
+    font-size: 1.7rem;
+}
+
+.sign-in-details {
+    padding-left: 6rem;
+    padding-right: 6rem;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    background-image:
+        linear-gradient(rgba(10, 92, 54, 0.95), rgba(20, 69, 47, 0.95)),
+        url(pics/plp-outside.jpg);
+    background-size: cover;
+    justify-content: center;
+    gap: 5rem;
+}
+
+.sign-in-user-input {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+    padding: 3rem;
+    width: 30em;
+    border-radius: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    justify-self: flex-start;
+}
+
+.sign-in-input-box {
+    padding: 1rem;
+    border-radius: 3px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: none;
+    background: none;
+    border: 1px solid #f4f4f4;
+    color: #f4f4f4;
+}
+
+.sign-in-input-box::placeholder {
+    color: #b4b4b4;
+}
+
+.sign-in-input-box:focus {
+    outline: none;
+    transform: scale(1.01);
+    border: 2px solid #fcb404;
+}
+
+.sign-in-input-box:hover {
+    border: 1px solid #fcb404;
+}
+
+
+#forgot-pass {
+    text-decoration: none;
+    color: #f4f4f4;
+    align-self: center;
+    font-size: 0.9em;
+}
+
+#forgot-pass:hover {
+    color: #A7FF83;
+}
+
+#sign-up {
+    text-decoration: none;
+    color: #f4f4f4;
+}
+
+#sign-up:hover {
+    color: #A7FF83;
+}
+
+.rem-me-forg-pass-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.sign-btn {
+    padding: 1rem;
+    border: none;
+    border-radius: 3px;
+    color: #161616;
+    background-color: #fcb404;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.sign-btn:hover {
+    color: #A7FF83;
+}
+
+.dont-have-account-container {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.create-or-sign-in-btn {
+    padding: 1rem;
+    border: none;
+    border-radius: 3px;
+    color: #f4f4f4;
+    background-color: #1D2E28;
+    font-weight: 500;
+    cursor: pointer;
+    width: 80%;
+    align-self: center;
+}
+
+.create-or-sign-in-btn:hover {
+    color: #A7FF83;
+}
+
+.sign-in-footer {
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    background: none;
+    bottom: 0;
+    position: absolute;
+    align-self: center;
 }
