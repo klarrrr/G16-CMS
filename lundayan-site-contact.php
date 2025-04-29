@@ -1,3 +1,4 @@
+<!-- main/contact.php -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,6 +22,7 @@
                 <span> | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | </span>
             </div>
         </div>
+
         <section class="contact">
             <div class="contact-title-container">
                 <div class="send-container-title">
@@ -32,20 +34,22 @@
                     <img src="pics/PLP_Logo.png" alt="" id='plp-logo'>
                 </div>
             </div>
+
             <div class="contact-container">
-                <div class="send-info">
+                <form class="send-info" method="POST" action="../G16-CMS/php-backend/ContactController.php">
                     <div class="two-input">
-                        <input id='send-f-name' type="text" placeholder="First Name">
-                        <input id='send-l-name' type="text" placeholder="Last Name">
+                        <input name='first_name' type="text" placeholder="First Name" required>
+                        <input name='last_name' type="text" placeholder="Last Name" required>
                     </div>
                     <div class="two-input">
-                        <input id='send-email' type="email" placeholder="Email">
-                        <input id='send-phone' type="text" placeholder="Phone Number">
+                        <input name='email' type="email" placeholder="Email" required>
+                        <input name='phone' type="text" placeholder="Phone Number">
                     </div>
-                    <input id='send-subject' type="text" placeholder="Subject">
-                    <textarea name="" id="send-message" placeholder="Message"></textarea>
-                    <button>Send Message</button>
-                </div>
+                    <input name='subject' type="text" placeholder="Subject" required>
+                    <textarea name="message" placeholder="Message" required></textarea>
+                    <button type="submit" name="submit">Send Message</button>
+                </form>
+
                 <div class="own-info">
                     <div class="info-box">
                         <div class="vertical-two">
@@ -76,8 +80,8 @@
                     </div>
                 </div>
             </div>
-
         </section>
+
         <section class="map">
             <div class="map-container-title">
                 <p>Our location</p>
@@ -87,7 +91,7 @@
         </section>
     </main>
 
-    <?php include 'lundayan-site-footer.php' ?>
+    <?php include 'lundayan-site-footer.php'; ?>
 </body>
 
 </html>
