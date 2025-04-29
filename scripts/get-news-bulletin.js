@@ -14,6 +14,7 @@ $.ajax({
 
             const newsCardImg = document.createElement('img');
             newsCardImg.src = 'pics/' + widget.widget_img;
+            newsCardImg.loading = 'lazy';
 
             const cardTextContainer = document.createElement('div');
             cardTextContainer.className = 'card-text-container';
