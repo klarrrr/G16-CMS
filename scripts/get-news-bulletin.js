@@ -1,59 +1,66 @@
 const bulletinCardNewsContainer = document.getElementById('bulletin-card-news-container');
 
-$.ajax({
-    url: '../php-backend/get-top-latest-news.php',
-    type: 'POST',
-    dataType: 'json',
-    data: {},
-    success: (res) => {
-        const widgets = res.widget;
+const paginationContainer = document.getElementById('pagination');
 
-        widgets.forEach(widget => {
-            const newsCard = document.createElement('div');
-            newsCard.className = 'bulletin-news-card'
+let currentPage = 1;
+const itemsPerPage = 10;
 
-            const newsCardImg = document.createElement('img');
-            newsCardImg.src = 'pics/' + widget.widget_img;
-            newsCardImg.loading = 'lazy';
+function loadData(page = 1) {
+    $.ajax({
+        url: '../php-backend/get-news-bulletin.php',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            page: page
+        },
+        success: (res) => {
+            const widgets = res.widget;
 
-            const cardTextContainer = document.createElement('div');
-            cardTextContainer.className = 'card-text-container';
+            let rows = '';
 
-            const newsCardTitle = document.createElement('h2');
-            newsCardTitle.innerHTML = widget.widget_title;
+            widgets.forEach(widget => {
+                rows += `
+                <div class="bulletin-news-card">
+                    <img src="pics/${widget.widget_img}" loading="lazy">
+                    <div class="card-text-container">
+                        <div>
+                            <h2>${widget.widget_title}</h2>
+                            
+                            <p class="time-posted" style="padding-bottom: 1em;">Posted<small> ● </small>${formatDateTime(widget.date_created)}</p>
+                            
+                            <hr>
+                            
+                        </div>
+                        <p>${widget.widget_paragraph}</p>
+                        
+                        <a href="#">Read More</a>
+                    </div>
+                </div>`;
+            });
 
-            const newsCardDate = document.createElement('p');
-            newsCardDate.innerHTML = 'Posted' + '<small> ● </small>' + formatDateTime(widget.date_created);
-            newsCardDate.className = 'time-posted';
-            newsCardDate.style.paddingBottom = '1em';
+            $(bulletinCardNewsContainer).html(rows);
 
-            const hr = document.createElement('hr');
+            let pagination = '';
+            for (let i = 1; i <= res.totalPages; i++) {
+                pagination += `<a href="#" class="page-link ${i === page ? 'active' : ''}" data-page="${i}">${i}</a>`;
+            }
+            $(paginationContainer).html(pagination);
 
-            const newsCardParagraph = document.createElement('p');
+        },
+        error: (error) => {
+            console.log(error);
+        }
+    });
+}
 
-            newsCardParagraph.textContent = widget.widget_paragraph;
-
-            const newsCardReadMore = document.createElement('a');
-
-            newsCardReadMore.href = '#';
-            newsCardReadMore.textContent = 'Read More';
-            const titleAndDateContainer = document.createElement('div');
-            titleAndDateContainer.appendChild(newsCardTitle);
-            titleAndDateContainer.appendChild(newsCardDate);
-            titleAndDateContainer.appendChild(hr);
-            cardTextContainer.appendChild(titleAndDateContainer);
-
-            cardTextContainer.appendChild(newsCardParagraph);
-            cardTextContainer.appendChild(newsCardReadMore);
-
-            newsCard.appendChild(newsCardImg);
-            newsCard.appendChild(cardTextContainer);
-
-            bulletinCardNewsContainer.appendChild(newsCard);
-        });
-
-    },
-    error: (error) => {
-        console.log(error);
-    }
+// Handle pagination link clicks
+$(document).on('click', '.page-link', function (e) {
+    e.preventDefault();
+    const page = $(this).data('page');
+    currentPage = page;
+    loadData(page);
 });
+
+// Initial load
+loadData(currentPage);
+

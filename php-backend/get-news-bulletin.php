@@ -4,7 +4,16 @@ include 'connect.php';
 
 $widgetArray = [];
 
-$stmt = $conn->prepare("SELECT * FROM widgets ORDER BY widget_id DESC");
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$limit = 10; // N cards per page
+$offset = ($page - 1) * $limit;
+
+$stmt = $conn->prepare("SELECT COUNT(*) FROM widgets");
+$stmt->execute();
+$totalRecords = $stmt->get_result()->fetch_row()[0];
+
+$stmt = $conn->prepare("SELECT * FROM widgets ORDER BY widget_id DESC LIMIT ?, ? ");
+$stmt->bind_param("ii", $offset, $limit);
 $stmt->execute();
 $results = $stmt->get_result();
 
@@ -19,7 +28,9 @@ foreach ($widgetArray as &$widget) {
 }
 
 $jsonOutput = json_encode([
-    'widget' => $widgetArray
+    'widget' => $widgetArray,
+    'totalRecords' => $totalRecords,
+    'totalPages' => ceil($totalRecords / $limit)
 ]);
 
 echo $jsonOutput;

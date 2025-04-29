@@ -46,8 +46,9 @@
             </div>
         </section>
         <section class="news-cards">
-
             <div class="bulletin-card-news-container" id='bulletin-card-news-container'>
+            </div>
+            <div class="pagination" id='pagination'>
 
             </div>
         </section>
