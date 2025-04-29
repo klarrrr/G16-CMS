@@ -25,6 +25,9 @@ $.ajax({
             const newsCardDate = document.createElement('p');
             newsCardDate.innerHTML = 'Posted' + '<small> ● </small>' + formatDateTime(widget.date_created);
             newsCardDate.className = 'time-posted';
+            newsCardDate.style.paddingBottom = '1em';
+
+            const hr = document.createElement('hr');
 
             const newsCardParagraph = document.createElement('p');
 
@@ -34,9 +37,12 @@ $.ajax({
 
             newsCardReadMore.href = '#';
             newsCardReadMore.textContent = 'Read More';
+            const titleAndDateContainer = document.createElement('div');
+            titleAndDateContainer.appendChild(newsCardTitle);
+            titleAndDateContainer.appendChild(newsCardDate);
+            titleAndDateContainer.appendChild(hr);
+            cardTextContainer.appendChild(titleAndDateContainer);
 
-            cardTextContainer.appendChild(newsCardTitle);
-            cardTextContainer.appendChild(newsCardDate);
             cardTextContainer.appendChild(newsCardParagraph);
             cardTextContainer.appendChild(newsCardReadMore);
 
