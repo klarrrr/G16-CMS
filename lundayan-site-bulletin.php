@@ -59,7 +59,8 @@
     <script src="scripts/date-formatter.js"></script>
     <!-- SCript to get all the news -->
     <script src="scripts/get-news-bulletin.js"></script>
-
+    <!-- Script for search -->
+    <script src="scripts/bulletin-search-news.js"></script>
 </body>
 
 </html>

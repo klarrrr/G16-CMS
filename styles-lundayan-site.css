@@ -259,9 +259,11 @@ nav {
 
 .latest-news img {
     height: 70vh;
+    max-width: 35rem;
     border-radius: 10px;
     border: 2px solid #fcb404;
     justify-self: center;
+    object-fit: cover;
 }
 
 /* Sub Header Section */
