@@ -30,9 +30,11 @@
       </div>
       <div class="buttons">
         <button type="submit" class="save">Save</button>
-        <button type="button" class="cancel" onclick="window.location.href='profile.php'">Cancel</button>
+        <button type="button" class="cancel" onclick="window.parent.closeModal()">Cancel</button>
       </div>
     </form>
   </div>
+  
+  <script src="on-click.js" defer></script>
 </body>
 </html>

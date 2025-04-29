@@ -15,15 +15,13 @@
     <!-- Left Sidebar -->
     <div class="main-container">
         <div class="settings-choices">
-            <h3>Profile Settings</h3>
+            <h3>Account Settings</h3>
             <ul>
                 <li><a href="profileSettings.php">Personal Information</a></li>
                 <li> <a href="login-info.php">Username & Password</a></li>
                 <li>Notification</li>
                 <li>Connected Accounts</li>
             </ul>
-
-            <button>Log Out</button>
         </div>
 
         <!-- Right Main Container -->
@@ -37,29 +35,35 @@
                 <div class="toggle">
                     <button id="toggleTheme"><i class='bx bxs-moon'></i> Darkmode</button>
                 </div>
-             </div>
-
-            <!-- Profile Picture -->
-            <div class="profile-picture">
-                <input type="image" src="#" alt="">
-                
-                <label for="file-upload" class="custom-file-upload">Change Picture</label>
-                <input id="file-upload" type="file" style="display: none;">
-
-                <button><p>Delete Picture</p></button>
             </div>
 
-            <!-- Personal Infos -->
-            <div class="perso-info">
-                <h5>Full Name</h5>
-                <p class="bio">Bio / Additional Description</p>
+            <!-- Profile Picture -->
+
+            <div class="profile-info">
+                <div class="profile-picture">
+                    <div class="img-container">
+                        <input type="image" src="img.jpeg" alt="">
+                    </div>
+                    
+                    <label for="file-upload" class="custom-file-upload">Change Picture</label>
+                    <input id="file-upload" type="file" style="display: none;">
+
+                    <button><p>Delete Picture</p></button>
+                </div>
+
+                <!-- Personal Infos -->
+                <div class="perso-info">
+                    <h5>Paul Justin Francisco (Full Name)</h5>
+                    <p class="bio">2nd Year Student (Bio)</p>
+                </div>
             </div>
 
             <div class="input-fields">
-                <p class="label last"></p>
-                <input type="text" placeholder="Last Name">
-                <p class="label last"></p>
-                <input type="text" placeholder="First Name">
+                <div class="first-last">
+                    <input type="text" placeholder="Last Name">
+                    <input type="text" placeholder="First Name">
+                </div>
+
                 <input type="email" placeholder="Email Address">
                 <input type="text" placeholder="Bio">
 
@@ -78,5 +82,6 @@
             document.body.classList.toggle('dark');
         });
     </script>
+
 </body>
 </html>

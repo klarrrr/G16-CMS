@@ -11,10 +11,9 @@ body {
 
 .main-container {
     display: grid;
-    grid-template-columns: 20% 50%;
+    grid-template-columns: 20% 80%;
     border-radius: 8px;
     padding: 60px 30px 30px 20px;
-    max-height: 100vh;
 }
 
 .settings-choices {
@@ -25,6 +24,7 @@ body {
     padding-top: 50px;
     margin-right: 10px;
     border-radius: 5px;
+    max-height: 250px;
 }
 
 .settings-choices h3 {
@@ -61,32 +61,22 @@ body {
     color: black;
 }
 
-.settings-choices button {
-    color: red;
-    background: none;
-    border: none;
-    cursor: pointer;
-    transition: .3s;
-}
-
-.settings-choices button:hover {
-    padding: 5px;
-    font-weight: bold;
-    background-color: rgb(219, 191, 191);
-    border-radius: 5px;
-}
-
 /* Right Panel - Profile */
 .my-profile {
     background-color: white;
-    padding: 20px;
-    border-radius: 10px;
+    padding: 40px;
+    border-radius: 5px;
+    height: 550px;
 }
 
 .theme-toggle {
     display: grid;
-    grid-template-columns: 80% 20%;
-    margin-bottom: 10px;
+    grid-template-columns: 85% 15%;
+    margin-bottom: 40px;
+}
+
+.theme-toggle h3 {
+    font-size: 40px;
 }
 
 #toggleTheme {
@@ -103,6 +93,10 @@ body {
     background-color: black;
 }
 /* Profile Picture Section */
+.profile-info {
+    display: flex;
+}
+
 .profile-picture {
     display: flex;
     flex-direction: column;
@@ -110,18 +104,31 @@ body {
     margin-bottom: 20px;
 }
 
-.profile-picture input[type="image"] {
-    width: 100px;
-    height: 100px;
+.img-container {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
     border-radius: 50%;
-    border: 2px solid #333;
     margin-bottom: 10px;
+    border: 1px solid black;
+}
+
+.profile-picture input[type="image"] {
+    width: 150px;
+    height: 150px;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
 }
 
 .custom-file-upload {
     color: #333;
     cursor: pointer;
     margin-bottom: 5px;
+}
+
+.custom-file-upload:hover {
+    color: black;
 }
 
 .profile-picture button {
@@ -131,18 +138,26 @@ body {
     cursor: pointer;
 }
 
+.profile-picture button:hover {
+    color: darkred;
+}
+
 /* Personal Info Section */
 .perso-info {
-    margin-bottom: 20px;
+    margin: 0 0 30px 30px;
+    padding-bottom: 50px;
+    display: flex table-column;
+    align-content: center;
 }
 
 .perso-info h5 {
-    font-size: 18px;
+    font-size: 25px;
     font-weight: bold;
+    margin-bottom: 5px;
 }
 
 .bio {
-    font-size: 14px;
+    font-size: 15px;
     color: #333;
 }
 
@@ -150,26 +165,38 @@ body {
 .input-fields {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 1rem;
+    padding-left: 180px;
 }
 
+.first-last {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 1rem;
+}
 
+.first-last input {
+    width: 100%;
+}
 
 .input-fields input[type="text"],
 .input-fields input[type="email"] {
     padding: 10px;
     border: none;
-    background-color: #e5e5e5;
+    background-color: #ededed;
     font-weight: bold;
-    border-radius: 5px;
+    border-radius: 2px;
+    border: 1px solid #7b7b7b;
 }
 
 .input-fields input:hover {
-    background-color: #dbdbdb;
+    border: 1px solid black;
 }
 
 .input-fields input::placeholder {
     color: #333;
+    font-weight: normal;
 }
 
 /* Save Buttons */
@@ -177,13 +204,14 @@ body {
     display: flex;
     justify-content: space-around;
     margin-top: 20px;
+    padding: 5px;
 }
 
 .save-buttons input[type="button"] {
     padding: 10px 20px;
     border: none;
     font-weight: bold;
-    border-radius: 30px;
+    border-radius: 5px;
     cursor: pointer;
 }
 
