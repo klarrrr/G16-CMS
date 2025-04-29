@@ -110,7 +110,7 @@ loginBtn.addEventListener('click', () => {
                 }
             },
             error: (error) => {
-                alert('There is something wrong with email or password.');
+                alert(error);
             }
         });
     }
