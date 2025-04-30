@@ -29,17 +29,10 @@
             </div>
             <div class="container">
                 <div class="text-container">
-                    <!-- TODO : MAKE THIS DYNAMIC -->
-                    <h1 id='latest-news-title'>CHED's Certificates of Program Compliance (COPCs)</h1>
-                    <!-- TODO : MAKE THIS DYNAMIC -->
-                    <p class="time-posted">Posted <small>●</small> <span id='latest-news-day-posted'>April 25, 2025</span></p>
-                    <!-- TODO : MAKE THIS DYNAMIC -->
+                    <h1 id='latest-news-title'></h1>
+                    <p class="time-posted">Posted <small>●</small> <span id='latest-news-day-posted'></span></p>
                     <p class="latest-paragraph" id='latest-news-paragraph'>
-                        Programs that comprise the College of Business and Accountancy (CBA), College of Computer
-                        Studies
-                        (CCS), College of International Hospitality Management (CIHM), College of Engineering (COE), and
-                        College of Education (COED) secured their compliance certificates, acquiring the go-signal to
-                        sustain the delivery of assured quality education to PLPians.
+
                     </p>
                     <!-- TODO : MAKE THIS DYNAMIC -->
                     <a href="lundayan-site-article.php" id='latest-read-more'>Read More</a>
@@ -67,6 +60,8 @@
     </main>
 
     <?php include 'lundayan-site-footer.php' ?>
+    <!-- Date formatter function -->
+    <script src="scripts/date-formatter.js"></script>
     <!-- Gets the Latest News -->
     <script src="scripts/home-latest-news.js"></script>
 </body>

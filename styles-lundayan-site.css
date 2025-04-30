@@ -259,9 +259,11 @@ nav {
 
 .latest-news img {
     height: 70vh;
+    max-width: 35rem;
     border-radius: 10px;
     border: 2px solid #fcb404;
     justify-self: center;
+    object-fit: cover;
 }
 
 /* Sub Header Section */
@@ -392,6 +394,8 @@ nav {
     text-align: center;
     transition: transform 0.3s;
     overflow: hidden;
+    justify-content: center;
+    align-items: center;
 }
 
 .news-card:hover {
@@ -451,8 +455,6 @@ nav {
 .bulletin-news-card .card-text-container h2 {
     font-size: 2em;
     text-align: left;
-    border-bottom: 1px solid #fcb404;
-    padding-bottom: 0.9rem;
     display: -webkit-box;
     -webkit-line-clamp: 1;
     line-clamp: 1;
@@ -504,6 +506,33 @@ nav {
 
 .bulletin-news-card .card-text-container a:hover {
     color: #A7FF83;
+}
+
+.pagination {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 4rem;
+    justify-self: center;
+    align-self: center;
+    background-color: #161616;
+    padding: 0.5rem;
+    border-radius: 1rem;
+}
+
+.pagination a {
+    text-decoration: none;
+    color: #f4f4f4;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.pagination a:hover {
+    background-color: #262626;
+}
+
+.pagination a.active {
+    background-color: #fcb404;
+    color: #161616;
 }
 
 /* Footer */
