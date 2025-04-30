@@ -10,9 +10,6 @@
                     <li><a href="#" id="nav-colors">Colors</a></li>
                 </ul>
             </li>
-            <li><a href="#">Archive</a></li>
-            <li><a href="#">Settings</a></li>
-            <li><a href="#">Domain</a></li>
         </ul>
     </nav>
 </div>
