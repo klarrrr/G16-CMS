@@ -19,7 +19,7 @@
                     <path d="M16 2H0V5H16V2Z" fill="#000000" />
                     <path d="M1 7H5V9H11V7H15V15H1V7Z" fill="#000000" />
                 </svg>
-                <p id='menu-archive-button' style='display: none'>Archive</p>
+                <p id='menu-archive-button' style='display: none'>Audit Logs</p>
             </a>
         </li>
     </ul>
