@@ -12,30 +12,41 @@ const renderCalendar = (month, year) => {
     calendarBody.innerHTML = "";
 
     let date = 1;
-    for (let i = 0; i < 6; i++) {
-        const row = document.createElement("tr");
-        for (let j = 0; j < 7; j++) {
-            const cell = document.createElement("td");
-            if (i === 0 && j < firstDay) {
-                cell.innerHTML = "";
-            } else if (date > daysInMonth) {
-                break;
-            } else {
-                cell.innerHTML = date;
-                // Highlight today
-                const today = new Date();
-                if (date === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
-                    cell.classList.add("td-highlighted");
-                }
-                date++;
+for (let i = 0; i < 6; i++) {
+    const row = document.createElement("tr");
+    let allCellsEmpty = true;
+    
+    for (let j = 0; j < 7; j++) {
+        const cell = document.createElement("td");
+
+        if (i === 0 && j < firstDay) {
+            cell.textContent = "";
+            cell.classList.add("empty-cell");
+        } else if (date > daysInMonth) {
+            cell.textContent = "";
+            cell.classList.add("empty-cell");
+        } else {
+            cell.textContent = date;
+            const today = new Date();
+            if (date === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+                cell.classList.add("td-highlighted");
             }
-            row.appendChild(cell);
+            date++;
+            allCellsEmpty = false;
         }
-        calendarBody.appendChild(row);
+
+        row.appendChild(cell);
     }
+
+    if (allCellsEmpty && date > daysInMonth) {
+        break; 
+    }
+
+    calendarBody.appendChild(row);
+}
+
 };
 
-// Load current month/year
 const now = new Date();
 currentMonth = now.getMonth();
 currentYear = now.getFullYear();
@@ -79,3 +90,19 @@ function updateDropdowns() {
     monthSelect.value = currentMonth;
     yearSelect.value = currentYear;
 }
+
+const timeContainer = document.querySelector(".time-day-text-container h3");
+const dateContainer = document.querySelector(".time-day-text-container p");
+
+function updateTime() {
+    const now = new Date();
+    const options = { weekday: 'long', month: 'long', year: 'numeric' };
+    const formattedDate = now.toLocaleDateString('en-US', options);
+    const formattedTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+    timeContainer.textContent = formattedTime;
+    dateContainer.textContent = formattedDate;
+}
+
+setInterval(updateTime, 1000);
+updateTime(); // Call once initially

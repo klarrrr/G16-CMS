@@ -1325,3 +1325,9 @@ tbody td {
         opacity: 1;
     }
 }
+
+.empty-cell{
+    color: #0A5C36;
+    background-color: #14452F;
+    pointer-events: none;
+}
