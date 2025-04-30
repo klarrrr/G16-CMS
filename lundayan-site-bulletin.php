@@ -31,16 +31,8 @@
             <div class="filters">
                 <div class="filter-group">
                     <h3>Sort by category</h3>
-                    <div class="filter-tags">
-                        <button class="tag">PLP</button>
-                        <button class="tag">Faculty</button>
-                        <button class="tag">BSN</button>
-                        <button class="tag selected">BSIT</button>
-                        <button class="tag">BSA</button>
-                        <button class="tag">BSCS</button>
-                        <button class="tag">Library</button>
-                        <button class="tag">Staff</button>
-                        <button class="tag">Motivation</button>
+                    <div class="filter-tags" id='filter-tags'>
+
                     </div>
                 </div>
             </div>
@@ -61,6 +53,10 @@
     <script src="scripts/get-news-bulletin.js"></script>
     <!-- Script for search -->
     <script src="scripts/bulletin-search-news.js"></script>
+    <!-- Script for gettings tags -->
+    <script src="scripts/bulletin-gets-tags.js"></script>
+    <!-- Filter by Tags -->
+    <script src="scripts/bulletin-search-by-tags.js"></script>
 </body>
 
 </html>
