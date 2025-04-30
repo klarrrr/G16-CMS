@@ -15,14 +15,6 @@
         </li>
         <li>
             <a href="#">
-                <svg fill="#000000" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M2,9H9V2H2Zm9-7V9h7V2ZM2,18H9V11H2Zm9,0h7V11H11Z" />
-                </svg>
-                <p id='menu-projects-button' style='display: none'>Projects</p>
-            </a>
-        </li>
-        <li>
-            <a href="#">
                 <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M16 2H0V5H16V2Z" fill="#000000" />
                     <path d="M1 7H5V9H11V7H15V15H1V7Z" fill="#000000" />

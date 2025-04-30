@@ -26,12 +26,12 @@
                         <!-- CHOOSE PAGE BOX -->
                         <select name="" id="select-pages" title="select-page"></select>
                         <!-- ADD PAGE BTN -->
-                        <button id="add-article-page-btn">Add Article Page</button>
+                        <button id="add-article-page-btn">Add Article</button>
                         <!-- <button id="add-element-btn">Add Element</button> -->
                     </div>
                     <!-- EDIT PAGE DETAILS CONTAINERS -->
                     <div id="edit-details-box" class="page-details-container">
-                        <h2>Edit Page Details</h2>
+                        <h2>Current Articles</h2>
                     </div>
                     <!-- Include Font Settings Box -->
                     <?php include 'font-settings.php'; ?>

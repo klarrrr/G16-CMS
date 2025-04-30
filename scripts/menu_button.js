@@ -7,13 +7,12 @@ const menuAccoutItems = document.getElementById('menu-account-items');
 const menuButtonContainer = document.getElementById('menu-button-container');
 
 const home = document.getElementById('menu-home-button');
-const projects = document.getElementById('menu-projects-button');
 const archive = document.getElementById('menu-archive-button');
 
 const accountSettings = document.getElementById('menu-account-settings-button');
 const signOut = document.getElementById('menu-sign-out-button');
 
-const pArray = [home, projects, archive, accountSettings, signOut];
+const pArray = [home, archive, accountSettings, signOut];
 
 const mainPage = document.getElementById('main-page');
 

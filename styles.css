@@ -31,7 +31,7 @@ body {
 nav {
     display: flex;
     width: 96%;
-    padding: 0px 30px;
+    padding: 0px 10px;
     border-bottom: 1px solid lightgray;
     height: 7vh;
     justify-content: space-between;
@@ -165,7 +165,7 @@ nav h1 {
 .second-nav-container nav ul {
     justify-content: center;
     gap: 30px;
-    border-left: 1px solid lightgray;
+    border-right: 1px solid lightgray;
     height: 100%;
     width: auto;
     align-items: center;
@@ -275,10 +275,10 @@ nav h1 {
 /* Second Nav Dropdown */
 #second-nav ul {
     list-style: none;
-    padding: 0;
+    padding: 5px;
     margin: 0;
     display: flex;
-    gap: 20px;
+    gap: 10px;
     align-items: center;
 }
 

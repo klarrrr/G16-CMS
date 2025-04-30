@@ -1,6 +1,6 @@
 <div class="second-nav-container">
     <nav id='second-nav'>
-        <h1>contento</h1>
+        
         <ul>
             <li><a href="#" id="nav-pages">Pages</a></li>
             <li class="dropdown">
@@ -10,9 +10,7 @@
                     <li><a href="#" id="nav-colors">Colors</a></li>
                 </ul>
             </li>
-            <li><a href="#">Archive</a></li>
-            <li><a href="#">Settings</a></li>
-            <li><a href="#">Domain</a></li>
         </ul>
+        <h1>contento</h1>
     </nav>
 </div>
