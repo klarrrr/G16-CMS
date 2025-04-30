@@ -19,7 +19,7 @@ class Mailer {
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 
-             $mail->setFrom('lundayan.studentpublication@gmail.com', 'Princess Jumiah Zamora'); 
+             $mail->setFrom('lundayan.studentpublication@gmail.com', 'Contact Form'); 
             $mail->addAddress($to);
             $mail->addReplyTo($fromEmail);
 

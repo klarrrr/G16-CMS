@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
     $body .= "Phone: {$model->phone}\n";
     $body .= "Message:\n{$model->message}\n";
 
-    $to = "manrique_klarenzcobie@plpasig.edu.ph";
+    $to = "depadua_charlesjeramy@plpasig.edu.ph";
     $sent = Mailer::send($to, $model->subject, $body, $model->email);
 
     if ($sent) {

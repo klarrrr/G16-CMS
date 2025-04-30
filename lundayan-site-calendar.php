@@ -34,25 +34,25 @@
                 <div class="adjust-calendar-container">
                     <div class="month-container">
                         <div class="select">
-                            <select>
-                                <option value="1">January</option>
-                                <option value="2">February</option>
-                                <option value="3">March</option>
-                                <option value="4">April</option>
-                                <option value="5">May</option>
-                                <option value="6">June</option>
-                                <option value="7">July</option>
-                                <option value="8">August</option>
-                                <option value="9">September</option>
-                                <option value="10">October</option>
-                                <option value="11">November</option>
-                                <option value="12">December</option>
+                            <select id="month-select">
+                                <option value="0">January</option>
+                                <option value="1">February</option>
+                                <option value="2">March</option>
+                                <option value="3">April</option>
+                                <option value="4">May</option>
+                                <option value="5">June</option>
+                                <option value="6">July</option>
+                                <option value="7">August</option>
+                                <option value="8">September</option>
+                                <option value="9">October</option>
+                                <option value="10">November</option>
+                                <option value="11">December</option>
                             </select>
                         </div>
                     </div>
                     <div class="year-container">
                         <div class="select">
-                            <select>
+                            <select id="year-select">
                                 <option value="2025">2025</option>
                                 <option value="2024">2024</option>
                                 <option value="2023">2023</option>
@@ -65,6 +65,7 @@
                     </div>
                 </div>
             </div>
+            
             <div class="calendar-body">
                 <div class="upcoming-events">
                     <div class="title-container">
@@ -129,61 +130,8 @@
                                 <th>Sat</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>1</td>
-                                <td>2</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                                <td>6</td>
-                                <td>7</td>
-                                <td class='td-highlighted'>8</td>
-                                <td>9</td>
-                            </tr>
-                            <tr>
-                                <td>10</td>
-                                <td>11</td>
-                                <td>12</td>
-                                <td>13</td>
-                                <td>14</td>
-                                <td>15</td>
-                                <td>16</td>
-                            </tr>
-                            <tr>
-                                <td>17</td>
-                                <td>18</td>
-                                <td>19</td>
-                                <td class='td-highlighted'>20</td>
-                                <td>21</td>
-                                <td>22</td>
-                                <td>23</td>
-                            </tr>
-                            <tr>
-                                <td>24</td>
-                                <td>25</td>
-                                <td>26</td>
-                                <td>27</td>
-                                <td>28</td>
-                                <td>29</td>
-                                <td>30</td>
-                            </tr>
-                            <tr>
-                                <td>31</td>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                                <td>6</td>
-                            </tr>
+                        <tbody id="calendar-body">
+                <!-- JavaScript will populate this -->
                         </tbody>
                     </table>
                 </div>
@@ -192,6 +140,7 @@
     </main>
 
     <?php include 'lundayan-site-footer.php' ?>
+    <script src='scripts/calendar-handler.js'></script>
 </body>
 
 </html>
