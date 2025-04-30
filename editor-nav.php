@@ -6,11 +6,19 @@
     </div>
     <ul id='main-nav-items'>
         <li>
-            <a href="#">
+            <a href="editor.php">
                 <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M8 0L0 6V8H1V15H4V10H7V15H15V8H16V6L14 4.5V1H11V2.25L8 0ZM9 10H12V13H9V10Z" fill="#000000" />
                 </svg>
                 <p id='menu-home-button' style='display: none'>Home</p>
+            </a>
+        </li>
+        <li>
+            <a href="add-article-page.php">
+                <svg fill="#000000" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2,9H9V2H2Zm9-7V9h7V2ZM2,18H9V11H2Zm9,0h7V11H11Z" />
+                </svg>
+                <p id='add-article-nav-button' style='display: none'>Articles</p>
             </a>
         </li>
         <li>

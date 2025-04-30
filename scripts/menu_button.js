@@ -8,11 +8,12 @@ const menuButtonContainer = document.getElementById('menu-button-container');
 
 const home = document.getElementById('menu-home-button');
 const archive = document.getElementById('menu-archive-button');
+const addArticle = document.getElementById('add-article-nav-button')
 
 const accountSettings = document.getElementById('menu-account-settings-button');
 const signOut = document.getElementById('menu-sign-out-button');
 
-const pArray = [home, archive, accountSettings, signOut];
+const pArray = [home, archive, addArticle, accountSettings, signOut];
 
 const mainPage = document.getElementById('main-page');
 
@@ -34,9 +35,6 @@ menuBurgir.addEventListener('click', () => {
             element.style.width = 'auto';
         });
 
-        secondNav.style.width = '90%';
-        previewBox.style.width = '84%';
-
     } else {
         menu.style.width = '4vw';
         menu.style.alignItems = 'center';
@@ -51,7 +49,9 @@ menuBurgir.addEventListener('click', () => {
             element.style.width = '100%';
         });
 
-        secondNav.style.width = '96%';
-        previewBox.style.width = '96%';
+
     }
 });
+
+
+document.createElement()

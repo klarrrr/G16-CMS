@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Content Management System</title>
+        <title>Contento : Dashboard Page</title>
         <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet" href="cms-preview-styles.css">
         <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
@@ -23,9 +23,6 @@
                 <div class="edit-page-details">
                     <!-- CHOOSE PAGE CONTAINER -->
                     <div class="choose-page-container">
-                        <!-- CHOOSE PAGE BOX -->
-                        <select name="" id="select-pages" title="select-page"></select>
-                        <!-- ADD PAGE BTN -->
                         <button id="add-article-page-btn">Add Article</button>
                         <!-- <button id="add-element-btn">Add Element</button> -->
                     </div>
