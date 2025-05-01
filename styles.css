@@ -107,8 +107,7 @@ nav h1 {
 }
 
 .off-screen-menu #menu-button-container {
-    padding: 15px;
-
+    padding: 1vw;
     height: 7vh;
     width: 100%;
     display: flex;
@@ -116,7 +115,7 @@ nav h1 {
 }
 
 #menuButton {
-    height: 25px;
+    height: 2rem;
     color: #161616;
     cursor: pointer;
     transition: 0.2s ease-in-out;
@@ -148,7 +147,8 @@ nav h1 {
     align-items: center;
     gap: 15px;
     text-wrap: nowrap;
-    padding: 15px;
+    padding: 1vw;
+    height: 7vh;
     width: 100%;
     transition: 0.2s ease-in-out;
     border-radius: 3px;
@@ -596,4 +596,86 @@ nav h1 {
 #search-your-articles:focus {
     transform: scale(1.02);
     border: 1px solid #161616;
+}
+
+.dashboard-main-page {
+    width: 100%;
+    display: grid;
+    grid-template-areas:
+        'title title title quick'
+        'recent recent draft draft'
+    ;
+
+    grid-template-rows: 10rem 1fr;
+    gap: 1rem;
+    height: 100vh;
+    padding: 8vh 12vw;
+}
+
+.dashboard-welcome-title {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    grid-area: title;
+    border: 1px solid #161616;
+    border-radius: 5px;
+}
+
+.dashboard-welcome-title p {
+    font-family: 'sub';
+}
+
+.dashboard-welcome-title h1 {
+    font-family: 'main';
+    font-size: 3rem;
+}
+
+.dashboard-recent-articles {
+    border: 1px solid #161616;
+    grid-area: recent;
+    border-radius: 5px;
+    padding: 2rem;
+}
+
+.dashboard-quick-action-buttons {
+    border: 1px solid #161616;
+    grid-area: quick;
+    border-radius: 5px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 2rem;
+}
+
+.dashboard-quick-action-buttons h2 {
+    font-family: 'main';
+}
+
+.dashboard-quick-action-buttons button {
+    padding: 1rem;
+    border: none;
+}
+
+.quick-button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+}
+
+.dashboard-draft-articles {
+    border: 1px solid #161616;
+    grid-area: draft;
+    border-radius: 5px;
+    padding: 2rem;
+}
+
+.dashboard-draft-articles h2 {
+    font-family: 'main';
+}
+
+.dashboard-recent-articles h2 {
+    font-family: 'main';
 }

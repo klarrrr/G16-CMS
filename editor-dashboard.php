@@ -17,50 +17,33 @@
             <?php include 'editor-nav.php'; ?>
         </div>
         <div class="right-editor-container">
-            <?php include 'editor-website-editor-nav.php' ?>
-            <div class="main-page" id='main-page'>
-                <!-- CHOOSE AND EDIT DETAILS CONTAINER -->
-                <div class="edit-page-details">
-                    <!-- CHOOSE PAGE CONTAINER -->
-                    <div class="choose-page-container">
-                        <button id="add-article-page-btn">Add Article</button>
-                        <!-- <button id="add-element-btn">Add Element</button> -->
-                    </div>
-                    <!-- EDIT PAGE DETAILS CONTAINERS -->
-                    <div id="edit-details-box" class="page-details-container">
-                        <h2>Current Articles</h2>
-                    </div>
-                    <!-- Include Font Settings Box -->
-                    <?php include 'font-settings.php'; ?>
-                    <!-- Include Color Settings Box -->
-                    <?php include 'color-settings.php'; ?>
+            <section class="dashboard-main-page" id='main-page'>
+                <div class="dashboard-welcome-title">
+                    <h1>User P. Name</h1>
+                    <p>Article Writer</p>
                 </div>
-            </div>
-            <!-- This is where the Preview Site will show -->
-            <div id='preview-site-box' class='preview-site'></div>
-        </div>
-        <!-- Script for Menu Button on Top Left -->
-        <script src="scripts/menu_button.js"></script>
-        <!-- Populate the Selection Input of all the pages -->
-        <script src="scripts/populate_selection_page.js"></script>
-        <!-- When Selection Input changes pages -->
-        <script src="scripts/build_preview_site.js"></script>
-        <!-- When Delete Button for each section is clicked -->
-        <script src="scripts/delete_btn.js"></script>
-        <!-- Builds The Edit Details based on page -->
-        <script src="scripts/build_edit_details.js"></script>
-        <!-- Events to execute when something changed on edit details -->
-        <script src="scripts/when_input_details_change.js"></script>
-        <!-- Upload Image function -->
-        <script src="scripts/upload_image.js"></script>
-        <!-- Add Article Page with Floating Container Function -->
-        <!-- <script src="scripts/add_article_page_with_container.js"></script> -->
-        <!-- Add Article Button, adds it to edit details and live preview -->
-        <script src="scripts/add_article.js"></script>
-        <!-- Builder Function -->
-        <script src="scripts/add_article_builder_function.js"></script>
-        <!-- Design Dropdown -->
-        <script src="scripts/nav_panel_switcher.js"></script>
+                <div class="dashboard-quick-action-buttons">
+                    <!-- Shortcut for all the main buttons of all pages -->
+                    <h2>Quick Action Buttons</h2>
+                    <div class="quick-button-container">
+                        <button>Create Article</button>
+                        <button>Audit Log</button>
+                        <button>Account Settings</button>
+                    </div>
+                </div>
+                <div class="dashboard-recent-articles">
+                    <!-- Recenter Articles posted by the user -->
+                    <h2>Recent Posts</h2>
+                </div>
+                <div class="dashboard-draft-articles">
+                    <!-- All the unposted/unfinished articles of the user -->
+                    <h2>Recent Drafts</h2>
+                </div>
+            </section>
+            <!-- Script for Menu Button on Top Left -->
+            <script src="scripts/menu_button.js"></script>
+            <!-- Populate the Selection Input of all the pages -->
+            <script src="scripts/nav_panel_switcher.js"></script>
     </body>
 
     </html>
