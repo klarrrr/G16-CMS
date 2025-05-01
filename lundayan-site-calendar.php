@@ -25,8 +25,8 @@
 
             <div class="calendar-controls">
                 <div class="time-day">
-                    <img src="svg/sun.svg" alt="">
-                    <div class="time-day-text-container">
+                <img id="time-image" src="images/morning.jpg" alt="Time of day image">
+                <div class="time-day-text-container">
                         <h3>05:35 AM</h3>
                         <p>Sunday, April 2025</p>
                     </div>
@@ -141,6 +141,7 @@
 
     <?php include 'lundayan-site-footer.php' ?>
     <script src='scripts/calendar-handler.js'></script>
+    <script src='scripts/time-icon-handler.js'></script>
 </body>
 
 </html>
