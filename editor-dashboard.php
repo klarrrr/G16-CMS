@@ -17,7 +17,7 @@
             <?php include 'editor-nav.php'; ?>
         </div>
         <div class="right-editor-container">
-            <section class="dashboard-main-page" id='main-page'>
+            <section class="dashboard-main-page" id='dashboard-main-page'>
                 <div class="dashboard-welcome-title">
                     <h1>User P. Name</h1>
                     <p>Article Writer</p>

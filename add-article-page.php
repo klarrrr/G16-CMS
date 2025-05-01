@@ -231,21 +231,14 @@
     <!-- Populate the Selection Input of all the pages -->
     <!-- Design Dropdown -->
     <script src="scripts/nav_panel_switcher.js"></script>
-    <!-- Script when hovering add article button, the one with the plus -->
-    <!-- <script>
-        const addArticlBtn = document.getElementById('article-add-article-button');
-        addArticlBtn.addEventListener('mouseover', () => {
-            addArticlBtn.style.fontSize = '1rem';
-            addArticlBtn.style.padding = '1rem';
-            addArticlBtn.textContent = 'Create an Article';
+    <!-- event for adding new article -->
+    <script>
+        const addArticleBtn = document.getElementById('article-add-article-button');
+        addArticleBtn.addEventListener('click', () => {
+            window.location.href = 'create-new-article.php'
+            // Ajax some data from PHP
         });
-
-        addArticlBtn.addEventListener('mouseout', () => {
-            addArticlBtn.style.fontSize = '1.5rem';
-            addArticlBtn.textContent = '+';
-            addArticlBtn.style.padding = '0';
-        });
-    </script> -->
+    </script>
 </body>
 
 </html>

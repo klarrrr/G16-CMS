@@ -477,7 +477,7 @@ nav h1 {
     position: absolute;
     right: 0;
     bottom: 0;
-    margin: 2rem;
+    margin: 3rem;
     box-shadow: rgba(22, 22, 22, 0.4) 5px 5px,
         rgba(22, 22, 22, 0.3) 10px 10px,
         rgba(22, 22, 22, 0.2) 15px 15px,
@@ -501,10 +501,11 @@ nav h1 {
     grid-template-columns: repeat(auto-fill, 15rem);
     justify-content: center;
     gap: 2rem;
-    padding: 2rem;
+    padding: 8vh 12vw;
     overflow-x: hidden;
     overflow-y: scroll;
     height: 100%;
+    background-color: white;
 }
 
 .article-box {
@@ -678,4 +679,178 @@ nav h1 {
 
 .dashboard-recent-articles h2 {
     font-family: 'main';
+}
+
+.audit-log-main-page {
+    padding: 8vh 12vw;
+}
+
+.create-nav-one {
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+    justify-content: space-between;
+    border-bottom: 1px solid lightgray;
+}
+
+#create-post-article-btn {
+    border: none;
+    font-family: 'sub';
+    min-width: 5rem;
+    border-radius: 5px;
+    background-color: #161616;
+    color: #f4f4f4;
+    cursor: pointer;
+}
+
+#create-post-article-btn:hover {
+    transform: scale(1.05);
+}
+
+.create-nav-one-title {}
+
+.create-nav-one-title h2 {
+    font-family: 'main';
+    font-size: 1rem;
+    font-weight: bolder;
+    color: #161616;
+}
+
+.create-nav-one-title p {
+    font-family: 'sub';
+    font-size: 0.7rem;
+    color: #262626;
+}
+
+.create-nav-two {
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+    border-bottom: 1px solid lightgray;
+    gap: 1rem;
+    align-items: center;
+}
+
+.font-style {}
+
+.font-style button {
+    border: none;
+    background: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    min-width: 1rem;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.font-style button:hover {
+    background-color: #d6d6d6;
+}
+
+.text-align {}
+
+.text-align button,
+#bullet-list,
+#numbered-list,
+#insert-image {
+    background: none;
+    border: none;
+    padding: 3px;
+    border-radius: 3px;
+}
+
+.text-align button:hover,
+#bullet-list:hover,
+#numbered-list:hover,
+#insert-image:hover {
+    background-color: #d6d6d6;
+}
+
+.text-align button img,
+#bullet-list img,
+#numbered-list img,
+#insert-image img {
+    min-width: 1rem;
+    width: 1rem;
+    cursor: pointer;
+}
+
+#font-family::picker(select) {
+    appearance: base-select;
+}
+
+#font-family {
+    padding: 1vh 1vw;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+    background-color: transparent;
+}
+
+#font-family:focus {
+    outline: none;
+    border: none;
+}
+
+.select-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 10rem;
+    border-radius: 5px;
+}
+
+.select-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #333;
+    transform: translateY(-50%);
+}
+
+.select-wrapper:hover {
+    background-color: #d6d6d6;
+}
+
+.create-article-right-editor-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.create-article-main {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.create-canvas {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 100%;
+    padding: 8vh 12vw;
+}
+
+.widget-toolbar {
+    display: flex;
+    background-color: red;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 2rem;
+    border-radius: 5px;
 }

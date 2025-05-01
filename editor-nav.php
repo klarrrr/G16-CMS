@@ -22,7 +22,7 @@
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="audit-log-page.php">
                 <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M16 2H0V5H16V2Z" fill="#000000" />
                     <path d="M1 7H5V9H11V7H15V15H1V7Z" fill="#000000" />
