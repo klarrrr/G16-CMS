@@ -22,7 +22,7 @@ html {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    transition: 0.2s ease-in-out;
+    transition: 0.3s ease;
 }
 
 body {
@@ -108,7 +108,7 @@ nav h1 {
 
 .off-screen-menu #menu-button-container {
     padding: 15px;
-    border-bottom: 1px solid lightgray;
+
     height: 7vh;
     width: 100%;
     display: flex;
@@ -186,7 +186,7 @@ nav h1 {
     width: 100%;
     display: flex;
     flex-direction: column;
-    height: 94vh;
+    height: 100vh;
 }
 
 /* Change Page and Page Details Container */
@@ -454,7 +454,7 @@ nav h1 {
 }
 
 .add-article-title-container {
-    padding: 2rem;
+    padding: 1rem;
     border-bottom: 1px solid lightgray;
     display: flex;
     justify-content: space-between;
@@ -462,31 +462,49 @@ nav h1 {
 
 .add-article-title-container h1 {
     font-family: 'main';
-    font-size: 3rem;
+    font-size: 2rem;
 }
 
 .article-add-article-button {
-    padding: 1rem;
-    background: #161616;
+    background-color: #161616;
     color: #f4f4f4;
     border: none;
-    border-bottom-left-radius: 2px;
-    border-bottom-right-radius: 2px;
+    border-radius: 5px;
     cursor: pointer;
+    min-width: 3.5rem;
+    min-height: 3.5rem;
+    font-size: 1.5rem;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 2rem;
+    box-shadow: rgba(22, 22, 22, 0.4) 5px 5px,
+        rgba(22, 22, 22, 0.3) 10px 10px,
+        rgba(22, 22, 22, 0.2) 15px 15px,
+        rgba(22, 22, 22, 0.1) 20px 20px,
+        rgba(22, 22, 22, 0.05) 25px 25px;
+
+}
+
+.article-add-article-button:hover {
+    transform: scale(1.05);
+    box-shadow: rgba(14, 63, 126, 0.04) 0px 0px 0px 1px, rgba(42, 51, 69, 0.04) 0px 1px 1px -0.5px, rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px, rgba(42, 51, 70, 0.04) 0px 6px 6px -3px, rgba(14, 63, 126, 0.04) 0px 12px 12px -6px, rgba(14, 63, 126, 0.04) 0px 24px 24px -12px;
 }
 
 .add-article-title-container p {
     font-family: 'sub';
+    font-size: 0.8rem;
 }
 
 .articles-boxes-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, 25em);
+    grid-template-columns: repeat(auto-fill, 15rem);
     justify-content: center;
     gap: 2rem;
     padding: 2rem;
     overflow-x: hidden;
     overflow-y: scroll;
+    height: 100%;
 }
 
 .article-box {
@@ -494,7 +512,6 @@ nav h1 {
     flex-direction: column;
     border: 1px solid #161616;
     /* padding: 2rem; */
-
     border-radius: 3px;
 }
 
@@ -520,7 +537,7 @@ nav h1 {
 
 .article-box h2 {
     font-family: 'sub';
-    font-size: 1.3rem;
+    font-size: 1rem;
     font-weight: 900;
     line-clamp: 1;
     overflow: hidden;
@@ -530,7 +547,7 @@ nav h1 {
 
 .article-box h3 {
     font-family: 'sub';
-    font-size: 1em;
+    font-size: 0.8em;
     color: #262626;
     font-weight: lighter;
 }
@@ -555,4 +572,28 @@ nav h1 {
 
 .edit-article-button:hover {
     background-color: #262626;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+}
+
+#search-your-articles {
+    height: 100%;
+    padding: 1rem;
+    font-family: 'sub';
+    width: 20rem;
+    border: 1px solid gray;
+    border-radius: 5px;
+    outline: none;
+}
+
+#search-your-articles:hover {
+    transform: scale(1.01);
+}
+
+#search-your-articles:focus {
+    transform: scale(1.02);
+    border: 1px solid #161616;
 }
