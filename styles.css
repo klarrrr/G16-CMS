@@ -785,21 +785,13 @@ nav h1 {
     padding: 2rem;
     grid-area: widget;
     gap: 2rem;
+    overflow-y: scroll;
 }
 
-.widget-toolbar-title-container {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.widget-toolbar-title-container h2 {
-    font-family: 'main';
-}
-
-.widget-toolbar-title-container p {
-    font-family: 'sub';
-    font-size: 0.7rem;
+.required {
+    color: red;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 #widget-text-area {
@@ -894,4 +886,8 @@ nav h1 {
 
 .ql-editor {
     overflow-y: hidden !important;
+}
+
+#editor {
+    height: auto;
 }

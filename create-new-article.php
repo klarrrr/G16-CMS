@@ -153,24 +153,18 @@
             </div>
 
             <div class="widget-toolbar">
-                <div class="widget-toolbar-title-container">
-                    <h2>Widget</h2>
-                    <p>The compressed version of your article inside in a small box/widget.</p>
-                    <hr>
-                </div>
-
                 <div class="widget-article-title">
-                    <h3 class='widget-article-h3'>Widget Title</h3>
+                    <h3 class='widget-article-h3'>Title <span class='required'>*</span></h3>
                     <input type="text" placeholder="Short title here" id='widget-short-title'>
                 </div>
 
                 <div class="widget-article-pargraph">
-                    <h3 class='widget-article-h3'>Widget Paragraph</h3>
-                    <textarea name="" id="widget-text-area" rows="5" placeholder="Short description here"></textarea>
+                    <h3 class='widget-article-h3'>Short Description <span class='required'>*</span></h3>
+                    <textarea name="" id="widget-text-area" rows="10" placeholder="Short description here"></textarea>
                 </div>
 
                 <div class="widget-article-image">
-                    <h3 class='widget-article-h3'>Widget Image</h3>
+                    <h3 class='widget-article-h3'>Thumbnail Image</h3>
                     <input type="file">
                 </div>
 
