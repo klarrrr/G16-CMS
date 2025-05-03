@@ -178,24 +178,26 @@
 
             </div>
         </div>
-        <!-- Script for Menu Button on Top Left -->
-        <script src="scripts/menu_button.js"></script>
-        <!-- Populate the Selection Input of all the pages -->
-        <script src="scripts/nav_panel_switcher.js"></script>
-        <script>
-            const quill = new Quill('#editor', {
-                theme: 'snow',
-                modules: {
-                    toolbar: '#create-nav-two'
-                },
-                history: {
-                    delay: 2000,
-                    maxStack: 500,
-                    userOnly: true
-                }
-            });
-        </script>
     </div>
+    <!-- Script for Menu Button on Top Left -->
+    <script src="scripts/menu_button.js"></script>
+    <!-- Populate the Selection Input of all the pages -->
+    <script src="scripts/nav_panel_switcher.js"></script>
+    <script>
+        const quill = new Quill('#editor', {
+            theme: 'snow',
+            modules: {
+                toolbar: '#create-nav-two'
+            },
+            history: {
+                delay: 2000,
+                maxStack: 500,
+                userOnly: true
+            }
+        });
+    </script>
+    <!-- Create Article -->
+    <script src="scripts/create-article.js"></script>
 </body>
 
 </html>

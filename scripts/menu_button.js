@@ -52,6 +52,3 @@ menuBurgir.addEventListener('click', () => {
 
     }
 });
-
-
-document.createElement()
