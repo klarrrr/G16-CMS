@@ -5,17 +5,17 @@ for (let i = 0; i < everyTags.length; i++) {
     console.log(everyTags[i].className);
 }
 
-function loadNewsByTags(page = 1, tags = '') {
+function loadNewsByTags(page = 1, tag_id) {
     $.ajax({
         url: 'php-backend/bulletin-search-by-tags.php', //removed ../
         type: 'GET',
         dataType: 'json',
         data: {
             page: page,
-            search: searchFor
+            tag_id: tag_id
         },
         success: (res) => {
-            const widgets = res.widget;
+            const widgets = res;
             let rows = '';
 
             // Generate rows for each widget
