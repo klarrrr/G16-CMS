@@ -7,7 +7,7 @@ for (let i = 0; i < everyTags.length; i++) {
 
 function loadNewsByTags(page = 1, tags = '') {
     $.ajax({
-        url: '../php-backend/bulletin-search-by-tags.php',
+        url: 'php-backend/bulletin-search-by-tags.php', //removed ../
         type: 'GET',
         dataType: 'json',
         data: {

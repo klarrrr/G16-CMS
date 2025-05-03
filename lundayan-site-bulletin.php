@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -57,6 +58,8 @@
     <script src="scripts/bulletin-gets-tags.js"></script>
     <!-- Filter by Tags -->
     <script src="scripts/bulletin-search-by-tags.js"></script>
+    <!-- Tag Filter Algorithm -->
+    <script src="scripts/tag-click-handler.js"></script>
 </body>
 
 </html>
