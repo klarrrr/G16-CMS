@@ -62,6 +62,8 @@
     </main>
     <!-- Handles the validation of account -->
     <script src='scripts/account-handler.js'></script>
+    <!-- Handles the functioanlity -->
+     <script src="scripts/sign-up-function.js"></script>
 </body>
 
 </html>
