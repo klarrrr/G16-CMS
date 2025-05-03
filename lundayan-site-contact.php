@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="contact-container">
-                    <form class="send-info" method="POST" action="../G16-CMS/php-backend/ContactController.php">
+                    <form class="send-info" method="POST" action="../php-backend/ContactController.php">
                         <div class="two-input">
                             <input name='first_name' type="text" placeholder="First Name" required>
                             <input name='last_name' type="text" placeholder="Last Name" required>
@@ -92,31 +92,31 @@
         </main>
 
         <div id="popup-backdrop" class="popup-backdrop">
-        <div id="popup-message" class="popup-message">
-            <p id="popup-text">Message sent!</p>
-            <button onclick="closePopup()">Close</button>
-        </div>
+            <div id="popup-message" class="popup-message">
+                <p id="popup-text">Message sent!</p>
+                <button onclick="closePopup()">Close</button>
+            </div>
         </div>
 
 
         <?php include 'lundayan-site-footer.php'; ?>
 
-        
-        <script>
-    function closePopup() {
-        document.getElementById('popup-backdrop').style.display = 'none';
-    }
 
-    window.addEventListener('DOMContentLoaded', () => {
-        const params = new URLSearchParams(window.location.search);
-        const status = params.get('status');
-        if (status === 'success' || status === 'fail') {
-            const text = status === 'success' ? 'Message sent successfully!' : 'Failed to send message. Try again.';
-            document.getElementById('popup-text').textContent = text;
-            document.getElementById('popup-backdrop').style.display = 'flex';
-        }
-    });
-    </script>
+        <script>
+            function closePopup() {
+                document.getElementById('popup-backdrop').style.display = 'none';
+            }
+
+            window.addEventListener('DOMContentLoaded', () => {
+                const params = new URLSearchParams(window.location.search);
+                const status = params.get('status');
+                if (status === 'success' || status === 'fail') {
+                    const text = status === 'success' ? 'Message sent successfully!' : 'Failed to send message. Try again.';
+                    document.getElementById('popup-text').textContent = text;
+                    document.getElementById('popup-backdrop').style.display = 'flex';
+                }
+            });
+        </script>
 
     </body>
 
