@@ -9,8 +9,9 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
     <link href="quill.css" rel="stylesheet" />
+    <!-- Online Quill Library -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script> -->
-    <script src="scripts/quill-api.js"></script>
+    <script src="scripts/quill.js"></script>
 </head>
 
 <body class="body">
@@ -19,7 +20,7 @@
         <?php include 'editor-nav.php'; ?>
     </div>
     <div class="create-article-right-editor-container">
-        <div class="create-article-main" id='create-article-main'>
+        <div class="create-article-main" id='create-article-main' style='    grid-template-columns: 80% 20%;'>
             <div class="create-navs">
                 <div class="create-nav-one">
                     <!-- TODO MAKE DYNAMIC LATER -->
@@ -28,10 +29,7 @@
                         <p>Last updated on May 1, 2025 - Klarenz Cobie Manrique</p>
                     </div>
                     <div class="nav-one-buttons">
-                        <!-- Prompt User if sure -->
-                        <button id="cancel-article-btn">Cancel</button>
-                        <!-- Prompt User if sure -->
-                        <button id="create-post-article-btn">Save Article</button>
+                        <span id='open-widget'>》 Hide Details Box</span>
                     </div>
                 </div>
                 <div class="" id='create-nav-two'>
@@ -143,17 +141,15 @@
                     <!-- Clearn Format -->
                     <button class="ql-clean">Clear</button>
 
+                    <div class="separator"></div>
                 </div>
 
             </div>
-            <div class="create-canvas">
+            <div class="create-canvas" id="editor">
                 <!-- TODO : MAKE DYNAMIC LATER -->
-                <div contenteditable="true" class="editor" id="editor">
-                    Start typing here...
-                </div>
             </div>
 
-            <div class="widget-toolbar">
+            <div class="widget-toolbar" id='widget-toolbar'>
                 <div class="widget-article-title">
                     <h3 class='widget-article-h3'>Title <span class='required'>*</span></h3>
                     <input type="text" placeholder="Short title here" id='widget-short-title'>
@@ -176,7 +172,6 @@
                         <input type="text" placeholder="Enter tags here" id='widget-tags-input'>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -199,6 +194,24 @@
     </script>
     <!-- Create Article -->
     <script src="scripts/create-article.js"></script>
+    <!-- Disable Some key events -->
+    <script src="scripts/disable-key-events.js"></script>
+    <!-- script for open and close widget -->
+    <script>
+        const widgetOpenBtn = document.getElementById('open-widget');
+        const createArticleMain = document.getElementById('create-article-main');
+
+        widgetOpenBtn.addEventListener('click', () => {
+            if (createArticleMain.style.gridTemplateColumns == '99% 1%') {
+                widgetOpenBtn.textContent = '》 Hide Detail Box'
+                createArticleMain.style.gridTemplateColumns = '80% 20%';
+            } else {
+                widgetOpenBtn.textContent = '《 Show Detail Box'
+                createArticleMain.style.gridTemplateColumns = '99% 1%';
+            }
+
+        });
+    </script>
 </body>
 
 </html>

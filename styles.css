@@ -27,7 +27,8 @@ html {
 
 body {
     overflow: hidden;
-    display: flex;
+    display: grid;
+    grid-template-columns: 4% 96%;
     width: 100%;
 }
 
@@ -762,18 +763,16 @@ nav h1 {
         'nav nav'
         'edit widget'
     ;
-    grid-template-columns: 80% 20%;
     grid-template-rows: auto 1fr;
     height: 100%;
     width: 100%;
 }
 
 .create-canvas {
-    overflow-y: scroll;
-    overflow-x: hidden;
+    overflow: hidden;
     height: 100%;
-    padding: 4vh 8vw;
     grid-area: edit;
+    padding: 2rem;
     background-color: #f9f9f9;
 }
 
@@ -786,6 +785,8 @@ nav h1 {
     grid-area: widget;
     gap: 2rem;
     overflow-y: scroll;
+    overflow-x: auto;
+    position: relative;
 }
 
 .required {
@@ -852,12 +853,12 @@ nav h1 {
     display: flex;
     flex-direction: column;
     min-height: 50rem;
-    border: 1px solid gray;
     padding: 12vh 8vw;
     background-color: white;
     font-size: 16px;
     width: 100%;
     overflow-y: visible;
+    margin: 1rem;
 }
 
 .editor:focus {
@@ -885,9 +886,34 @@ nav h1 {
 }
 
 .ql-editor {
-    overflow-y: hidden !important;
+    background-color: white !important;
+    overflow-x: hidden !important;
+    padding: 8vh 12vw !important;
+    border: 1px solid lightgray;
 }
 
 #editor {
     height: auto;
+}
+
+.ql-container.ql-snow {
+    border: none !important;
+}
+
+#open-widget {
+    align-self: center;
+    position: absolute;
+    right: 0;
+    color: #161616;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    z-index: 99;
+    font-family: 'sub';
+    font-size: 0.8rem;
+    padding: 1rem;
+}
+
+#open-widget:hover {
+    transform: scale(1.02);
 }
