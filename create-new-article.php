@@ -25,7 +25,7 @@
                 <div class="create-nav-one">
                     <!-- TODO MAKE DYNAMIC LATER -->
                     <div class="create-nav-one-title">
-                        <h2 contenteditable="true">Article Document Title</h2>
+                        <h2 id='top-article-title'>Article Document Title</h2>
                         <p>Last updated on May 1, 2025 - Klarenz Cobie Manrique</p>
                     </div>
                     <div class="nav-one-buttons">
@@ -152,12 +152,12 @@
             <div class="widget-toolbar" id='widget-toolbar'>
                 <div class="widget-article-title">
                     <h3 class='widget-article-h3'>Title <span class='required'>*</span></h3>
-                    <input type="text" placeholder="Short title here" id='widget-short-title'>
+                    <input type="text" placeholder="Short title here" id='title-box'>
                 </div>
 
                 <div class="widget-article-pargraph">
                     <h3 class='widget-article-h3'>Short Description <span class='required'>*</span></h3>
-                    <textarea name="" id="widget-text-area" rows="10" placeholder="Short description here"></textarea>
+                    <textarea name="" id="short-desc-box" rows="10" placeholder="Short description here"></textarea>
                 </div>
 
                 <div class="widget-article-image">
@@ -192,8 +192,6 @@
             }
         });
     </script>
-    <!-- Create Article -->
-    <script src="scripts/create-article.js"></script>
     <!-- Disable Some key events -->
     <script src="scripts/disable-key-events.js"></script>
     <!-- script for open and close widget -->
@@ -212,6 +210,8 @@
 
         });
     </script>
+    <!-- Create ARticle js -->
+    <script src="scripts/create-article.js"></script>
 </body>
 
 </html>

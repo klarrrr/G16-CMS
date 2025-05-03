@@ -515,6 +515,7 @@ nav h1 {
     border: 1px solid #161616;
     /* padding: 2rem; */
     border-radius: 3px;
+    height: fit-content;
 }
 
 .article-box:hover {
@@ -795,7 +796,7 @@ nav h1 {
     user-select: none;
 }
 
-#widget-text-area {
+#short-desc-box {
     resize: none;
 }
 
@@ -813,8 +814,8 @@ nav h1 {
     font-size: 1rem;
 }
 
-#widget-short-title,
-#widget-text-area,
+#title-box,
+#short-desc-box,
 #widget-tags-input {
     padding: 0.5rem;
     border-radius: 3px;

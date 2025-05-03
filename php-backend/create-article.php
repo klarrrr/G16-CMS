@@ -15,73 +15,74 @@ S
 
 */
 
-// $title = $_POST['title'];
-// $content = $_POST['content'];
-// $shortDesc = $_POST['shortDesc'];
-// //  Temporary, Use session in the future
-// $userOwner = 1;
+$title = $_POST['title'];
+$content = $_POST['content'];
+$shortDesc = $_POST['shortDesc'];
+// $title = 'sampul title';
+// $content = '<p>Hello</p>';
+// $shortDesc = 'short desc';
+//  Temporary, Use session in the future
+$userOwner = 3;
 
-// if (!$content || !$title || $shortDesc) {
-//     echo json_encode([
-//         'error' => 'Bruh may error'
-//     ]);
-// }
+$sanitizedContent = htmlentities($content, ENT_QUOTES, 'UTF-8');
 
-// // Insert article to db
+if (!$content || !$title || !$shortDesc) {
+    echo json_encode([
+        'error' => 'Bruh may error'
+    ]);
+}
 
-// $articleQuery = "INSERT FROM articles 
-// (
-// article_title,
-// article_content,
-// user_owner,
-// edit_status,
-// completion_status,
-// ) 
-// VALUES 
-// (
-// $title,
-// $content,
-// $userOwner,
-// 'available',
-// 'draft'
-// )";
+// Insert article to db
 
-// mysqli_query($conn, $articleQuery);
+$articleQuery = "INSERT INTO articles 
+(
+article_title,
+article_content,
+user_owner,
+edit_status,
+completion_status
+) 
+VALUES 
+(
+'$title',
+'$content',
+$userOwner,
+'available',
+'draft'
+)";
 
-// // Get max id article
+mysqli_query($conn, $articleQuery);
 
-// $currentArticle = "SELECT max(article_id) FROM articles";
-// $result = mysqli_query($conn, $currentArticle);
-// $row = mysqli_fetch_assoc($result);
+// Get max id article
 
-// foreach ($row as $a) {
-//     $curArticle = $a;
-//     break;
-// }
+$currentArticle = "SELECT max(article_id) FROM articles";
+$result = mysqli_query($conn, $currentArticle);
+$row = mysqli_fetch_assoc($result);
 
-// // INsert to widgets
+foreach ($row as $a) {
+    $curArticle = $a;
+    break;
+}
 
-// $widgetQuery = "INSERT FROM widgets
-// (
-// widget_title,
-// widget_paragraph,
-// article_owner,
-// user_owner
-// )
-// VALUES
-// (
-// $title,
-// $shortDesc,
-// $curArticle,
-// $userOwner
-// )
-// ";
+// Insert to widgets
 
-// mysqli_query($conn, $widgetQuery);
+$widgetQuery = "INSERT INTO widgets
+(
+widget_title,
+widget_paragraph,
+article_owner,
+user_owner
+)
+VALUES
+(
+'$title',
+'$shortDesc',
+$curArticle,
+$userOwner
+)
+";
 
-
-
-
+mysqli_query($conn, $widgetQuery);
 
 
 // After inserting all required details, get all of them.
@@ -93,12 +94,7 @@ $articleAttribs = [];
 $getArticleQuery = "SELECT * FROM articles WHERE article_id = (SELECT max(article_id) FROM articles)";
 
 $result = mysqli_query($conn, $getArticleQuery);
-while ($row = mysqli_fetch_assoc($result)) {
-    foreach ($row as $a) {
-        $articleAttribs[] = $a;
-    }
-    break;
-}
+$articleAttribs = mysqli_fetch_assoc($result);
 
 
 // Widgets
@@ -108,14 +104,11 @@ $widgetAttribs = [];
 $getWidgetQuery = "SELECT * FROM widgets WHERE widget_id = (SELECT max(widget_id) FROM widgets)";
 
 $result = mysqli_query($conn, $getWidgetQuery);
-while ($row = mysqli_fetch_assoc($result)) {
-    foreach ($row as $a) {
-        $widgetAttribs[] = $a;
-    }
-    break;
-}
+$widgetAttribs = mysqli_fetch_assoc($result);
+
+mysqli_close($conn);
 
 echo json_encode([
     'article' => $articleAttribs,
-    'widgets' => $widgetAttribs
+    'widget' => $widgetAttribs
 ]);

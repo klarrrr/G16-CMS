@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contento : Add Article Page</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="cms-preview-styles.css">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 
@@ -68,156 +67,7 @@
                     </div>
                     <button class='edit-article-button'>Edit Page</button>
                 </div>
-                <div class="article-box">
-                    <div class="article-img-container">
-                        <img src="upload-images/PPK1.jpg" alt="" class='article-image-preview'>
-                    </div>
-                    <div class="article-title-status-container">
-                        <h2>Sample Captivating Title that will entrap you</h2>
-                        <h3>Status</h3>
-                    </div>
-                    <button class='edit-article-button'>Edit Page</button>
-                </div>
-                <div class="article-box">
-                    <div class="article-img-container">
-                        <img src="upload-images/PPK1.jpg" alt="" class='article-image-preview'>
-                    </div>
-                    <div class="article-title-status-container">
-                        <h2>Sample Captivating Title that will entrap you</h2>
-                        <h3>Status</h3>
-                    </div>
-                    <button class='edit-article-button'>Edit Page</button>
-                </div>
-                <div class="article-box">
-                    <div class="article-img-container">
-                        <img src="upload-images/PPK1.jpg" alt="" class='article-image-preview'>
-                    </div>
-                    <div class="article-title-status-container">
-                        <h2>Sample Captivating Title that will entrap you</h2>
-                        <h3>Status</h3>
-                    </div>
-                    <button class='edit-article-button'>Edit Page</button>
-                </div>
-                <div class="article-box">
-                    <div class="article-img-container">
-                        <img src="upload-images/PPK1.jpg" alt="" class='article-image-preview'>
-                    </div>
-                    <div class="article-title-status-container">
-                        <h2>Sample Captivating Title that will entrap you</h2>
-                        <h3>Status</h3>
-                    </div>
-                    <button class='edit-article-button'>Edit Page</button>
-                </div>
-                <div class="article-box">
-                    <div class="article-img-container">
-                        <img src="upload-images/PPK1.jpg" alt="" class='article-image-preview'>
-                    </div>
-                    <div class="article-title-status-container">
-                        <h2>Sample Captivating Title that will entrap you</h2>
-                        <h3>Status</h3>
-                    </div>
-                    <button class='edit-article-button'>Edit Page</button>
-                </div>
-                <div class="article-box">
-                    <div class="article-img-container">
-                        <img src="upload-images/PPK1.jpg" alt="" class='article-image-preview'>
-                    </div>
-                    <div class="article-title-status-container">
-                        <h2>Sample Captivating Title that will entrap you</h2>
-                        <h3>Status</h3>
-                    </div>
-                    <button class='edit-article-button'>Edit Page</button>
-                </div>
-                <div class="article-box">
-                    <div class="article-img-container">
-                        <img src="upload-images/PPK1.jpg" alt="" class='article-image-preview'>
-                    </div>
-                    <div class="article-title-status-container">
-                        <h2>Sample Captivating Title that will entrap you</h2>
-                        <h3>Status</h3>
-                    </div>
-                    <button class='edit-article-button'>Edit Page</button>
-                </div>
-                <div class="article-box">
-                    <div class="article-img-container">
-                        <img src="upload-images/PPK1.jpg" alt="" class='article-image-preview'>
-                    </div>
-                    <div class="article-title-status-container">
-                        <h2>Sample Captivating Title that will entrap you</h2>
-                        <h3>Status</h3>
-                    </div>
-                    <button class='edit-article-button'>Edit Page</button>
-                </div>
-                <div class="article-box">
-                    <div class="article-img-container">
-                        <img src="upload-images/PPK1.jpg" alt="" class='article-image-preview'>
-                    </div>
-                    <div class="article-title-status-container">
-                        <h2>Sample Captivating Title that will entrap you</h2>
-                        <h3>Status</h3>
-                    </div>
-                    <button class='edit-article-button'>Edit Page</button>
-                </div>
-                <div class="article-box">
-                    <div class="article-img-container">
-                        <img src="upload-images/PPK1.jpg" alt="" class='article-image-preview'>
-                    </div>
-                    <div class="article-title-status-container">
-                        <h2>Sample Captivating Title that will entrap you</h2>
-                        <h3>Status</h3>
-                    </div>
-                    <button class='edit-article-button'>Edit Page</button>
-                </div>
-                <div class="article-box">
-                    <div class="article-img-container">
-                        <img src="upload-images/PPK1.jpg" alt="" class='article-image-preview'>
-                    </div>
-                    <div class="article-title-status-container">
-                        <h2>Sample Captivating Title that will entrap you</h2>
-                        <h3>Status</h3>
-                    </div>
-                    <button class='edit-article-button'>Edit Page</button>
-                </div>
-                <div class="article-box">
-                    <div class="article-img-container">
-                        <img src="upload-images/PPK1.jpg" alt="" class='article-image-preview'>
-                    </div>
-                    <div class="article-title-status-container">
-                        <h2>Sample Captivating Title that will entrap you</h2>
-                        <h3>Status</h3>
-                    </div>
-                    <button class='edit-article-button'>Edit Page</button>
-                </div>
-                <div class="article-box">
-                    <div class="article-img-container">
-                        <img src="upload-images/PPK1.jpg" alt="" class='article-image-preview'>
-                    </div>
-                    <div class="article-title-status-container">
-                        <h2>Sample Captivating Title that will entrap you</h2>
-                        <h3>Status</h3>
-                    </div>
-                    <button class='edit-article-button'>Edit Page</button>
-                </div>
-                <div class="article-box">
-                    <div class="article-img-container">
-                        <img src="upload-images/PPK1.jpg" alt="" class='article-image-preview'>
-                    </div>
-                    <div class="article-title-status-container">
-                        <h2>Sample Captivating Title that will entrap you</h2>
-                        <h3>Status</h3>
-                    </div>
-                    <button class='edit-article-button'>Edit Page</button>
-                </div>
-                <div class="article-box">
-                    <div class="article-img-container">
-                        <img src="upload-images/PPK1.jpg" alt="" class='article-image-preview'>
-                    </div>
-                    <div class="article-title-status-container">
-                        <h2>Sample Captivating Title that will entrap you</h2>
-                        <h3>Status</h3>
-                    </div>
-                    <button class='edit-article-button'>Edit Page</button>
-                </div>
+
             </div>
             <button class='article-add-article-button' id='article-add-article-button'>+</button>
             <!-- Include Font Settings Box -->
@@ -236,7 +86,7 @@
         const addArticleBtn = document.getElementById('article-add-article-button');
         addArticleBtn.addEventListener('click', () => {
             window.location.href = 'create-new-article.php'
-            // Ajax some data from PHP
+            createArticle();
         });
     </script>
 </body>
