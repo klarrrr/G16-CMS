@@ -918,3 +918,53 @@ nav h1 {
 #open-widget:hover {
     transform: scale(1.02);
 }
+.widget-article-image {
+    display: flex;
+    flex-direction: column;
+}
+
+#thumbnailInput {
+    margin-right: 10px; /* Add space between the file input and the button */
+}
+
+#uploadedFile {
+    margin-top: 10px;
+}
+
+.thumbnail-container {
+    position: relative;
+    display: inline-block;
+}
+
+.thumbnail-img {
+    width: 100px;  /* Small size for the thumbnail image */
+    height: 100px;
+    object-fit: cover;  /* Ensure the image covers the area without distortion */
+    border-radius: 5px;
+}
+
+.delete-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: rgba(255, 255, 255, 0.5);   
+    border: none;
+    color: #888;  
+    font-size: 18px;  
+    width: 30px;  
+    height: 30px;
+    border-radius: 50%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;  
+    cursor: pointer;
+    padding: 0; 
+    transition: color 0.3s ease, background-color 0.3s ease;
+    font-weight: bold;
+    font-family: Arial, sans-serif; /
+}
+
+.delete-btn:hover {
+    color: #555; 
+    background-color: rgba(255, 255, 255, 0.8);
+}

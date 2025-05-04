@@ -161,9 +161,10 @@
                 </div>
 
                 <div class="widget-article-image">
-                    <h3 class='widget-article-h3'>Thumbnail Image</h3>
-                    <input type="file">
-                </div>
+                    <h3 class="widget-article-h3">Thumbnail Image</h3>
+                    <input type="file" id="thumbnailInput">
+                <div id="uploadedFile" style="margin-top: 10px;"></div>  
+
 
                 <div class="widget-article-tags">
                     <h3 class='widget-article-h3'>Tags</h3>
@@ -212,6 +213,8 @@
     </script>
     <!-- Create ARticle js -->
     <script src="scripts/create-article.js"></script>
+    <!-- upload image -->
+    <script src="scripts/widget_upload.js"></script>
 </body>
 
 </html>
