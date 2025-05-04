@@ -524,7 +524,6 @@ nav h1 {
 
 .article-img-container {
     display: flex;
-    background-image: url(upload-images/PPK1.jpg);
     background-repeat: none;
     background-size: cover;
     background-position-y: center;

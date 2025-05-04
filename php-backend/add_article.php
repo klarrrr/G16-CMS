@@ -1,62 +1,46 @@
 <?php
 include 'connect.php';
 
-// Post Page ID here
-$pageOwner = $_POST['page_id'] ?? 1;
+$user_id = $_POST['user_id'];
+// $user_id = 3; // // for testing
 
-// check
-if (!$pageOwner) {
-    echo json_encode(['error' => 'No page ID provided']);
-    exit;
-}
+$query = "SELECT * FROM widgets WHERE user_owner = $user_id ORDER BY user_owner DESC";
 
-// Insert a blank section where the article will be put into
-// TODO : Change Template to 'project' later on
-$stmt1 = $conn->prepare("INSERT INTO sections (section_name, page_owner, `type`) VALUES ('Article', ?, 'template')");
-$stmt1->bind_param("i", $pageOwner);
+$result = mysqli_query($conn, $query);
 
-$stmt1->execute();
-
-// Insert title text, images and paragraph in sections to elements
-// TODO : Change template to project in future updates
-$stmt2 = $conn->prepare("
-INSERT INTO elements (element_name, element_type, content, section_owner, `type`) VALUES 
-('Title Text', 'title', '{\"content\": \"Sample Captivating Title\"}', (SELECT MAX(section_id) FROM sections), 'template'),
-('Image', 'image', '{\"content\": \"default.png\"}', (SELECT MAX(section_id) FROM sections), 'template'),
-('Paragraph Text', 'paragraph', '{\"content\": \"Sample Captivating Paragraph...\"}', (SELECT MAX(section_id) FROM sections), 'template')
-");
-
-$stmt2->execute();
-
-$elementsArray = [];
-
-// Gets all the elements that are related to the recently inserted Section
-$stmt3 = $conn->prepare("SELECT * FROM elements WHERE section_owner = (SELECT MAX(section_id) FROM sections)");
-$stmt3->execute();
-$result = $stmt3->get_result();
+$widgets = [];
 
 while ($row = mysqli_fetch_assoc($result)) {
-    $elementsArray[] = $row;
+    $widgets[] = $row;
 }
 
-$sectionsArray = [];
+$articleOwnerId = [];
 
-// Gets all the elements that are related to the recently inserted Section
-$stmt4 = $conn->prepare("SELECT * FROM sections WHERE page_owner = $pageOwner AND section_id = (SELECT MAX(section_id) FROM sections);");
-$stmt4->execute();
-$result = $stmt4->get_result();
+foreach ($widgets as $widget) {
+    array_push($articleOwnerId, $widget['article_owner']);
+}
+
+$articleStatus = [];
+
+$articleIds = json_encode($articleOwnerId);
+$articleIds = str_replace('[', '', $articleIds);
+$articleIds = str_replace(']', '', $articleIds);
+
+$query = "SELECT edit_status FROM articles WHERE article_id IN ($articleIds) ORDER BY article_id DESC";
+
+$result = mysqli_query($conn, $query);
+
+$articles = [];
 
 while ($row = mysqli_fetch_assoc($result)) {
-    $sectionsArray[] = $row;
+    $articles[] = $row['edit_status'];
 }
 
-$stmt1->close();
-$stmt2->close();
-$stmt3->close();
-$stmt4->close();
-$conn->close();
+echo json_encode(
+    [
+        'article_status' => $articles,
+        'widgets' => $widgets
+    ]
+);
 
-echo json_encode([
-    'elements' => $elementsArray,
-    'sections' => $sectionsArray
-]);
+// echo json_encode($widgets);
