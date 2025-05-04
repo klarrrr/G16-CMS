@@ -26,47 +26,7 @@
                     <input type="text" placeholder="Search for you articles" id='search-your-articles'>
                 </div>
             </div>
-            <div class="articles-boxes-container">
-                <div class="article-box">
-                    <div class="article-img-container">
-                        <img src="upload-images/PPK1.jpg" alt="" class='article-image-preview'>
-                    </div>
-                    <div class="article-title-status-container">
-                        <h2>Sample Captivating Title that will entrap you</h2>
-                        <h3>Status</h3>
-                    </div>
-                    <button class='edit-article-button'>Edit Page</button>
-                </div>
-                <div class="article-box">
-                    <div class="article-img-container">
-                        <img src="upload-images/PPK1.jpg" alt="" class='article-image-preview'>
-                    </div>
-                    <div class="article-title-status-container">
-                        <h2>Sample Captivating Title that will entrap you</h2>
-                        <h3>Status</h3>
-                    </div>
-                    <button class='edit-article-button'>Edit Page</button>
-                </div>
-                <div class="article-box">
-                    <div class="article-img-container">
-                        <img src="upload-images/PPK1.jpg" alt="" class='article-image-preview'>
-                    </div>
-                    <div class="article-title-status-container">
-                        <h2>Sample Captivating Title that will entrap you</h2>
-                        <h3>Status</h3>
-                    </div>
-                    <button class='edit-article-button'>Edit Page</button>
-                </div>
-                <div class="article-box">
-                    <div class="article-img-container">
-                        <img src="upload-images/PPK1.jpg" alt="" class='article-image-preview'>
-                    </div>
-                    <div class="article-title-status-container">
-                        <h2>Sample Captivating Title that will entrap you</h2>
-                        <h3>Status</h3>
-                    </div>
-                    <button class='edit-article-button'>Edit Page</button>
-                </div>
+            <div class="articles-boxes-container" id='articles-boxes-container'>
 
             </div>
             <button class='article-add-article-button' id='article-add-article-button'>+</button>
@@ -89,6 +49,8 @@
             createArticle();
         });
     </script>
+    <!-- populate article container with articles -->
+    <script src="scripts/add_article.js"></script>
 </body>
 
 </html>
