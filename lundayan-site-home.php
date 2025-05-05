@@ -8,53 +8,50 @@
     <link rel="stylesheet" href="styles-lundayan-site.css">
     <link rel="icon" href="pics/lundayan-logo.png">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v22.0"></script>
 </head>
 
+
 <body>
+    <?php include 'lundayan-site-upper-nav.php' ?>
     <?php include 'lundayan-site-nav.php'; ?>
-    <main>
-        <section class="hero">
-            <div class="school">
-                <img src="pics/PLP_Logo.png" alt="" class="plp-name-logo">
-            </div>
-            <h1>Welcome to Lundayan</h1>
-            <p>Student Publication of Pamantasan ng Lungsod ng Pasig</p>
-        </section>
-
-        <section class="latest-news">
-            <div class="news-banner">
-                <div class="scrolling-text">
-                    <span> | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | </span>
-                </div>
-            </div>
-            <div class="container">
+    <main id='home-main'>
+        <section class="latest-news" id='latest-news-container'>
+            <div class="container" id='highlight-articles'>
                 <div class="text-container">
-                    <h1 id='latest-news-title'></h1>
-                    <p class="time-posted">Posted <small>●</small> <span id='latest-news-day-posted'></span></p>
-                    <p class="latest-paragraph" id='latest-news-paragraph'>
-
-                    </p>
+                    <div>
+                        <p class="time-posted">Posted <small>●</small> <span id='latest-news-day-posted'></span></p>
+                        <h1 id='latest-news-title'></h1>
+                    </div>
                     <!-- TODO : MAKE THIS DYNAMIC -->
-                    <a href="lundayan-site-article.php" id='latest-read-more'>Read More</a>
-                </div>
-                <!-- TODO : MAKE THIS DYNAMIC -->
-                <img src="pics/image.png" alt="Picture of the latest news fresh from the oven" id='latest-news-pic'>
-            </div>
-
-            <div class="news-banner">
-                <div class="scrolling-text">
-                    <span> | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | </span>
+                    <!-- <a href="lundayan-site-article.php" id='latest-read-more'>Read More</a> -->
                 </div>
             </div>
         </section>
 
+        <!-- <div class="news-banner">
+            <div class="scrolling-text">
+                <span> | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | </span>
+            </div>
+        </div> -->
         <section class="news-cards">
+            <div class="remaining-latest">
+                <div class="remaining-texts">
+                    <p>Browse and read the latest stuff</p>
+                    <h2>Latest News</h2>
+                </div>
+                <div class="card-news-container" id='card-news-container'>
+                    <!-- To be filled up -->
+                </div>
+            </div>
+            <div class="extras-container">
+                <div class="home-upcoming-events">
 
-        </section>
-
-        <section class="news-cards">
-            <div class="card-news-container" id='card-news-container'>
-
+                </div>
+                <div class="fb-page" data-href="https://www.facebook.com/LundayanPLP" data-tabs="timeline" data-width="800" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" data-lazy='true'>
+                    <blockquote cite="https://www.facebook.com/LundayanPLP" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/LundayanPLP">Lundayan Student Publication - PLPasig</a></blockquote>
+                </div>
             </div>
         </section>
     </main>

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,19 +11,20 @@
 </head>
 
 <body>
+    <?php include 'lundayan-site-upper-nav.php' ?>
     <?php include 'lundayan-site-nav.php'; ?>
     <main>
-        <section class="hero">
-            <h1>BULLETIN</h1>
-            <p>Posted news and events</p>
-        </section>
-        <div class="news-banner">
+        <!-- <div class="news-banner">
             <div class="scrolling-text">
                 <span> | BULLETIN | BULLETIN | BULLETIN | BULLETIN | BULLETIN | BULLETIN | BULLETIN | BULLETIN | BULLETIN | BULLETIN | BULLETIN | BULLETIN | BULLETIN | BULLETIN | BULLETIN | BULLETIN | BULLETIN | BULLETIN | BULLETIN | BULLETIN | </span>
             </div>
-        </div>
-
+        </div> -->
         <section class="sub-header">
+            <div class="remaining-texts" style='justify-content: center; align-items: center; display:flex; flex-direction: column;'>
+                <p>news and events</p>
+                <h2>BULLETIN</h2>
+            </div>
+
             <h3>Search for article</h3>
             <div class="search">
                 <input type="text" name='search-bar' id='search-bar' placeholder="Search for an existing article">
@@ -38,7 +38,8 @@
                 </div>
             </div>
         </section>
-        <section class="news-cards">
+        <!-- Lagyan ng sort ascending - descending -->
+        <section class="bulletin-news-cards">
             <div class="bulletin-card-news-container" id='bulletin-card-news-container'>
             </div>
             <div class="pagination" id='pagination'>

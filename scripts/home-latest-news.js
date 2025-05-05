@@ -2,13 +2,14 @@
 
 // Latest News
 
+const highlightArticle = document.getElementById('highlight-articles');
 const latestNewsTitle = document.getElementById('latest-news-title');
 const latestNewsDate = document.getElementById('latest-news-day-posted');
 const latestNewsParagraph = document.getElementById('latest-news-paragraph');
 const latestNewsReadMore = document.getElementById('latest-read-more');
-const latestNewsPic = document.getElementById('latest-news-pic');
 
 const cardNewsContainer = document.getElementById('card-news-container');
+const latestNewsContainer = document.getElementById('latest-news-container');
 
 $.ajax({
     url: 'php-backend/get-top-latest-news.php',
@@ -20,47 +21,39 @@ $.ajax({
         const topNews = res.widget[0];
 
         latestNewsTitle.innerHTML = topNews.widget_title;
+        latestNewsTitle.addEventListener('click', () => {
+            window.location.href = 'lundayan-site-article.php';
+        });
         latestNewsDate.innerHTML = formatDateTime(topNews.date_created);
-        latestNewsParagraph.innerHTML = topNews.widget_paragraph;
-        latestNewsPic.src = 'pics/' + topNews.widget_img;
+        // latestNewsParagraph.innerHTML = topNews.widget_paragraph;
+        let picUrl = 'pics/' + topNews.widget_img;
+        highlightArticle.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.65), rgb(0, 0, 0)), url(${picUrl})`;
+        highlightArticle.style.backgroundRepeat = 'no-repeat';
+        highlightArticle.style.backgroundSize = 'contain';
+
+        latestNewsContainer.style.backgroundImage = `linear-gradient(rgba(10, 92, 54, 0), rgba(0, 0, 0, 0.65), rgb(0, 0, 0)), url(${picUrl})`;
 
         for (let i = 1; i <= 6; i++) {
-            const newsCard = document.createElement('div');
-            newsCard.className = 'news-card'
+            let latestCardLayout = `
+                <div class="news-card">
+                    <div class='news-card-date-container'>
+                        <p class="news-card-date">${formatDateOnly(widgets[i].date_created)}</p>
+                        <p class="news-card-date">${formatTimeOnly(widgets[i].date_created)}</p>
+                    </div>
+                    <img src="${'pics/' + widgets[i].widget_img}">
+                    <div class="card-text-container">
+                        <h2>
+                            ${widgets[i].widget_title}
+                        </h2>
 
-            const newsCardImg = document.createElement('img');
-            newsCardImg.src = 'pics/' + widgets[i].widget_img;
+                        <p>
+                            ${widgets[i].widget_paragraph}
+                        </p>
+                    </div>
+                </div>
+            `;
 
-            const cardTextContainer = document.createElement('div');
-            cardTextContainer.className = 'card-text-container';
-
-            const newsCardTitle = document.createElement('h2');
-            newsCardTitle.innerHTML = widgets[i].widget_title;
-
-            const newsCardDate = document.createElement('p');
-            newsCardDate.innerHTML = 'Posted' + '<small> ● </small>' + formatDateTime(widgets[i].date_created);
-
-            const hr = document.createElement('hr');
-
-            const newsCardParagraph = document.createElement('p');
-
-            newsCardParagraph.textContent = widgets[i].widget_paragraph;
-
-            const newsCardReadMore = document.createElement('a');
-
-            newsCardReadMore.href = '#';
-            newsCardReadMore.textContent = 'Read More';
-
-            cardTextContainer.appendChild(newsCardTitle);
-            cardTextContainer.appendChild(newsCardDate);
-            cardTextContainer.appendChild(hr);
-            cardTextContainer.appendChild(newsCardParagraph);
-            cardTextContainer.appendChild(newsCardReadMore);
-
-            newsCard.appendChild(newsCardImg);
-            newsCard.appendChild(cardTextContainer);
-
-            cardNewsContainer.appendChild(newsCard);
+            cardNewsContainer.innerHTML += latestCardLayout;
         }
 
     },

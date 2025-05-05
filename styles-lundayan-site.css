@@ -21,19 +21,24 @@ body {
 header {
     background-color: #0f513293;
     /* Castleton green */
-    padding: 1rem 2rem;
-    position: fixed;
+    padding: 0 2rem;
+    position: sticky;
     width: 100vw;
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
     z-index: 99;
+    top: 0;
+    border-top: 2px solid #fcb404;
+    border-bottom: 2px solid #fcb404;
+
 }
 
 nav {
-    display: grid;
-    /* justify-content: space-between; */
-    grid-template-columns: 1fr 1fr 1fr;
+    display: flex;
+    justify-content: center;
+    /* grid-template-columns: 1fr 1fr 1fr; */
     align-items: center;
+    padding: 14px 16px;
 }
 
 .logo {
@@ -44,12 +49,13 @@ nav {
 }
 
 .logo h1 {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: bold;
     /* color: #A7FF83; */
     color: f4f4f4;
     -webkit-user-select: none;
     user-select: none;
+    align-self: center;
 }
 
 #lundayan-logo-pic {
@@ -72,10 +78,19 @@ nav {
     justify-content: center;
 }
 
+.nav-links li {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
 .nav-links li a {
     color: #f4f4f4;
     text-decoration: none;
     font-weight: 500;
+    font-size: 0.9rem;
+    justify-self: center;
 }
 
 .nav-links li a:hover {
@@ -152,16 +167,28 @@ nav {
 
 /* Latest News Section */
 
+#latest-news-container {
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .latest-news {
     display: flex;
     flex-direction: column;
     gap: 3rem;
     /* background-color: #18392B; */
     align-items: center;
+    height: 50vh;
 }
 
-.latest-news .container {
-    padding: 2rem 6rem 1rem 6rem;
+#latest-news-title {
+    cursor: pointer;
+    color: #fcb404;
+}
+
+#latest-news-title:hover {
+    color: #ffcc4b;
+    transform: scale(1.01);
 }
 
 .news-banner {
@@ -205,17 +232,23 @@ nav {
 }
 
 
-
-.latest-news .container {
+#highlight-articles {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    padding: 8vh 12vw;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    background-position: center;
+    background-attachment: fixed;
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
 }
 
 .latest-news .text-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 2rem;
     gap: 2rem;
 }
 
@@ -225,32 +258,36 @@ nav {
 }
 
 .latest-news .text-container h1 {
-    font-size: 2.5em;
+    font-size: 2.8em;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    width: 40%;
+    line-height: 3rem;
 }
 
 .latest-paragraph {
-    font-size: 1.3em;
+    font-size: 1em;
     text-align: justify;
     display: -webkit-box;
-    -webkit-line-clamp: 6;
-    line-clamp: 6;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    width: 50%;
 }
 
 .latest-news .text-container a {
-    font-size: 1.3em;
+    font-size: 0.8em;
     color: #161616;
     text-align: center;
     background-color: #fcb404;
     padding: 0.5rem;
     border-radius: 3px;
     text-decoration: none;
+    width: fit-content;
 }
 
 .latest-news .text-container a:hover {
@@ -358,16 +395,41 @@ nav {
 /* News cards Section */
 
 .news-cards {
-    background-color: #18392B;
+    background: hsla(155, 41%, 16%, 1);
+
+    background: linear-gradient(180deg, hsla(155, 41%, 16%, 1) 0%, hsla(159, 23%, 15%, 1) 100%);
+
+    background: -moz-linear-gradient(180deg, hsla(155, 41%, 16%, 1) 0%, hsla(159, 23%, 15%, 1) 100%);
+
+    background: -webkit-linear-gradient(180deg, hsla(155, 41%, 16%, 1) 0%, hsla(159, 23%, 15%, 1) 100%);
+
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#18392B", endColorstr="#1D2E28", GradientType=1);
+    display: grid;
+    grid-template-columns: 70% 1fr;
+    padding: 4vh 12vw;
+    gap: 2rem;
+}
+
+.bulletin-news-cards {
+    background: hsla(155, 41%, 16%, 1);
+    background: linear-gradient(180deg, hsla(155, 41%, 16%, 1) 0%, hsla(159, 23%, 15%, 1) 100%);
+    background: -moz-linear-gradient(180deg, hsla(155, 41%, 16%, 1) 0%, hsla(159, 23%, 15%, 1) 100%);
+    background: -webkit-linear-gradient(180deg, hsla(155, 41%, 16%, 1) 0%, hsla(159, 23%, 15%, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#18392B", endColorstr="#1D2E28", GradientType=1);
     display: flex;
     flex-direction: column;
+    padding: 4vh 12vw;
+    gap: 2rem;
 }
 
 .card-news-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
-    padding: 4rem 8rem;
+}
+
+.fb_iframe_widget iframe {
+    /* border-radius: 1rem !important; */
 }
 
 .bulletin-card-news-container {
@@ -379,11 +441,17 @@ nav {
 
 .news-card {
     background-color: #14452F;
-    border-radius: 15px;
+    /* border-radius: 15px; */
     text-align: center;
     transition: transform 0.3s;
     overflow: hidden;
     border: 1px solid #fcb404;
+    padding: 1.7rem;
+    gap: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    height: 100%;
 }
 
 .bulletin-news-card {
@@ -399,7 +467,7 @@ nav {
 }
 
 .news-card:hover {
-    transform: translateY(-10px);
+    transform: scale(1.02);
 }
 
 .bulletin-news-card:hover {
@@ -407,8 +475,8 @@ nav {
 }
 
 .news-card img {
-    width: 400px;
-    height: 400px;
+    width: 100%;
+    height: 200px;
     object-fit: cover;
     background-color: #161616;
 }
@@ -421,10 +489,10 @@ nav {
 }
 
 .news-card .card-text-container {
-    padding: 1.5rem;
+    /* padding: 0 1.5vw 1.5vh 1.5vw; */
     display: flex;
     flex-direction: column;
-    gap: 1em;
+    gap: 0.5rem;
 }
 
 .news-card .card-text-container hr {
@@ -446,8 +514,8 @@ nav {
     font-size: 1.2em;
     text-align: left;
     display: -webkit-box;
-    -webkit-line-clamp: 1;
-    line-clamp: 1;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -456,20 +524,36 @@ nav {
     font-size: 2em;
     text-align: left;
     display: -webkit-box;
-    -webkit-line-clamp: 1;
-    line-clamp: 1;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
 .news-card .card-text-container p {
-    font-size: 0.9em;
+    font-size: 0.7em;
     text-align: left;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+
+.news-card-date {
+    font-size: 0.6em !important;
+    text-align: left;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.news-card-date-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .bulletin-news-card .card-text-container p {
@@ -487,8 +571,9 @@ nav {
     justify-self: flex-end;
     background-color: #fcb404;
     border-radius: 3px;
-    padding: 0.5rem;
+    padding: 0.3rem;
     text-decoration: none;
+    font-size: 0.8rem;
 }
 
 .bulletin-news-card .card-text-container a {
@@ -766,7 +851,15 @@ tbody td {
     flex-direction: column;
     width: 100vw;
     gap: 5rem;
-    background-color: #18392B;
+    background: hsla(155, 41%, 16%, 1);
+
+    background: linear-gradient(180deg, hsla(155, 41%, 16%, 1) 0%, hsla(159, 23%, 15%, 1) 100%);
+
+    background: -moz-linear-gradient(180deg, hsla(155, 41%, 16%, 1) 0%, hsla(159, 23%, 15%, 1) 100%);
+
+    background: -webkit-linear-gradient(180deg, hsla(155, 41%, 16%, 1) 0%, hsla(159, 23%, 15%, 1) 100%);
+
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#18392B", endColorstr="#1D2E28", GradientType=1);
     width: 100%;
 }
 
@@ -1265,8 +1358,9 @@ tbody td {
     display: none;
     justify-content: center;
     align-items: center;
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px); /* Safari */
+    /* Safari */
     background-color: rgba(0, 0, 0, 0.3);
     z-index: 9999;
     animation: fadeInBackdrop 0.4s ease-in-out forwards;
@@ -1312,6 +1406,7 @@ tbody td {
         opacity: 0;
         transform: scale(0.95);
     }
+
     100% {
         opacity: 1;
         transform: scale(1);
@@ -1322,12 +1417,13 @@ tbody td {
     0% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
 }
 
-.empty-cell{
+.empty-cell {
     color: #0A5C36;
     background-color: #14452F;
     pointer-events: none;
@@ -1338,7 +1434,7 @@ tbody td {
     border: 1px solid #14452F;
     padding: 10px;
     min-width: 200px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
 }
 
@@ -1347,4 +1443,58 @@ tbody td {
     border-radius: 6px;
     padding: 8px;
     margin-bottom: 6px;
+}
+
+.upper-title-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 2rem;
+    background-image:
+        linear-gradient(rgba(10, 92, 54, 0.95), rgba(20, 69, 47, 0.95)),
+        url(pics/plp-outside.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.upper-title-container h1 {
+    font-size: 5rem;
+    line-height: 5rem;
+}
+
+.upper-title-container p {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5rem;
+}
+
+.home-upcoming-events {
+    border: 1px solid #fcb404;
+    width: 100%;
+    height: 500px;
+}
+
+.extras-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.remaining-latest {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.remaining-texts p {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5rem;
+}
+
+.remaining-texts h2 {
+    font-size: 2rem;
+    line-height: 2rem;
 }

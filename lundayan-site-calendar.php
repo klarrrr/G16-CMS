@@ -10,23 +10,24 @@
 </head>
 
 <body>
+    <?php include 'lundayan-site-upper-nav.php' ?>
     <?php include 'lundayan-site-nav.php'; ?>
     <main>
-        <section class="hero">
-            <h1>CALENDAR</h1>
-            <p>Look back or ahead of time</p>
-        </section>
-        <div class="news-banner">
+        <!-- <div class="news-banner">
             <div class="scrolling-text">
                 <span> | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | </span>
             </div>
-        </div>
+        </div> -->
         <section class="calendar">
-
+            <div class="remaining-texts" style='justify-content: center; align-items: center; display:flex; flex-direction: column;'>
+                <p>stay on track with our</p>
+                <h2>CALENDAR</h2>
+            </div>
+            <br>
             <div class="calendar-controls">
                 <div class="time-day">
-                <img id="time-image" src="images/morning.jpg" alt="Time of day image">
-                <div class="time-day-text-container">
+                    <img id="time-image" src="images/morning.jpg" alt="Time of day image">
+                    <div class="time-day-text-container">
                         <h3>05:35 AM</h3>
                         <p>Sunday, April 2025</p>
                     </div>
@@ -65,7 +66,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="calendar-body">
                 <div class="upcoming-events">
                     <div class="title-container">
@@ -131,7 +132,7 @@
                             </tr>
                         </thead>
                         <tbody id="calendar-body">
-                <!-- JavaScript will populate this -->
+                            <!-- JavaScript will populate this -->
                         </tbody>
                     </table>
                 </div>

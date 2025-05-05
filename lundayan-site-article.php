@@ -10,6 +10,7 @@
 </head>
 
 <body>
+    <?php include 'lundayan-site-upper-nav.php' ?>
     <?php include 'lundayan-site-nav.php'; ?>
     <main>
         <section class="hero">

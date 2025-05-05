@@ -11,17 +11,15 @@
     </head>
 
     <body>
+        <?php include 'lundayan-site-upper-nav.php' ?>
         <?php include 'lundayan-site-nav.php'; ?>
         <main>
-            <section class="hero">
-                <h1>CONTACT US</h1>
-                <p>Send us a message</p>
-            </section>
-            <div class="news-banner">
+
+            <!-- <div class="news-banner">
                 <div class="scrolling-text">
                     <span> | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | </span>
                 </div>
-            </div>
+            </div> -->
 
             <section class="contact">
                 <div class="contact-title-container">
