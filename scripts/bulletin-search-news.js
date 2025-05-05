@@ -3,7 +3,7 @@ const searchBar = document.getElementById('search-bar');
 // Function to load search data with pagination
 function loadSearchData(page = 1, searchFor = '') {
     $.ajax({
-        url: '../php-backend/bulletin-search-news.php',
+        url: 'php-backend/bulletin-search-news.php',
         type: 'GET',
         dataType: 'json',
         data: {

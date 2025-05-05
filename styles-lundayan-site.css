@@ -1332,3 +1332,19 @@ tbody td {
     background-color: #14452F;
     pointer-events: none;
 }
+
+#event-box {
+    background: #0A5C36;
+    border: 1px solid #14452F;
+    padding: 10px;
+    min-width: 200px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+.event-card {
+    background: #14452F;
+    border-radius: 6px;
+    padding: 8px;
+    margin-bottom: 6px;
+}

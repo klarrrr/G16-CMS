@@ -138,6 +138,7 @@
             </div>
         </section>
     </main>
+    <div id="event-box" style="display:none; position:absolute; z-index:1000;"></div>
 
     <?php include 'lundayan-site-footer.php' ?>
     <script src='scripts/calendar-handler.js'></script>

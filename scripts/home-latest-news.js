@@ -11,7 +11,7 @@ const latestNewsPic = document.getElementById('latest-news-pic');
 const cardNewsContainer = document.getElementById('card-news-container');
 
 $.ajax({
-    url: '../php-backend/get-top-latest-news.php',
+    url: 'php-backend/get-top-latest-news.php',
     type: 'POST',
     dataType: 'json',
     data: {},
