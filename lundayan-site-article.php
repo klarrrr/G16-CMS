@@ -13,32 +13,30 @@
     <?php include 'lundayan-site-upper-nav.php' ?>
     <?php include 'lundayan-site-nav.php'; ?>
     <main>
-        <section class="hero">
-            <h1>CHED's Certificates of Program Compliance (COPCs)</h1>
-            <p>Posted ● April 25, 2025</p>
-            <div class="back-next">
-                <a href="#">« Older Post</a>
-                <a href="#">Newer Post »</a>
-            </div>
-        </section>
-        <div class="news-banner">
+        <!-- <div class="news-banner">
             <div class="scrolling-text">
                 <span>
                     | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE
                     | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE |
                 </span>
             </div>
-        </div>
+        </div> -->
         <section class="article-image-container">
             <div class="article-image">
-                <img src="pics/image.png" alt="Article Image">
+                <div class="image-gradient">
+                    <img src="pics/image.png" alt="Article Image">
+                </div>
+                <div class="back-next">
+                    <a href="#">« Older Post</a>
+                    <a href="#">Newer Post »</a>
+                </div>
             </div>
         </section>
-        <div class="news-banner">
+        <!-- <div class="news-banner">
             <div class="scrolling-text">
                 <span> | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | </span>
             </div>
-        </div>
+        </div> -->
         <section class="article-information">
             <h2>
                 Various programs from several colleges of the Pamantasan received their respective Certificates of Program Compliance (COPCs) from the Commission on Higher Education (CHED)
@@ -58,14 +56,14 @@
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim cupiditate numquam fuga aspernatur at corrupti! Blanditiis, nihil quae illo debitis magni expedita repellat. Itaque atque, nesciunt necessitatibus dolor tenetur possimus.
             </p>
         </section>
-        <div class="news-banner">
+        <!-- <div class="news-banner">
             <div class="scrolling-text">
                 <span>
                     | GALLERY | GALLERY | GALLERY | GALLERY | GALLERY | GALLERY | GALLERY | GALLERY
                     | GALLERY | GALLERY | GALLERY | GALLERY | GALLERY | GALLERY | GALLERY | GALLERY | GALLERY | GALLERY | GALLERY | GALLERY |
                 </span>
             </div>
-        </div>
+        </div> -->
         <section class="article-gallery">
             <div class="gallery-title-container">
                 <h2>Gallery</h2>

@@ -1098,9 +1098,12 @@ tbody td {
 
 .back-next {
     display: flex;
+    flex-direction: row;
+    width: 100%;
     justify-content: space-between;
     padding-left: 8rem;
     padding-right: 8rem;
+    position: absolute;
 }
 
 .back-next a {
@@ -1115,11 +1118,12 @@ tbody td {
 .article-image-container {
     width: 100vw;
     overflow: hidden;
-    height: 60vh;
+    height: 50vh;
     display: flex;
     align-items: center;
     justify-content: center;
     background-image: url(pics/image.png);
+
 }
 
 .article-image {
@@ -1127,21 +1131,35 @@ tbody td {
     height: 100%;
     overflow: hidden;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     -webkit-backdrop-filter: blur(20px) brightness(0.3);
     backdrop-filter: blur(20px) brightness(0.3);
 }
 
-.article-image-container img {
+.image-gradient img {
     height: 100%;
+    z-index: -1;
+    position: relative;
+}
+
+.image-gradient {
+    width: fit-content;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(rgba(0, 0, 0, 0), rgb(0, 0, 0));
 }
 
 .article-information {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    padding: 4rem 8rem;
+    padding: 8vh 12vw;
 }
 
 .article-information .p-date {
@@ -1171,7 +1189,7 @@ tbody td {
 
 .gallery-images {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     justify-content: center;
     gap: 1rem;
 }
@@ -1460,14 +1478,14 @@ tbody td {
 }
 
 .upper-title-container h1 {
-    font-size: 5rem;
-    line-height: 5rem;
+    font-size: 5vw;
+    line-height: 5vw;
 }
 
 .upper-title-container p {
-    font-size: 1rem;
+    font-size: 1vw;
     text-transform: uppercase;
-    letter-spacing: 0.5rem;
+    letter-spacing: 0.5vw;
 }
 
 .home-upcoming-events {
