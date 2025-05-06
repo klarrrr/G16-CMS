@@ -25,7 +25,7 @@
                 <h2>BULLETIN</h2>
             </div> -->
 
-            <h3>Search for article</h3>
+            <h3>Search for articles</h3>
             <div class="search">
                 <input type="text" name='search-bar' id='search-bar' placeholder="Search for an existing article">
             </div>

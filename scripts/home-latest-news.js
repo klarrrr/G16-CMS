@@ -26,22 +26,39 @@ $.ajax({
         });
         latestNewsDate.innerHTML = formatDateTime(topNews.date_created);
         // latestNewsParagraph.innerHTML = topNews.widget_paragraph;
-        let picUrl = 'pics/' + topNews.widget_img;
+
+        let picUrl = null;
+        console.log(topNews.widget_img);
+
+        if (topNews.widget_img != '') {
+            picUrl = 'pics/' + topNews.widget_img;
+        } else {
+            picUrl = 'pics/plp-outside.jpg';
+        }
+
         highlightArticle.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.65), rgb(0, 0, 0)), url(${picUrl})`;
+
         highlightArticle.style.backgroundRepeat = 'no-repeat';
         highlightArticle.style.backgroundSize = 'contain';
 
         latestNewsContainer.style.backgroundImage = `linear-gradient(rgba(10, 92, 54, 0), rgba(0, 0, 0, 0.65), rgb(0, 0, 0)), url(${picUrl})`;
 
         for (let i = 1; i <= 6; i++) {
+            if (widgets[i].widget_img != '') {
+                picUrl = 'pics/' + widgets[i].widget_img;
+            } else {
+                picUrl = 'pics/plp-outside.jpg';
+            }
+
+
             let latestCardLayout = `
                 <div class="news-card">
                     <div class='news-card-date-container'>
                         <p class="news-card-date">${formatDateOnly(widgets[i].date_created)}</p>
                         <p class="news-card-date">${formatTimeOnly(widgets[i].date_created)}</p>
                     </div>
-                    <img src="${'pics/' + widgets[i].widget_img}">
-                    <div class="card-text-container">
+                    <img src="${picUrl}">
+                    <div class="card-text-container">   
                         <h2>
                             ${widgets[i].widget_title}
                         </h2>

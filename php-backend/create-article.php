@@ -1,6 +1,6 @@
 <?php
 include 'connect.php';
-
+session_start();
 // Insert 
 
 /*
@@ -21,8 +21,7 @@ $shortDesc = $_POST['shortDesc'];
 // $title = 'sampul title';
 // $content = '<p>Hello</p>';
 // $shortDesc = 'short desc';
-//  Temporary, Use session in the future
-$userOwner = 3;
+$userOwner = $_SESSION['user_id'];
 
 $sanitizedContent = htmlentities($content, ENT_QUOTES, 'UTF-8');
 

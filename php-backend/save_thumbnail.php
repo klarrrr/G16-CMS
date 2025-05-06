@@ -1,6 +1,8 @@
 <?php
 include 'connect.php';
 
+session_start();
+
 $data = json_decode(file_get_contents("php://input"), true);
 
 if (isset($data['widget_img']) && isset($data['article_owner']) && isset($data['user_owner'])) {
@@ -23,4 +25,3 @@ if (isset($data['widget_img']) && isset($data['article_owner']) && isset($data['
 }
 
 $conn->close();
-?>

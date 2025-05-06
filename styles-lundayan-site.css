@@ -430,6 +430,7 @@ nav {
 
 .fb_iframe_widget iframe {
     /* border-radius: 1rem !important; */
+    border-radius: 1rem;
 }
 
 .bulletin-card-news-container {
@@ -452,6 +453,7 @@ nav {
     flex-direction: column;
     cursor: pointer;
     height: 100%;
+    border-radius: 1rem;
 }
 
 .bulletin-news-card {
@@ -631,12 +633,18 @@ footer {
 /* Calendar */
 
 .calendar {
-    padding: 4rem 8rem;
+    padding: 8vh 12vw;
     display: flex;
     flex-direction: column;
     width: 100vw;
+    /* height: 100vh; */
     gap: 1em;
-    background-color: #18392B;
+    /* background-color: #18392B; */
+    background: hsla(155, 41%, 16%, 1);
+    background: linear-gradient(180deg, hsla(155, 41%, 16%, 1) 0%, hsla(159, 23%, 15%, 1) 100%);
+    background: -moz-linear-gradient(180deg, hsla(155, 41%, 16%, 1) 0%, hsla(159, 23%, 15%, 1) 100%);
+    background: -webkit-linear-gradient(180deg, hsla(155, 41%, 16%, 1) 0%, hsla(159, 23%, 15%, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#18392B", endColorstr="#1D2E28", GradientType=1);
 }
 
 .calendar h1 {
@@ -644,11 +652,13 @@ footer {
 }
 
 .calendar-controls {
-    display: grid;
-    grid-template-columns: 30% 70%;
     align-items: center;
     gap: 1rem;
     /* border: 1px solid #fcb404; */
+}
+
+.calendar-numbers {
+    width: 100%;
 }
 
 .adjust-calendar-container {
@@ -695,6 +705,28 @@ footer {
 .calendar-btns button img {
     width: 30px;
 }
+
+.calendar-vertical-layout {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+.calendar-left,
+.calendar-right {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.calendar-left .time-day {
+    margin-bottom: 2rem;
+}
+
+.calendar-right {
+    gap: 2rem;
+}
+
 
 select {
     /* Reset Select */
@@ -752,6 +784,7 @@ select::-ms-expand {
     background-color: #14452F;
     border-radius: 3px;
     /* border: 1px solid #f4f4f4; */
+    height: 100%;
 }
 
 .events {
@@ -760,6 +793,7 @@ select::-ms-expand {
     gap: 1rem;
     overflow-y: scroll;
     padding: 1rem;
+    height: 100%;
 }
 
 .title-container {
@@ -808,11 +842,13 @@ select::-ms-expand {
 
 table {
     border-collapse: collapse;
-    background: white;
+    background: transparent;
     color: black;
     width: 100%;
     height: 100%;
     border-radius: 3px;
+    border-collapse: separate;
+    table-layout: fixed;
 }
 
 th,
@@ -820,17 +856,30 @@ td {
     font-weight: bold;
     text-align: center;
     padding: 1rem;
-    border: 1px solid #fcb404;
 }
 
 thead th {
-    background: #0F5132;
+    /* background: #0F5132; */
     color: #f4f4f4;
+    text-transform: uppercase;
+    font-size: 1.5rem;
 }
 
 tbody td {
-    background: #14452F;
+    /* background: #14452F; */
     color: #f4f4f4;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    font-size: 2rem;
+    border-radius: 0.5rem;
+    outline: 1px solid #fcb404;
+
+}
+
+tbody td:hover {
+    background-color: #A7FF83;
+    color: #161616;
 }
 
 .td-highlighted {
@@ -839,10 +888,9 @@ tbody td {
 }
 
 .calendar-body {
-    display: grid;
-    grid-template-columns: 30% 1fr;
     gap: 1rem;
-    height: 70vh;
+    height: 100%;
+    width: 100%;
 }
 
 .contact {
@@ -1443,24 +1491,45 @@ tbody td {
 
 .empty-cell {
     color: #0A5C36;
-    background-color: #14452F;
+    /* background-color: #14452F; */
     pointer-events: none;
 }
 
 #event-box {
-    background: #0A5C36;
+    background: #0a5c369b;
     border: 1px solid #14452F;
-    padding: 10px;
+    padding: 1rem;
     min-width: 200px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    border-radius: 0.5rem;
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+}
+
+#event-box .close-event-box-container {
+    margin-bottom: 1rem;
+
 }
 
 .event-card {
     background: #14452F;
-    border-radius: 6px;
-    padding: 8px;
+    border-radius: 0.4rem;
+    padding: 1rem;
     margin-bottom: 6px;
+    cursor: pointer;
+}
+
+.event-card strong {
+    font-size: 0.8rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    /* Lagyan line clamp orr ewangko */
+}
+
+.event-card:hover {
+    background-color: #fcb404;
+    color: #161616;
 }
 
 .upper-title-container {
@@ -1492,12 +1561,14 @@ tbody td {
     border: 1px solid #fcb404;
     width: 100%;
     height: 500px;
+    border-radius: 1rem;
 }
 
 .extras-container {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    overflow: hidden;
 }
 
 .remaining-latest {
@@ -1515,4 +1586,26 @@ tbody td {
 .remaining-texts h2 {
     font-size: 2rem;
     line-height: 2rem;
+}
+
+.close-event-box-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.close-event-box {
+    color: #f4f4f4;
+    padding: 0.5rem;
+    cursor: pointer;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    border-radius: 0.5rem;
+}
+
+.close-event-box:hover {
+    background-color: crimson;
 }

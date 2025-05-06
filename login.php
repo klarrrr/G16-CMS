@@ -15,14 +15,14 @@ if (empty($email) || empty($pass)) {
 }
 
 // Prepare SQL to fetch the user with the email
-$stmt = $conn->prepare("SELECT user_id, user_first_name, user_last_name, user_pass FROM users WHERE user_email = ?");
+$stmt = $conn->prepare("SELECT user_id, user_first_name, user_last_name, user_type, user_pass FROM users WHERE user_email = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
 $stmt->store_result();
 
 // Check if user found
 if ($stmt->num_rows > 0) {
-    $stmt->bind_result($user_id, $user_first, $user_last, $db_pass);
+    $stmt->bind_result($user_id, $user_first, $user_last, $user_type, $db_pass);
     $stmt->fetch();
 
     // ✅ Check plain text password (not hashed)
@@ -30,6 +30,7 @@ if ($stmt->num_rows > 0) {
         $_SESSION['user_id'] = $user_id;
         $_SESSION['user_first'] = $user_first;
         $_SESSION['user_last'] = $user_last;
+        $_SESSION['user_type'] = ucwords($user_type);
         echo json_encode([
             'status' => 'success'
         ]);
@@ -42,4 +43,3 @@ if ($stmt->num_rows > 0) {
 
 $stmt->close();
 $conn->close();
-?>

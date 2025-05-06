@@ -1,7 +1,7 @@
 document.getElementById('thumbnailInput').addEventListener('change', function () {
     const file = this.files[0];
-    const articleOwnerId = 69;   
-    const userOwnerId = 3;      
+    const articleOwnerId = 69;
+    const userOwnerId = 3;
 
     if (file) {
         const reader = new FileReader();
@@ -19,20 +19,20 @@ document.getElementById('thumbnailInput').addEventListener('change', function ()
                     user_owner: userOwnerId
                 })
             })
-            .then(res => res.text())
-            .then(response => {
-                if (!isNaN(response)) {
-                    const uploadedFile = document.getElementById('uploadedFile');
-                    uploadedFile.innerHTML = `
+                .then(res => res.text())
+                .then(response => {
+                    if (!isNaN(response)) {
+                        const uploadedFile = document.getElementById('uploadedFile');
+                        uploadedFile.innerHTML = `
                         <div class="thumbnail-container">
                             <img src="data:image/jpeg;base64,${base64String}" class="thumbnail-img" />
                             <button class="delete-btn" onclick="deleteImage(${response})">x</button>
                         </div>
                     `;
-                } else {
-                    alert("Failed to upload image: " + response);
-                }
-            });
+                    } else {
+                        alert("Failed to upload image: " + response);
+                    }
+                });
         };
         reader.readAsDataURL(file);
     }
@@ -46,11 +46,11 @@ function deleteImage(id) {
         },
         body: JSON.stringify({ id: id })
     })
-    .then(res => res.text())
-    .then(response => {
-        alert(response);
-        document.getElementById('uploadedFile').innerHTML = "";
-        document.getElementById('thumbnailInput').value = "";  
-    });
+        .then(res => res.text())
+        .then(response => {
+            alert(response);
+            document.getElementById('uploadedFile').innerHTML = "";
+            document.getElementById('thumbnailInput').value = "";
+        });
 }
 

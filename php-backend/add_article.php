@@ -1,7 +1,10 @@
 <?php
+
+session_start();
+
 include 'connect.php';
 
-$user_id = $_POST['user_id'];
+$user_id = $_SESSION['user_id'];
 // $user_id = 3; // // for testing
 
 $query = "SELECT * FROM widgets WHERE user_owner = $user_id ORDER BY widget_id DESC";

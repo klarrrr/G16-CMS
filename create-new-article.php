@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location: lundayan-sign-in-page.php');
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,7 +34,7 @@
                     <!-- TODO MAKE DYNAMIC LATER -->
                     <div class="create-nav-one-title">
                         <h2 id='top-article-title'>Article Document Title</h2>
-                        <p>Last updated on May 1, 2025 - Klarenz Cobie Manrique</p>
+                        <p>Last updated on May 1, 2025 - <?php echo $_SESSION['user_first'] . ' ' . $_SESSION['user_last'] ?></p>
                     </div>
                     <div class="nav-one-buttons">
                         <span id='open-widget'>》 Hide Details Box</span>
@@ -163,58 +171,58 @@
                 <div class="widget-article-image">
                     <h3 class="widget-article-h3">Thumbnail Image</h3>
                     <input type="file" id="thumbnailInput">
-                <div id="uploadedFile" style="margin-top: 10px;"></div>  
+                    <div id="uploadedFile" style="margin-top: 10px;"></div>
 
 
-                <div class="widget-article-tags">
-                    <h3 class='widget-article-h3'>Tags</h3>
-                    <span class='added-tag'><span class='tag-name'>anime</span><span class='remove-tag'>x</span></span>
-                    <div class="tags-input-container">
-                        <input type="text" placeholder="Enter tags here" id='widget-tags-input'>
+                    <div class="widget-article-tags">
+                        <h3 class='widget-article-h3'>Tags</h3>
+                        <span class='added-tag'><span class='tag-name'>anime</span><span class='remove-tag'>x</span></span>
+                        <div class="tags-input-container">
+                            <input type="text" placeholder="Enter tags here" id='widget-tags-input'>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Script for Menu Button on Top Left -->
-    <script src="scripts/menu_button.js"></script>
-    <!-- Populate the Selection Input of all the pages -->
-    <script src="scripts/nav_panel_switcher.js"></script>
-    <script>
-        const quill = new Quill('#editor', {
-            theme: 'snow',
-            modules: {
-                toolbar: '#create-nav-two'
-            },
-            history: {
-                delay: 2000,
-                maxStack: 500,
-                userOnly: true
-            }
-        });
-    </script>
-    <!-- Disable Some key events -->
-    <script src="scripts/disable-key-events.js"></script>
-    <!-- script for open and close widget -->
-    <script>
-        const widgetOpenBtn = document.getElementById('open-widget');
-        const createArticleMain = document.getElementById('create-article-main');
+        <!-- Script for Menu Button on Top Left -->
+        <script src="scripts/menu_button.js"></script>
+        <!-- Populate the Selection Input of all the pages -->
+        <script src="scripts/nav_panel_switcher.js"></script>
+        <script>
+            const quill = new Quill('#editor', {
+                theme: 'snow',
+                modules: {
+                    toolbar: '#create-nav-two'
+                },
+                history: {
+                    delay: 2000,
+                    maxStack: 500,
+                    userOnly: true
+                }
+            });
+        </script>
+        <!-- Disable Some key events -->
+        <script src="scripts/disable-key-events.js"></script>
+        <!-- script for open and close widget -->
+        <script>
+            const widgetOpenBtn = document.getElementById('open-widget');
+            const createArticleMain = document.getElementById('create-article-main');
 
-        widgetOpenBtn.addEventListener('click', () => {
-            if (createArticleMain.style.gridTemplateColumns == '99% 1%') {
-                widgetOpenBtn.textContent = '》 Hide Detail Box'
-                createArticleMain.style.gridTemplateColumns = '80% 20%';
-            } else {
-                widgetOpenBtn.textContent = '《 Show Detail Box'
-                createArticleMain.style.gridTemplateColumns = '99% 1%';
-            }
+            widgetOpenBtn.addEventListener('click', () => {
+                if (createArticleMain.style.gridTemplateColumns == '99% 1%') {
+                    widgetOpenBtn.textContent = '》 Hide Detail Box'
+                    createArticleMain.style.gridTemplateColumns = '80% 20%';
+                } else {
+                    widgetOpenBtn.textContent = '《 Show Detail Box'
+                    createArticleMain.style.gridTemplateColumns = '99% 1%';
+                }
 
-        });
-    </script>
-    <!-- Create ARticle js -->
-    <script src="scripts/create-article.js"></script>
-    <!-- upload image -->
-    <script src="scripts/widget_upload.js"></script>
+            });
+        </script>
+        <!-- Create ARticle js -->
+        <script src="scripts/create-article.js"></script>
+        <!-- upload image -->
+        <script src="scripts/widget_upload.js"></script>
 </body>
 
 </html>

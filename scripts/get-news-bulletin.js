@@ -18,10 +18,19 @@ function loadData(page = 1) {
 
             let rows = '';
 
+            let picUrl = null;
+
             widgets.forEach(widget => {
+                console.log(widget.widget_img);
+                if (widget.widget_img != '') {
+                    picUrl = 'pics/' + widget.widget_img;
+                } else {
+                    picUrl = 'pics/plp-outside.jpg';
+                }
+
                 rows += `
                 <div class="bulletin-news-card">
-                    <img src="pics/${widget.widget_img}" loading="lazy">
+                    <img src="${picUrl}" loading="lazy">
                     <div class="card-text-container">
                         <div>
                             <h2>${widget.widget_title}</h2>

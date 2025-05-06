@@ -1,20 +1,24 @@
 // Temporary Only, Change this to be dynamic later on
-const user_id = 3;
 const articleContainer = document.getElementById('articles-boxes-container');
 
 $.ajax({
     url: '../php-backend/add_article.php',
     type: "POST",
     dataType: 'json',
-    data: {
-        user_id: user_id
-    },
+    data: {},
     success: (res) => {
         const widgets = res.widgets;
         const article_status = res.article_status;
 
+
         for (let i = 0; i < widgets.length; i++) {
-            const img = '../upload-images/' + widgets[i].widget_img;
+            let img = null;
+            if (widgets[i].widget_img != null) {
+                img = 'upload-images/' + widgets[i].widget_img;
+            } else {
+                img = 'pics/plp-outside.jpg';
+            }
+
             const title = widgets[i].widget_title;
             const status = article_status[i];
 

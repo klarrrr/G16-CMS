@@ -6,6 +6,21 @@ const nextBtn = document.querySelector(".calendar-btns button:last-child");
 
 let currentMonth, currentYear;
 
+let shown = false;
+
+// $.ajax({
+//     url: 'php-backend/get-news-bulletin.php',
+//     type: 'POST',
+//     dataType: 'json',
+//     data: {},
+//     success: (res) => {
+//         const widgets = res.widget;
+//     },
+//     error: (error) => {
+//         console.log(error);
+//     }
+// });
+
 const renderCalendar = (month, year) => {
     const firstDay = new Date(year, month).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -35,10 +50,10 @@ const renderCalendar = (month, year) => {
                 }
 
                 const thisDay = date;
-                cell.addEventListener("mouseenter", (e) => {
+
+                cell.addEventListener("click", (e) => {
                     showEventBox(e.target, thisDay, month, year);
                 });
-                cell.addEventListener("mouseleave", hideEventBox);
 
                 date++;
                 allCellsEmpty = false;
@@ -60,25 +75,37 @@ function updateDropdowns() {
 
 function showEventBox(cell, day, month, year) {
     const box = document.getElementById("event-box");
+
     const rect = cell.getBoundingClientRect();
 
     // Simulated events
+    // Hard Coded, make it dynamic
     const events = [
-        { title: "Meeting", description: "Zoom @ 10:00 AM" },
+        { title: "CHED Visits Inang Pamantasan", description: "Zoom @ 10:00 AM" },
         { title: "Project Deadline", description: "Submit by 5 PM" }
     ];
 
     const cards = events.map(event => `
         <div class="event-card">
             <strong>${event.title}</strong>
-            <p>${event.description}</p>
         </div>
     `).join("");
 
-    box.innerHTML = `<h4>${month + 1}/${day}/${year}</h4>${cards}`;
+    box.innerHTML = `
+    <div class='close-event-box-container'>
+        <h4>${month + 1}/${day}/${year}</h4>
+        <span id='close-event-box' class='close-event-box'>X</span>
+    </div>
+    ${cards}
+        `;
     box.style.display = "block";
     box.style.top = `${rect.top + window.scrollY + 10}px`;
     box.style.left = `${rect.left + window.scrollX + 10}px`;
+
+    const closeEventBtn = document.getElementById('close-event-box');
+    closeEventBtn.addEventListener('click', () => {
+        hideEventBox();
+    });
 }
 
 function hideEventBox() {
