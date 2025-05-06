@@ -39,10 +39,10 @@
 
                 <!-- TODO: LAgays Incoorect format -->
                 <label for="reg-first-name" style='font-size: 0.8em; color: salmon; display: none;' id='reg-incorrect-format'>* Cannot be empty</label>
-                <input type="text" name='reg-first-name' class='sign-in-input-box' placeholder='Enter first name' />
+                <input type="text" name='reg-first-name' class='sign-in-input-box' placeholder='Enter first name' id="reg-first-name">
 
                 <label for="reg-last-name" style='font-size: 0.8em; color: salmon; display: none;' id='reg-incorrect-format'>* Cannot be empty</label>
-                <input type="text" name='reg-last-name' class='sign-in-input-box' placeholder='Enter last name'>
+                <input type="text" name='reg-last-name' class='sign-in-input-box' placeholder='Enter last name' id="reg-last-name">
 
 
                 <label for="reg-email-box" style='font-size: 0.8em; color: salmon; display: none;' id='reg-incorrect-format'>* Incorrect Format - Pasig Email Only</label>
@@ -69,10 +69,8 @@
             <p>&copy; 2025 Lundayan - Student Publication - Pamantasan ng Lungsod ng Pasig. All rights reserved.</p>
         </footer>
     </main>
-    <!-- Handles the validation of account -->
-    <script src='scripts/account-handler.js'></script>
     <!-- Handles the functioanlity -->
-     <script src="scripts/sign-up-function.js"></script>
+     <script src="data_handler.js"></script>
 </body>
 
 </html>

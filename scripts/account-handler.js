@@ -91,7 +91,7 @@ loginBtn.addEventListener('click', () => {
 
     if (validated == true) {
         $.ajax({
-            url: '../php-backend/account-validator.php',
+            url: 'php-backend/account-validator.php',
             type: 'POST',
             dataType: 'json',
             data: {
