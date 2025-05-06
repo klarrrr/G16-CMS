@@ -20,10 +20,10 @@
             </div>
         </div> -->
         <section class="sub-header">
-            <div class="remaining-texts" style='justify-content: center; align-items: center; display:flex; flex-direction: column;'>
+            <!-- <div class="remaining-texts" style='justify-content: center; align-items: center; display:flex; flex-direction: column;'>
                 <p>news and events</p>
                 <h2>BULLETIN</h2>
-            </div>
+            </div> -->
 
             <h3>Search for article</h3>
             <div class="search">

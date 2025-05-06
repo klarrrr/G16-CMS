@@ -19,10 +19,10 @@
             </div>
         </div> -->
         <section class="calendar">
-            <div class="remaining-texts" style='justify-content: center; align-items: center; display:flex; flex-direction: column;'>
+            <!-- <div class="remaining-texts" style='justify-content: center; align-items: center; display:flex; flex-direction: column;'>
                 <p>stay on track with our</p>
                 <h2>CALENDAR</h2>
-            </div>
+            </div> -->
             <br>
             <div class="calendar-controls">
                 <div class="time-day">
