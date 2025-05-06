@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location: lundayan-sign-in-page.php');
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
