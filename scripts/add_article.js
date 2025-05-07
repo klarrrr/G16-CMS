@@ -8,7 +8,8 @@ $.ajax({
     data: {},
     success: (res) => {
         const widgets = res.widgets;
-        const article_status = res.article_status;
+        const articles = res.articles;
+        const authors = res.authors;
 
 
         for (let i = 0; i < widgets.length; i++) {
@@ -20,7 +21,11 @@ $.ajax({
             }
 
             const title = widgets[i].widget_title;
-            const status = article_status[i];
+            let status = articles[i].edit_status;
+            status = status.charAt(0).toUpperCase() + status.slice(1); // caps 1st
+            const first_name = authors[i].user_first_name;
+            const last_name = authors[i].user_last_name;
+            const articleId = articles[i].article_id;
 
             let layout = `
                 <div class="article-box">
@@ -29,9 +34,10 @@ $.ajax({
                     </div>
                     <div class="article-title-status-container">
                         <h2>${title}</h2>
-                        <h3>${status}</h3>
+                        <h3>by ${first_name} ${last_name}</h3>
+                        <h4 style='color: green;'>${status}</h4>
                     </div>
-                    <button class='edit-article-button'>Edit Page</button>
+                    <button class='edit-article-button' articleid='${articleId}' onclick='editArticle(this)'>Edit Page</button>
                 </div>
             `;
 
@@ -43,3 +49,11 @@ $.ajax({
         console.log(error);
     }
 });
+
+function editArticle(thisButton) {
+    const article_id = thisButton.getAttribute('articleid');
+    // Pass GET method the article id
+    // Verify by using the user id in the session too
+    // So Article id = article_id AND user_id = $_SESSION['user_id'];
+    window.location.href = `../edit-article.php?article_id=${article_id}`;
+}

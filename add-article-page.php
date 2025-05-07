@@ -46,9 +46,6 @@ if (!isset($_SESSION['user_id'])) {
     </div>
     <!-- Script for Menu Button on Top Left -->
     <script src="scripts/menu_button.js"></script>
-    <!-- Populate the Selection Input of all the pages -->
-    <!-- Design Dropdown -->
-    <script src="scripts/nav_panel_switcher.js"></script>
     <!-- event for adding new article -->
     <script>
         const addArticleBtn = document.getElementById('article-add-article-button');

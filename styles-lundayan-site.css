@@ -693,17 +693,27 @@ footer {
 .calendar-btns button {
     border-radius: 3px;
     border: none;
-    background-color: #f4f4f4;
+    background-color: transparent;
     cursor: pointer;
     width: 5em;
+    border: 1px solid #f4f4f4;
 }
 
 .calendar-btns button:hover {
     background-color: #fcb404;
+    border: 1px solid #fcb404;
 }
 
-.calendar-btns button img {
+.calendar-btns button:hover>svg path {
+    stroke: #161616;
+}
+
+.calendar-btns button svg {
     width: 30px;
+}
+
+.calendar-btns button svg path {
+    stroke: #f4f4f4;
 }
 
 .calendar-vertical-layout {
@@ -737,11 +747,18 @@ select {
     /* Personalize */
     flex: 1;
     padding: 0 1em;
-    background-color: #f4f4f4;
+    background-color: transparent;
     background-image: none;
+    border: 1px solid #f4f4f4;
+    border-radius: 0.5rem;
     cursor: pointer;
-    color: #161616;
+    color: #f4f4f4;
     width: 100%;
+}
+
+select option {
+    background: transparent;
+    color: #161616;
 }
 
 /* Remove IE arrow */
@@ -766,7 +783,7 @@ select::-ms-expand {
     top: 0;
     right: 0;
     padding: 1.3em;
-    color: #262626;
+    color: #f4f4f4;
     transition: .25s all ease;
     pointer-events: none;
     font-size: 0.7em;
@@ -785,6 +802,7 @@ select::-ms-expand {
     border-radius: 3px;
     /* border: 1px solid #f4f4f4; */
     height: 100%;
+    border-radius: 1rem;
 }
 
 .events {

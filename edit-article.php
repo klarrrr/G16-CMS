@@ -1,10 +1,45 @@
+<?php
+
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location: lundayan-sign-in-page.php');
+    exit;
+}
+
+include 'php-backend/connect.php';
+
+$article_id = $_GET['article_id'];
+$user_id = $_SESSION['user_id'];
+
+$query = "SELECT * FROM articles WHERE user_owner = $user_id AND article_id = $article_id";
+$result = mysqli_query($conn, $query);
+$articles = [];
+if ($row = mysqli_fetch_assoc($result)) {
+    $articles = $row;
+}
+
+$query = "SELECT * FROM widgets WHERE user_owner = $user_id AND article_owner = $article_id";
+$result = mysqli_query($conn, $query);
+$widgets = [];
+if ($row = mysqli_fetch_assoc($result)) {
+    $widgets = $row;
+}
+
+$articleContent = $articles['article_content'];
+$title = $articles['article_title'];
+$shortDesc = $widgets['widget_paragraph'];
+$thumbnailImg = $widgets['widget_img'];
+$dateUpdated = $articles['date_updated'];
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contento : Create Article Page</title>
+    <title>Contento : Edit Article Page</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
@@ -26,7 +61,7 @@
                     <!-- TODO MAKE DYNAMIC LATER -->
                     <div class="create-nav-one-title">
                         <h2 id='top-article-title'>Article Document Title</h2>
-                        <p>Last updated on May 1, 2025 - Klarenz Cobie Manrique</p>
+                        <p id='last-updated'></p>
                     </div>
                     <div class="nav-one-buttons">
                         <span id='open-widget'>》 Hide Details Box</span>
@@ -210,8 +245,33 @@
 
         });
     </script>
-    <!-- Create ARticle js -->
-    <script src="scripts/create-article.js"></script>
+    <!-- Populate all required elemnts when editing -->
+    <script>
+        // $articleContent = $articles['article_content'];
+        // $title = $articles['article_title'];
+        // $shortDesc = $widgets['widget_paragraph'];
+        // $thumbnailImg = $widgets['widget_img'];
+        // $dateUpdated = $articles['date_updated'];
+
+        const topTitle = document.getElementById('top-article-title');
+        const lastUpdated = document.getElementById('last-updated');
+        const titleBox = document.getElementById('title-box');
+        const shortDescBox = document.getElementById('short-desc-box');
+        const contentBox = document.querySelector('.ql-editor');
+        // Thumnail image
+        // Tags
+
+        topTitle.innerHTML = '<?php echo $title ?>';
+
+        const dateUpdated = '<?php echo $dateUpdated ?>';
+        const author = '<?php echo $_SESSION['user_first'] . ' ' . $_SESSION['user_last'] ?>'
+
+        lastUpdated.innerHTML = `Last updated on ${dateUpdated} - ${author}`;
+        titleBox.value = '<?php echo $title ?>';
+        shortDescBox.value = '<?php echo $shortDesc ?>';
+
+        contentBox.innerHTML = '<?php echo $articleContent ?>';
+    </script>
 </body>
 
 </html>
