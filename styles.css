@@ -741,6 +741,11 @@ nav h1 {
     font-weight: bolder;
     color: #161616;
     min-width: 10rem;
+    max-width: 30vw;
+    line-clamp: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .create-nav-one-title p {

@@ -245,14 +245,10 @@ $dateUpdated = $articles['date_updated'];
 
         });
     </script>
+    <!-- Date formatterr -->
+    <script src='scripts/date-formatter.js'></script>
     <!-- Populate all required elemnts when editing -->
     <script>
-        // $articleContent = $articles['article_content'];
-        // $title = $articles['article_title'];
-        // $shortDesc = $widgets['widget_paragraph'];
-        // $thumbnailImg = $widgets['widget_img'];
-        // $dateUpdated = $articles['date_updated'];
-
         const topTitle = document.getElementById('top-article-title');
         const lastUpdated = document.getElementById('last-updated');
         const titleBox = document.getElementById('title-box');
@@ -261,16 +257,170 @@ $dateUpdated = $articles['date_updated'];
         // Thumnail image
         // Tags
 
-        topTitle.innerHTML = '<?php echo $title ?>';
+        topTitle.innerHTML = `<?php echo $title ?>`;
 
-        const dateUpdated = '<?php echo $dateUpdated ?>';
-        const author = '<?php echo $_SESSION['user_first'] . ' ' . $_SESSION['user_last'] ?>'
+        const dateUpdated = `<?php echo $dateUpdated ?>`;
+        const author = `<?php echo $_SESSION['user_first'] . ' ' . $_SESSION['user_last'] ?>`
 
-        lastUpdated.innerHTML = `Last updated on ${dateUpdated} - ${author}`;
-        titleBox.value = '<?php echo $title ?>';
-        shortDescBox.value = '<?php echo $shortDesc ?>';
+        lastUpdated.innerHTML = `Last updated on ${formatDateTime(dateUpdated)} - ${author}`;
+        titleBox.value = `<?php echo html_entity_decode($title) ?>`;
+        shortDescBox.value = `<?php echo $shortDesc ?>`;
 
-        contentBox.innerHTML = '<?php echo $articleContent ?>';
+        contentBox.innerHTML = `<?php echo html_entity_decode($articleContent) ?>`;
+    </script>
+    <!-- Live update database -->
+    <script>
+        const article_id = `<?php echo $article_id ?>`;
+
+        // eto para text lang
+        contentBox.addEventListener('input', function() {
+            const updatedContent = contentBox.innerHTML;
+            // Debounce avoid flooding the server
+            if (window.updateTimeout) clearTimeout(window.updateTimeout);
+
+            window.updateTimeout = setTimeout(() => {
+                updateContentBox(updatedContent, article_id);
+                // console.log(updatedContent);
+            }, 500);
+        });
+
+        // Gamit observer para sa imgs
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                const updatedContent = contentBox.innerHTML;
+                // Debounce avoid flooding the server
+                if (window.updateTimeout) clearTimeout(window.updateTimeout);
+
+                window.updateTimeout = setTimeout(() => {
+                    updateContentBox(updatedContent, article_id);
+                    // console.log(updatedContent);
+                }, 500);
+                // console.log('DOM mutation detected', mutation);
+            });
+        });
+
+        observer.observe(contentBox, {
+            childList: true, // Observe direct children
+            subtree: true, // Observe descendants 
+            attributes: true, // Observe attribute schanges 
+        });
+
+        // Kapag nag paste
+        // contentBox.addEventListener('paste', function() {
+        //     const updatedContent = contentBox.innerHTML;
+        //     // Debounce avoid flooding the server
+        //     if (window.updateTimeout) clearTimeout(window.updateTimeout);
+
+        //     window.updateTimeout = setTimeout(() => {
+        //         updateContentBox(updatedContent, article_id);
+        //         // console.log(updatedContent);
+        //     }, 500);
+        // });
+
+        function updateContentBox(content, article_id) {
+            $.ajax({
+                url: 'php-backend/edit-article-live-update.php',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    content: content,
+                    article_id: article_id
+                },
+                success: (res) => {
+                    console.log(res.status);
+                    updateDateUpdated(article_id);
+                },
+                error: (error) => {
+                    console.log(error);
+                }
+            });
+        }
+    </script>
+    <!-- Update Title -->
+    <script>
+        titleBox.addEventListener('input', () => {
+            // Debounce avoid flooding the server
+            if (window.updateTimeout) clearTimeout(window.updateTimeout);
+
+            window.updateTimeout = setTimeout(() => {
+                updateTitle(article_id);
+                // console.log(updatedContent);
+            }, 500);
+        });
+
+        function updateTitle(article_id) {
+            const newTitle = titleBox.value;
+            $.ajax({
+                url: 'php-backend/edit-article-title-update.php',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    newTitle: newTitle,
+                    article_id: article_id
+                },
+                success: (res) => {
+                    console.log(res.status);
+                    topTitle.innerHTML = newTitle;
+                    updateDateUpdated(article_id);
+                },
+                error: (error) => {
+                    console.log(error);
+                }
+            });
+        }
+    </script>
+    <!-- Update Short Desc -->
+    <script>
+        shortDescBox.addEventListener('input', () => {
+            // Debounce avoid flooding the server
+            if (window.updateTimeout) clearTimeout(window.updateTimeout);
+
+            window.updateTimeout = setTimeout(() => {
+                updateShortDesc(article_id);
+                // console.log(updatedContent);
+            }, 500);
+        });
+
+        function updateShortDesc(article_id) {
+            const newShortDesc = shortDescBox.value;
+            $.ajax({
+                url: 'php-backend/edit-article-shortDesc-update.php',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    newShortDesc: newShortDesc,
+                    article_id: article_id
+                },
+                success: (res) => {
+                    console.log(res.status);
+                    updateDateUpdated(article_id);
+                },
+                error: (error) => {
+                    console.log(error);
+                }
+            });
+        }
+    </script>
+    <!-- Update Date Updated -->
+    <script>
+        function updateDateUpdated(article_id) {
+            $.ajax({
+                url: 'php-backend/edit-article-date-updated.php',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    article_id: article_id
+                },
+                success: (res) => {
+                    // Kunin ung date updated, then palitan yung date updated sa baba ng title
+                    const date_updated = res.date_updated;
+                    lastUpdated.innerHTML = `Last updated on ${formatDateTime(date_updated)} - ${author}`;
+                },
+                error: (error) => {
+                    console.log(error);
+                }
+            });
+        }
     </script>
 </body>
 
