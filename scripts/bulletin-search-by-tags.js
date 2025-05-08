@@ -20,9 +20,16 @@ function loadNewsByTags(page = 1, tag_id) {
 
             // Generate rows for each widget
             widgets.forEach(widget => {
+                let picUrl = null;
+                if (widget.widget_img != '') {
+                    picUrl = 'data:image/png;base64,' + widget.widget_img;
+                } else {
+                    picUrl = 'pics/plp-outside.jpg';
+                }
+
                 rows += `
                 <div class="bulletin-news-card">
-                    <img src="pics/${widget.widget_img}" loading="lazy">
+                    <img src="${picUrl}" loading="lazy">
                     <div class="card-text-container">
                         <div>
                             <h2>${widget.widget_title}</h2>

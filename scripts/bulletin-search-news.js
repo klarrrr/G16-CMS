@@ -17,7 +17,7 @@ function loadSearchData(page = 1, searchFor = '') {
             // Generate rows for each widget
             widgets.forEach(widget => {
                 if (widget.widget_img != '') {
-                    picUrl = 'pics/' + widget.widget_img;
+                    picUrl = 'data:image/png;base64,' + widget.widget_img;
                 } else {
                     picUrl = 'pics/plp-outside.jpg';
                 }

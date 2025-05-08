@@ -31,7 +31,7 @@ $.ajax({
         console.log(topNews.widget_img);
 
         if (topNews.widget_img != '') {
-            picUrl = 'pics/' + topNews.widget_img;
+            picUrl = 'data:image/png;base64,' + topNews.widget_img;
         } else {
             picUrl = 'pics/plp-outside.jpg';
         }
@@ -45,7 +45,7 @@ $.ajax({
 
         for (let i = 1; i <= 6; i++) {
             if (widgets[i].widget_img != '') {
-                picUrl = 'pics/' + widgets[i].widget_img;
+                picUrl = 'data:image/png;base64,' + widgets[i].widget_img;
             } else {
                 picUrl = 'pics/plp-outside.jpg';
             }

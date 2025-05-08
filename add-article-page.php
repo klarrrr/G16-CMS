@@ -50,8 +50,34 @@ if (!isset($_SESSION['user_id'])) {
     <script>
         const addArticleBtn = document.getElementById('article-add-article-button');
         addArticleBtn.addEventListener('click', () => {
-            window.location.href = 'create-new-article.php'
-            createArticle();
+            $.ajax({
+                url: 'php-backend/create-article.php',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    title: 'Article Default Title',
+                    content: '<p>Your article content journey starts here...</p>',
+                    shortDesc: 'Your short description is here...'
+                },
+                success: (res) => {},
+                error: (error) => {
+                    console.log("Create Article Error :" + error);
+                }
+            });
+            // Get the latest article's id
+            $.ajax({
+                url: 'php-backend/add-article-get-latest-article.php',
+                type: 'post',
+                dataType: 'json',
+                data: {},
+                success: (res) => {
+                    // go to edit page with the get id
+                    window.location.href = 'edit-article.php?article_id=' + res;
+                },
+                error: (error) => {
+
+                }
+            });
         });
     </script>
     <!-- populate article container with articles -->

@@ -16,17 +16,17 @@ function createArticle() {
             shortDesc: defaultShortDesc
         },
         success: (res) => {
-            const article = res.article;
-            const widget = res.widget;
+            // const article = res.article;
+            // const widget = res.widget;
 
-            console.log(article);
-            console.log(widget);
+            // console.log(article);
+            // console.log(widget);
 
             // All About titles
-            const topTitle = document.getElementById('top-article-title');
-            const titleBox = document.getElementById('title-box');
+            // const topTitle = document.getElementById('top-article-title');
+            // const titleBox = document.getElementById('title-box');
 
-            const shortDescBox = document.getElementById('short-desc-box');
+            // const shortDescBox = document.getElementById('short-desc-box');
 
             // Do the image later
             // Do the Tags later
@@ -35,11 +35,11 @@ function createArticle() {
 
             // Assigning of response data to elements
 
-            topTitle.textContent = article.article_title;
-            titleBox.value = article.article_title;
-            shortDescBox.value = widget.widget_paragraph;
+            // topTitle.textContent = article.article_title;
+            // titleBox.value = article.article_title;
+            // shortDescBox.value = widget.widget_paragraph;
 
-            contentBox.innerHTML = article.article_content;
+            // contentBox.innerHTML = article.article_content;
         },
         error: (error) => {
             console.log("Create Article Error :" + error);

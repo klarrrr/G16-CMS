@@ -23,7 +23,7 @@ function loadData(page = 1) {
             widgets.forEach(widget => {
                 console.log(widget.widget_img);
                 if (widget.widget_img != '') {
-                    picUrl = 'pics/' + widget.widget_img;
+                    picUrl = 'data:image/png;base64,' + widget.widget_img;
                 } else {
                     picUrl = 'pics/plp-outside.jpg';
                 }
