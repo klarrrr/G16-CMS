@@ -1,3 +1,37 @@
+<?php
+
+include 'php-backend/connect.php';
+
+if (!isset($_GET['article_id'])) {
+    header('Location: lundayan-site-home.php');
+    exit;
+}
+
+$article_id = $_GET['article_id'];
+
+$query = "SELECT * FROM articles WHERE article_id = $article_id";
+$result = mysqli_query($conn, $query);
+$article = null;
+if ($row = mysqli_fetch_assoc($result)) {
+    $article = $row;
+}
+
+$title = $article['article_title'];
+$content = $article['article_content'];
+// Change this in the future to date_posted
+$datePosted = $article['date_updated'];
+
+$query = "SELECT * FROM widgets WHERE article_owner = $article_id";
+$result = mysqli_query($conn, $query);
+$widget = null;
+if ($row = mysqli_fetch_assoc($result)) {
+    $widget = $row;
+}
+
+$image = $widget['widget_img']
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,6 +41,8 @@
     <title>Lundayan : Article</title>
     <link rel="stylesheet" href="styles-lundayan-site.css">
     <link rel="icon" href="pics/lundayan-logo.png">
+    <link href="quill.css" rel="stylesheet" />
+    <script src="scripts/quill.js"></script>
 </head>
 
 <body>
@@ -21,14 +57,22 @@
                 </span>
             </div>
         </div> -->
-        <section class="article-image-container">
+        <section class="article-image-container" style='background-image: url(<?php echo 'data:image/png;base64,' . $image; ?>);'>
             <div class="article-image">
                 <div class="image-gradient">
-                    <img src="pics/image.png" alt="Article Image">
+                    <!-- <img src="<?php echo 'data:image/png;base64,' . $image; ?>" alt="<?php echo $title; ?>"> -->
                 </div>
                 <div class="back-next">
                     <a href="#">« Older Post</a>
                     <a href="#">Newer Post »</a>
+                </div>
+                <div class="text-container-article">
+                    <div>
+                        <p class="time-posted">Posted <small>●</small> <span id="latest-news-day-posted"></span></p>
+                        <h1><?php echo $title ?></h1>
+                    </div>
+                    <!-- TODO : MAKE THIS DYNAMIC -->
+                    <!-- <a href="lundayan-site-article.php" id='latest-read-more'>Read More</a> -->
                 </div>
             </div>
         </section>
@@ -37,24 +81,9 @@
                 <span> | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | </span>
             </div>
         </div> -->
-        <section class="article-information">
-            <h2>
-                Various programs from several colleges of the Pamantasan received their respective Certificates of Program Compliance (COPCs) from the Commission on Higher Education (CHED)
-            </h2>
-            <p class='p-date'>
-                Posted on April 25, 2025
-            </p>
-            <hr>
-            <p class='p-paragraph'>
-                Programs that comprise the College of Business and Accountancy (CBA), College of Computer Studies (CCS), College of International Hospitality Management (CIHM), College of Engineering (COE), and College of Education (COED) secured their compliance certificates, acquiring the go-signal to sustain the delivery of assured quality education to PLPians.
-                The representatives from CHED's Regional Quality Assessment Team (RQAT) also conducted site visits in laboratories around the Pamantasan, with some colleges' laboratories getting commendations, such as the CBA's "PLPreneur," CCS's network lab, and CIHM's hospitality facilities.
-            </p>
-            <p class='p-paragraph'>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim cupiditate numquam fuga aspernatur at corrupti! Blanditiis, nihil quae illo debitis magni expedita repellat. Itaque atque, nesciunt necessitatibus dolor tenetur possimus.
-            </p>
-            <p class='p-paragraph'>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim cupiditate numquam fuga aspernatur at corrupti! Blanditiis, nihil quae illo debitis magni expedita repellat. Itaque atque, nesciunt necessitatibus dolor tenetur possimus.
-            </p>
+        <section id="article-information" class='ql-editor'>
+            <!-- This is where content will go -->
+            <?php echo html_entity_decode($content); ?>
         </section>
         <!-- <div class="news-banner">
             <div class="scrolling-text">
@@ -90,6 +119,12 @@
     </main>
 
     <?php include 'lundayan-site-footer.php' ?>
+
+    <script src="scripts/date-formatter.js"></script>
+    <script>
+        const datePosted = document.getElementById('latest-news-day-posted');
+        datePosted.innerHTML = formatDateTime("<?php echo $datePosted; ?>");
+    </script>
 </body>
 
 </html>

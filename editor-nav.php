@@ -5,6 +5,7 @@
         </svg>
     </div>
     <ul id='main-nav-items'>
+        <!-- DASHBOARD -->
         <li>
             <a href="editor-dashboard.php">
                 <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -13,6 +14,7 @@
                 <p id='menu-home-button' style='display: none'>Home</p>
             </a>
         </li>
+        <!-- ARTICLES -->
         <li>
             <a href="add-article-page.php">
                 <svg fill="#000000" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -21,6 +23,7 @@
                 <p id='add-article-nav-button' style='display: none'>Articles</p>
             </a>
         </li>
+        <!-- AUDIT LOG PAGE -->
         <li>
             <a href="audit-log-page.php">
                 <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -32,6 +35,7 @@
         </li>
     </ul>
     <ul id='menu-account-items'>
+        <!-- ACCOUNT SETTINGS -->
         <li>
             <a href="account-settings.php">
                 <svg fill="#000000" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -41,6 +45,7 @@
                 <p id='menu-account-settings-button' style='display: none'>Account Settings</p>
             </a>
         </li>
+        <!-- SIGN OUT -->
         <li>
             <a href="php-backend/sign-out.php" id='sign-out-btn'>
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

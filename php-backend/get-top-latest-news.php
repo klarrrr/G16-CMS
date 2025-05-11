@@ -4,7 +4,7 @@ include 'connect.php';
 
 $widgetArray = [];
 
-$stmt = $conn->prepare("SELECT * FROM widgets ORDER BY widget_id DESC");
+$stmt = $conn->prepare("SELECT * FROM widgets ORDER BY widget_id DESC LIMIT 7");
 $stmt->execute();
 $results = $stmt->get_result();
 

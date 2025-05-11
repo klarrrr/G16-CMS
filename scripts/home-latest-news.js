@@ -21,14 +21,15 @@ $.ajax({
         const topNews = res.widget[0];
 
         latestNewsTitle.innerHTML = topNews.widget_title;
+        latestNewsTitle.setAttribute('articleid', topNews.article_owner);
         latestNewsTitle.addEventListener('click', () => {
-            window.location.href = 'lundayan-site-article.php';
+            goToArticle(latestNewsTitle);
         });
         latestNewsDate.innerHTML = formatDateTime(topNews.date_created);
         // latestNewsParagraph.innerHTML = topNews.widget_paragraph;
 
         let picUrl = null;
-        console.log(topNews.widget_img);
+        // console.log(topNews.widget_img);
 
         if (topNews.widget_img != '') {
             picUrl = 'data:image/png;base64,' + topNews.widget_img;
@@ -50,9 +51,8 @@ $.ajax({
                 picUrl = 'pics/plp-outside.jpg';
             }
 
-
             let latestCardLayout = `
-                <div class="news-card">
+                <div class="news-card" articleid="${widgets[i].article_owner}" onclick="goToArticle(this)">
                     <div class='news-card-date-container'>
                         <p class="news-card-date">${formatDateOnly(widgets[i].date_created)}</p>
                         <p class="news-card-date">${formatTimeOnly(widgets[i].date_created)}</p>
@@ -72,9 +72,14 @@ $.ajax({
 
             cardNewsContainer.innerHTML += latestCardLayout;
         }
-
     },
     error: (error) => {
         console.log(error);
     }
 });
+
+function goToArticle(thisContainer) {
+    console.log("Hello World")
+    const article_id = thisContainer.getAttribute('articleid');
+    window.location.href = `../lundayan-site-article.php?article_id=${article_id}`;
+}
