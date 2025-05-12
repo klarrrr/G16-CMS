@@ -4,6 +4,13 @@ if (!isset($_SESSION['user_id'])) {
     header('Location: lundayan-sign-in-page.php');
     exit;
 }
+
+$user_id = $_SESSION['user_id'];
+$fname = $_SESSION['user_first'];
+$lname = $_SESSION['user_last'];
+$email = $_SESSION['user_email'];
+$profile_pic = $_SESSION['profile_picture'];
+
 ?>
 
 <!DOCTYPE html>
@@ -28,31 +35,21 @@ if (!isset($_SESSION['user_id'])) {
         <section class="account-settings" id='account-settings'>
             <div class="my-profile">
 
-                <!-- Darkmode Toggle -->
-                <div class="theme-toggle">
-                    <div>
-                        <h1 style='font-family: "main"; font-size: 3rem;'>Account Settings</h1>
-                        <p style='font-family: "sub";'>Paul Group</p>
-                    </div>
-                    <div class="toggle">
-                        <button id="toggleTheme"><i class='bx bxs-moon'></i> Darkmode</button>
-                    </div>
+                <div>
+                    <h1 style='font-family: "main"; font-size: 3rem;'>Account Settings</h1>
+                    <!-- <p style='font-family: "sub";'>Paul Group</p> -->
                 </div>
 
                 <!-- Profile Picture -->
 
                 <div class="profile-info">
-                    <div class="profile-picture">
-                        <div class="img-container">
-                            <input type="image" src="img.jpeg" alt="">
-                        </div>
-
-                        <label for="file-upload" class="custom-file-upload">Change Picture</label>
-                        <input id="file-upload" type="file" style="display: none;">
-
-                        <button>
-                            <p>Delete Picture</p>
-                        </button>
+                    <div class="profile-pic">
+                        <label class="-label" for="file">
+                            <span class="glyphicon glyphicon-camera"></span>
+                            <span>Change Image</span>
+                        </label>
+                        <input id="file" type="file" onchange="loadFile(event)" />
+                        <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : 'data:image/png;base64,' . $profile_pic; ?>" id="output" width="200" />
                     </div>
 
                     <!-- Personal Infos -->
@@ -64,20 +61,20 @@ if (!isset($_SESSION['user_id'])) {
 
                 <div class="input-fields">
                     <div class="first-last">
-                        <input type="text" placeholder="Last Name">
-                        <input type="text" placeholder="First Name">
+                        <input type="text" placeholder="First Name" value='<?php echo $fname; ?>'>
+                        <input type="text" placeholder="Last Name" value='<?php echo $lname; ?>'>
                     </div>
 
-                    <input type="email" placeholder="Email Address">
-                    <input type="text" placeholder="Bio">
+                    <input type="email" placeholder="Email Address" value='<?php echo $email; ?>'>
+                    <!-- <input type="text" placeholder="Bio"> -->
 
                     <!-- Save & Discard Buttons -->
                     <div class="save-buttons">
                         <input type="button" name="saveChanges" value="Save Changes">
-                        <input type="button" name="discardChanges" value="Discard Changes">
                     </div>
                 </div>
             </div>
+            <!-- Setting Choices -->
             <div class="settings-choices">
                 <h3>Account Settings</h3>
                 <ul>
@@ -92,10 +89,65 @@ if (!isset($_SESSION['user_id'])) {
         <!-- Script for Menu Button on Top Left -->
         <script src="scripts/menu_button.js"></script>
         <script>
-            // Toggle darkmode
-            document.getElementById('toggleTheme').addEventListener('click', () => {
-                document.body.classList.toggle('dark');
-            });
+            const user_id = `<?php echo $user_id; ?>`;
+
+            function loadFile(event) {
+                var image = document.getElementById("output");
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const base64String = e.target.result.split(',')[1]; // Extract Base64 string
+                        if (base64String.length > 16777215) {
+                            // NO MORE THAN 16777215 chars
+                            console.log("Image size is too large : " + base64String.length);
+                            // TODO : Maglagay ng warning label
+                            // warningLbl.style.display = 'block';
+                        } else {
+                            // PWEDE basta less than 16777215 chars
+                            console.log("This is allowed : " + base64String.length)
+                            $.ajax({
+                                url: 'php-backend/account-settings-update-profile-pic.php',
+                                type: 'post',
+                                dataType: 'json',
+                                data: {
+                                    base64String: base64String,
+                                    user_id: user_id
+                                },
+                                success: (res) => {
+                                    console.log(res.status);
+                                    image.src = 'data:image/png;base64,' + base64String;
+                                    updateDateUpdated(user_id);
+                                    // warningLbl.style.display = 'none';
+                                },
+                                error: (error) => {
+                                    console.log(error);
+                                }
+                            });
+                        }
+                    };
+                    reader.readAsDataURL(file); // Read file as Data URL
+                } else {
+                    console.log('No file selected.');
+                }
+            }
+
+            function updateDateUpdated(user_id) {
+                $.ajax({
+                    url: 'php-backend/account-settings-update-user-date-updated.php',
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        user_id: user_id
+                    },
+                    success: (res) => {
+                        console.log(res.status);
+                    },
+                    error: (error) => {
+                        console.log(error);
+                    }
+                });
+            }
         </script>
 </body>
 

@@ -1226,6 +1226,15 @@ tbody td:hover {
     display: flex;
     flex-direction: column;
     padding: 8vh 16vw;
+    background: hsla(155, 41%, 16%, 1);
+
+    background: linear-gradient(180deg, hsla(155, 41%, 16%, 1) 0%, hsla(159, 23%, 15%, 1) 100%);
+
+    background: -moz-linear-gradient(180deg, hsla(155, 41%, 16%, 1) 0%, hsla(159, 23%, 15%, 1) 100%);
+
+    background: -webkit-linear-gradient(180deg, hsla(155, 41%, 16%, 1) 0%, hsla(159, 23%, 15%, 1) 100%);
+
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#18392B", endColorstr="#1D2E28", GradientType=1);
 }
 
 

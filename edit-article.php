@@ -270,7 +270,7 @@ $dateUpdated = $articles['date_updated'];
 
         contentBox.innerHTML = `<?php echo html_entity_decode($articleContent) ?>`;
     </script>
-    <!-- Live update database -->
+    <!-- Live update content database -->
     <script>
         const article_id = `<?php echo $article_id ?>`;
 
