@@ -9,49 +9,17 @@ const menuButtonContainer = document.getElementById('menu-button-container');
 const home = document.getElementById('menu-home-button');
 const archive = document.getElementById('menu-archive-button');
 const addArticle = document.getElementById('add-article-nav-button')
+const reviewArticleBtnP = document.getElementById('review-articles-button-p');
 
 const accountSettings = document.getElementById('menu-account-settings-button');
 const signOut = document.getElementById('menu-sign-out-button');
 
-const pArray = [home, archive, addArticle, accountSettings, signOut];
+const pArray = [home, archive, reviewArticleBtnP, addArticle, accountSettings, signOut];
 
 const mainPage = document.getElementById('main-page');
 
 const previewSiteBox = document.getElementById('preview-site-box');
 const secondNav = document.getElementById('second-nav');
-
-// menuBurgir.addEventListener('click', () => {
-//     if (menu.style.width == '4vw') {
-//         menu.style.width = 'auto';
-//         menu.style.alignItems = 'start';
-
-//         menuButtonContainer.style.justifyContent = 'flex-start';
-
-//         mainNavItems.style.alignContent = 'flex-start';
-//         menuAccoutItems.style.alignContent = 'flex-start';
-
-//         pArray.forEach(element => {
-//             element.style.display = 'block';
-//             element.style.width = 'auto';
-//         });
-
-//     } else {
-//         menu.style.width = '4vw';
-//         menu.style.alignItems = 'center';
-
-//         menuButtonContainer.style.justifyContent = 'center';
-
-//         mainNavItems.style.alignContent = 'center';
-//         menuAccoutItems.style.alignContent = 'center';
-
-//         pArray.forEach(element => {
-//             element.style.display = 'none';
-//             element.style.width = '100%';
-//         });
-
-
-//     }
-// });
 
 const body = document.querySelector('body');
 
@@ -66,8 +34,10 @@ menuBurgir.addEventListener('click', () => {
         menuAccoutItems.style.alignContent = 'center';
 
         pArray.forEach(element => {
-            element.style.display = 'none';
-            element.style.width = '100%';
+            if (element != null) {
+                element.style.display = 'none';
+                element.style.width = '100%';
+            }
         });
 
     } else {
@@ -81,8 +51,10 @@ menuBurgir.addEventListener('click', () => {
         menuAccoutItems.style.alignContent = 'flex-start';
 
         pArray.forEach(element => {
-            element.style.display = 'block';
-            element.style.width = 'auto';
+            if (element != null) {
+                element.style.display = 'block';
+                element.style.width = 'auto';
+            }
         });
     }
 });

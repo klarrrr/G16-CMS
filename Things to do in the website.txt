@@ -1,0 +1,65 @@
+Things to do in the website:
+
+1. Gallery
+
+	Upload bulk images by saving them to the server's storage and storing url link to the database.
+
+2. About Page
+
+	Tell the users all about the lundayan site of plp.
+
+4. Article Archive
+
+	This is a new page. The reviewer will be able to move the article in the article archive.
+
+	Add Archived in Completion Status in the Database
+	
+	When completion status is changed to archived, move the article widget from Add Article page to Article Archive page
+
+5. Audit Log
+
+	Everytime there is a change in the articles, it gets send to the audit log.
+
+6. Reviewer Side
+
+	Article Page
+	Reviewers can only view not edit the articles. She can leave comments on specific areas in the document.
+	Inline Comments
+
+	Set the date of the Article to be Posted
+	
+
+7. Account Settings Page
+
+	Writers and Reviewrs can both view their account settings and modify it.
+
+8. Calendar
+
+	Display all the events in the day when clicked.
+
+9. Announcements/Upcoming Events
+
+	Display all the events that are greater than today's date.
+
+10. Tags
+
+	Add Tags in Tag section of edit page
+
+11. Share Link
+
+	Add a share article link when share button is clicked. In Lundayan Site
+
+12. Sign In and Register
+
+	Update everything and make sure everything is secured.
+
+
+
+
+
+============== DONE ==============
+
+3. Delete Article
+
+	In Add Article Page, add a delete article.
+	Also in Edit Article Page add a delete article.

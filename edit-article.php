@@ -5,6 +5,10 @@ if (!isset($_SESSION['user_id'])) {
     header('Location: lundayan-sign-in-page.php');
     exit;
 }
+if (strtolower($_SESSION['user_type']) != 'writer') {
+    header('Location: editor-dashboard.php');
+    exit;
+}
 
 include 'php-backend/connect.php';
 
@@ -50,6 +54,15 @@ $dateUpdated = $articles['date_updated'];
 </head>
 
 <body class="body">
+    <div class="sure-delete-container" style="display: none;" id='sure-delete-container'>
+        <div class="sure-delete">
+            <h3>Delete this article?</h3>
+            <div class="delete-button-container">
+                <button id='del-yes-btn'>Confirm</button>
+                <button id='del-no-btn'>Cancel</button>
+            </div>
+        </div>
+    </div>
     <!-- ACTUAL NAV OF CMS WEBSITE -->
     <div class="left-editor-container">
         <?php include 'editor-nav.php'; ?>
@@ -181,9 +194,10 @@ $dateUpdated = $articles['date_updated'];
 
             </div>
             <div class="create-canvas" id="editor">
-                <!-- TODO : MAKE DYNAMIC LATER -->
+
             </div>
 
+            <!-- Details Toolbox -->
             <div class="widget-toolbar" id='widget-toolbar'>
                 <div class="widget-article-title">
                     <h3 class='widget-article-h3'>Title <span class='required'>*</span></h3>
@@ -208,6 +222,11 @@ $dateUpdated = $articles['date_updated'];
                     <div class="tags-input-container">
                         <input type="text" placeholder="Enter tags here" id='widget-tags-input'>
                     </div>
+                </div>
+
+                <div class="delete-article-container">
+                    <h3 class="widget-article-h3">Delete Article</h3>
+                    <button class='delete-article-btn' id='del-article-btn'>Delete Article</button>
                 </div>
             </div>
         </div>
@@ -456,6 +475,41 @@ $dateUpdated = $articles['date_updated'];
             }
         }
     </script>
+    <!-- Delete Article -->
+    <script>
+        const delButton = document.getElementById('del-article-btn');
+        const delBox = document.getElementById('sure-delete-container');
+        const delBoxYes = document.getElementById('del-yes-btn');
+        const delBoxNo = document.getElementById('del-no-btn');
+
+        delButton.addEventListener('click', () => {
+            delBox.style.display = 'flex';
+        });
+
+        delBoxYes.addEventListener('click', () => {
+            $.ajax({
+                url: 'php-backend/edit-article-delete-article.php',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    article_id: article_id
+                },
+                sucess: (res) => {
+                    // Go back to article page
+                    console.log(res.status);
+                },
+                error: (error) => {
+                    console.log(error);
+                }
+            });
+            window.location.href = 'add-article-page.php';
+        });
+
+        delBoxNo.addEventListener('click', () => {
+            delBox.style.display = 'none';
+        });
+    </script>
+
     <!-- Update Date Updated -->
     <!-- Keep this at the bottom kasi mahal ko parin :(-->
     <script>

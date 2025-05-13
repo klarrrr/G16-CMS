@@ -1,3 +1,8 @@
+<?php
+
+$user_type = $_SESSION['user_type'];
+?>
+
 <div class="off-screen-menu" id='off-screen-menu' style='align-items: center;'>
     <div id='menu-button-container' style='justify-content: center;'>
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" id="menuButton">
@@ -15,12 +20,22 @@
             </a>
         </li>
         <!-- ARTICLES -->
-        <li>
+        <li id='add-article-icon'>
             <a href="add-article-page.php">
                 <svg fill="#000000" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path d="M2,9H9V2H2Zm9-7V9h7V2ZM2,18H9V11H2Zm9,0h7V11H11Z" />
                 </svg>
                 <p id='add-article-nav-button' style='display: none'>Articles</p>
+            </a>
+        </li>
+        <!-- REVIEW ARTICLES -->
+        <li id='review-article-icon'>
+            <a href="for-review-article-page.php">
+                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16 1H4V11H8L10 13L12 11H16V1Z" fill="#000000" />
+                    <path d="M2 5V13H7.17157L8.70711 14.5355L7.29289 15.9497L6.34315 15H0V5H2Z" fill="#000000" />
+                </svg>
+                <p id='review-articles-button-p' style='display: none'>Review Articles</p>
             </a>
         </li>
         <!-- AUDIT LOG PAGE -->
@@ -56,3 +71,14 @@
         </li>
     </ul>
 </div>
+
+<script>
+    const userType = "<?php echo strtolower($user_type); ?>";
+    const addArticleIcon = document.getElementById('add-article-icon');
+    const reviewArticleIcon = document.getElementById('review-article-icon');
+    if (userType == 'writer') {
+        reviewArticleIcon.remove();
+    } else if (userType == 'reviewer') {
+        addArticleIcon.remove();
+    }
+</script>

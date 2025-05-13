@@ -4,6 +4,11 @@ if (!isset($_SESSION['user_id'])) {
     header('Location: lundayan-sign-in-page.php');
     exit;
 }
+
+if (strtolower($_SESSION['user_type']) == 'reviewer') {
+    header('Location: editor-dashboard.php');
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -38,10 +43,6 @@ if (!isset($_SESSION['user_id'])) {
 
             </div>
             <button class='article-add-article-button' id='article-add-article-button'>+</button>
-            <!-- Include Font Settings Box -->
-            <?php include 'font-settings.php'; ?>
-            <!-- Include Color Settings Box -->
-            <?php include 'color-settings.php'; ?>
         </div>
     </div>
     <!-- Script for Menu Button on Top Left -->

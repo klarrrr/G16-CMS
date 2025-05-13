@@ -263,9 +263,10 @@ nav {
     -webkit-line-clamp: 2;
     line-clamp: 2;
     -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
     overflow: hidden;
     width: 40%;
-    line-height: 3rem;
+    line-height: normal;
 }
 
 .latest-paragraph {
