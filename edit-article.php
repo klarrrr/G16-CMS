@@ -193,41 +193,61 @@ $dateUpdated = $articles['date_updated'];
                 </div>
 
             </div>
-            <div class="create-canvas" id="editor">
 
+            <div class="create-canvas" id='create-canvas'>
+                <div class='detail-box'>
+
+                    <!-- Left Details Box -->
+                    <div class="left-detail-box">
+                        <div class="widget-article-title">
+                            <h3 class='widget-article-h3'>Title <span class='required'>*</span></h3>
+                            <input type="text" placeholder="Short title here" id='title-box'>
+                        </div>
+
+                        <div class="widget-article-pargraph">
+                            <h3 class='widget-article-h3'>Short Description <span class='required'>*</span></h3>
+                            <textarea name="" id="short-desc-box" rows="10" placeholder="Short description here"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Right Details Box -->
+                    <div class="right-detail-box">
+                        <div class="thumbnail-del-container">
+                            <!-- Thumbnail -->
+                            <div class="widget-article-image">
+                                <h3 class='widget-article-h3'>Thumbnail Image</h3>
+                                <span class='warning' style='display: none;' id='img-size-warning'>Image size is too large</span>
+                                <img src="<?php echo 'data:image/png;base64,' . $thumbnailImg ?>" alt="" id='show-thumbnail-image'>
+                                <input type="file" id='thumbnail-image'>
+                            </div>
+
+                            <!-- Delete -->
+                            <div class="delete-article-container">
+                                <h3 class="widget-article-h3">Delete Article</h3>
+                                <button class='delete-article-btn' id='del-article-btn'>Delete Article</button>
+                            </div>
+                        </div>
+
+                        <!-- Tags -->
+                        <div class="widget-article-tags">
+                            <h3 class='widget-article-h3'>Tags</h3>
+                            <span class='added-tag'><span class='tag-name'>anime</span><span class='remove-tag'>x</span></span>
+                            <div class="tags-input-container">
+                                <input type="text" placeholder="Enter tags here" id='widget-tags-input'>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div id="editor">
+
+                </div>
             </div>
 
             <!-- Details Toolbox -->
             <div class="widget-toolbar" id='widget-toolbar'>
-                <div class="widget-article-title">
-                    <h3 class='widget-article-h3'>Title <span class='required'>*</span></h3>
-                    <input type="text" placeholder="Short title here" id='title-box'>
-                </div>
 
-                <div class="widget-article-pargraph">
-                    <h3 class='widget-article-h3'>Short Description <span class='required'>*</span></h3>
-                    <textarea name="" id="short-desc-box" rows="10" placeholder="Short description here"></textarea>
-                </div>
-
-                <div class="widget-article-image">
-                    <h3 class='widget-article-h3'>Thumbnail Image</h3>
-                    <span class='warning' style='display: none;' id='img-size-warning'>Image size is too large</span>
-                    <img src="<?php echo 'data:image/png;base64,' . $thumbnailImg ?>" alt="" id='show-thumbnail-image'>
-                    <input type="file" id='thumbnail-image'>
-                </div>
-
-                <div class="widget-article-tags">
-                    <h3 class='widget-article-h3'>Tags</h3>
-                    <span class='added-tag'><span class='tag-name'>anime</span><span class='remove-tag'>x</span></span>
-                    <div class="tags-input-container">
-                        <input type="text" placeholder="Enter tags here" id='widget-tags-input'>
-                    </div>
-                </div>
-
-                <div class="delete-article-container">
-                    <h3 class="widget-article-h3">Delete Article</h3>
-                    <button class='delete-article-btn' id='del-article-btn'>Delete Article</button>
-                </div>
             </div>
         </div>
     </div>
@@ -257,10 +277,10 @@ $dateUpdated = $articles['date_updated'];
 
         widgetOpenBtn.addEventListener('click', () => {
             if (createArticleMain.style.gridTemplateColumns == '99% 1%') {
-                widgetOpenBtn.textContent = '》 Hide Detail Box'
+                widgetOpenBtn.textContent = '》 Hide Comment Box'
                 createArticleMain.style.gridTemplateColumns = '80% 20%';
             } else {
-                widgetOpenBtn.textContent = '《 Show Detail Box'
+                widgetOpenBtn.textContent = '《 Show Comment Box'
                 createArticleMain.style.gridTemplateColumns = '99% 1%';
             }
 

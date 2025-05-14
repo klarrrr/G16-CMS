@@ -108,55 +108,9 @@ $ownerPicture = $userInfo['profile_picture'];
                 </div>
             </div>
             <div class="review-article-comment-container">
-                <div class="comments-container">
-                    <div class="comment-box">
-                        <div class="comment-upper-part">
-                            <div class="pfp-container">
-                                <img src="pics/charles.jpg" alt="">
-                            </div>
-                            <div class="author-and-date">
-                                <h2 class='comment-author'>Charles Jeramy De Padua</h2>
-                                <p class='comment-date'>May 13, 2025 - 11:59:00 PM</p>
-                            </div>
-                        </div>
-                        <div class="comment-bottom-part">
-                            <p>Sean John Combs[a] (born November 4, 1969), better known by his stage name Diddy, and formerly Puff Daddy and P. Diddy, is an American rapper, record producer, and record executive. Born in Harlem and raised in Mount Vernon, Combs worked as a talent director at Uptown Records before founding his own record label, Bad Boy Records in 1993. He is credited with the discovery and development of musical artists including Mary J. Blige, Usher and the Notorious B.I.G., for whom he served as manager and hype man.
-                                <br>
-                                <br>
-                                Fix this
-                            </p>
-                        </div>
-                    </div>
-                    <div class="comment-box">
-                        <div class="comment-upper-part">
-                            <div class="pfp-container">
-                                <img src="pics/charles.jpg" alt="">
-                            </div>
-                            <div class="author-and-date">
-                                <h2 class='comment-author'>Charles Jeramy De Padua</h2>
-                                <p class='comment-date'>May 13, 2025 - 11:59:00 PM</p>
-                            </div>
-                        </div>
-                        <div class="comment-bottom-part">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde vero culpa voluptatem dolor, cumque nobis aut beatae totam itaque debitis labore doloribus ex illo consequuntur, fugiat in nihil aliquid commodi.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="comment-box">
-                        <div class="comment-upper-part">
-                            <div class="pfp-container">
-                                <img src="pics/charles.jpg" alt="">
-                            </div>
-                            <div class="author-and-date">
-                                <h2 class='comment-author'>Charles Jeramy De Padua</h2>
-                                <p class='comment-date'>May 13, 2025 - 11:59:00 PM</p>
-                            </div>
-                        </div>
-                        <div class="comment-bottom-part">
-                            <p>Small comment paragraph.
-                            </p>
-                        </div>
-                    </div>
+                <!-- Populate this -->
+                <div class="comments-container" id='comments-container'>
+                    <!-- Populated here -->
                 </div>
             </div>
         </div>
@@ -217,6 +171,11 @@ $ownerPicture = $userInfo['profile_picture'];
             window.location.href = 'account-settings.php';
         });
     </script>
+    <script>
+        const article_id = `<?php echo $article_id ?>`;
+    </script>
+    <!-- Populate the comments -->
+    <script src="scripts/get-comments.js"></script>
 </body>
 
 </html>

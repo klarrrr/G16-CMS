@@ -40,8 +40,8 @@ $profile_pic = $_SESSION['profile_picture'];
                     <!-- <p style='font-family: "sub";'>Paul Group</p> -->
                 </div>
 
-                <!-- Profile Picture -->
 
+                <!-- Profile Picture -->
                 <div class="profile-info">
                     <div class="profile-pic">
                         <label class="-label" for="file">
@@ -55,7 +55,7 @@ $profile_pic = $_SESSION['profile_picture'];
                     <!-- Personal Infos -->
                     <div class="perso-info">
                         <h5><?php echo $_SESSION['user_first'] . ' ' . $_SESSION['user_last'] ?></h5>
-                        <p class="bio">Article Writer</p>
+                        <p class="bio"><?php echo 'Article ' . $_SESSION['user_type']; ?></p>
                     </div>
                 </div>
 

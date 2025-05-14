@@ -797,96 +797,6 @@ nav h1 {
     overflow-y: scroll;
     overflow-x: auto;
     position: relative;
-
-    .required {
-        color: red;
-        -webkit-user-select: none;
-        user-select: none;
-        font-family: 'sub';
-    }
-
-    .warning {
-        color: red;
-        -webkit-user-select: none;
-        user-select: none;
-        font-family: 'sub';
-        font-size: 0.8rem;
-    }
-
-    #short-desc-box {
-        resize: none;
-    }
-
-    .widget-article-title,
-    .widget-article-pargraph,
-    .widget-article-image,
-    .widget-article-tags {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-
-    .widget-article-h3 {
-        font-family: 'sub';
-        font-size: 1rem;
-    }
-
-    #title-box,
-    #short-desc-box,
-    #widget-tags-input {
-        padding: 0.5rem;
-        border-radius: 0.5rem;
-        border: none;
-        border: 1px solid gray;
-        font-family: 'sub';
-    }
-
-    .added-tag {
-        background-color: #ccc;
-        border-radius: 3px;
-        padding: 0.5rem 0;
-        width: fit-content;
-        font-family: 'sub';
-    }
-
-    .tag-name {
-        padding: 0.5rem;
-        font-size: 0.8rem;
-    }
-
-    .remove-tag {
-        padding: 0.6rem;
-        text-align: center;
-        color: #464646;
-        font-weight: bolder;
-        height: 100%;
-        cursor: pointer;
-        -webkit-user-select: none;
-        user-select: none;
-        border-radius: 2px;
-    }
-
-    .delete-article-container {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-
-        .delete-article-btn {
-            padding: 1rem;
-            border: none;
-            background-color: #161616;
-            color: #f4f4f4;
-            font-family: 'sub';
-            border-radius: 0.5rem;
-            cursor: pointer;
-        }
-
-        .delete-article-btn:hover {
-            background-color: crimson;
-        }
-
-
-    }
 }
 
 .sure-delete-container {
@@ -986,10 +896,141 @@ nav h1 {
     overflow-x: hidden !important;
     padding: 8vh 12vw !important;
     border: 1px solid lightgray;
+    overflow-y: hidden !important;
+    object-fit: cover;
+    height: fit-content !important;
+    min-height: 100vh;
+    border-radius: 0.5rem;
 }
 
-#editor {
-    height: auto;
+.detail-box {
+    width: 100%;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    border: 1px solid lightgray;
+    gap: 2rem;
+    display: grid;
+    grid-template-columns: 50% 1fr;
+
+
+    .left-detail-box {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .right-detail-box {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        .thumbnail-del-container {
+            display: flex;
+            flex-direction: row;
+
+        }
+
+        img {
+            width: 200px;
+        }
+    }
+
+    .required {
+        color: red;
+        -webkit-user-select: none;
+        user-select: none;
+        font-family: 'sub';
+    }
+
+    .warning {
+        color: red;
+        -webkit-user-select: none;
+        user-select: none;
+        font-family: 'sub';
+        font-size: 0.8rem;
+    }
+
+    #short-desc-box {
+        resize: none;
+    }
+
+    .widget-article-title,
+    .widget-article-pargraph,
+    .widget-article-image,
+    .widget-article-tags {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .widget-article-h3 {
+        font-family: 'sub';
+        font-size: 1rem;
+    }
+
+    #title-box,
+    #short-desc-box,
+    #widget-tags-input {
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        border: none;
+        border: 1px solid gray;
+        font-family: 'sub';
+    }
+
+    .added-tag {
+        background-color: #ccc;
+        border-radius: 3px;
+        padding: 0.5rem 0;
+        width: fit-content;
+        font-family: 'sub';
+    }
+
+    .tag-name {
+        padding: 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    .remove-tag {
+        padding: 0.6rem;
+        text-align: center;
+        color: #464646;
+        font-weight: bolder;
+        height: 100%;
+        cursor: pointer;
+        -webkit-user-select: none;
+        user-select: none;
+        border-radius: 2px;
+    }
+
+    .delete-article-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        .delete-article-btn {
+            padding: 1rem;
+            border: none;
+            background-color: #161616;
+            color: #f4f4f4;
+            font-family: 'sub';
+            border-radius: 0.5rem;
+            cursor: pointer;
+        }
+
+        .delete-article-btn:hover {
+            background-color: crimson;
+        }
+    }
+}
+
+#create-canvas {
+    height: 100%;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 .ql-container.ql-snow {
