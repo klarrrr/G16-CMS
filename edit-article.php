@@ -68,7 +68,7 @@ $dateUpdated = $articles['date_updated'];
         <?php include 'editor-nav.php'; ?>
     </div>
     <div class="create-article-right-editor-container">
-        <div class="create-article-main" id='create-article-main' style='    grid-template-columns: 80% 20%;'>
+        <div class="create-article-main" id='create-article-main' style='    grid-template-columns: 75% 25%;'>
             <div class="create-navs">
                 <div class="create-nav-one">
                     <!-- TODO MAKE DYNAMIC LATER -->
@@ -208,36 +208,65 @@ $dateUpdated = $articles['date_updated'];
                             <h3 class='widget-article-h3'>Short Description <span class='required'>*</span></h3>
                             <textarea name="" id="short-desc-box" rows="10" placeholder="Short description here"></textarea>
                         </div>
+
+                        <div class="delete-article-container">
+                            <h3 class="widget-article-h3">Delete Article</h3>
+                            <button class='delete-article-btn' id='del-article-btn'>Delete Article</button>
+                        </div>
                     </div>
 
                     <!-- Right Details Box -->
                     <div class="right-detail-box">
-                        <div class="thumbnail-del-container">
-                            <!-- Thumbnail -->
-                            <div class="widget-article-image">
-                                <h3 class='widget-article-h3'>Thumbnail Image</h3>
-                                <span class='warning' style='display: none;' id='img-size-warning'>Image size is too large</span>
+                        <!-- Thumbnail -->
+                        <div class="widget-article-image">
+                            <h3 class='widget-article-h3'>Thumbnail Image</h3>
+
+                            <span class='warning' style='display: none;' id='img-size-warning'>Image size is too large</span>
+
+                            <div class="thumbnail-image-container" style='background: url(<?php echo 'data:image/png;base64,' . $thumbnailImg ?>);'>
                                 <img src="<?php echo 'data:image/png;base64,' . $thumbnailImg ?>" alt="" id='show-thumbnail-image'>
-                                <input type="file" id='thumbnail-image'>
                             </div>
-
-                            <!-- Delete -->
-                            <div class="delete-article-container">
-                                <h3 class="widget-article-h3">Delete Article</h3>
-                                <button class='delete-article-btn' id='del-article-btn'>Delete Article</button>
+                            <input type="file" id='thumbnail-image'>
+                        </div>
+                        <div class="tags-del-container">
+                            <!-- Tags -->
+                            <div class="widget-article-tags">
+                                <h3 class='widget-article-h3'>Tags</h3>
+                                <div class="tags-container">
+                                    <div class='added-tag'>
+                                        <span class='tag-name'>anime</span>
+                                        <span class='remove-tag'>x</span>
+                                    </div>
+                                    <div class='added-tag'>
+                                        <span class='tag-name'>news</span>
+                                        <span class='remove-tag'>x</span>
+                                    </div>
+                                    <div class='added-tag'>
+                                        <span class='tag-name'>sample tags</span>
+                                        <span class='remove-tag'>x</span>
+                                    </div>
+                                    <div class='added-tag'>
+                                        <span class='tag-name'>pogi ni cj</span>
+                                        <span class='remove-tag'>x</span>
+                                    </div>
+                                    <div class='added-tag'>
+                                        <span class='tag-name'>ntr</span>
+                                        <span class='remove-tag'>x</span>
+                                    </div>
+                                    <div class='added-tag'>
+                                        <span class='tag-name'>gorilla</span>
+                                        <span class='remove-tag'>x</span>
+                                    </div>
+                                    <div class='added-tag'>
+                                        <span class='tag-name'>futanari</span>
+                                        <span class='remove-tag'>x</span>
+                                    </div>
+                                </div>
+                                <div class="tags-input-container">
+                                    <input type="text" placeholder="Enter tags here" id='widget-tags-input'>
+                                </div>
                             </div>
                         </div>
-
-                        <!-- Tags -->
-                        <div class="widget-article-tags">
-                            <h3 class='widget-article-h3'>Tags</h3>
-                            <span class='added-tag'><span class='tag-name'>anime</span><span class='remove-tag'>x</span></span>
-                            <div class="tags-input-container">
-                                <input type="text" placeholder="Enter tags here" id='widget-tags-input'>
-                            </div>
-                        </div>
-
-
                     </div>
                 </div>
                 <div id="editor">
@@ -246,7 +275,7 @@ $dateUpdated = $articles['date_updated'];
             </div>
 
             <!-- Details Toolbox -->
-            <div class="widget-toolbar" id='widget-toolbar'>
+            <div class="widget-toolbar" id='edit-article-comments-container'>
 
             </div>
         </div>
@@ -278,7 +307,7 @@ $dateUpdated = $articles['date_updated'];
         widgetOpenBtn.addEventListener('click', () => {
             if (createArticleMain.style.gridTemplateColumns == '99% 1%') {
                 widgetOpenBtn.textContent = '》 Hide Comment Box'
-                createArticleMain.style.gridTemplateColumns = '80% 20%';
+                createArticleMain.style.gridTemplateColumns = '75% 25%';
             } else {
                 widgetOpenBtn.textContent = '《 Show Comment Box'
                 createArticleMain.style.gridTemplateColumns = '99% 1%';
@@ -305,7 +334,7 @@ $dateUpdated = $articles['date_updated'];
 
         lastUpdated.innerHTML = `Last updated on ${formatDateTime(dateUpdated)} - ${author}`;
         titleBox.value = `<?php echo html_entity_decode($title) ?>`;
-        shortDescBox.value = `<?php echo $shortDesc ?>`;
+        shortDescBox.value = `<?php echo html_entity_decode($shortDesc) ?>`;
 
         contentBox.innerHTML = `<?php echo html_entity_decode($articleContent) ?>`;
     </script>
@@ -552,6 +581,8 @@ $dateUpdated = $articles['date_updated'];
             });
         }
     </script>
+    <!-- Populate Comments -->
+    <script src="scripts/get-comments-in-article.js"></script>
 </body>
 
 </html>
