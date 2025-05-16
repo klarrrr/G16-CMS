@@ -77,6 +77,8 @@ $dateUpdated = $articles['date_updated'];
                         <p id='last-updated'></p>
                     </div>
                     <div class="nav-one-buttons">
+                        <input type="date" id='schedule-choose-date'>
+                        <button id='post-article'>Post Article</button>
                         <span id='open-widget'>》 Hide Details Box</span>
                     </div>
                 </div>
@@ -196,7 +198,6 @@ $dateUpdated = $articles['date_updated'];
 
             <div class="create-canvas" id='create-canvas'>
                 <div class='detail-box'>
-
                     <!-- Left Details Box -->
                     <div class="left-detail-box">
                         <div class="widget-article-title">
@@ -583,6 +584,18 @@ $dateUpdated = $articles['date_updated'];
     </script>
     <!-- Populate Comments -->
     <script src="scripts/get-comments-in-article.js"></script>
+    <!-- Input Date Box -->
+    <script>
+        const inputDate = document.getElementById('schedule-choose-date');
+
+        // if date == null
+        // Defaultly sets the date to now
+        inputDate.valueAsDate = new Date();
+        // else
+        // Get the set date
+
+        // inputDate.addEventListener()
+    </script>
 </body>
 
 </html>

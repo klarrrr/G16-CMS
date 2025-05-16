@@ -10,7 +10,6 @@ $.ajax({
     },
     success: (res) => {
         const comments = res;
-        console.log(comments);
 
         const commentFragment = document.createDocumentFragment();
 

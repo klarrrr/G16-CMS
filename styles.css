@@ -810,6 +810,7 @@ nav h1 {
     width: 100vw;
     height: 100vh;
     z-index: 1000;
+    position: absolute;
 
     .sure-delete {
         display: flex;
@@ -819,15 +820,20 @@ nav h1 {
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
         background-color: white;
         border-radius: 0.5rem;
-        gap: 1rem;
-        padding: 1rem;
+        gap: 2rem;
+        padding: 2rem;
         min-width: 15rem;
         width: 20rem;
-        height: 10rem;
         border: 1px solid #161616;
 
         h3 {
             font-family: 'sub';
+        }
+
+        p {
+            font-family: 'sub';
+            font-size: 0.8rem;
+            text-align: center;
         }
 
         button {
@@ -1088,7 +1094,6 @@ nav h1 {
 
 #open-widget {
     align-self: center;
-    position: absolute;
     right: 0;
     color: #161616;
     cursor: pointer;
@@ -1385,28 +1390,6 @@ nav h1 {
         flex-direction: row;
         gap: 1rem;
 
-        #schedule-choose-date {
-            background-color: #f4f4f4;
-            padding: 0.5rem;
-            font-family: 'sub';
-            color: #161616;
-            border: 1px solid #161616;
-            outline: none;
-            border-radius: 0.5rem;
-        }
-
-        ::-webkit-calendar-picker-indicator {
-            background-color: #f4f4f4;
-            padding: 5px;
-            cursor: pointer;
-            border-radius: 3px;
-            transition: 0.3s ease-in-out;
-        }
-
-        ::-webkit-calendar-picker-indicator:hover {
-            background-color: #e4e4e4;
-        }
-
         .pfp-container {
             height: 30px;
             width: 30px;
@@ -1576,4 +1559,38 @@ nav h1 {
 .review-article-p-short-desc {
     font-family: 'sub';
     font-size: 0.8rem;
+}
+
+#schedule-choose-date {
+    background-color: #f4f4f4;
+    padding: 0.5rem;
+    font-family: 'sub';
+    color: #161616;
+    border: 1px solid #161616;
+    outline: none;
+    border-radius: 0.5rem;
+}
+
+::-webkit-calendar-picker-indicator {
+    background-color: #f4f4f4;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: 0.3s ease-in-out;
+}
+
+::-webkit-calendar-picker-indicator:hover {
+    background-color: #e4e4e4;
+}
+
+#post-article {
+    padding: 0.5rem;
+    min-width: 9rem;
+    border: none;
+    background-color: #161616;
+    color: #f4f4f4;
+    border-radius: 0.5rem;
+    font-size: 0.8rem;
+    border: 1px solid #161616;
+    cursor: pointer;
 }

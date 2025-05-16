@@ -36,6 +36,7 @@ $shortDesc = $widgets['widget_paragraph'];
 $thumbnailImg = $widgets['widget_img'];
 $dateUpdated = $articles['date_updated'];
 $userOwner = $articles['user_owner'];
+$approval = $articles['approve_status'];
 
 $userInfo = [];
 $query = "SELECT * FROM users WHERE user_id = $userOwner";
@@ -71,13 +72,13 @@ $ownerPicture = $userInfo['profile_picture'];
 <body class="body">
     <div class="sure-delete-container" style="display: none;" id='sure-delete-container'>
         <div class="sure-delete">
-            <h3>Approve and Post this article?</h3>
+            <h3>Approve this article?</h3>
             <!-- Selected Date will be here -->
             <!-- TODO: Make this dynamic -->
-            <p>Confirming this will post the article on, <strong>May 13, 2025</strong></p>
+            <p>Confirming this will enable the author to schedule this article a date to be posted. <strong>Are you sure?</strong></p>
             <div class="delete-button-container">
-                <button id='del-yes-btn'>Confirm</button>
-                <button id='del-no-btn'>Cancel</button>
+                <button id='approve-confirm-btn'>Confirm</button>
+                <button id='approve-cancel-btn'>Cancel</button>
             </div>
         </div>
     </div>
@@ -92,8 +93,7 @@ $ownerPicture = $userInfo['profile_picture'];
                 <p id='last-updated-for-review'></p>
             </div>
             <div class="right-side-review-nav">
-                <input type="date" id='schedule-choose-date'>
-                <button id='approve-btn'>Approve this Post</button>
+                <button id='approve-btn'>Approve Post</button>
                 <button id='add-comment'>Add a Comment</button>
                 <!-- Keep this at the bottom here -->
                 <div class="pfp-container">
@@ -191,15 +191,17 @@ $ownerPicture = $userInfo['profile_picture'];
         const lastUpdated = document.getElementById('last-updated-for-review');
         const dateUpdated = `<?php echo $dateUpdated; ?>`;
         const author = `<?php echo $ownerFName . ' ' . $ownerLName ?>`
+        const user_id = `<?php echo $user_id ?>`;
 
         lastUpdated.innerHTML = `Last updated on ${formatDateTime(dateUpdated)} - ${author}`;
     </script>
 
+    <!-- Approve Btn -->
     <script>
         const approveBtn = document.getElementById('approve-btn');
         const approveBox = document.getElementById('sure-delete-container');
-        const approveConfirm = document.getElementById('del-yes-btn');
-        const approveCancel = document.getElementById('del-no-btn');
+        const approveConfirm = document.getElementById('approve-confirm-btn');
+        const approveCancel = document.getElementById('approve-cancel-btn');
 
         approveBtn.addEventListener('click', () => {
             approveBox.style.display = 'flex';
@@ -207,15 +209,17 @@ $ownerPicture = $userInfo['profile_picture'];
 
         approveConfirm.addEventListener('click', () => {
             $.ajax({
-                url: '',
+                url: 'php-backend/approve-confirmation.php',
                 type: 'POST',
                 dataType: 'json',
                 data: {
-                    article_id: article_id
+                    article_id: article_id,
+                    user_id: user_id
                 },
-                sucess: (res) => {
-                    // Go back to article page
-                    console.log(res.status);
+                success: (res) => {
+                    if (res.status != "Invalid User Type") {
+                        changeApprovalBtn(res.status);
+                    }
                 },
                 error: (error) => {
                     console.log(error);
@@ -239,17 +243,21 @@ $ownerPicture = $userInfo['profile_picture'];
     </script>
     <!-- Populate the comments -->
     <script src="scripts/get-comments.js"></script>
-    <!-- Input Date Box -->
+    <!-- Handle Approval Status -->
     <script>
-        const inputDate = document.getElementById('schedule-choose-date');
+        // Change the button to approve when approval status is no
+        // Change the button to Remove Approval When approval Status is yes
+        const approvalStatus = `<?php echo $approval; ?>`;
 
-        // if date == null
-        // Defaultly sets the date to now
-        inputDate.valueAsDate = new Date();
-        // else
-        // Get the set date
+        function changeApprovalBtn(approvalStatus) {
+            if (approvalStatus == 'no') {
+                approveBtn.innerHTML = 'Approve This Post';
+            } else {
+                approveBtn.innerHTML = 'Remove Approval';
+            }
+        }
 
-        inputDate.addEventListener()
+        changeApprovalBtn(approvalStatus);
     </script>
 </body>
 

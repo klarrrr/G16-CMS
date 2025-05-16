@@ -53,6 +53,15 @@ Things to do in the website:
 
 	Update everything and make sure everything is secured.
 
+13. Dashboard Page
+
+	Fix the UI Layout of the Dashboard Page
+	Put the profile picture
+
+14. Profile Picture on NavBar
+
+	If click go to account settings
+
 
 
 

@@ -8,7 +8,7 @@ $user_type = strtolower($_SESSION['user_type']);
 $query = "
     SELECT 
         w.*,
-        a.article_id, a.edit_status,
+        a.article_id, a.approve_status,
         u.user_first_name, u.user_last_name
     FROM widgets w
     LEFT JOIN articles a ON w.article_owner = a.article_id
