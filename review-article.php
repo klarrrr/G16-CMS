@@ -103,6 +103,69 @@ $ownerPicture = $userInfo['profile_picture'];
         </div>
         <div class=" review-article-content-and-comments-container">
             <div class="review-article-content-container">
+                <div class='detail-box'>
+                    <!-- Left Details Box -->
+                    <div class="left-detail-box">
+                        <div class="widget-article-title">
+                            <h3 class='widget-article-h3'>Title</h3>
+                            <p class='review-article-p-title'><?php echo $title; ?></p>
+                        </div>
+
+                        <div class="widget-article-pargraph">
+                            <h3 class='widget-article-h3'>Short Description</h3>
+                            <p class="review-article-p-short-desc"><?php echo $shortDesc; ?></p>
+                        </div>
+                    </div>
+
+                    <!-- Right Details Box -->
+                    <div class="right-detail-box">
+                        <!-- Thumbnail -->
+                        <div class="widget-article-image">
+                            <h3 class='widget-article-h3'>Thumbnail Image</h3>
+
+                            <div class="thumbnail-image-container" style='background: url(<?php echo 'data:image/png;base64,' . $thumbnailImg ?>);'>
+                                <img src="<?php echo 'data:image/png;base64,' . $thumbnailImg ?>" alt="" id='show-thumbnail-image'>
+                            </div>
+                        </div>
+                        <div class="tags-del-container">
+                            <!-- Tags -->
+                            <div class="widget-article-tags">
+                                <h3 class='widget-article-h3'>Tags</h3>
+                                <div class="tags-container">
+                                    <div class='added-tag'>
+                                        <span class='tag-name'>anime</span>
+
+                                    </div>
+                                    <div class='added-tag'>
+                                        <span class='tag-name'>news</span>
+
+                                    </div>
+                                    <div class='added-tag'>
+                                        <span class='tag-name'>sample tags</span>
+
+                                    </div>
+                                    <div class='added-tag'>
+                                        <span class='tag-name'>pogi ni cj</span>
+
+                                    </div>
+                                    <div class='added-tag'>
+                                        <span class='tag-name'>ntr</span>
+
+                                    </div>
+                                    <div class='added-tag'>
+                                        <span class='tag-name'>gorilla</span>
+
+                                    </div>
+                                    <div class='added-tag'>
+                                        <span class='tag-name'>futanari</span>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div id="article-content" class="ql-editor">
                     <?php echo html_entity_decode($articleContent); ?>
                 </div>
@@ -176,6 +239,18 @@ $ownerPicture = $userInfo['profile_picture'];
     </script>
     <!-- Populate the comments -->
     <script src="scripts/get-comments.js"></script>
+    <!-- Input Date Box -->
+    <script>
+        const inputDate = document.getElementById('schedule-choose-date');
+
+        // if date == null
+        // Defaultly sets the date to now
+        inputDate.valueAsDate = new Date();
+        // else
+        // Get the set date
+
+        inputDate.addEventListener()
+    </script>
 </body>
 
 </html>
