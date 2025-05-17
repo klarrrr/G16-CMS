@@ -43,6 +43,7 @@
                 </div>
                 <div class="card-news-container" id='card-news-container'>
                     <!-- To be filled up -->
+
                 </div>
             </div>
             <div class="extras-container">

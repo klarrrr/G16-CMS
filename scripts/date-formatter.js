@@ -60,7 +60,7 @@ function formatTimeOnly(datetimeString) {
     const paddedMinutes = minutes < 10 ? "0" + minutes : minutes;
     const paddedSeconds = seconds < 10 ? "0" + seconds : seconds;
 
-    const formattedTime = `${hours}:${paddedMinutes}:${paddedSeconds} ${ampm}`;
+    const formattedTime = `${hours}:${paddedMinutes} ${ampm}`;
 
     return `${formattedTime}`;
 }

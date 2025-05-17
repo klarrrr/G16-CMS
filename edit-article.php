@@ -79,7 +79,7 @@ $dateUpdated = $articles['date_updated'];
                     <div class="nav-one-buttons">
                         <input type="date" id='schedule-choose-date'>
                         <button id='post-article'>Post Article</button>
-                        <span id='open-widget'>》 Hide Details Box</span>
+                        <span id='open-widget'>》 Hide Comment Box</span>
                     </div>
                 </div>
                 <div class="" id='create-nav-two'>

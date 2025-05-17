@@ -4,6 +4,24 @@ if (!isset($_SESSION['user_id'])) {
     header('Location: lundayan-sign-in-page.php');
     exit;
 }
+
+include 'php-backend/connect.php';
+
+$user_id = $_SESSION['user_id'];
+
+$userInfo = [];
+$query = "SELECT * FROM users WHERE user_id = $user_id";
+$result = mysqli_query($conn, $query);
+if ($row = mysqli_fetch_assoc($result)) {
+    $userInfo = $row;
+}
+
+$ownerUserId = $userInfo['user_id'];
+$ownerFName = $userInfo['user_first_name'];
+$ownerLName = $userInfo['user_last_name'];
+$ownerEmail = $userInfo['user_email'];
+$ownerPicture = $userInfo['profile_picture'];
+
 ?>
 
 <!DOCTYPE html>

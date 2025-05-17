@@ -51,26 +51,63 @@ $.ajax({
                 picUrl = 'pics/plp-outside.jpg';
             }
 
-            let latestCardLayout = `
-                <div class="news-card" articleid="${widgets[i].article_owner}" onclick="goToArticle(this)">
-                    <div class='news-card-date-container'>
-                        <p class="news-card-date">${formatDateOnly(widgets[i].date_created)}</p>
-                        <p class="news-card-date">${formatTimeOnly(widgets[i].date_created)}</p>
-                    </div>
-                    <img src="${picUrl}">
-                    <div class="card-text-container">   
-                        <h2>
-                            ${widgets[i].widget_title}
-                        </h2>
+            // let latestCardLayout = `
+            //     <div class="news-card" articleid="${widgets[i].article_owner}" onclick="goToArticle(this)">
+            //         <div class='news-card-date-container'>
+            //             <p class="news-card-date">${formatDateOnly(widgets[i].date_created)}</p>
+            //             <p class="news-card-date">${formatTimeOnly(widgets[i].date_created)}</p>
+            //         </div>
+            //         <img src="${picUrl}">
+            //         <div class="card-text-container">   
+            //             <h2>
+            //                 ${widgets[i].widget_title}
+            //             </h2>
 
-                        <p>
-                            ${widgets[i].widget_paragraph}
-                        </p>
+            //             <p>
+            //                 ${widgets[i].widget_paragraph}
+            //             </p>
+            //         </div>
+            //     </div>
+            // `;
+
+            // let latestCardLayout = `
+            //     <div class="news-card" articleid="${widgets[i].article_owner}" onclick="goToArticle(this)">
+            //         <img src="${picUrl}">
+            //     </div>
+            // `;
+
+            let latestCardLayout = document.createElement('div');
+            latestCardLayout.innerHTML = `
+                <div class="news-card" articleid="${widgets[i].article_owner}" onclick="goToArticle(this)">
+                    <img src="${picUrl}">
+                    <div class="latest-info-container">
+                        <div class='news-card-date-container'>
+                            <p class="news-card-date">${formatDateOnly(widgets[i].date_created)}</p>
+                            <p class="news-card-date">${formatTimeOnly(widgets[i].date_created)}</p>
+                        </div>
+                        <div class="card-text-container">
+                            <h2>${widgets[i].widget_title}</h2>
+                            <p>${widgets[i].widget_paragraph}</p>
+                        </div>
                     </div>
                 </div>
             `;
 
-            cardNewsContainer.innerHTML += latestCardLayout;
+            let newsCard = latestCardLayout.querySelector('.news-card');
+            let image = newsCard.querySelector('img');
+            let infoContainer = newsCard.querySelector('.latest-info-container');
+
+            newsCard.addEventListener('mouseover', () => {
+                infoContainer.classList.add('fade-in');
+                infoContainer.classList.remove('fade-out');
+            });
+
+            newsCard.addEventListener('mouseout', () => {
+                infoContainer.classList.remove('fade-in');
+                infoContainer.classList.add('fade-out');
+            });
+
+            cardNewsContainer.appendChild(newsCard);
         }
     },
     error: (error) => {
