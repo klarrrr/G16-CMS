@@ -224,9 +224,10 @@ $dateUpdated = $articles['date_updated'];
 
                             <span class='warning' style='display: none;' id='img-size-warning'>Image size is too large</span>
 
-                            <div class="thumbnail-image-container" style='background: url(<?php echo 'data:image/png;base64,' . $thumbnailImg ?>);'>
+                            <div id='thumbnail-image-container' class="thumbnail-image-container" style='background: url(<?php echo 'data:image/png;base64,' . $thumbnailImg ?>);'>
                                 <img src="<?php echo 'data:image/png;base64,' . $thumbnailImg ?>" alt="" id='show-thumbnail-image'>
                             </div>
+
                             <input type="file" id='thumbnail-image'>
                         </div>
                         <div class="tags-del-container">
@@ -509,8 +510,12 @@ $dateUpdated = $articles['date_updated'];
                             },
                             success: (res) => {
                                 console.log(res.status);
+
                                 document.getElementById('show-thumbnail-image').src = 'data:image/png;base64,' + base64String;
                                 updateDateUpdated(article_id);
+
+                                document.getElementById('thumbnail-image-container').style.background = `url(${'data:image/png;base64,' + base64String})`;
+
                                 warningLbl.style.display = 'none';
                             },
                             error: (error) => {

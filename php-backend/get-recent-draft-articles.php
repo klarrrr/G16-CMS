@@ -2,12 +2,16 @@
 
 include 'connect.php';
 
+$user_id = $_GET['user_id'];
+
 // Prepare the query to fetch articles and associated widgets
 $query = "
 SELECT a.*, w.*
 FROM articles a
 LEFT JOIN widgets w ON a.article_id = w.article_owner
 WHERE a.completion_status = 'draft'
+AND
+a.user_owner = $user_id
 ORDER BY a.date_updated DESC
 LIMIT 5;
 ";

@@ -53,11 +53,6 @@ Things to do in the website:
 
 	Update everything and make sure everything is secured.
 
-13. Dashboard Page
-
-	Fix the UI Layout of the Dashboard Page
-	Put the profile picture
-
 14. Profile Picture on NavBar
 
 	If click go to account settings
@@ -70,7 +65,12 @@ Things to do in the website:
 		3. Alphabetical Desc
 		4. 
 
+
+
 Ma'am Siao:
+
+
+
 
 Only show a portion of article page
 
@@ -92,7 +92,11 @@ Share link to Facebook
 
 
 
+
 Ma'am Daluyon:
+
+
+
 
 User type in account creation
 
@@ -108,3 +112,8 @@ System settings - Editable contact information in admin side
 
 	In Add Article Page, add a delete article.
 	Also in Edit Article Page add a delete article.
+
+13. Dashboard Page
+
+	Fix the UI Layout of the Dashboard Page
+	Put the profile picture
