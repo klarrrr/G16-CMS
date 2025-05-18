@@ -235,37 +235,11 @@ $dateUpdated = $articles['date_updated'];
                             <div class="widget-article-tags">
                                 <h3 class='widget-article-h3'>Tags</h3>
                                 <div class="tags-container">
-                                    <div class='added-tag'>
-                                        <span class='tag-name'>anime</span>
-                                        <span class='remove-tag'>x</span>
-                                    </div>
-                                    <div class='added-tag'>
-                                        <span class='tag-name'>news</span>
-                                        <span class='remove-tag'>x</span>
-                                    </div>
-                                    <div class='added-tag'>
-                                        <span class='tag-name'>sample tags</span>
-                                        <span class='remove-tag'>x</span>
-                                    </div>
-                                    <div class='added-tag'>
-                                        <span class='tag-name'>pogi ni cj</span>
-                                        <span class='remove-tag'>x</span>
-                                    </div>
-                                    <div class='added-tag'>
-                                        <span class='tag-name'>ntr</span>
-                                        <span class='remove-tag'>x</span>
-                                    </div>
-                                    <div class='added-tag'>
-                                        <span class='tag-name'>gorilla</span>
-                                        <span class='remove-tag'>x</span>
-                                    </div>
-                                    <div class='added-tag'>
-                                        <span class='tag-name'>futanari</span>
-                                        <span class='remove-tag'>x</span>
-                                    </div>
+                                    <!-- Population of tags will be here -->
                                 </div>
                                 <div class="tags-input-container">
                                     <input type="text" placeholder="Enter tags here" id='widget-tags-input'>
+                                    <button id="save-tags-button">Save Tags</button>
                                 </div>
                             </div>
                         </div>
@@ -600,6 +574,103 @@ $dateUpdated = $articles['date_updated'];
         // Get the set date
 
         // inputDate.addEventListener()
+    </script>
+
+    <!-- Create Tags -->
+    <script>
+        const tagsInput = document.getElementById('widget-tags-input');
+        const tagsContainer = document.querySelector('.tags-container');
+        let currentTags = [];
+
+        // Add tag on Enter key
+        tagsInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const tagName = tagsInput.value.trim();
+                if (tagName && !currentTags.includes(tagName)) {
+                    addTagElement(tagName);
+                    currentTags.push(tagName);
+                    tagsInput.value = '';
+                }
+            }
+        });
+
+        // Add tag element to the DOM
+        function addTagElement(tagName) {
+            const tagDiv = document.createElement('div');
+            tagDiv.className = 'added-tag';
+            tagDiv.innerHTML = `
+                <span class='tag-name'>${tagName}</span>
+                <span class='remove-tag'>x</span>
+            `;
+            tagsContainer.appendChild(tagDiv);
+
+            // REMOVE TAG
+            tagDiv.querySelector('.remove-tag').addEventListener('click', () => {
+                tagsContainer.removeChild(tagDiv);
+                currentTags = currentTags.filter(tag => tag !== tagName);
+            });
+        }
+
+        // Send tags to server (call this on Save/Submit)
+        function saveTags(articleId) {
+            console.log(articleId);
+            console.log(currentTags);
+
+            $.ajax({
+                url: 'php-backend/save-tags.php',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    article_id: articleId,
+                    tags: currentTags
+                },
+                success: (res) => {
+                    if (res.success) {
+                        alert('Tags saved successfully!');
+                    }
+                },
+                error: (err) => {
+                    console.error(err);
+                }
+            });
+        }
+
+        // Save button
+        document.getElementById('save-tags-button').addEventListener('click', function() {
+            const articleId = <?php echo $article_id; ?>; // PHP variable to get the article ID
+            saveTags(articleId);
+        });
+    </script>
+
+    <!-- Populate assigned tags -->
+    <script>
+        // Function to load all assigned tags for an article
+        function loadAssignedTags(articleId) {
+            $.ajax({
+                url: 'php-backend/get-assigned-tags.php',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    article_id: articleId
+                },
+                success: (res) => {
+                    if (res.success && res.tags.length > 0) {
+                        res.tags.forEach(tag => {
+                            addTagElement(tag.tag_name);
+                            currentTags.push(tag.tag_name); // Update the currentTags array
+                        });
+                    } else {
+                        console.log('No tags assigned to this article.');
+                    }
+                },
+                error: (err) => {
+                    console.error(err);
+                }
+            });
+        }
+
+        loadAssignedTags(<?php echo $article_id ?>);
     </script>
 </body>
 

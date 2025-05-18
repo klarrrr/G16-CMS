@@ -4,23 +4,45 @@ include 'connect.php';
 
 $user_id = $_GET['user_id'];
 
-// Prepare the query to fetch articles and associated widgets
-$query = "
-SELECT a.*, w.*
-FROM articles a
-LEFT JOIN widgets w ON a.article_id = w.article_owner
-WHERE a.completion_status = 'draft'
-AND
-a.user_owner = $user_id
-ORDER BY a.date_updated DESC
-LIMIT 5;
-";
+// Step 1: Get user type
+$userTypeQuery = "SELECT user_type FROM users WHERE user_id = ?";
+$userTypeStmt = $conn->prepare($userTypeQuery);
+$userTypeStmt->bind_param("i", $user_id);
+$userTypeStmt->execute();
+$userTypeResult = $userTypeStmt->get_result();
 
-// Use prepared statements to avoid SQL injection and increase security
-$stmt = $conn->prepare($query);
+$user_type = null;
+if ($row = $userTypeResult->fetch_assoc()) {
+    $user_type = strtolower($row['user_type']);
+}
+
+// Step 2: Build the article query dynamically
+if ($user_type === 'writer') {
+    $query = "
+        SELECT a.*, w.*
+        FROM articles a
+        LEFT JOIN widgets w ON a.article_id = w.article_owner
+        WHERE a.completion_status = 'draft'
+        AND a.user_owner = ?
+        ORDER BY a.date_updated DESC
+        LIMIT 5
+    ";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $user_id);
+} else {
+    $query = "
+        SELECT a.*, w.*
+        FROM articles a
+        LEFT JOIN widgets w ON a.article_id = w.article_owner
+        WHERE a.completion_status = 'draft'
+        ORDER BY a.date_updated DESC
+        LIMIT 5
+    ";
+    $stmt = $conn->prepare($query);
+}
+
+// Step 3: Execute and fetch results
 $stmt->execute();
-
-// Fetch the result
 $result = $stmt->get_result();
 
 $articles = [];
@@ -33,22 +55,24 @@ while ($row = $result->fetch_assoc()) {
         'article_title' => $row['article_title'],
         'article_content' => $row['article_content'],
         'date_updated' => $row['date_updated'],
-        // Add other article fields here
+        // Add other article fields as needed
     ];
 
     // Add widget if it exists
-    if ($row['widget_id']) {
+    if (!empty($row['widget_id'])) {
         $widgets[] = [
             'widget_id' => $row['widget_id'],
             'widget_img' => $row['widget_img'],
-            // Add other widget fields here
+            // Add other widget fields as needed
         ];
     }
 
     $articles[] = $article;
 }
 
+// Step 4: Return the result as JSON
 echo json_encode([
     'articles' => $articles,
-    'widgets' => $widgets
+    'widgets' => $widgets,
+    'user_type' => $user_type
 ]);

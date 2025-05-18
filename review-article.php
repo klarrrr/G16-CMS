@@ -16,6 +16,9 @@ $article_id = $_GET['article_id'];
 $user_id = $_SESSION['user_id'];
 $profile_pic = $_SESSION['profile_picture'];
 
+$userFName = $_SESSION['user_first'];
+$userLName = $_SESSION['user_last'];
+
 $query = "SELECT * FROM articles WHERE article_id = $article_id";
 $result = mysqli_query($conn, $query);
 $articles = [];
@@ -70,18 +73,19 @@ $ownerPicture = $userInfo['profile_picture'];
 </head>
 
 <body class="body">
-    <div class="sure-delete-container" style="display: none;" id='sure-delete-container'>
+    <div class="sure-delete-container" style="display: none;" id="sure-delete-container">
         <div class="sure-delete">
-            <h3>Approve this article?</h3>
-            <!-- Selected Date will be here -->
-            <!-- TODO: Make this dynamic -->
-            <p>Confirming this will enable the author to schedule this article a date to be posted. <strong>Are you sure?</strong></p>
+            <h3 id="modal-title">Approve this article?</h3>
+            <p id="modal-message">
+                Confirming this will enable the author to schedule this article a date to be posted. <strong>Are you sure?</strong>
+            </p>
             <div class="delete-button-container">
-                <button id='approve-confirm-btn'>Confirm</button>
-                <button id='approve-cancel-btn'>Cancel</button>
+                <button id="modal-confirm-btn">Confirm</button>
+                <button id="modal-cancel-btn">Cancel</button>
             </div>
         </div>
     </div>
+
     <!-- ACTUAL NAV OF CMS WEBSITE -->
     <div class="left-editor-container">
         <?php include 'editor-nav.php'; ?>
@@ -94,7 +98,7 @@ $ownerPicture = $userInfo['profile_picture'];
             </div>
             <div class="right-side-review-nav">
                 <button id='approve-btn'>Approve Post</button>
-                <button id='add-comment'>Add a Comment</button>
+                <button id='add-comment' disabled>Add a Comment</button>
                 <!-- Keep this at the bottom here -->
                 <div class="pfp-container">
                     <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : 'data:image/png;base64,' . $profile_pic; ?>" alt="" id='pfp-circle'>
@@ -204,32 +208,29 @@ $ownerPicture = $userInfo['profile_picture'];
         const approveCancel = document.getElementById('approve-cancel-btn');
 
         approveBtn.addEventListener('click', () => {
-            approveBox.style.display = 'flex';
-        });
-
-        approveConfirm.addEventListener('click', () => {
-            $.ajax({
-                url: 'php-backend/approve-confirmation.php',
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    article_id: article_id,
-                    user_id: user_id
-                },
-                success: (res) => {
-                    if (res.status != "Invalid User Type") {
-                        changeApprovalBtn(res.status);
-                    }
-                },
-                error: (error) => {
-                    console.log(error);
+            showModal({
+                title: 'Approve this article?',
+                message: 'Confirming this will enable the author to schedule this article a date to be posted. <strong>Are you sure?</strong>',
+                onConfirm: () => {
+                    $.ajax({
+                        url: 'php-backend/approve-confirmation.php',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            article_id: article_id,
+                            user_id: user_id
+                        },
+                        success: (res) => {
+                            if (res.status != "Invalid User Type") {
+                                changeApprovalBtn(res.status);
+                            }
+                        },
+                        error: (error) => {
+                            console.log(error);
+                        }
+                    });
                 }
             });
-            approveBox.style.display = 'none';
-        });
-
-        approveCancel.addEventListener('click', () => {
-            approveBox.style.display = 'none';
         });
     </script>
     <script>
@@ -258,6 +259,328 @@ $ownerPicture = $userInfo['profile_picture'];
         }
 
         changeApprovalBtn(approvalStatus);
+    </script>
+
+    <!-- Add Comment -->
+    <script>
+        const addCommPfp = '<?php echo $profile_pic; ?>';
+        const firstName = '<?php echo $userFName; ?>';
+        const lastName = '<?php echo $userLName; ?>';
+
+        // Function to handle adding a comment
+        document.getElementById("add-comment").addEventListener("click", () => {
+            const commentsContainer = document.getElementById("comments-container");
+
+            // Create a new comment box (editable)
+            const newCommentBox = document.createElement("div");
+            newCommentBox.classList.add("comment-box");
+            newCommentBox.setAttribute("data-status", "new"); // Mark this comment as new
+
+            newCommentBox.innerHTML = `
+        <div class="comment-upper-part">
+            <div class="pfp-container">
+                <img src="${'data:image/png;base64,' + addCommPfp}" alt="">
+            </div>
+            <div class="author-and-date">
+                <h2 class="comment-author">${firstName + ' ' + lastName}</h2>
+                <p class="comment-date"></p>
+            </div>
+            <div class="comment-options">
+                <button class="options-button" disabled style="opacity: 0.5; cursor: not-allowed;">⋮</button>
+                <div class="options-dropdown hidden">
+                    <button class="edit-comment">Edit</button>
+                    <button class="remove-comment">Remove</button>
+                </div>
+            </div>
+        </div>
+        <div class="comment-bottom-part">
+            <textarea class="comment-textarea" placeholder="Write your comment here..."></textarea>
+        </div>
+        <div class="comment-actions">
+            <button class="cancel-comment">Cancel</button>
+            <button class="save-comment">Save</button>
+        </div>
+    `;
+
+            // Append new comment box to the comments container
+            commentsContainer.appendChild(newCommentBox);
+
+            // Focus the textarea after appending it to the DOM
+            const textarea = newCommentBox.querySelector('.comment-textarea');
+            textarea.focus();
+
+            // Add event listeners for Save and Cancel buttons
+            const saveButton = newCommentBox.querySelector(".save-comment");
+            const cancelButton = newCommentBox.querySelector(".cancel-comment");
+
+            saveButton.addEventListener("click", function() {
+                const commentTextarea = newCommentBox.querySelector(".comment-textarea");
+                if (!commentTextarea) return;
+                const commentText = commentTextarea.value;
+
+                if (commentText.trim() !== "") {
+                    // Get the current date in the desired format
+                    const currentDate = getFormattedDate();
+
+                    // Update the comment text and date
+                    newCommentBox.querySelector(".comment-bottom-part").innerHTML = `<p>${commentText}</p>`;
+
+                    newCommentBox.querySelector(".comment-date").innerHTML = currentDate;
+
+                    // Enable the options dropdown after saving
+                    const optionsButton = newCommentBox.querySelector('.options-button');
+                    if (optionsButton) {
+                        optionsButton.disabled = false;
+                        optionsButton.style.cursor = 'pointer';
+                        optionsButton.style.opacity = 1;
+                    }
+
+                    // Mark the comment as "existing"
+                    newCommentBox.setAttribute("data-status", "existing"); // Change status to existing
+                    newCommentBox.setAttribute("data-originaltext", commentText); // Store original comment text for cancellation
+
+                    saveNewComment(commentText, newCommentBox);
+                }
+            });
+
+            cancelButton.addEventListener("click", function() {
+                if (newCommentBox.getAttribute("data-status") === "new") {
+                    // If the comment is new, remove the whole comment box
+                    newCommentBox.remove();
+                } else {
+                    // If the comment already exists, revert to original comment text
+                    revertToOriginalComment(newCommentBox);
+                }
+            });
+
+            document.querySelectorAll('.comment-textarea').forEach(textarea => {
+                textarea.addEventListener('input', function() {
+                    // Reset height to auto to shrink if content is deleted
+                    this.style.height = 'auto';
+
+                    // Set the height to the scrollHeight (total height including overflow)
+                    this.style.height = (this.scrollHeight) + 'px';
+                });
+            });
+        });
+
+        // Function to format date like "May 14, 2025 - 9:42:01 AM"
+        function getFormattedDate() {
+            const now = new Date();
+            const options = {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            };
+            return now.toLocaleString('en-US', options);
+        }
+
+        // Function to revert to the original comment if it's not a new one
+        function revertToOriginalComment(commentBox) {
+            const originalCommentText = commentBox.getAttribute("data-originaltext");
+            commentBox.querySelector(".comment-bottom-part").innerHTML = `<p>${originalCommentText}</p>`;
+        }
+
+        // Function to insert new comment to database
+        function saveNewComment(commentText, commentBox) {
+            $.ajax({
+                url: 'php-backend/save-comment.php',
+                type: 'get',
+                dataType: 'json',
+                data: {
+                    commentText: commentText,
+                    user_id: user_id,
+                    article_id: article_id
+                },
+                success: (res) => {
+                    if (res && res.comment_id) {
+                        // Set the new comment ID as a data attribute
+                        commentBox.setAttribute("data-commentid", res.comment_id);
+                        const actions = commentBox.querySelector('.comment-actions');
+                        if (actions) actions.remove();
+                    }
+                },
+                error: (error) => {
+                    console.log(error);
+                }
+            });
+        }
+
+        // Function to revert to the original comment if it's not a new one
+        function revertToOriginalComment(commentBox) {
+            const originalCommentText = commentBox.getAttribute("data-originaltext");
+            commentBox.querySelector(".comment-bottom-part").innerHTML = `<p>${originalCommentText}</p>`;
+        }
+    </script>
+
+    <!-- Dropdown More Options -->
+    <script>
+        // Toggle dropdown visibility
+        document.addEventListener('click', function(e) {
+            document.querySelectorAll('.options-dropdown').forEach(dropdown => {
+                if (!dropdown.contains(e.target) && !dropdown.previousElementSibling.contains(e.target)) {
+                    dropdown.classList.add('hidden');
+                }
+            });
+
+            if (e.target.classList.contains('options-button')) {
+                const dropdown = e.target.nextElementSibling;
+                dropdown.classList.toggle('hidden');
+            }
+
+            // Edit Button Clicked
+            if (e.target.classList.contains('edit-comment')) {
+                const commentBox = e.target.closest('.comment-box');
+                const commentText = commentBox.querySelector('.comment-bottom-part p').innerText;
+
+                // Hide the dropdown
+                const dropdown = e.target.closest('.options-dropdown');
+                dropdown.classList.add('hidden');
+
+                commentBox.setAttribute("data-status", "editing");
+                commentBox.setAttribute("data-originaltext", commentText);
+
+                commentBox.querySelector(".comment-bottom-part").innerHTML = `
+        <textarea class="comment-textarea">${commentText}</textarea>
+    `;
+
+                const actions = document.createElement('div');
+                actions.classList.add('comment-actions');
+                actions.innerHTML = `
+        <button class="cancel-comment">Cancel</button>
+        <button class="save-comment">Save</button>
+    `;
+                commentBox.appendChild(actions);
+
+                // Reapply textarea autosize logic
+                const textarea = commentBox.querySelector('.comment-textarea');
+                textarea.style.height = 'auto'; // reset first
+                textarea.style.height = `${textarea.scrollHeight}px`; // resize to fit content
+                textarea.focus();
+
+                // Attach autosize logic for user input
+                textarea.addEventListener('input', function() {
+                    this.style.height = 'auto';
+                    this.style.height = `${this.scrollHeight}px`;
+                });
+            }
+
+
+            // Remove Button Clicked
+            if (e.target.classList.contains('remove-comment')) {
+                const commentBox = e.target.closest('.comment-box');
+                const commentId = commentBox.getAttribute('data-commentid');
+
+                // Hide the dropdown
+                const dropdown = e.target.closest('.options-dropdown');
+                dropdown.classList.add('hidden');
+
+                showModal({
+                    title: 'Delete this comment?',
+                    message: 'Are you sure you want to permanently delete this comment?',
+                    onConfirm: () => {
+                        $.ajax({
+                            url: 'php-backend/delete-comment.php',
+                            type: 'post',
+                            dataType: 'json',
+                            data: {
+                                comment_id: commentId
+                            },
+                            success: (res) => {
+                                if (res.success) {
+                                    commentBox.remove();
+                                }
+                            },
+                            error: (error) => {
+                                console.log(error);
+                            }
+                        });
+                    }
+                });
+            }
+
+            // Cancel Editing
+            if (e.target.classList.contains('cancel-comment')) {
+                const commentBox = e.target.closest('.comment-box');
+                revertToOriginalComment(commentBox);
+                commentBox.setAttribute("data-status", "existing");
+                const actions = commentBox.querySelector('.comment-actions');
+                if (actions) actions.remove();
+            }
+
+            // Save Edited Comment
+            if (e.target.classList.contains('save-comment')) {
+                const commentBox = e.target.closest('.comment-box');
+                const textarea = commentBox.querySelector('.comment-textarea');
+                if (!textarea) return;
+                const newCommentText = textarea.value;
+
+                const commentId = commentBox.getAttribute('data-commentid');
+
+                $.ajax({
+                    url: 'php-backend/update-comment.php',
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        comment_id: commentId,
+                        comment_text: newCommentText
+                    },
+                    success: (res) => {
+                        if (res.success) {
+                            commentBox.querySelector('.comment-bottom-part').innerHTML = `<p>${newCommentText}</p>`;
+                            commentBox.setAttribute("data-originaltext", newCommentText);
+                            commentBox.setAttribute("data-status", "existing");
+                            const actions = commentBox.querySelector('.comment-actions');
+                            if (actions) actions.remove();
+                        }
+                    },
+                    error: (error) => {
+                        console.log(error);
+                    }
+                });
+            }
+        });
+    </script>
+
+    <!-- Dynamic modal -->
+    <script>
+        function showModal({
+            title,
+            message,
+            onConfirm
+        }) {
+            const modal = document.getElementById('sure-delete-container');
+            const modalTitle = document.getElementById('modal-title');
+            const modalMessage = document.getElementById('modal-message');
+            const confirmBtn = document.getElementById('modal-confirm-btn');
+            const cancelBtn = document.getElementById('modal-cancel-btn');
+
+            // Update content
+            modalTitle.textContent = title;
+            modalMessage.innerHTML = message;
+
+            // Remove previous event listeners from Confirm
+            const newConfirmBtn = confirmBtn.cloneNode(true);
+            confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+
+            // Add new confirm listener
+            newConfirmBtn.addEventListener('click', () => {
+                onConfirm();
+                modal.style.display = 'none';
+            });
+
+            // Cancel button always hides the modal
+            cancelBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+
+            // Show the modal
+            modal.style.display = 'flex';
+        }
     </script>
 </body>
 

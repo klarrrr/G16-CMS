@@ -37,9 +37,17 @@ $.ajax({
             recentArticleLayout.appendChild(img);
             recentArticleLayout.appendChild(p);
             recentArticleLayout.setAttribute('articleid', articleId);
-            recentArticleLayout.addEventListener('click', (event) => {
-                editArticle(event.currentTarget);
-            });
+
+            // If writer or reviewer
+            if (userType === 'writer') {
+                recentArticleLayout.addEventListener('click', (event) => {
+                    editArticle(event.currentTarget);
+                });
+            } else if (userType === 'reviewer') {
+                recentArticleLayout.addEventListener('click', (event) => {
+                    reviewArticleDashboard(event.currentTarget);
+                });
+            }
 
             // Append the recentArticleLayout to the fragment
             fragment.appendChild(recentArticleLayout);
@@ -62,6 +70,13 @@ function editArticle(thisContainer) {
     // So Article id = article_id AND user_id = $_SESSION['user_id'];
     window.location.href = `../edit-article.php?article_id=${article_id}`;
 }
+
+
+function reviewArticleDashboard(thisContainer) {
+    const article_id = thisContainer.getAttribute('articleid');
+    window.location.href = `../review-article.php?article_id=${article_id}`;
+}
+
 
 function htmlEntityDecode(str) {
     const txt = document.createElement('textarea');

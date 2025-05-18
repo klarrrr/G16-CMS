@@ -1,4 +1,3 @@
-// WHEN CREATING ARTICLE PAGES, THESE ARE THE THINGS THAT GET INSERTED INTO THE THE DATABASE
 
 // Latest News
 
@@ -50,31 +49,6 @@ $.ajax({
             } else {
                 picUrl = 'pics/plp-outside.jpg';
             }
-
-            // let latestCardLayout = `
-            //     <div class="news-card" articleid="${widgets[i].article_owner}" onclick="goToArticle(this)">
-            //         <div class='news-card-date-container'>
-            //             <p class="news-card-date">${formatDateOnly(widgets[i].date_created)}</p>
-            //             <p class="news-card-date">${formatTimeOnly(widgets[i].date_created)}</p>
-            //         </div>
-            //         <img src="${picUrl}">
-            //         <div class="card-text-container">   
-            //             <h2>
-            //                 ${widgets[i].widget_title}
-            //             </h2>
-
-            //             <p>
-            //                 ${widgets[i].widget_paragraph}
-            //             </p>
-            //         </div>
-            //     </div>
-            // `;
-
-            // let latestCardLayout = `
-            //     <div class="news-card" articleid="${widgets[i].article_owner}" onclick="goToArticle(this)">
-            //         <img src="${picUrl}">
-            //     </div>
-            // `;
 
             let latestCardLayout = document.createElement('div');
             latestCardLayout.innerHTML = `

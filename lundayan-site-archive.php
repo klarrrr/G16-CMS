@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Lundayan : Bulletin</title>
+    <title>Lundayan : Archive</title>
     <link rel="stylesheet" href="styles-lundayan-site.css">
     <link rel="icon" href="pics/lundayan-logo.png">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
@@ -49,10 +49,15 @@
     </main>
 
     <?php include 'lundayan-site-footer.php' ?>
+    <script>
+        const bulletinCardNewsContainer = document.getElementById('bulletin-card-news-container');
+        const paginationContainer = document.getElementById('pagination');
+
+        let currentPage = 1;
+        const itemsPerPage = 10;
+    </script>
     <!-- Date formatter Function -->
     <script src="scripts/date-formatter.js"></script>
-    <!-- SCript to get all the news -->
-    <script src="scripts/get-news-bulletin.js"></script>
     <!-- Script for search -->
     <script src="scripts/bulletin-search-news.js"></script>
     <!-- Script for gettings tags -->

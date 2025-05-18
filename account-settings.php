@@ -48,47 +48,54 @@ $cover_photo = $_SESSION['cover_photo'];
 
                 <div class="person-info-container">
 
-                    <div class="pictures-container">
-                        <div class="profile-pic-account">
+                    <div>
+                        <h1 style='font-family: "main"; font-size: 2rem;'>Account Settings</h1>
+                    </div>
 
-                            <label class="-label" for="pfp-file">
-                                <span>Change Profile Picture</span>
-                            </label>
+                    <div class="below-account-title">
+                        <div class="pictures-container">
+                            <div class="profile-pic-account">
 
-                            <input id="pfp-file" type="file" onchange="loadPfp(event)" />
+                                <label class="-label" for="pfp-file">
+                                    <span>Change Profile Picture</span>
+                                </label>
+
+                                <input id="pfp-file" type="file" onchange="loadPfp(event)" />
 
 
-                            <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : 'data:image/png;base64,' . $profile_pic; ?>" id="pfp" />
+                                <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : 'data:image/png;base64,' . $profile_pic; ?>" id="pfp" />
+                            </div>
+                        </div>
+
+
+                        <div class="input-fields">
+                            <div class="first-last">
+                                <div class='input-box-container'>
+                                    <p>First name</p>
+                                    <input type="text" placeholder="First Name" value='<?php echo $fname; ?>' id='user-first-name'>
+                                </div>
+
+                                <div class='input-box-container'>
+                                    <p>Last name</p>
+                                    <input type="text" placeholder="Last Name" value='<?php echo $lname; ?>' id='user-last-name'>
+                                </div>
+                            </div>
+
+                            <div class='input-box-container'>
+                                <p>Email address</p>
+                                <input type="email" placeholder="Email Address" value='<?php echo $email; ?>' id='user-email'>
+                            </div>
+
+                            <!-- <input type="text" placeholder="Bio"> -->
+
+                            <!-- Save & Discard Buttons -->
+                            <div class="save-buttons">
+                                <input type="button" name="saveChanges" value="Save Changes" onclick="saveChanges()">
+                            </div>
                         </div>
                     </div>
 
 
-                    <div class="input-fields">
-
-                        <div class="first-last">
-                            <div class='input-box-container'>
-                                <p>First name</p>
-                                <input type="text" placeholder="First Name" value='<?php echo $fname; ?>'>
-                            </div>
-
-                            <div class='input-box-container'>
-                                <p>Last name</p>
-                                <input type="text" placeholder="Last Name" value='<?php echo $lname; ?>'>
-                            </div>
-                        </div>
-
-                        <div class='input-box-container'>
-                            <p>Email address</p>
-                            <input type="email" placeholder="Email Address" value='<?php echo $email; ?>'>
-                        </div>
-
-                        <!-- <input type="text" placeholder="Bio"> -->
-
-                        <!-- Save & Discard Buttons -->
-                        <div class="save-buttons">
-                            <input type="button" name="saveChanges" value="Save Changes">
-                        </div>
-                    </div>
 
                 </div>
 
@@ -194,6 +201,35 @@ $cover_photo = $_SESSION['cover_photo'];
                 },
                 success: (res) => {
                     console.log(res.status);
+                },
+                error: (error) => {
+                    console.log(error);
+                }
+            });
+        }
+    </script>
+
+    <!-- Save Changes -->
+    <script>
+        const userFirstName = document.getElementById('user-first-name');
+        const userLastName = document.getElementById('user-last-name');
+        const userEmail = document.getElementById('user-email');
+
+        function saveChanges() {
+            $.ajax({
+                url: 'php-backend/update-account-settings.php',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    userFirstName: userFirstName.value,
+                    userLastName: userLastName.value,
+                    userEmail: userEmail.value,
+                    user_id: user_id
+                },
+                success: (res) => {
+                    if (res.success) {
+                        alert("Successfully Updated");
+                    }
                 },
                 error: (error) => {
                     console.log(error);

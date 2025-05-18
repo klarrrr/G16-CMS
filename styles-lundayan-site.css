@@ -483,6 +483,8 @@ nav {
     overflow: hidden;
     justify-content: center;
     align-items: center;
+    position: relative;
+    max-height: 350px;
 }
 
 .news-card:hover {
@@ -503,8 +505,10 @@ nav {
 .bulletin-news-card img {
     max-width: 300px;
     height: 100%;
+    width: 100%;
     object-fit: cover;
     background-color: #161616;
+    display: block;
 }
 
 .news-card .card-text-container {
@@ -1401,7 +1405,7 @@ tbody td:hover {
     border-radius: 3px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     border: none;
-    background: none;
+    background: transparent;
     border: 1px solid #f4f4f4;
     color: #f4f4f4;
 }
@@ -1419,6 +1423,8 @@ tbody td:hover {
 .sign-in-input-box:hover {
     border: 1px solid #fcb404;
 }
+
+
 
 
 #forgot-pass {

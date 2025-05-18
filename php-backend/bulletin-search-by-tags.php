@@ -2,30 +2,23 @@
 
 include 'connect.php';
 
-// $page = $_POST['page'];
-$tag_ids = [1, 2];
+$page = $_POST['page'];
+$tag_ids = $_POST['tag_ids'];
 
-$string = json_encode($tag_ids);
-$string = str_replace('[', '', $string);
-$string = str_replace(']', '', $string);
-
-$tagsArray = [];
-
-$query = "SELECT * FROM tags WHERE tag_id IN ($string)";
-
-$stmt = $conn->prepare($query);
-$stmt->execute();
-$result = $stmt->get_result();
-
-while ($row = mysqli_fetch_assoc($result)) {
-    $tagsArray[] = $row;
-}
+// Convert the tag_ids array to a comma-separated string
+$tag_ids_string = implode(",", $tag_ids);
 
 // Get all the articles based on tag ids
 
 $articles = [];
 
-$query = "SELECT assigned_article FROM tag_assign WHERE assigned_tag IN ($string)";
+// Update query to ensure that only articles assigned to all the selected tags are fetched
+$query = "
+    SELECT assigned_article 
+    FROM tag_assign 
+    WHERE assigned_tag IN ($tag_ids_string)
+    GROUP BY assigned_article
+    HAVING COUNT(DISTINCT assigned_tag) = " . count($tag_ids);
 
 $stmt = $conn->prepare($query);
 $stmt->execute();
@@ -35,15 +28,19 @@ while ($row = mysqli_fetch_assoc($result)) {
     $articles[] = $row['assigned_article'];
 }
 
-$string = json_encode($articles);
-$string = str_replace('[', '', $string);
-$string = str_replace(']', '', $string);
+// If there are no articles, return an empty result
+if (empty($articles)) {
+    echo json_encode([]);
+    exit();
+}
 
-// Get the widget
+// Convert article IDs to a string for the next query
+$articles_string = implode(",", $articles);
 
+// Get the widgets for these articles
 $widgets = [];
 
-$query = "SELECT * FROM widgets WHERE article_owner IN ($string)";
+$query = "SELECT * FROM widgets WHERE article_owner IN ($articles_string)";
 
 $stmt = $conn->prepare($query);
 $stmt->execute();
@@ -53,4 +50,5 @@ while ($row = mysqli_fetch_assoc($result)) {
     $widgets[] = $row;
 }
 
+// Return the widgets
 echo json_encode($widgets);

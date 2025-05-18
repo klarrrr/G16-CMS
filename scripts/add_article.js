@@ -55,8 +55,5 @@ $.ajax({
 
 function editArticle(thisButton) {
     const article_id = thisButton.getAttribute('articleid');
-    // Pass GET method the article id
-    // Verify by using the user id in the session too
-    // So Article id = article_id AND user_id = $_SESSION['user_id'];
     window.location.href = `../edit-article.php?article_id=${article_id}`;
 }

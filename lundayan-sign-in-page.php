@@ -70,7 +70,7 @@
         </footer>
     </main>
     <!-- Handles the functioanlity -->
-     <script src="data_handler.js"></script>
+    <script src="data_handler.js"></script>
 </body>
 
 </html>

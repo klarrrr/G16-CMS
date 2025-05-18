@@ -14,6 +14,13 @@ $email = $_SESSION['user_email'];
 $profile_pic = $_SESSION['profile_picture'];
 $cover_photo = $_SESSION['cover_photo'];
 
+$user_type = null;
+
+$query = "SELECT user_type FROM users WHERE user_id = $user_id";
+$result = mysqli_query($conn, $query);
+if ($row = mysqli_fetch_assoc($result)) {
+    $user_type = $row['user_type'];
+}
 
 $articles = [];
 $query = "SELECT * FROM articles LIMIT 5";
@@ -72,6 +79,13 @@ while ($row = mysqli_fetch_assoc($result)) {
                                 <path d="M8.29289 3.70711L1 11V15H5L12.2929 7.70711L8.29289 3.70711Z" fill="#f4f4f4" />
                                 <path d="M9.70711 2.29289L13.7071 6.29289L15.1716 4.82843C15.702 4.29799 16 3.57857 16 2.82843C16 1.26633 14.7337 0 13.1716 0C12.4214 0 11.702 0.297995 11.1716 0.828428L9.70711 2.29289Z" fill="#f4f4f4" />
                             </svg>Create Article</button>
+
+                        <button id='shortcut-review-article'>
+                            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M16 1H4V11H8L10 13L12 11H16V1Z" fill="#f4f4f4" />
+                                <path d="M2 5V13H7.17157L8.70711 14.5355L7.29289 15.9497L6.34315 15H0V5H2Z" fill="#f4f4f4" />
+                            </svg>Review Article</button>
+
                         <button id='shortcut-audit-log'><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M16 2H0V5H16V2Z" fill="#f4f4f4" />
                                 <path d="M1 7H5V9H11V7H15V15H1V7Z" fill="#f4f4f4" />
@@ -119,15 +133,11 @@ while ($row = mysqli_fetch_assoc($result)) {
         const userId = '<?php echo $user_id ?>';
     </script>
 
-    <!-- Populate recent posts -->
-    <script src='scripts/dashboard-get-recent-posted-articles.js'></script>
-
-    <!-- Populate recent drafts -->
-    <script src='scripts/dashboard-get-recent-draft-articles.js'></script>
-
     <!-- Shortcut Create butons -->
     <script>
         const addArticleBtn = document.getElementById('shortcut-create-article');
+
+        const reviewArticle = document.getElementById('shortcut-review-article');
 
         const auditBtn = document.getElementById('shortcut-audit-log');
 
@@ -164,6 +174,10 @@ while ($row = mysqli_fetch_assoc($result)) {
             });
         });
 
+        reviewArticle.addEventListener('click', () => {
+            window.location.href = 'for-review-article-page.php';
+        });
+
         auditBtn.addEventListener('click', () => {
             window.location.href = 'audit-log-page.php';
         });
@@ -172,6 +186,25 @@ while ($row = mysqli_fetch_assoc($result)) {
             window.location.href = 'account-settings.php';
         })
     </script>
+
+    <!-- Populate recent posts -->
+    <script src='scripts/dashboard-get-recent-posted-articles.js'></script>
+
+    <!-- Populate recent drafts -->
+    <script src='scripts/dashboard-get-recent-draft-articles.js'></script>
+
+    <!-- Remove Create Article is Reviewer -->
+    <script>
+        const dashboardUserType = '<?php echo $user_type; ?>';
+
+        if (dashboardUserType == 'Reviewer') {
+            addArticleBtn.remove();
+        } else {
+            reviewArticle.remove();
+        }
+    </script>
+
+
 
 </body>
 

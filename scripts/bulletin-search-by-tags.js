@@ -1,18 +1,35 @@
+// Function to get all selected tags and their tag-ids
+function getSelectedTags() {
+    const selectedTags = document.getElementsByClassName('tag selected');
+    let tagIds = [];
 
-const everyTags = document.getElementsByClassName('tag');
+    for (let i = 0; i < selectedTags.length; i++) {
+        const tagId = selectedTags[i].getAttribute('tag-id');
+        if (tagId) {
+            tagIds.push(tagId);
+        }
+    }
 
-for (let i = 0; i < everyTags.length; i++) {
-    console.log(everyTags[i].className);
+    return tagIds;
 }
 
-function loadNewsByTags(page = 1, tag_id) {
+// Updated loadNewsByTags function
+function loadNewsByTags(page = 1) {
+    const tagIds = getSelectedTags(); // Get all selected tag ids
+
+    // Ensure there's at least one tag selected
+    if (tagIds.length === 0) {
+        console.log('No tags selected');
+        return;
+    }
+
     $.ajax({
-        url: 'php-backend/bulletin-search-by-tags.php', //removed ../
-        type: 'GET',
+        url: 'php-backend/bulletin-search-by-tags.php',
+        type: 'POST',
         dataType: 'json',
         data: {
             page: page,
-            tag_id: tag_id
+            tag_ids: tagIds
         },
         success: (res) => {
             const widgets = res;
@@ -27,6 +44,8 @@ function loadNewsByTags(page = 1, tag_id) {
                     picUrl = 'pics/plp-outside.jpg';
                 }
 
+                const articleOwner = widget.article_owner; // Store the article ID for the "Read More" functionality
+
                 rows += `
                 <div class="bulletin-news-card">
                     <img src="${picUrl}" loading="lazy">
@@ -39,12 +58,22 @@ function loadNewsByTags(page = 1, tag_id) {
                             <hr>
                         </div>
                         <p>${widget.widget_paragraph}</p>
-                        <a href="#">Read More</a>
+                        <a href="#" class="read-more" articleid="${articleOwner}">Read More</a>
                     </div>
                 </div>`;
             });
 
             $(bulletinCardNewsContainer).html(rows);
+
+            // Attach event listeners to each "Read More" button
+            const readMoreButtons = document.querySelectorAll('.read-more');
+            readMoreButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault(); // Prevent the default anchor behavior
+                    const articleId = button.getAttribute('articleid');
+                    goToArticle(articleId); // Call the function to navigate to the article page
+                });
+            });
 
             // Handle pagination
             let pagination = '';
@@ -59,4 +88,8 @@ function loadNewsByTags(page = 1, tag_id) {
     });
 }
 
-// loadNewsByTags();
+// Function to navigate to the article page
+function goToArticle(articleId) {
+    console.log("Navigating to article with ID:", articleId);
+    window.location.href = `../lundayan-site-article.php?article_id=${articleId}`;
+}
