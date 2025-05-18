@@ -10,6 +10,7 @@ $fname = $_SESSION['user_first'];
 $lname = $_SESSION['user_last'];
 $email = $_SESSION['user_email'];
 $profile_pic = $_SESSION['profile_picture'];
+$cover_photo = $_SESSION['cover_photo'];
 
 ?>
 
@@ -41,108 +42,102 @@ $profile_pic = $_SESSION['profile_picture'];
 
             <!-- Cover Photo for personalization -->
             <div class="cover-photo-container">
-                <img src="pics/plp-outside.jpg" alt="" id='account-cover-photo'>
-            </div>
+                <!-- Cover Photo IMG -->
+                <div class="cover-photo">
+                    <img src="<?php echo (!$cover_photo) ? 'pics/plp-outside.jpg' : 'data:image/png;base64,' . $cover_photo; ?>" alt="" id="account-cover-photo">
 
+                    <!-- Profile Picture -->
+                    <div class="profile-info">
+                        <div class="profile-pic">
+                            <label class="-label" for="file">
+                                <span>Change Image</span>
+                            </label>
 
-            <!-- Profile Picture -->
-            <div class="profile-info">
-                <div class="profile-pic">
-                    <label class="-label" for="file">
-                        <span class="glyphicon glyphicon-camera"></span>
-                        <span>Change Image</span>
-                    </label>
-                    <input id="file" type="file" onchange="loadFile(event)" />
-                    <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : 'data:image/png;base64,' . $profile_pic; ?>" id="output" width="200" />
-                </div>
+                            <input id="file" type="file" onchange="loadFile(event)" />
+                            <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : 'data:image/png;base64,' . $profile_pic; ?>" id="output" width="200" />
+                        </div>
 
-                <!-- Personal Infos -->
-                <div class="perso-info">
-                    <h5><?php echo $_SESSION['user_first'] . ' ' . $_SESSION['user_last'] ?></h5>
-                    <p class="bio"><?php echo 'Article ' . $_SESSION['user_type']; ?></p>
-                </div>
-            </div>
-
-            <div class="input-fields">
-                <div class="first-last">
-                    <input type="text" placeholder="First Name" value='<?php echo $fname; ?>'>
-                    <input type="text" placeholder="Last Name" value='<?php echo $lname; ?>'>
-                </div>
-
-                <input type="email" placeholder="Email Address" value='<?php echo $email; ?>'>
-                <!-- <input type="text" placeholder="Bio"> -->
-
-                <!-- Save & Discard Buttons -->
-                <div class="save-buttons">
-                    <input type="button" name="saveChanges" value="Save Changes">
+                        <!-- Personal Infos -->
+                        <div class="perso-info">
+                            <h5><?php echo $_SESSION['user_first'] . ' ' . $_SESSION['user_last'] ?></h5>
+                            <p class="bio"><?php echo 'Article ' . $_SESSION['user_type']; ?></p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
 
 
-            <!-- Script for Menu Button on Top Left -->
-            <script src="scripts/menu_button.js"></script>
-            <script>
-                const user_id = `<?php echo $user_id; ?>`;
+    </div>
 
-                function loadFile(event) {
-                    var image = document.getElementById("output");
-                    const file = event.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            const base64String = e.target.result.split(',')[1]; // Extract Base64 string
-                            if (base64String.length > 16777215) {
-                                // NO MORE THAN 16777215 chars
-                                console.log("Image size is too large : " + base64String.length);
-                                // TODO : Maglagay ng warning label
-                                // warningLbl.style.display = 'block';
-                            } else {
-                                // PWEDE basta less than 16777215 chars
-                                console.log("This is allowed : " + base64String.length)
-                                $.ajax({
-                                    url: 'php-backend/account-settings-update-profile-pic.php',
-                                    type: 'post',
-                                    dataType: 'json',
-                                    data: {
-                                        base64String: base64String,
-                                        user_id: user_id
-                                    },
-                                    success: (res) => {
-                                        console.log(res.status);
-                                        image.src = 'data:image/png;base64,' + base64String;
-                                        updateDateUpdated(user_id);
-                                        // warningLbl.style.display = 'none';
-                                    },
-                                    error: (error) => {
-                                        console.log(error);
-                                    }
-                                });
-                            }
-                        };
-                        reader.readAsDataURL(file); // Read file as Data URL
+
+
+
+
+
+    <!-- Script for Menu Button on Top Left -->
+    <script src="scripts/menu_button.js"></script>
+    <script>
+        const user_id = `<?php echo $user_id; ?>`;
+
+        function loadFile(event) {
+            var image = document.getElementById("output");
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const base64String = e.target.result.split(',')[1]; // Extract Base64 string
+                    if (base64String.length > 16777215) {
+                        // NO MORE THAN 16777215 chars
+                        console.log("Image size is too large : " + base64String.length);
+                        // TODO : Maglagay ng warning label
+                        // warningLbl.style.display = 'block';
                     } else {
-                        console.log('No file selected.');
+                        // PWEDE basta less than 16777215 chars
+                        console.log("This is allowed : " + base64String.length)
+                        $.ajax({
+                            url: 'php-backend/account-settings-update-profile-pic.php',
+                            type: 'post',
+                            dataType: 'json',
+                            data: {
+                                base64String: base64String,
+                                user_id: user_id
+                            },
+                            success: (res) => {
+                                console.log(res.status);
+                                image.src = 'data:image/png;base64,' + base64String;
+                                updateDateUpdated(user_id);
+                                // warningLbl.style.display = 'none';
+                            },
+                            error: (error) => {
+                                console.log(error);
+                            }
+                        });
                     }
-                }
+                };
+                reader.readAsDataURL(file); // Read file as Data URL
+            } else {
+                console.log('No file selected.');
+            }
+        }
 
-                function updateDateUpdated(user_id) {
-                    $.ajax({
-                        url: 'php-backend/account-settings-update-user-date-updated.php',
-                        type: 'post',
-                        dataType: 'json',
-                        data: {
-                            user_id: user_id
-                        },
-                        success: (res) => {
-                            console.log(res.status);
-                        },
-                        error: (error) => {
-                            console.log(error);
-                        }
-                    });
+        function updateDateUpdated(user_id) {
+            $.ajax({
+                url: 'php-backend/account-settings-update-user-date-updated.php',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    user_id: user_id
+                },
+                success: (res) => {
+                    console.log(res.status);
+                },
+                error: (error) => {
+                    console.log(error);
                 }
-            </script>
+            });
+        }
+    </script>
 </body>
 
 </html>

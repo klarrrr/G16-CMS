@@ -8,19 +8,19 @@ if (!isset($_SESSION['user_id'])) {
 include 'php-backend/connect.php';
 
 $user_id = $_SESSION['user_id'];
+$fname = $_SESSION['user_first'];
+$lname = $_SESSION['user_last'];
+$email = $_SESSION['user_email'];
+$profile_pic = $_SESSION['profile_picture'];
+$cover_photo = $_SESSION['cover_photo'];
 
-$userInfo = [];
-$query = "SELECT * FROM users WHERE user_id = $user_id";
+
+$articles = [];
+$query = "SELECT * FROM articles LIMIT 5";
 $result = mysqli_query($conn, $query);
-if ($row = mysqli_fetch_assoc($result)) {
-    $userInfo = $row;
+while ($row = mysqli_fetch_assoc($result)) {
+    $articles[] = $row;
 }
-
-$ownerUserId = $userInfo['user_id'];
-$ownerFName = $userInfo['user_first_name'];
-$ownerLName = $userInfo['user_last_name'];
-$ownerEmail = $userInfo['user_email'];
-$ownerPicture = $userInfo['profile_picture'];
 
 ?>
 
@@ -41,34 +41,77 @@ $ownerPicture = $userInfo['profile_picture'];
     <div class="left-editor-container">
         <?php include 'editor-nav.php'; ?>
     </div>
-    <div class="right-editor-container">
-        <section class="dashboard-main-page" id='dashboard-main-page'>
-            <div class="dashboard-welcome-title">
-                <h1><?= $_SESSION['user_first'] . ' ' . $_SESSION['user_last'] ?></h1>
-                <p>Article <?= $_SESSION['user_type'] ?></p>
-            </div>
-            <div class="dashboard-quick-action-buttons">
-                <!-- Shortcut for all the main buttons of all pages -->
-                <h2>Quick Action Buttons</h2>
-                <div class="quick-button-container">
-                    <button>Create Article</button>
-                    <button>Audit Log</button>
-                    <button>Account Settings</button>
+    <div class="right-editor-container" id='dashboard-right-container'>
+        <div class="cover-photo-container">
+            <!-- Cover Photo IMG -->
+            <div class="cover-photo">
+                <img src="<?php echo (!$cover_photo) ? 'pics/plp-outside.jpg' : 'data:image/png;base64,' . $cover_photo; ?>" alt="" id="account-cover-photo">
+
+                <!-- Profile Picture -->
+                <div class="profile-info">
+
+                    <!-- Person -->
+                    <div class="person-container">
+                        <!-- Picture -->
+                        <div class="profile-pic-dashboard">
+                            <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : 'data:image/png;base64,' . $profile_pic; ?>" id="output" width="200" />
+                        </div>
+
+                        <!-- Personal Infos -->
+                        <div class="perso-info">
+                            <h5><?php echo $_SESSION['user_first'] . ' ' . $_SESSION['user_last'] ?></h5>
+                            <p class="bio"><?php echo 'Article ' . $_SESSION['user_type']; ?></p>
+                        </div>
+                    </div>
+
+                    <!-- Quick Action Buttons -->
+                    <div class="dashboard-quick-action-buttons">
+                        <!-- Shortcut for all the main buttons of all pages -->
+
+                        <button>Create Article</button>
+                        <button>Audit Log</button>
+                        <button>Account Settings</button>
+
+                    </div>
+
                 </div>
+
             </div>
+        </div>
+
+        <section class="dashboard-main-page" id='dashboard-main-page'>
             <div class="dashboard-recent-articles">
                 <!-- Recenter Articles posted by the user -->
                 <h2>Recent Posts</h2>
+
+                <div class="recent-post-container" id='recent-post-container'>
+                    <!-- Populate here -->
+                </div>
+
             </div>
             <div class="dashboard-draft-articles">
                 <!-- All the unposted/unfinished articles of the user -->
                 <h2>Recent Drafts</h2>
+
+                <div class="recent-drafts-container" id='recent-drafts-container'>
+                    <!-- Populate her -->
+
+                </div>
             </div>
         </section>
+
         <!-- Script for Menu Button on Top Left -->
         <script src="scripts/menu_button.js"></script>
+
         <!-- Populate the Selection Input of all the pages -->
         <script src="scripts/nav_panel_switcher.js"></script>
+
+        <!-- Populate recent posts -->
+        <script src='scripts/dashboard-get-recent-posted-articles.js'></script>
+
+        <!-- Populate recent drafts -->
+        <script src='scripts/dashboard-get-recent-draft-articles.js'></script>
+
 </body>
 
 </html>

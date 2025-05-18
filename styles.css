@@ -91,6 +91,7 @@ nav h1 {
 
 .right-editor-container {
     width: 100%;
+    background-color: white;
 }
 
 /* Off Screen Menu */
@@ -610,16 +611,20 @@ nav h1 {
 
 .dashboard-main-page {
     width: 100%;
-    display: grid;
-    grid-template-areas:
-        'title title title quick'
-        'recent recent draft draft'
-    ;
-
-    grid-template-rows: 10rem 1fr;
     gap: 1rem;
-    height: 100vh;
-    padding: 8vh 12vw;
+    height: 100%;
+    padding: 0vh 12vw;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* Default: 50% 50% layout */
+    position: relative;
+}
+
+@media (max-width: 1222px) {
+    .dashboard-main-page {
+        grid-template-columns: 1fr;
+        /* Stack as columns on smaller screens */
+    }
 }
 
 .dashboard-welcome-title {
@@ -641,30 +646,81 @@ nav h1 {
 }
 
 .dashboard-recent-articles {
-    border: 1px solid #161616;
-    grid-area: recent;
-    border-radius: 5px;
-    padding: 2rem;
-}
-
-.dashboard-quick-action-buttons {
-    border: 1px solid #161616;
-    grid-area: quick;
-    border-radius: 5px;
     padding: 2rem;
     display: flex;
     flex-direction: column;
-    width: 100%;
-    gap: 2rem;
+    gap: 1rem;
+
+    h2 {
+        font-family: 'main';
+    }
+}
+
+.recent-post-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 190px);
+    gap: 1rem;
+}
+
+.recent-box {
+
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    cursor: pointer;
+
+    img {
+        width: 100%;
+        height: 100%;
+        min-width: 100px;
+        min-height: 150px;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 0.5rem;
+    }
+
+    p {
+        font-family: 'sub';
+        font-size: 0.8rem;
+        line-clamp: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &:hover {
+        transform: scale(1.02);
+    }
+}
+
+
+.dashboard-quick-action-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-self: center;
+    justify-self: flex-end;
+    bottom: 0;
+    transform: translateY(60%);
+
+    button {
+        padding: 1rem;
+        background-color: #161616;
+        color: #f4f4f4;
+        border-radius: 0.5rem;
+        font-size: 0.8vw;
+        border: 1px solid #161616;
+    }
+
+    button:hover {
+        background-color: #f4f4f4;
+        color: #161616;
+    }
 }
 
 .dashboard-quick-action-buttons h2 {
     font-family: 'main';
-}
-
-.dashboard-quick-action-buttons button {
-    padding: 1rem;
-    border: none;
 }
 
 .quick-button-container {
@@ -676,18 +732,21 @@ nav h1 {
 }
 
 .dashboard-draft-articles {
-    border: 1px solid #161616;
-    grid-area: draft;
-    border-radius: 5px;
+
     padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    h2 {
+        font-family: 'main';
+    }
 }
 
-.dashboard-draft-articles h2 {
-    font-family: 'main';
-}
-
-.dashboard-recent-articles h2 {
-    font-family: 'main';
+.recent-drafts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 190px);
+    gap: 1rem;
 }
 
 .create-navs {
@@ -1242,23 +1301,43 @@ nav h1 {
 
 .profile-info {
     display: flex;
-    flex-direction: row;
     align-items: center;
-    gap: 1rem;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 0;
+    transform: translateY(60%);
+    padding: 0vh 12vw;
+    width: 100%;
 }
 
-.perso-info {}
+.perso-info {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-end;
+    padding-bottom: 2rem;
 
-.perso-info h5 {
-    font-size: 1.5em;
-    font-family: 'main';
+    h5 {
+        font-size: 1.5rem;
+        font-family: 'main';
+    }
+
+    p {
+        font-size: 1rem;
+        font-family: 'sub';
+    }
 }
 
-.perso-info p {
-    font-size: 1em;
-    font-family: 'sub';
+.profile-pic-dashboard {
+    img {
+        object-fit: cover;
+        width: 165px;
+        height: 165px;
+        border-radius: 50%;
+        z-index: 0;
+        border: 5px solid white;
+        background-color: #161616;
+    }
 }
-
 
 .profile-pic {
     color: transparent;
@@ -1276,25 +1355,28 @@ nav h1 {
         object-fit: cover;
         width: 165px;
         height: 165px;
-        border-radius: 100px;
+        border-radius: 50%;
         z-index: 0;
-        border: 1px solid #161616;
+        border: 5px solid white;
         background-color: #161616;
     }
 
     .-label {
         cursor: pointer;
-        height: 165px;
-        width: 165px;
-        border-radius: 100px;
+        height: 155px;
+        width: 155px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'sub';
+        font-size: 0.8rem;
     }
 
     &:hover {
         .-label {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: rgba(0, 0, 0, .8);
+            -webkit-backdrop-filter: blur(5px) brightness(0.5);
+            backdrop-filter: blur(5px) brightness(0.5);
             z-index: 10000;
             color: rgb(250, 250, 250);
             margin-bottom: 0;
@@ -1306,6 +1388,19 @@ nav h1 {
         padding: .2em;
         height: 2em;
     }
+}
+
+#account-cover-photo {
+    width: 100%;
+    height: 50vh;
+    object-fit: cover;
+    object-position: center;
+}
+
+.person-container {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
 }
 
 /* ACCOUNT SETTINGS INPUT FIELDS */
@@ -1587,19 +1682,12 @@ nav h1 {
     cursor: pointer;
 }
 
-#account-cover-photo {
-    width: 100%;
-    height: 50vh;
-    object-fit: cover;
-    object-position: center;
-}
-
 .cover-photo-container {
+    position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     width: 100%;
+    margin-bottom: 150px;
 }
 
 /* ACCOUNT SETTINGS */
@@ -1608,4 +1696,12 @@ nav h1 {
     /* padding: 8vh 12vw; */
     display: flex;
     flex-direction: column;
+}
+
+/* DASHBOARD */
+
+#dashboard-right-container {
+    overflow-y: scroll;
+    height: 100%;
+    overflow-x: hidden;
 }
