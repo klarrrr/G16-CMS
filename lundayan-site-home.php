@@ -21,7 +21,7 @@
             <div class="container" id='highlight-articles'>
                 <div class="text-container">
                     <div>
-                        <p class="time-posted">Posted <small>●</small> <span id='latest-news-day-posted'></span></p>
+                        <p class="time-posted"><span id='latest-news-day-posted'></span></p>
                         <h1 id='latest-news-title'></h1>
                     </div>
                     <!-- TODO : MAKE THIS DYNAMIC -->

@@ -76,8 +76,6 @@ Ma'am Daluyon:
 
 User type in account creation
 
-Add schedule of posting and end date (range or number of days the post is on the website)
-
 System settings - Editable contact information in admin side
 
 
@@ -113,4 +111,6 @@ DONE - Article status (Bold)
 1. Gallery
 
 	Upload bulk images by saving them to the server's storage and storing url link to the database.
+
+Add schedule of posting and end date (range or number of days the post is on the website)
 	

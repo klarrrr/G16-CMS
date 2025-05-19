@@ -774,6 +774,39 @@ nav h1 {
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
+
+    label {
+        font-family: 'sub';
+        font-size: 0.8rem;
+    }
+
+    input {
+        background-color: #f4f4f4;
+        padding: 0.3rem;
+        font-family: 'sub';
+        color: #161616;
+        border: 1px solid #161616;
+        outline: none;
+        border-radius: 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    #post-article {
+        padding: 0.3rem;
+        min-width: 9rem;
+        border: none;
+        background-color: #161616;
+        color: #f4f4f4;
+        border-radius: 0.5rem;
+        font-size: 0.8rem;
+        border: 1px solid #161616;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #f4f4f4;
+            color: #161616;
+        }
+    }
 }
 
 #create-post-article-btn,
@@ -795,6 +828,12 @@ nav h1 {
 #create-post-article-btn:hover,
 #cancel-article-btn:hover {
     transform: scale(1.05);
+}
+
+.create-nav-one-title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .create-nav-one-title h2 {
@@ -1005,6 +1044,7 @@ nav h1 {
                 background-position: center !important;
                 background-repeat: no-repeat !important;
                 background-size: cover !important;
+                border-radius: 0.5rem;
 
                 img {
                     height: 150px;
@@ -1012,6 +1052,7 @@ nav h1 {
                     -webkit-backdrop-filter: blur(15px);
                     backdrop-filter: blur(15px);
                     width: 100%;
+                    border-radius: 0.5rem;
                 }
             }
         }
@@ -1923,16 +1964,6 @@ nav h1 {
     font-size: 0.8rem;
 }
 
-#schedule-choose-date {
-    background-color: #f4f4f4;
-    padding: 0.5rem;
-    font-family: 'sub';
-    color: #161616;
-    border: 1px solid #161616;
-    outline: none;
-    border-radius: 0.5rem;
-}
-
 ::-webkit-calendar-picker-indicator {
     background-color: #f4f4f4;
     padding: 5px;
@@ -1943,18 +1974,6 @@ nav h1 {
 
 ::-webkit-calendar-picker-indicator:hover {
     background-color: #e4e4e4;
-}
-
-#post-article {
-    padding: 0.5rem;
-    min-width: 9rem;
-    border: none;
-    background-color: #161616;
-    color: #f4f4f4;
-    border-radius: 0.5rem;
-    font-size: 0.8rem;
-    border: 1px solid #161616;
-    cursor: pointer;
 }
 
 .cover-photo-container {
@@ -2031,3 +2050,5 @@ nav h1 {
 .options-dropdown button:hover {
     background-color: #f0f0f0;
 }
+
+/* Style for the scheduling controls */

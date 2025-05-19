@@ -77,10 +77,17 @@ $dateUpdated = $articles['date_updated'];
                         <p id='last-updated'></p>
                     </div>
                     <div class="nav-one-buttons">
-                        <input type="date" id='schedule-choose-date'>
-                        <button id='post-article'>Post Article</button>
-                        <span id='open-widget'>》 Hide Comment Box</span>
+
+                        <label for="schedule-choose-date" style="color: #161616;">Post on:</label>
+                        <input type="datetime-local" id="schedule-choose-date" value="<?php echo $articles['date_posted'] ?? ''; ?>">
+
+                        <label for="expire-choose-date" style="color: #161616;">Archive on:</label>
+                        <input type="datetime-local" id="expire-choose-date" value="<?php echo $articles['date_expired'] ?? ''; ?>">
+
+                        <button id="post-article">Post Article</button>
+                        <span id="open-widget">》 Hide Comment Box</span>
                     </div>
+
                 </div>
                 <div class="" id='create-nav-two'>
 
@@ -200,6 +207,13 @@ $dateUpdated = $articles['date_updated'];
                 <div class='detail-box'>
                     <!-- Left Details Box -->
                     <div class="left-detail-box">
+
+                        <div id="article-status">
+                            <h3 class='widget-article-h3'>Article Status:</h3>
+                            <span id="status-text"></span>
+                        </div>
+
+
                         <div class="widget-article-title">
                             <h3 class='widget-article-h3'>Title <span class='required'>*</span></h3>
                             <input type="text" placeholder="Short title here" id='title-box'>
@@ -214,18 +228,6 @@ $dateUpdated = $articles['date_updated'];
                             <h3 class="widget-article-h3">Delete Article</h3>
                             <button class='delete-article-btn' id='del-article-btn'>Delete Article</button>
                         </div>
-
-                        <div class="gallery-container">
-                            <h3 class="widget-article-h3">Gallery</h3>
-
-                            <div id="image-gallery" class="gallery-picture-container">
-                                <!-- All images will be dynamically inserted here -->
-                            </div>
-
-                            <input type="file" name="image" id="image" accept="image/*" multiple required>
-                            <input type="hidden" name="article_id" value="1"> <!-- dynamically set article_id -->
-                        </div>
-
 
                     </div>
 
@@ -243,6 +245,20 @@ $dateUpdated = $articles['date_updated'];
 
                             <input type="file" id='thumbnail-image' accept="image/*">
                         </div>
+
+                        <!-- GALLERY -->
+                        <div class="gallery-container">
+                            <h3 class="widget-article-h3">Gallery</h3>
+
+                            <div id="image-gallery" class="gallery-picture-container">
+                                <!-- All images will be dynamically inserted here -->
+                            </div>
+
+                            <input type="file" name="image" id="image" accept="image/*" multiple required>
+                            <input type="hidden" name="article_id" value="1"> <!-- dynamically set article_id -->
+                        </div>
+
+                        <!-- TAGS -->
                         <div class="tags-del-container">
                             <!-- Tags -->
                             <div class="widget-article-tags">
@@ -578,13 +594,14 @@ $dateUpdated = $articles['date_updated'];
     </script>
     <!-- Populate Comments -->
     <script src="scripts/get-comments-in-article.js"></script>
+
     <!-- Input Date Box -->
     <script>
         const inputDate = document.getElementById('schedule-choose-date');
 
         // if date == null
         // Defaultly sets the date to now
-        inputDate.valueAsDate = new Date();
+        // inputDate.valueAsDate = new Date();
         // else
         // Get the set date
 
@@ -643,6 +660,7 @@ $dateUpdated = $articles['date_updated'];
                 success: (res) => {
                     if (res.success) {
                         alert('Tags saved successfully!');
+                        updateDateUpdated(articleId);
                     }
                 },
                 error: (err) => {
@@ -738,6 +756,7 @@ $dateUpdated = $articles['date_updated'];
                                 console.log('Image successfully uploaded and added to the gallery');
                                 // Update the gallery list after insertion (optional)
                                 updateGalleryList(articleId);
+                                updateDateUpdated(articleId);
                             } else {
                                 console.log('Error uploading image');
                             }
@@ -772,7 +791,6 @@ $dateUpdated = $articles['date_updated'];
                             imgContainer.classList.add('image-container');
                             imgContainer.style.position = 'relative';
                             imgContainer.style.display = 'inline-block';
-                            imgContainer.style.margin = '5px';
 
                             // Create the image element
                             const imgElement = document.createElement('img');
@@ -826,6 +844,7 @@ $dateUpdated = $articles['date_updated'];
                         console.log('Image deleted successfully');
                         // Refresh the gallery after deletion
                         updateGalleryList(articleId);
+                        updateDateUpdated(articleId);
                     } else {
                         console.log('Error deleting image:', res.message || res.status);
                     }
@@ -835,6 +854,124 @@ $dateUpdated = $articles['date_updated'];
                 }
             });
         }
+    </script>
+
+    <!-- Submit dates set -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const articleId = <?php echo $article_id; ?>;
+            const postBtn = document.getElementById('post-article');
+            const datePostedInput = document.getElementById('schedule-choose-date');
+            const dateExpiredInput = document.getElementById('expire-choose-date');
+
+            // Load current status
+            function loadStatus() {
+                $.ajax({
+                    url: 'php-backend/get-article-status.php',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        article_id: articleId
+                    },
+                    success: function(res) {
+                        if (res.status === 'success') {
+                            updateButtonLabel(res.completion_status);
+
+                            // You can also display the archive status somewhere if you want
+                            console.log('Archive status:', res.archive_status);
+                        } else {
+                            postBtn.disabled = true;
+                            postBtn.innerText = 'Status Error';
+                            console.error(res.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX error:', error);
+                        postBtn.disabled = true;
+                        postBtn.innerText = 'Error loading status';
+                    }
+                });
+            }
+
+
+            // Toggle publish/unpublish
+            postBtn.addEventListener('click', function() {
+                const datePosted = datePostedInput.value.trim();
+                const dateExpired = dateExpiredInput.value.trim();
+
+                // Reset styling
+                datePostedInput.style.border = '';
+                dateExpiredInput.style.border = '';
+
+                // Validation
+                if (!datePosted || !dateExpired) {
+                    if (!datePosted) datePostedInput.style.border = '1px solid red';
+                    if (!dateExpired) dateExpiredInput.style.border = '1px solid red';
+                    return;
+                }
+
+                $.ajax({
+                    url: 'php-backend/toggle-article-status.php',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        article_id: articleId,
+                        date_posted: datePosted,
+                        date_expired: dateExpired
+                    },
+                    success: function(res) {
+                        if (res.status === 'success') {
+                            updateButtonLabel(res.new_status);
+                            updateDateUpdated(articleId);
+                            alert(`Article is now ${res.new_status}.`);
+                            location.reload();
+                        } else {
+                            alert('Error: ' + res.message);
+                        }
+                    },
+                    error: function(err) {
+                        console.error(err);
+                        alert('Request failed.');
+                    }
+                });
+            });
+
+            function updateButtonLabel(status) {
+                if (status === 'published') {
+                    postBtn.innerText = 'Unpublish Article';
+                } else {
+                    postBtn.innerText = 'Publish Article';
+                }
+            }
+
+            // Initialize
+            loadStatus();
+        });
+    </script>
+
+    <!-- Handle Status Display -->
+    <script>
+        // Assuming this is for the edit page or article view page
+        $.ajax({
+            url: 'php-backend/get-article-status.php',
+            type: 'GET',
+            dataType: 'json',
+            data: {
+                article_id: <?php echo $article_id; ?>
+            },
+            success: function(res) {
+                if (res.status == 'success') {
+                    const statusText = res.data.archive_status === 'active' ? 'Active' : 'Archived';
+                    document.getElementById('status-text').textContent = statusText;
+                } else {
+                    console.log('Error fetching article status');
+                }
+            },
+            error: function(err) {
+                console.error('Request failed:', err);
+            }
+        });
     </script>
 </body>
 

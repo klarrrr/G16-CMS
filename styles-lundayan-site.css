@@ -1754,3 +1754,11 @@ tbody td:hover {
     line-height: 4rem;
     color: #fcb404;
 }
+
+.no-news-message {
+    text-align: center;
+    padding: 40px;
+    color: #f4f4f4;
+    font-style: italic;
+    opacity: 0.8;
+}

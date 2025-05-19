@@ -4,7 +4,19 @@ include 'connect.php';
 
 $widgetArray = [];
 
-$stmt = $conn->prepare("SELECT * FROM widgets ORDER BY widget_id DESC LIMIT 7");
+$stmt = $conn->prepare("
+    SELECT w.* 
+    FROM widgets w
+    INNER JOIN articles a ON w.article_owner = a.article_id
+    WHERE a.approve_status = 'yes'
+      AND a.completion_status = 'published'
+      AND a.date_posted IS NOT NULL
+      AND NOW() >= a.date_posted
+      AND NOW() <= a.date_expired
+    ORDER BY a.date_posted DESC
+    LIMIT 7
+");
+
 $stmt->execute();
 $results = $stmt->get_result();
 
