@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteBase /lundayan-site/
+
+RewriteRule ^article/([0-9]+)/([^/]+)?$ lundayan-site-article.php?article_id=$1 [L]

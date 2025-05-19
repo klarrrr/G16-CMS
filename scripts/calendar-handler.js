@@ -6,20 +6,38 @@ const nextBtn = document.querySelector(".calendar-btns button:last-child");
 
 let currentMonth, currentYear;
 
-let shown = false;
+// Store all articles fetched from the server
+let articles = [];
 
-// $.ajax({
-//     url: 'php-backend/get-news-bulletin.php',
-//     type: 'POST',
-//     dataType: 'json',
-//     data: {},
-//     success: (res) => {
-//         const widgets = res.widget;
-//     },
-//     error: (error) => {
-//         console.log(error);
-//     }
-// });
+// Map dates to their articles, key = "YYYY-MM-DD"
+let articlesByDate = {};
+
+const fetchArticles = () => {
+    return $.ajax({
+        url: "php-backend/calendar-get-articles.php",
+        type: "GET",
+        dataType: "json",
+        success: function (res) {
+            articles = res || [];
+            articlesByDate = {};
+
+            articles.forEach(article => {
+                const dateKey = article.date_posted.split(' ')[0]; // Keeps only "YYYY-MM-DD"
+                if (!articlesByDate[dateKey]) {
+                    articlesByDate[dateKey] = [];
+                }
+                articlesByDate[dateKey].push(article);
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error("Failed to fetch articles:", error);
+            articles = [];
+            articlesByDate = {};
+        }
+    });
+};
+
+
 
 const renderCalendar = (month, year) => {
     const firstDay = new Date(year, month).getDay();
@@ -46,13 +64,26 @@ const renderCalendar = (month, year) => {
                     month === today.getMonth() &&
                     year === today.getFullYear()
                 ) {
+                    cell.classList.add("td-highlighted");  // highlight today always
+                }
+
+                // Format date to "YYYY-MM-DD"
+                const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
+
+                // Highlight cells with articles
+                if (articlesByDate[dateKey]) {
                     cell.classList.add("td-highlighted");
                 }
 
                 const thisDay = date;
 
                 cell.addEventListener("click", (e) => {
-                    showEventBox(e.target, thisDay, month, year);
+                    if (articlesByDate[dateKey]) {
+                        console.log(articlesByDate[dateKey])
+                        showEventBox(e.target, thisDay, month, year);
+                    } else {
+                        hideEventBox();
+                    }
                 });
 
                 date++;
@@ -76,35 +107,42 @@ function updateDropdowns() {
 function showEventBox(cell, day, month, year) {
     const box = document.getElementById("event-box");
 
+    const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
     const rect = cell.getBoundingClientRect();
+    const events = articlesByDate[dateKey] || [];
 
-    // Simulated events
-    // Hard Coded, make it dynamic
-    const events = [
-        { title: "CHED Visits Inang Pamantasan", description: "Zoom @ 10:00 AM" },
-        { title: "Project Deadline", description: "Submit by 5 PM" }
-    ];
+    if (events.length === 0) {
+        box.style.display = "none";
+        return;
+    }
 
     const cards = events.map(event => `
-        <div class="event-card">
-            <strong>${event.title}</strong>
+        <div class="event-card" articleid="${event.article_id}">
+            <strong>${event.article_title}</strong>
+            <p>${event.widget_paragraph || ""}</p>
         </div>
     `).join("");
 
     box.innerHTML = `
-    <div class='close-event-box-container'>
-        <h4>${month + 1}/${day}/${year}</h4>
-        <span id='close-event-box' class='close-event-box'>X</span>
-    </div>
-    ${cards}
-        `;
+        <div class='close-event-box-container'>
+            <h4>${month + 1}/${day}/${year}</h4>
+            <span id='close-event-box' class='close-event-box'>X</span>
+        </div>
+        ${cards}
+    `;
+
     box.style.display = "block";
     box.style.top = `${rect.top + window.scrollY + 10}px`;
     box.style.left = `${rect.left + window.scrollX + 10}px`;
 
-    const closeEventBtn = document.getElementById('close-event-box');
-    closeEventBtn.addEventListener('click', () => {
-        hideEventBox();
+    // Close button functionality
+    document.getElementById('close-event-box').addEventListener('click', hideEventBox);
+
+    // Add click listener for each event card
+    box.querySelectorAll('.event-card').forEach(card => {
+        card.addEventListener('click', function () {
+            goToArticle(this);
+        });
     });
 }
 
@@ -137,7 +175,11 @@ currentYear = now.getFullYear();
 monthSelect.value = currentMonth;
 yearSelect.value = currentYear;
 
-renderCalendar(currentMonth, currentYear);
+// Fetch articles first, then render calendar
+fetchArticles().then(() => {
+    renderCalendar(currentMonth, currentYear);
+});
+
 setInterval(updateTime, 1000);
 updateTime();
 
@@ -171,3 +213,8 @@ nextBtn.addEventListener("click", () => {
     updateDropdowns();
     renderCalendar(currentMonth, currentYear);
 });
+
+function goToArticle(thisContainer) {
+    const article_id = thisContainer.getAttribute('articleid');
+    window.location.href = `../lundayan-site-article.php?article_id=${article_id}`;
+}

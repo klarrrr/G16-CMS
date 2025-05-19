@@ -17,14 +17,6 @@ Things to do in the website:
 	Everytime there is a change in the articles, it gets send to the audit log.
 	(Option: Replace this to be Article Archive)
 
-8. Calendar
-
-	Display all the events in the day when clicked.
-
-9. Announcements/Upcoming Events
-
-	Display all the events that are greater than today's date.
-
 11. Share Link
 
 	Add a share article link when share button is clicked. In Lundayan Site
@@ -56,8 +48,6 @@ Only show a portion of article page
 Archive - Stores past events to be reused in the future. 
 
 Articles - add a start and end date to article after which archive the article
-
-Calendar - will display archived articles too
 
 Bulletin - filtered by month
 
@@ -113,4 +103,14 @@ DONE - Article status (Bold)
 	Upload bulk images by saving them to the server's storage and storing url link to the database.
 
 Add schedule of posting and end date (range or number of days the post is on the website)
+
+8. Calendar
+
+	Display all the events in the day when clicked.
+
+Calendar - will display archived articles too
+
+9. Announcements/Upcoming Events
+
+	Display all the events that have article type = announcement
 	

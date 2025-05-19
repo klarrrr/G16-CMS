@@ -47,8 +47,18 @@
                 </div>
             </div>
             <div class="extras-container">
-                <div class="home-upcoming-events">
+                <div class="remaining-texts">
+                    <p>announcements</p>
+                    <h2>Upcoming Events</h2>
+                </div>
+                <!-- Upcoming Events -->
+                <div class="events" id="upcoming-events-container" style='border: 1px solid #fcb404; background-color: #fff; border-radius: 0.5rem;'>
+                    <!-- JS will inject events here -->
+                </div>
 
+                <div class="remaining-texts">
+                    <p>Lundayan on Facebook</p>
+                    <h2>Facebook page</h2>
                 </div>
                 <div class="fb-page" data-href="https://www.facebook.com/LundayanPLP" data-tabs="timeline" data-width="800" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" data-lazy='true'>
                     <blockquote cite="https://www.facebook.com/LundayanPLP" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/LundayanPLP">Lundayan Student Publication - PLPasig</a></blockquote>
@@ -58,6 +68,8 @@
     </main>
 
     <?php include 'lundayan-site-footer.php' ?>
+    <!-- populate announcements -->
+    <script src="scripts/get-announcements.js"></script>
     <!-- Date formatter function -->
     <script src="scripts/date-formatter.js"></script>
     <!-- Gets the Latest News -->

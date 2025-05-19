@@ -1084,6 +1084,10 @@ nav h1 {
                             display: flex;
                             justify-content: center;
                             align-items: center;
+
+                            &:hover {
+                                background-color: rgba(255, 0, 0, 0.308);
+                            }
                         }
 
                     }
@@ -1245,7 +1249,7 @@ nav h1 {
                 }
 
                 .delete-btn:hover {
-                    background-color: rgba(245, 245, 245, 0.097);
+                    background-color: rgba(255, 0, 0, 0.308);
                 }
             }
         }
@@ -2051,4 +2055,32 @@ nav h1 {
     background-color: #f0f0f0;
 }
 
-/* Style for the scheduling controls */
+.post-on-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    input {
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        outline: none;
+        border: 1px solid #161616;
+    }
+}
+
+#status-text {
+    font-weight: bold;
+}
+
+.article-type-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    select {
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        outline: none;
+        border: 1px solid #161616;
+    }
+}

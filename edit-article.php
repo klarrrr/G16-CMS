@@ -75,19 +75,14 @@ $dateUpdated = $articles['date_updated'];
                     <div class="create-nav-one-title">
                         <h2 id='top-article-title'>Article Document Title</h2>
                         <p id='last-updated'></p>
+                        <div id="article-status">
+                            <p class='widget-article-h3'>Article Status: <span id="status-text"></span></p>
+                        </div>
                     </div>
                     <div class="nav-one-buttons">
-
-                        <label for="schedule-choose-date" style="color: #161616;">Post on:</label>
-                        <input type="datetime-local" id="schedule-choose-date" value="<?php echo $articles['date_posted'] ?? ''; ?>">
-
-                        <label for="expire-choose-date" style="color: #161616;">Archive on:</label>
-                        <input type="datetime-local" id="expire-choose-date" value="<?php echo $articles['date_expired'] ?? ''; ?>">
-
                         <button id="post-article">Post Article</button>
                         <span id="open-widget">》 Hide Comment Box</span>
                     </div>
-
                 </div>
                 <div class="" id='create-nav-two'>
 
@@ -207,13 +202,6 @@ $dateUpdated = $articles['date_updated'];
                 <div class='detail-box'>
                     <!-- Left Details Box -->
                     <div class="left-detail-box">
-
-                        <div id="article-status">
-                            <h3 class='widget-article-h3'>Article Status:</h3>
-                            <span id="status-text"></span>
-                        </div>
-
-
                         <div class="widget-article-title">
                             <h3 class='widget-article-h3'>Title <span class='required'>*</span></h3>
                             <input type="text" placeholder="Short title here" id='title-box'>
@@ -222,6 +210,22 @@ $dateUpdated = $articles['date_updated'];
                         <div class="widget-article-pargraph">
                             <h3 class='widget-article-h3'>Short Description <span class='required'>*</span></h3>
                             <textarea name="" id="short-desc-box" rows="10" placeholder="Short description here"></textarea>
+                        </div>
+
+                        <div class="post-on-container">
+                            <label class='widget-article-h3' for="schedule-choose-date" style="color: #161616; font-weight: bolder;">Post on:</label>
+                            <input type="datetime-local" id="schedule-choose-date" value="<?php echo $articles['date_posted'] ?? ''; ?>">
+
+                            <label class='widget-article-h3' for="expire-choose-date" style="color: #161616; font-weight: bolder;">Archive on:</label>
+                            <input type="datetime-local" id="expire-choose-date" value="<?php echo $articles['date_expired'] ?? ''; ?>">
+                        </div>
+
+                        <div class="article-type-container">
+                            <label class="widget-article-h3" style="font-weight: bolder;" for="article-type">Article Type</label>
+                            <select id="article-type">
+                                <option value="regular">Regular</option>
+                                <option value="announcement">Announcement</option>
+                            </select>
                         </div>
 
                         <div class="delete-article-container">
@@ -617,6 +621,11 @@ $dateUpdated = $articles['date_updated'];
         // Add tag on Enter key
         tagsInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
+                // Remove the message if it exists
+                const existingMsg = tagsContainer.querySelector('.no-tags-msg');
+                if (existingMsg) {
+                    existingMsg.remove();
+                }
                 e.preventDefault();
                 const tagName = tagsInput.value.trim();
                 if (tagName && !currentTags.includes(tagName)) {
@@ -641,7 +650,27 @@ $dateUpdated = $articles['date_updated'];
             tagDiv.querySelector('.remove-tag').addEventListener('click', () => {
                 tagsContainer.removeChild(tagDiv);
                 currentTags = currentTags.filter(tag => tag !== tagName);
+
+                // Check if no more tags exist
+                const remainingTags = tagsContainer.querySelectorAll('.added-tag'); // Replace with your actual tag class
+                if (remainingTags.length === 0) {
+                    // Remove any existing message first
+                    const existingMsg = tagsContainer.querySelector('.no-tags-msg');
+                    if (!existingMsg) {
+                        const msg = document.createElement('div');
+                        msg.className = 'no-tags-msg';
+                        msg.style.padding = '1rem';
+                        msg.style.color = '#555';
+                        msg.style.fontStyle = 'italic';
+                        msg.style.fontFamily = 'sub';
+                        msg.style.fontSize = '0.8rem';
+                        msg.textContent = '🗿 Ayo! This article doesn\'t have assigned tags!';
+
+                        tagsContainer.appendChild(msg);
+                    }
+                }
             });
+
         }
 
         // Send tags to server (call this on Save/Submit)
@@ -688,13 +717,31 @@ $dateUpdated = $articles['date_updated'];
                     article_id: articleId
                 },
                 success: (res) => {
+                    const tagsContainer = document.querySelector('.tags-container');
+
+                    // Remove the message if it exists
+                    const existingMsg = tagsContainer.querySelector('.no-tags-msg');
+                    if (existingMsg) {
+                        existingMsg.remove();
+                    }
+
                     if (res.success && res.tags.length > 0) {
                         res.tags.forEach(tag => {
                             addTagElement(tag.tag_name);
-                            currentTags.push(tag.tag_name); // Update the currentTags array
+                            currentTags.push(tag.tag_name);
                         });
                     } else {
-                        console.log('No tags assigned to this article.');
+                        // Create the message element
+                        const msg = document.createElement('div');
+                        msg.className = 'no-tags-msg';
+                        msg.style.padding = '1rem';
+                        msg.style.color = '#555';
+                        msg.style.fontStyle = 'italic';
+                        msg.style.fontFamily = 'sub';
+                        msg.style.fontSize = '0.8rem';
+                        msg.textContent = '🗿 Ayo! This article doesn\'t have assigned tags!';
+
+                        tagsContainer.appendChild(msg);
                     }
                 },
                 error: (err) => {
@@ -877,9 +924,9 @@ $dateUpdated = $articles['date_updated'];
                     success: function(res) {
                         if (res.status === 'success') {
                             updateButtonLabel(res.completion_status);
+                            const capitalizedStatus = res.archive_status.charAt(0).toUpperCase() + res.archive_status.slice(1);
+                            document.getElementById('status-text').textContent = capitalizedStatus;
 
-                            // You can also display the archive status somewhere if you want
-                            console.log('Archive status:', res.archive_status);
                         } else {
                             postBtn.disabled = true;
                             postBtn.innerText = 'Status Error';
@@ -950,27 +997,58 @@ $dateUpdated = $articles['date_updated'];
         });
     </script>
 
-    <!-- Handle Status Display -->
+    <!-- Get Article Type -->
     <script>
-        // Assuming this is for the edit page or article view page
         $.ajax({
-            url: 'php-backend/get-article-status.php',
-            type: 'GET',
+            url: 'php-backend/get-article-type.php',
+            method: 'POST',
             dataType: 'json',
             data: {
-                article_id: <?php echo $article_id; ?>
+                article_id: articleId
             },
             success: function(res) {
-                if (res.status == 'success') {
-                    const statusText = res.data.archive_status === 'active' ? 'Active' : 'Archived';
-                    document.getElementById('status-text').textContent = statusText;
+                if (res.status === 'success') {
+                    $('#article-type').val(res.article_type);
                 } else {
-                    console.log('Error fetching article status');
+                    console.error('Failed to load type:', res.message);
                 }
             },
             error: function(err) {
-                console.error('Request failed:', err);
+                console.error('AJAX error:', err);
             }
+        });
+    </script>
+
+    <!-- Switch Article Type -->
+    <script>
+        document.getElementById('article-type').addEventListener('change', function() {
+            const articleType = this.value;
+
+            if (!['regular', 'announcement'].includes(articleType)) {
+                alert("Invalid type selected.");
+                return;
+            }
+
+            fetch('php-backend/update-article-type.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `article_id=${articleId}&article_type=${articleType}`
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        console.log('Article type updated to:', articleType);
+                    } else {
+                        console.error('Update failed:', data.message);
+                        alert('Error: ' + data.message);
+                    }
+                })
+                .catch(err => {
+                    console.error('Request failed:', err);
+                    alert('AJAX error occurred.');
+                });
         });
     </script>
 </body>

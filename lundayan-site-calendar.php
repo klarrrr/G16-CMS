@@ -7,6 +7,7 @@
     <title>Lundayan : Calendar</title>
     <link rel="stylesheet" href="styles-lundayan-site.css">
     <link rel="icon" href="pics/lundayan-logo.png">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -23,28 +24,27 @@
             <div class="calendar-vertical-layout">
                 <!-- LEFT COLUMN -->
                 <div class="calendar-left">
+
+                    <!-- Time and Day -->
                     <div class="time-day">
                         <img id="time-image" src="" alt="Time of day image">
                         <div class="time-day-text-container">
-                            <h3>05:35 AM</h3>
-                            <p>Sunday, April 2025</p>
+                            <h3></h3>
+                            <p></p>
                         </div>
                     </div>
 
+                    <!-- Upcoming Events -->
                     <div class="upcoming-events">
                         <div class="title-container">
                             <h2>Upcoming Events</h2>
                         </div>
-                        <div class="events">
-                            <div class="event">
-                                <img src="pics/sample1.jpg" alt="">
-                                <div class="event-text-container">
-                                    <h3>Celebration of the Literary Month</h3>
-                                    <p>Posted on April 11, 2025</p>
-                                </div>
-                            </div>
+                        <div class="events" id="upcoming-events-container">
+                            <!-- JS will inject events here -->
                         </div>
                     </div>
+
+
                 </div>
 
                 <!-- RIGHT COLUMN -->
@@ -122,7 +122,12 @@
     <div id="event-box" style="display:none; position:absolute; z-index:1000;"></div>
 
     <?php include 'lundayan-site-footer.php' ?>
+
+    <!-- populate announcements -->
+    <script src="scripts/get-announcements.js"></script>
+    <!-- handles caldnedar -->
     <script src='scripts/calendar-handler.js'></script>
+    <!-- Time and day icon handler   -->
     <script src='scripts/time-icon-handler.js'></script>
 </body>
 

@@ -1,5 +1,10 @@
 <?php
 
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
+$domain = $_SERVER['HTTP_HOST'];
+$uri = $_SERVER['REQUEST_URI'];
+$fullUrl = $protocol . $domain . $uri;
+
 include 'php-backend/connect.php';
 
 if (!isset($_GET['article_id'])) {
@@ -17,9 +22,16 @@ if ($row = mysqli_fetch_assoc($result)) {
 }
 
 $title = $article['article_title'];
+$articleUrl = $protocol . $domain . "/article/" . $article_id . "/" . urlencode(strtolower(str_replace(" ", "-", $title)));
+
 $content = $article['article_content'];
-// Change this in the future to date_posted
-$datePosted = $article['date_updated'];
+$datePosted = $article['date_posted'];
+
+// Pag di pa published or di pa approved yung article WAG.
+if ($article['completion_status'] == 'draft' || $article['approve_status'] == 'no') {
+    header('Location: lundayan-site-home.php');
+    exit;
+}
 
 $query = "SELECT * FROM widgets WHERE article_owner = $article_id";
 $result = mysqli_query($conn, $query);
@@ -38,12 +50,20 @@ $image = $widget['widget_img']
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:url" content="<?php echo $fullUrl; ?>" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="<?php echo htmlspecialchars($title); ?>" />
+    <meta property="og:description" content="<?php echo substr(strip_tags(html_entity_decode($content)), 0, 150); ?>..." />
+    <meta property="og:image" content="data:image/png;base64,<?php echo $image; ?>" />
+
     <title>Lundayan : Article</title>
     <link rel="stylesheet" href="styles-lundayan-site.css">
     <link rel="icon" href="pics/lundayan-logo.png">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <link href="quill.css" rel="stylesheet" />
     <script src="scripts/quill.js"></script>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -68,32 +88,29 @@ $image = $widget['widget_img']
                     <a href="#">Newer Post »</a>
                 </div>
                 <div class="text-container-article">
-                    <div>
-                        <p class="time-posted">Posted <small>●</small> <span id="latest-news-day-posted"></span></p>
+                    <div class='article-time-title-tags-container'>
+                        <p class="time-posted"><span id="latest-news-day-posted"></span></p>
                         <h1><?php echo $title ?></h1>
+                        <!-- Tags Here -->
+                        <div class="filter-tags tags-article" id='filter-tags'>
+
+                        </div>
                     </div>
                     <!-- TODO : MAKE THIS DYNAMIC -->
                     <!-- <a href="lundayan-site-article.php" id='latest-read-more'>Read More</a> -->
                 </div>
             </div>
         </section>
-        <!-- <div class="news-banner">
-            <div class="scrolling-text">
-                <span> | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | </span>
+
+
+
+
+
+        <div class="ql-snow" id='article-information'>
+            <div class="ql-editor" style="padding: 0;">
+                <?php echo html_entity_decode($content); ?>
             </div>
-        </div> -->
-        <section id="article-information" class='ql-editor'>
-            <!-- This is where content will go -->
-            <?php echo html_entity_decode($content); ?>
-        </section>
-        <!-- <div class="news-banner">
-            <div class="scrolling-text">
-                <span>
-                    | GALLERY | GALLERY | GALLERY | GALLERY | GALLERY | GALLERY | GALLERY | GALLERY
-                    | GALLERY | GALLERY | GALLERY | GALLERY | GALLERY | GALLERY | GALLERY | GALLERY | GALLERY | GALLERY | GALLERY | GALLERY |
-                </span>
-            </div>
-        </div> -->
+        </div>
         <section class="article-gallery">
             <div class="gallery-title-container">
                 <h2>Gallery</h2>
@@ -112,48 +129,18 @@ $image = $widget['widget_img']
         datePosted.innerHTML = formatDateTime("<?php echo $datePosted; ?>");
     </script>
 
+    <!-- Script for gettings tags -->
+    <script>
+        const articleId = <?php echo $article_id; ?>;
+    </script>
+    <script src="scripts/lundayan-article-get-tags.js"></script>
+
+
     <!-- Load Galllery -->
     <script>
         const galleryContainer = document.querySelector('.gallery-images');
-        const articleId = <?php echo $article_id; ?>;
-
-        // AJAX request to fetch images for the given article_id
-        $.ajax({
-            url: 'php-backend/get-article-site-gallery.php',
-            type: 'GET',
-            dataType: 'json',
-            data: {
-                article_id: articleId // Pass article_id to the server
-            },
-            success: function(res) {
-                if (res.status === 'success') {
-                    // Clear the gallery container to prevent duplicates
-                    galleryContainer.innerHTML = '';
-
-                    // Loop through the fetched images and display them
-                    res.data.forEach(function(image, index) {
-                        const imgElement = document.createElement('img');
-                        imgElement.src = 'gallery/' + image.pic_path; // Assuming the image is stored in the 'gallery' folder
-                        imgElement.alt = 'Gallery Image';
-                        imgElement.setAttribute('data-pic-id', image.pic_id); // Set pic_id as a data attribute
-
-                        // Append the image element to the gallery
-                        galleryContainer.appendChild(imgElement);
-
-                        // Add the 'show' class with a slight delay for staggered effect
-                        setTimeout(() => {
-                            imgElement.classList.add('show');
-                        }, index * 100); // Delay each image slightly (100ms for each image)
-                    });
-                } else {
-                    console.log('Error fetching gallery images');
-                }
-            },
-            error: function(error) {
-                console.log('Error during the request:', error);
-            }
-        });
     </script>
+    <script src="scripts/lundayan-load-article.js"></script>
 </body>
 
 </html>
