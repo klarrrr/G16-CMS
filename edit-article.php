@@ -214,6 +214,19 @@ $dateUpdated = $articles['date_updated'];
                             <h3 class="widget-article-h3">Delete Article</h3>
                             <button class='delete-article-btn' id='del-article-btn'>Delete Article</button>
                         </div>
+
+                        <div class="gallery-container">
+                            <h3 class="widget-article-h3">Gallery</h3>
+
+                            <div id="image-gallery" class="gallery-picture-container">
+                                <!-- All images will be dynamically inserted here -->
+                            </div>
+
+                            <input type="file" name="image" id="image" accept="image/*" multiple required>
+                            <input type="hidden" name="article_id" value="1"> <!-- dynamically set article_id -->
+                        </div>
+
+
                     </div>
 
                     <!-- Right Details Box -->
@@ -228,7 +241,7 @@ $dateUpdated = $articles['date_updated'];
                                 <img src="<?php echo 'data:image/png;base64,' . $thumbnailImg ?>" alt="" id='show-thumbnail-image'>
                             </div>
 
-                            <input type="file" id='thumbnail-image'>
+                            <input type="file" id='thumbnail-image' accept="image/*">
                         </div>
                         <div class="tags-del-container">
                             <!-- Tags -->
@@ -256,6 +269,8 @@ $dateUpdated = $articles['date_updated'];
             </div>
         </div>
     </div>
+
+
     <!-- Script for Menu Button on Top Left -->
     <script src="scripts/menu_button.js"></script>
     <!-- Populate the Selection Input of all the pages -->
@@ -671,6 +686,155 @@ $dateUpdated = $articles['date_updated'];
         }
 
         loadAssignedTags(<?php echo $article_id ?>);
+    </script>
+
+    <script>
+        const galleryInput = document.getElementById('image');
+        const articleId = '<?php echo $article_id ?>';
+        const galleryContainer = document.getElementById('image-gallery');
+
+        galleryInput.addEventListener('change', (event) => {
+            // Debounce to avoid flooding the server with requests
+            if (window.updateTimeout) clearTimeout(window.updateTimeout);
+
+            window.updateTimeout = setTimeout(() => {
+                updateGallery(event, articleId);
+            }, 500);
+        });
+
+        function updateGallery(event, articleId) {
+            const files = event.target.files; // Get selected files
+            const galleryContainer = document.getElementById('image-gallery'); // Ensure this container is defined
+            const warningLbl = document.getElementById('img-size-warning');
+            const user_owner = '<?php echo $user_id ?>';
+
+            if (files.length > 0) {
+                Array.from(files).forEach(file => {
+                    const formData = new FormData(); // Create a new FormData object for each file
+
+                    const filePath = `gallery/${file.name}`; // Define the path to save the file
+
+                    // Append the image file to FormData for upload
+                    formData.append('image_files[]', file);
+                    formData.append('article_id', articleId);
+                    formData.append('file_path', filePath);
+                    formData.append('user_owner', user_owner);
+
+                    // Show the selected image preview in the gallery
+                    const imgElement = document.createElement('img');
+                    imgElement.src = URL.createObjectURL(file); // Display the file as a temporary preview
+                    galleryContainer.appendChild(imgElement);
+
+                    // Insert the file path into the database after successfully uploading
+                    $.ajax({
+                        url: 'php-backend/edit-article-gallery-update.php',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: (res) => {
+                            if (res.status === 'success') {
+                                console.log('Image successfully uploaded and added to the gallery');
+                                // Update the gallery list after insertion (optional)
+                                updateGalleryList(articleId);
+                            } else {
+                                console.log('Error uploading image');
+                            }
+                        },
+                        error: (error) => {
+                            console.log(error);
+                        }
+                    });
+                });
+            }
+        }
+
+
+        function updateGalleryList(articleId) {
+            // Fetch the list of images for the specific article from the database
+            $.ajax({
+                url: 'php-backend/get-article-gallery.php',
+                type: 'GET',
+                dataType: 'json',
+                data: {
+                    article_id: articleId
+                },
+                success: (res) => {
+                    if (res.status === 'success') {
+                        // Clear current gallery to prevent duplicate images
+                        galleryContainer.innerHTML = '';
+
+                        // Add new images to the gallery
+                        res.data.forEach(image => {
+                            // Create a container for each image (for positioning the delete button)
+                            const imgContainer = document.createElement('div');
+                            imgContainer.classList.add('image-container');
+                            imgContainer.style.position = 'relative';
+                            imgContainer.style.display = 'inline-block';
+                            imgContainer.style.margin = '5px';
+
+                            // Create the image element
+                            const imgElement = document.createElement('img');
+                            imgElement.src = 'gallery/' + image.pic_path;
+                            imgElement.alt = 'Gallery Image';
+                            imgElement.setAttribute('data-pic-id', image.pic_id); // Store the pic_id in the data attribute
+
+                            // Create the delete button
+                            const deleteButton = document.createElement('button');
+                            deleteButton.textContent = 'X';
+                            deleteButton.classList.add('delete-btn');
+
+                            // Append the delete button to the image container
+                            imgContainer.appendChild(imgElement);
+                            imgContainer.appendChild(deleteButton);
+
+                            // Add the image container to the gallery
+                            galleryContainer.appendChild(imgContainer);
+
+                            // Bind delete function to the delete button
+                            deleteButton.addEventListener('click', () => {
+                                const picId = imgElement.getAttribute('data-pic-id'); // Get the pic_id from the image's data attribute
+                                deleteImage(picId); // Call the deleteImage function
+                            });
+                        });
+                    } else {
+                        console.log('Error fetching gallery images');
+                    }
+                },
+                error: (error) => {
+                    console.log(error);
+                }
+            });
+        }
+
+
+
+        updateGalleryList(articleId);
+
+        // Delete imAgee
+        function deleteImage(pic_id) {
+            $.ajax({
+                url: 'php-backend/delete-article-gallery.php',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    pic_id: pic_id
+                },
+                success: (res) => {
+                    if (res.status == 'success') {
+                        console.log('Image deleted successfully');
+                        // Refresh the gallery after deletion
+                        updateGalleryList(articleId);
+                    } else {
+                        console.log('Error deleting image:', res.message || res.status);
+                    }
+                },
+                error: (error) => {
+                    console.log('Error during the request:', error);
+                }
+            });
+        }
     </script>
 </body>
 

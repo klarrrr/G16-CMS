@@ -1,9 +1,5 @@
 Things to do in the website:
 
-1. Gallery
-
-	Upload bulk images by saving them to the server's storage and storing url link to the database.
-
 2. About Page
 
 	Tell the users all about the lundayan site of plp.
@@ -113,4 +109,8 @@ DONE - Article status (Bold)
 10. Tags
 
 	Add Tags in Tag section of edit page
+
+1. Gallery
+
+	Upload bulk images by saving them to the server's storage and storing url link to the database.
 	

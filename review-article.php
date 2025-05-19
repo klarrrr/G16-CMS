@@ -119,6 +119,14 @@ $ownerPicture = $userInfo['profile_picture'];
                             <h3 class='widget-article-h3'>Short Description</h3>
                             <p class="review-article-p-short-desc"><?php echo $shortDesc; ?></p>
                         </div>
+
+                        <div class="gallery-container">
+                            <h3 class="widget-article-h3">Gallery</h3>
+
+                            <div id="image-gallery" class="gallery-picture-container">
+                                <!-- All images will be dynamically inserted here -->
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Right Details Box -->
@@ -136,36 +144,8 @@ $ownerPicture = $userInfo['profile_picture'];
                             <div class="widget-article-tags">
                                 <h3 class='widget-article-h3'>Tags</h3>
                                 <div class="tags-container">
-                                    <div class='added-tag'>
-                                        <span class='tag-name'>anime</span>
-
-                                    </div>
-                                    <div class='added-tag'>
-                                        <span class='tag-name'>news</span>
-
-                                    </div>
-                                    <div class='added-tag'>
-                                        <span class='tag-name'>sample tags</span>
-
-                                    </div>
-                                    <div class='added-tag'>
-                                        <span class='tag-name'>pogi ni cj</span>
-
-                                    </div>
-                                    <div class='added-tag'>
-                                        <span class='tag-name'>ntr</span>
-
-                                    </div>
-                                    <div class='added-tag'>
-                                        <span class='tag-name'>gorilla</span>
-
-                                    </div>
-                                    <div class='added-tag'>
-                                        <span class='tag-name'>futanari</span>
-
-                                    </div>
+                                    <!-- Population of tags will be here -->
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -196,6 +176,7 @@ $ownerPicture = $userInfo['profile_picture'];
         const dateUpdated = `<?php echo $dateUpdated; ?>`;
         const author = `<?php echo $ownerFName . ' ' . $ownerLName ?>`
         const user_id = `<?php echo $user_id ?>`;
+        const articleId = '<?php echo $article_id ?>';
 
         lastUpdated.innerHTML = `Last updated on ${formatDateTime(dateUpdated)} - ${author}`;
     </script>
@@ -580,6 +561,90 @@ $ownerPicture = $userInfo['profile_picture'];
 
             // Show the modal
             modal.style.display = 'flex';
+        }
+    </script>
+
+    <!-- Populate Gallery -->
+    <script>
+        const galleryContainer = document.getElementById('image-gallery'); // Ensure this container is defined
+
+        // Fetch the list of images for the specific article from the database
+        $.ajax({
+            url: 'php-backend/get-article-gallery.php',
+            type: 'GET',
+            dataType: 'json',
+            data: {
+                article_id: articleId
+            },
+            success: (res) => {
+                if (res.status === 'success') {
+                    // Clear current gallery to prevent duplicate images
+                    galleryContainer.innerHTML = '';
+
+                    // Add new images to the gallery
+                    res.data.forEach(image => {
+                        // Create a container for each image (for positioning the delete button)
+                        const imgContainer = document.createElement('div');
+                        imgContainer.classList.add('image-container');
+                        imgContainer.style.position = 'relative';
+                        imgContainer.style.display = 'inline-block';
+
+                        // Create the image element
+                        const imgElement = document.createElement('img');
+                        imgElement.src = 'gallery/' + image.pic_path;
+                        imgElement.alt = 'Gallery Image';
+                        imgElement.setAttribute('data-pic-id', image.pic_id); // Store the pic_id in the data attribute
+
+                        // Append the delete button to the image container
+                        imgContainer.appendChild(imgElement);
+
+                        // Add the image container to the gallery
+                        galleryContainer.appendChild(imgContainer);
+                    });
+                } else {
+                    console.log('Error fetching gallery images');
+                }
+            },
+            error: (error) => {
+                console.log(error);
+            }
+        });
+    </script>
+
+    <!-- Load Tags -->
+    <script>
+        const tagsContainer = document.querySelector('.tags-container');
+        let currentTags = [];
+
+        $.ajax({
+            url: 'php-backend/get-assigned-tags.php',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                article_id: articleId
+            },
+            success: (res) => {
+                if (res.success && res.tags.length > 0) {
+                    res.tags.forEach(tag => {
+                        addTagElement(tag.tag_name);
+                        currentTags.push(tag.tag_name); // Update the currentTags array
+                    });
+                } else {
+                    console.log('No tags assigned to this article.');
+                }
+            },
+            error: (err) => {
+                console.error(err);
+            }
+        });
+
+        function addTagElement(tagName) {
+            const tagDiv = document.createElement('div');
+            tagDiv.className = 'added-tag';
+            tagDiv.innerHTML = `
+                <span class='tag-name'>${tagName}</span>
+            `;
+            tagsContainer.appendChild(tagDiv);
         }
     </script>
 </body>

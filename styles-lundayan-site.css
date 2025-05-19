@@ -1314,25 +1314,60 @@ tbody td:hover {
 .gallery-title-container h2 {
     text-align: center;
     font-size: 3em;
+    color: white;
+    /* Make the title text color white for visibility */
 }
 
 .gallery-images {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    /* Keeps the grid responsive */
     justify-content: center;
-    gap: 1rem;
+    gap: 1.5rem;
+    /* Adds a little more spacing between images */
+    padding-top: 2rem;
+    /* Padding on top to ensure images are well spaced */
 }
 
 .gallery-images img {
     width: 100%;
-    justify-self: center;
+    height: 100%;
+    object-fit: cover;
+    /* Ensures images fill the grid space without distortion */
     border-radius: 3px;
-    border: 1px solid #fcb404;
+    border: 2px solid #fcb404;
+    /* Keep the yellow border */
+    opacity: 0;
+    /* Initially hide images */
+    transform: translateY(50px);
+    /* Position images below their final spot */
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    /* Smooth transition for opacity and transform */
 }
 
 .gallery-images img:hover {
-    transform: scale(1.02);
+    transform: scale(1.05);
+    /* Slight zoom effect on hover */
 }
+
+/* Staggered effect (delay based on image index) */
+.gallery-images img:nth-child(odd) {
+    transition-delay: 0.2s;
+    /* Delay for odd images */
+}
+
+.gallery-images img:nth-child(even) {
+    transition-delay: 0.4s;
+    /* Delay for even images */
+}
+
+/* When images are loaded, they will transition to visible and slide into place */
+.gallery-images img.show {
+    opacity: 1;
+    transform: translateY(0);
+    /* Move to their final position */
+}
+
 
 /* Sign in Page */
 .sign-in-main {

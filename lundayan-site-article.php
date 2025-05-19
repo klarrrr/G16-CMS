@@ -41,6 +41,7 @@ $image = $widget['widget_img']
     <title>Lundayan : Article</title>
     <link rel="stylesheet" href="styles-lundayan-site.css">
     <link rel="icon" href="pics/lundayan-logo.png">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <link href="quill.css" rel="stylesheet" />
     <script src="scripts/quill.js"></script>
 </head>
@@ -98,22 +99,7 @@ $image = $widget['widget_img']
                 <h2>Gallery</h2>
             </div>
             <div class="gallery-images">
-                <img src="gallery/1.jpg" alt="">
-                <img src="gallery/2.jpg" alt="">
-                <img src="gallery/3.jpg" alt="">
-                <img src="gallery/4.jpg" alt="">
-                <img src="gallery/5.jpg" alt="">
-                <img src="gallery/6.jpg" alt="">
-                <img src="gallery/7.jpg" alt="">
-                <img src="gallery/8.jpg" alt="">
-                <img src="gallery/9.jpg" alt="">
-                <img src="gallery/10.jpg" alt="">
-                <img src="gallery/11.jpg" alt="">
-                <img src="gallery/12.jpg" alt="">
-                <img src="gallery/13.jpg" alt="">
-                <img src="gallery/14.jpg" alt="">
-                <img src="gallery/15.jpg" alt="">
-                <img src="gallery/16.jpg" alt="">
+                <!-- Images will be placed here -->
             </div>
         </section>
     </main>
@@ -124,6 +110,49 @@ $image = $widget['widget_img']
     <script>
         const datePosted = document.getElementById('latest-news-day-posted');
         datePosted.innerHTML = formatDateTime("<?php echo $datePosted; ?>");
+    </script>
+
+    <!-- Load Galllery -->
+    <script>
+        const galleryContainer = document.querySelector('.gallery-images');
+        const articleId = <?php echo $article_id; ?>;
+
+        // AJAX request to fetch images for the given article_id
+        $.ajax({
+            url: 'php-backend/get-article-site-gallery.php',
+            type: 'GET',
+            dataType: 'json',
+            data: {
+                article_id: articleId // Pass article_id to the server
+            },
+            success: function(res) {
+                if (res.status === 'success') {
+                    // Clear the gallery container to prevent duplicates
+                    galleryContainer.innerHTML = '';
+
+                    // Loop through the fetched images and display them
+                    res.data.forEach(function(image, index) {
+                        const imgElement = document.createElement('img');
+                        imgElement.src = 'gallery/' + image.pic_path; // Assuming the image is stored in the 'gallery' folder
+                        imgElement.alt = 'Gallery Image';
+                        imgElement.setAttribute('data-pic-id', image.pic_id); // Set pic_id as a data attribute
+
+                        // Append the image element to the gallery
+                        galleryContainer.appendChild(imgElement);
+
+                        // Add the 'show' class with a slight delay for staggered effect
+                        setTimeout(() => {
+                            imgElement.classList.add('show');
+                        }, index * 100); // Delay each image slightly (100ms for each image)
+                    });
+                } else {
+                    console.log('Error fetching gallery images');
+                }
+            },
+            error: function(error) {
+                console.log('Error during the request:', error);
+            }
+        });
     </script>
 </body>
 
