@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="contact-container">
-                    <form class="send-info" method="POST" action="../php-backend/ContactController.php">
+                    <form class="send-info" method="POST" action="/G16-CMS/php-backend/ContactController.php">
                         <div class="two-input">
                             <input name='first_name' type="text" placeholder="First Name" required>
                             <input name='last_name' type="text" placeholder="Last Name" required>
@@ -98,7 +98,6 @@
 
 
         <?php include 'lundayan-site-footer.php'; ?>
-
 
         <script>
             function closePopup() {

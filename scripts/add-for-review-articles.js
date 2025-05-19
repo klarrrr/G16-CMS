@@ -1,7 +1,7 @@
 const articleContainer = document.getElementById('articles-boxes-container');
 
 $.ajax({
-    url: '../php-backend/add-for-review-articles.php',
+    url: '/php-backend/add-for-review-articles.php',
     type: "POST",
     dataType: 'json',
     data: {},
@@ -55,8 +55,5 @@ $.ajax({
 
 function reviewArticle(thisButton) {
     const article_id = thisButton.getAttribute('articleid');
-    // Pass GET method the article id
-    // Verify by using the user id in the session too
-    // So Article id = article_id AND user_id = $_SESSION['user_id'];
-    window.location.href = `../review-article.php?article_id=${article_id}`;
+    window.location.href = `/G16-CMS/review-article.php?article_id=${article_id}`;
 }

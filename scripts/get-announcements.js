@@ -30,8 +30,3 @@ $.ajax({
         console.error("Failed to fetch announcements:", error);
     }
 });
-
-function goToArticle(thisContainer) {
-    const article_id = thisContainer.getAttribute('articleid');
-    window.location.href = `../lundayan-site-article.php?article_id=${article_id}`;
-}

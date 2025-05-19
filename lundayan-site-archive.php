@@ -56,6 +56,7 @@
         let currentPage = 1;
         const itemsPerPage = 10;
     </script>
+
     <!-- Date formatter Function -->
     <script src="scripts/date-formatter.js"></script>
     <!-- Script for search -->
