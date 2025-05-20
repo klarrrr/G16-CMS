@@ -25,14 +25,25 @@ try {
     ";
 
     $result = mysqli_query($conn, $query);
-
     $articles = [];
+
+    $minYear = PHP_INT_MAX;
+    $maxYear = PHP_INT_MIN;
 
     while ($row = mysqli_fetch_assoc($result)) {
         $articles[] = $row;
+        $year = (int)date('Y', strtotime($row['date_posted']));
+        if ($year < $minYear) $minYear = $year;
+        if ($year > $maxYear) $maxYear = $year;
     }
 
-    echo json_encode($articles);
+    $response = [
+        'articles' => $articles,
+        'minYear' => $minYear === PHP_INT_MAX ? null : $minYear,
+        'maxYear' => $maxYear === PHP_INT_MIN ? null : $maxYear
+    ];
+
+    echo json_encode($response);
 } catch (PDOException $e) {
     http_response_code(500);
     echo json_encode(['error' => 'Database error: ' . $e->getMessage()]);

@@ -10,6 +10,8 @@ if (strtolower($_SESSION['user_type']) != 'reviewer') {
     exit;
 }
 
+$user_id = $_SESSION['user_id'];
+$profile_pic = $_SESSION['profile_picture'];
 ?>
 
 <!DOCTYPE html>
@@ -37,19 +39,29 @@ if (strtolower($_SESSION['user_type']) != 'reviewer') {
                     <p>Review Articles</p>
                 </div>
                 <div class="search-container">
-                    <input type="text" placeholder="Search for articles" id='search-your-articles'>
+                    <select id="sort-articles-dropdown" class="sort-dropdown">
+                        <option value="desc" selected>Date Updated Descending</option>
+                        <option value="asc">Date Updated Ascending</option>
+                    </select>
+                    <input type="text" placeholder="Search for you articles" id='search-your-active-articles' class='search-your-articles'>
+                    <div class="pfp-container">
+                        <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : 'data:image/png;base64,' . $profile_pic; ?>" alt="" id='pfp-circle'>
+                    </div>
                 </div>
             </div>
             <div class="articles-boxes-container" id='articles-boxes-container'>
 
             </div>
+            <div id="pagination" class="pagination-container"></div>
+
         </div>
     </div>
 
     <!-- Script for Menu Button on Top Left -->
     <script src="scripts/menu_button.js"></script>
-    <!-- populate article container with articles -->
-    <script src="scripts/add-for-review-articles.js"></script>
+
+    <!-- Grab active articles -->
+    <script src="scripts/fetch-review-active-articles.js"></script>
 
 </body>
 

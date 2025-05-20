@@ -1320,7 +1320,6 @@ tbody td:hover {
 }
 
 .ql-editor {
-    pointer-events: none;
     -webkit-user-select: text;
     user-select: text;
 }
@@ -1439,7 +1438,7 @@ tbody td:hover {
     padding-right: 6rem;
     display: flex;
     align-items: center;
-    height: 100%;
+    height: 100vh;
     background-image:
         linear-gradient(rgba(10, 92, 54, 0.95), rgba(20, 69, 47, 0.95)),
         url(pics/plp-outside.jpg);
@@ -1558,6 +1557,8 @@ tbody td:hover {
     position: absolute;
     align-self: center;
 }
+
+/* END OF SIGN IN */
 
 .popup-backdrop {
     position: fixed;
@@ -2217,4 +2218,17 @@ tbody td:hover {
 .user-card .user-info .time {
     font-size: 0.9rem;
     color: gray;
+}
+
+@media (max-width: 768px) {
+    .writers-readers-article-content-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .writers-readers-container {
+        position: static;
+        max-height: none;
+        overflow: visible;
+    }
 }

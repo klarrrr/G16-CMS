@@ -164,8 +164,6 @@ $ownerPicture = $userInfo['profile_picture'];
     </div>
     <!-- Script for Menu Button on Top Left -->
     <script src="scripts/menu_button.js"></script>
-    <!-- Populate the Selection Input of all the pages -->
-    <script src="scripts/nav_panel_switcher.js"></script>
     <!-- Disable Some key events -->
     <script src="scripts/disable-key-events.js"></script>
     <!-- Date formatterr -->
@@ -214,6 +212,9 @@ $ownerPicture = $userInfo['profile_picture'];
             });
         });
     </script>
+
+    <!-- Go to account settings -->
+
     <script>
         const pfpCircle = document.getElementById('pfp-circle');
         pfpCircle.addEventListener('click', () => {

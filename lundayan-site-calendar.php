@@ -14,11 +14,6 @@
     <?php include 'lundayan-site-upper-nav.php' ?>
     <?php include 'lundayan-site-nav.php'; ?>
     <main>
-        <!-- <div class="news-banner">
-            <div class="scrolling-text">
-                <span> | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | CALENDAR | </span>
-            </div>
-        </div> -->
         <section class="calendar">
             <br>
             <div class="calendar-vertical-layout">
@@ -72,10 +67,7 @@
                             <div class="year-container">
                                 <div class="select">
                                     <select id="year-select">
-                                        <!-- TODO : Dynamic, start from the oldest article's year up to present -->
-                                        <option value="2025">2025</option>
-                                        <option value="2024">2024</option>
-                                        <option value="2023">2023</option>
+                                        <!-- Ppoulate with oldest year - 1 and year + 1 -->
                                     </select>
                                 </div>
                             </div>

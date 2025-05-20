@@ -18,16 +18,36 @@ const fetchArticles = () => {
         type: "GET",
         dataType: "json",
         success: function (res) {
-            articles = res || [];
+            const resArticles = res.articles || [];
+            articles = resArticles;
             articlesByDate = {};
 
-            articles.forEach(article => {
-                const dateKey = article.date_posted.split(' ')[0]; // Keeps only "YYYY-MM-DD"
+            resArticles.forEach(article => {
+                const dateKey = article.date_posted.split(' ')[0];
                 if (!articlesByDate[dateKey]) {
                     articlesByDate[dateKey] = [];
                 }
                 articlesByDate[dateKey].push(article);
             });
+
+            // Populate year select dynamically
+            if (res.minYear && res.maxYear) {
+                const startYear = parseInt(res.minYear) - 1;
+                const endYear = parseInt(res.maxYear) + 1;
+
+                yearSelect.innerHTML = "";
+                for (let y = endYear; y >= startYear; y--) {
+                    const opt = document.createElement("option");
+                    opt.value = y;
+                    opt.textContent = y;
+                    yearSelect.appendChild(opt);
+                }
+
+                // Set currentYear to now if in range, otherwise fallback to endYear
+                const nowYear = new Date().getFullYear();
+                currentYear = nowYear >= startYear && nowYear <= endYear ? nowYear : endYear;
+                yearSelect.value = currentYear;
+            }
         },
         error: function (xhr, status, error) {
             console.error("Failed to fetch articles:", error);
@@ -36,6 +56,7 @@ const fetchArticles = () => {
         }
     });
 };
+
 
 
 

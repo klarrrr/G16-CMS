@@ -1,7 +1,7 @@
 const articleContainer = document.getElementById('articles-boxes-container');
 
 $.ajax({
-    url: '/php-backend/add_article.php',
+    url: 'php-backend/add_article.php',
     type: "POST",
     dataType: 'json',
     data: {},

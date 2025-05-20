@@ -34,6 +34,7 @@ $title = $articles['article_title'];
 $shortDesc = $widgets['widget_paragraph'];
 $thumbnailImg = $widgets['widget_img'];
 $dateUpdated = $articles['date_updated'];
+$archiveStatus = $articles['archive_status'];
 
 ?>
 
@@ -54,15 +55,21 @@ $dateUpdated = $articles['date_updated'];
 </head>
 
 <body class="body">
-    <div class="sure-delete-container" style="display: none;" id='sure-delete-container'>
+
+
+    <div class="sure-delete-container" style="display: none;" id="sure-delete-container">
         <div class="sure-delete">
-            <h3>Delete this article?</h3>
+            <h3 id="confirm-message">Archive this article?</h3>
             <div class="delete-button-container">
-                <button id='del-yes-btn'>Confirm</button>
-                <button id='del-no-btn'>Cancel</button>
+                <button id="del-yes-btn">Confirm</button>
+                <button id="del-no-btn">Cancel</button>
             </div>
         </div>
     </div>
+
+    <input type="file" id="local-video-upload" accept="video/*" style="display: none;">
+
+
     <!-- ACTUAL NAV OF CMS WEBSITE -->
     <div class="left-editor-container">
         <?php include 'editor-nav.php'; ?>
@@ -71,7 +78,6 @@ $dateUpdated = $articles['date_updated'];
         <div class="create-article-main" id='create-article-main' style='    grid-template-columns: 75% 25%;'>
             <div class="create-navs">
                 <div class="create-nav-one">
-                    <!-- TODO MAKE DYNAMIC LATER -->
                     <div class="create-nav-one-title">
                         <h2 id='top-article-title'>Article Document Title</h2>
                         <p id='last-updated'></p>
@@ -173,8 +179,15 @@ $dateUpdated = $articles['date_updated'];
                         <!-- Images -->
                         <button class="ql-image">Image</button>
 
-                        <!-- Video -->
+                        <!-- Link Video -->
                         <button class="ql-video">Video</button>
+
+                        <!-- Local Video -->
+                        <button id="custom-video-button">
+                            <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+                                <path fill="#444" d="m768 576 192-64v320l-192-64v96a32 32 0 0 1-32 32H96a32 32 0 0 1-32-32V480a32 32 0 0 1 32-32h640a32 32 0 0 1 32 32v96zM192 768v64h384v-64H192zm192-480a160 160 0 0 1 320 0 160 160 0 0 1-320 0zm64 0a96 96 0 1 0 192.064-.064A96 96 0 0 0 448 288zm-320 32a128 128 0 1 1 256.064.064A128 128 0 0 1 128 320zm64 0a64 64 0 1 0 128 0 64 64 0 0 0-128 0z" />
+                            </svg>
+                        </button>
                     </div>
 
                     <div class="separator"></div>
@@ -228,9 +241,9 @@ $dateUpdated = $articles['date_updated'];
                             </select>
                         </div>
 
-                        <div class="delete-article-container">
-                            <h3 class="widget-article-h3">Delete Article</h3>
-                            <button class='delete-article-btn' id='del-article-btn'>Delete Article</button>
+                        <div class="archive-article-container">
+                            <h3 class="widget-article-h3">Archive Article : <i id='archi-stat'><?php echo ucwords($archiveStatus); ?></i></h3>
+                            <button class='archive-article-btn' id='archive-article-btn'>Archive Article</button>
                         </div>
 
                     </div>
@@ -291,10 +304,62 @@ $dateUpdated = $articles['date_updated'];
     </div>
 
 
+    <!-- Update Date Updated -->
+    <!-- Keep this at the bottom kasi mahal ko parin :(-->
+    <script>
+        const article_id = `<?php echo $article_id ?>`;
+
+
+        function updateDateUpdated(article_id, action) {
+            $.ajax({
+                url: 'php-backend/edit-article-date-updated.php',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    article_id: article_id,
+                    action: action
+                },
+                success: (res) => {
+                    const date_updated = res.date_updated;
+                    lastUpdated.innerHTML = `Last updated on ${formatDateTime(date_updated)} - ${author}`;
+                },
+                error: (error) => {
+                    console.log(error);
+                }
+            });
+        }
+    </script>
+
     <!-- Script for Menu Button on Top Left -->
     <script src="scripts/menu_button.js"></script>
-    <!-- Populate the Selection Input of all the pages -->
-    <script src="scripts/nav_panel_switcher.js"></script>
+    <script>
+        const BlockEmbed = Quill.import('blots/block/embed');
+
+        class CustomVideo extends BlockEmbed {
+            static create(value) {
+                const node = document.createElement('video');
+                node.setAttribute('controls', true);
+                node.setAttribute('width', '100%');
+                node.setAttribute('height', '400');
+                const source = document.createElement('source');
+                source.setAttribute('src', value);
+                source.setAttribute('type', 'video/mp4');
+                node.appendChild(source);
+                return node;
+            }
+
+            static value(node) {
+                const source = node.querySelector('source');
+                return source ? source.getAttribute('src') : '';
+            }
+        }
+
+        CustomVideo.blotName = 'customVideo';
+        CustomVideo.tagName = 'video';
+
+        Quill.register(CustomVideo);
+    </script>
+
     <script>
         const quill = new Quill('#editor', {
             theme: 'snow',
@@ -307,7 +372,82 @@ $dateUpdated = $articles['date_updated'];
                 userOnly: true
             }
         });
+
+        $('#custom-video-button').on('click', function() {
+            const input = $('<input type="file" accept="video/mp4,video/webm,video/ogg">');
+            input.trigger('click');
+
+            input.on('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const formData = new FormData();
+                    formData.append('video', file);
+
+                    $.ajax({
+                        url: 'php-backend/upload-video.php', // your upload script
+                        type: 'POST',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function(response) {
+                            const res = JSON.parse(response);
+                            if (res.success) {
+                                let range = quill.getSelection();
+                                if (!range) {
+                                    // No selection, insert at the end
+                                    range = {
+                                        index: quill.getLength(),
+                                        length: 0
+                                    };
+                                }
+                                quill.insertEmbed(range.index, 'customVideo', res.url);
+                                quill.setSelection(range.index + 1);
+                                updateDateUpdated(article_id, "Inserted a Video");
+                            } else {
+                                alert('Upload failed: ' + res.error);
+                            }
+                        },
+                        error: function(error) {
+                            alert('An error occurred while uploading.' + error);
+                        }
+                    });
+                }
+            });
+        });
+
+        // Automatically delete video file when removed from editor
+
+        let previousVideos = new Set();
+
+        // Get all current video URLs
+        function getCurrentVideos() {
+            return new Set(
+                Array.from(quill.root.querySelectorAll('video source')).map(source => source.src)
+            );
+        }
+
+        // Listen for text-change events
+        quill.on('text-change', function() {
+            const currentVideos = getCurrentVideos();
+
+            // Find deleted video URLs
+            for (const url of previousVideos) {
+                if (!currentVideos.has(url)) {
+                    // Video was deleted
+                    $.post('php-backend/delete-video.php', {
+                        url: url
+                    }, function(res) {
+                        const response = JSON.parse(res);
+                        if (!response.success) {
+                            console.warn('Delete failed:', response.error);
+                        }
+                    });
+                }
+            }
+            previousVideos = currentVideos;
+        });
     </script>
+
     <!-- Disable Some key events -->
     <script src="scripts/disable-key-events.js"></script>
     <!-- script for open and close widget -->
@@ -351,8 +491,6 @@ $dateUpdated = $articles['date_updated'];
     </script>
     <!-- Live update content database -->
     <script>
-        const article_id = `<?php echo $article_id ?>`;
-
         // eto para text lang
         contentBox.addEventListener('input', function() {
             const updatedContent = contentBox.innerHTML;
@@ -408,8 +546,8 @@ $dateUpdated = $articles['date_updated'];
                     article_id: article_id
                 },
                 success: (res) => {
-                    console.log(res.status);
-                    updateDateUpdated(article_id);
+                    // console.log(res.status);
+                    updateDateUpdated(article_id, "Article Content is Updated");
                 },
                 error: (error) => {
                     console.log(error);
@@ -442,7 +580,7 @@ $dateUpdated = $articles['date_updated'];
                 success: (res) => {
                     console.log(res.status);
                     topTitle.innerHTML = newTitle;
-                    updateDateUpdated(article_id);
+                    updateDateUpdated(article_id, "Article Title gets updated");
                 },
                 error: (error) => {
                     console.log(error);
@@ -474,7 +612,7 @@ $dateUpdated = $articles['date_updated'];
                 },
                 success: (res) => {
                     console.log(res.status);
-                    updateDateUpdated(article_id);
+                    updateDateUpdated(article_id, "Article Short Description gets updated");
                 },
                 error: (error) => {
                     console.log(error);
@@ -521,7 +659,7 @@ $dateUpdated = $articles['date_updated'];
                                 console.log(res.status);
 
                                 document.getElementById('show-thumbnail-image').src = 'data:image/png;base64,' + base64String;
-                                updateDateUpdated(article_id);
+                                updateDateUpdated(article_id, "Article thumbnail image updated");
 
                                 document.getElementById('thumbnail-image-container').style.background = `url(${'data:image/png;base64,' + base64String})`;
 
@@ -539,62 +677,103 @@ $dateUpdated = $articles['date_updated'];
             }
         }
     </script>
-    <!-- Delete Article -->
+
+    <!-- Get Archive Status -->
     <script>
-        const delButton = document.getElementById('del-article-btn');
+        $.ajax({
+            url: 'php-backend/get-archive-status.php',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                article_id: article_id
+            },
+            success: (res) => {
+                if (res.status === 'success') {
+                    const isArchived = res.archive_status === 'archived';
+
+                    // Update visible status
+                    document.getElementById('archi-stat').innerText = res.archive_status;
+
+                    // Update archive button text
+                    const archiveBtn = document.getElementById('archive-article-btn');
+                    archiveBtn.innerText = isArchived ? 'Unarchive' : 'Archive';
+
+                    // Show/hide delete box if needed
+                    const delBox = document.getElementById('delBox');
+                    if (delBox) delBox.style.display = isArchived ? 'none' : 'block';
+
+                    // Update confirmation modal content
+                    const confirmMessage = document.getElementById('confirm-message');
+                    const delYesBtn = document.getElementById('del-yes-btn');
+
+                    if (confirmMessage && delYesBtn) {
+                        confirmMessage.innerText = isArchived ?
+                            'Unarchive this article?' :
+                            'Archive this article?';
+
+                        delYesBtn.innerText = isArchived ?
+                            'Unarchive' :
+                            'Archive';
+                    }
+                } else {
+                    console.warn('Could not get archive status:', res.message);
+                }
+            },
+            error: (err) => {
+                console.error('AJAX error:', err);
+            }
+        });
+    </script>
+
+    <!-- Archive Article -->
+    <script>
+        const archiveBtn = document.getElementById('archive-article-btn');
+        const archiStat = document.getElementById('archi-stat');
+
+        archiStat.innerHTML = '<?php echo $archiveStatus; ?>';
+
         const delBox = document.getElementById('sure-delete-container');
         const delBoxYes = document.getElementById('del-yes-btn');
         const delBoxNo = document.getElementById('del-no-btn');
 
-        delButton.addEventListener('click', () => {
+        archiveBtn.addEventListener('click', () => {
             delBox.style.display = 'flex';
         });
 
+        // edit-article-delete-article.php
+
         delBoxYes.addEventListener('click', () => {
             $.ajax({
-                url: 'php-backend/edit-article-delete-article.php',
+                url: 'php-backend/archive-article.php',
                 type: 'POST',
                 dataType: 'json',
                 data: {
                     article_id: article_id
                 },
-                sucess: (res) => {
-                    // Go back to article page
-                    console.log(res.status);
+                success: (res) => {
+                    if (res.status === 'success') {
+                        const isArchived = res.archive_status === 'archived';
+
+                        archiStat.innerText = res.archive_status;
+                        archiveBtn.innerText = isArchived ? 'Unarchive' : 'Archive';
+                        alert(res.message);
+
+                        // Hide delete box only if archived
+                        delBox.style.display = 'none';
+                        updateDateUpdated(article_id, "Article got archived");
+                    } else {
+                        alert('Failed: ' + res.message);
+                    }
                 },
                 error: (error) => {
-                    console.log(error);
+                    console.error('AJAX error:', error);
                 }
             });
-            window.location.href = 'add-article-page.php';
         });
 
         delBoxNo.addEventListener('click', () => {
             delBox.style.display = 'none';
         });
-    </script>
-
-    <!-- Update Date Updated -->
-    <!-- Keep this at the bottom kasi mahal ko parin :(-->
-    <script>
-        function updateDateUpdated(article_id) {
-            $.ajax({
-                url: 'php-backend/edit-article-date-updated.php',
-                type: 'post',
-                dataType: 'json',
-                data: {
-                    article_id: article_id
-                },
-                success: (res) => {
-                    // Kunin ung date updated, then palitan yung date updated sa baba ng title
-                    const date_updated = res.date_updated;
-                    lastUpdated.innerHTML = `Last updated on ${formatDateTime(date_updated)} - ${author}`;
-                },
-                error: (error) => {
-                    console.log(error);
-                }
-            });
-        }
     </script>
     <!-- Populate Comments -->
     <script src="scripts/get-comments-in-article.js"></script>
@@ -689,7 +868,7 @@ $dateUpdated = $articles['date_updated'];
                 success: (res) => {
                     if (res.success) {
                         alert('Tags saved successfully!');
-                        updateDateUpdated(articleId);
+                        updateDateUpdated(articleId, "Article Tags modified");
                     }
                 },
                 error: (err) => {
@@ -803,7 +982,7 @@ $dateUpdated = $articles['date_updated'];
                                 console.log('Image successfully uploaded and added to the gallery');
                                 // Update the gallery list after insertion (optional)
                                 updateGalleryList(articleId);
-                                updateDateUpdated(articleId);
+                                updateDateUpdated(articleId, "Article gallery modified");
                             } else {
                                 console.log('Error uploading image');
                             }
@@ -891,7 +1070,7 @@ $dateUpdated = $articles['date_updated'];
                         console.log('Image deleted successfully');
                         // Refresh the gallery after deletion
                         updateGalleryList(articleId);
-                        updateDateUpdated(articleId);
+                        updateDateUpdated(articleId, "Article gallery image deleted");
                     } else {
                         console.log('Error deleting image:', res.message || res.status);
                     }
@@ -970,7 +1149,7 @@ $dateUpdated = $articles['date_updated'];
                     success: function(res) {
                         if (res.status === 'success') {
                             updateButtonLabel(res.new_status);
-                            updateDateUpdated(articleId);
+                            updateDateUpdated(articleId, "Article gets published");
                             alert(`Article is now ${res.new_status}.`);
                             location.reload();
                         } else {

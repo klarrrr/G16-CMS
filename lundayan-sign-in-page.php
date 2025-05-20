@@ -7,7 +7,6 @@ if (isset($_SESSION['user_id'])) {
 }
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,6 +17,17 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="styles-lundayan-site.css">
     <link rel="icon" href="pics/lundayan-logo.png">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <style>
+        .error-msg {
+            font-size: 0.8em;
+            color: salmon;
+            display: none;
+        }
+
+        .error-visible {
+            display: block !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -28,59 +38,204 @@ if (isset($_SESSION['user_id'])) {
                 <h1>LUNDAYAN</h1>
                 <p id='sign-in-paragraph'>Sign in to modify, create and share <br>exciting news and posts</p>
             </div>
-            <!-- SIGN IN -->
-            <div class="sign-in-user-input" id='sign-in-container' style='display: flex;'>
-                <label for="email-box" style='font-size: 0.8em; color: salmon; display: none;' id='incorret-format'>* Incorrect Format - Pasig Email Only</label>
-                <input type="email" name='email-box' class='sign-in-input-box' placeholder="Enter your email here" id='sign-in-email'>
 
-                <label for="empty-pass" style='font-size: 0.8em; color: salmon; display: none;' id='empty-pass'>* Password cannot be empty</label>
-                <input type="password" name='pass-box' class='sign-in-input-box' placeholder="Enter your password here" id='sign-in-pass'>
+            <!-- Sign In Form -->
+            <form id="sign-in-form" class="sign-in-user-input" style='display: flex;' novalidate>
+                <label class="error-msg" id="sign-in-email-error"></label>
+                <input type="email" class='sign-in-input-box' placeholder="Enter your email here" id='sign-in-email' autocomplete="email">
 
-                <button id='sign-in-btn' class='sign-btn'>Sign in</button>
+                <label class="error-msg" id="sign-in-pass-error"></label>
+                <input type="password" class='sign-in-input-box' placeholder="Enter your password here" id='sign-in-pass' autocomplete="current-password">
 
+                <button type="submit" class='sign-btn'>Sign in</button>
                 <a href="#" id='forgot-pass'>Forgot Password?</a>
 
                 <hr>
+                <button type="button" id="create-account" class='create-or-sign-in-btn'>Create New Account</button>
+            </form>
 
-                <button id="create-account" class='create-or-sign-in-btn'>Create New Account</button>
-            </div>
-            <!-- SIGN UP REGISTER -->
-            <div class="sign-in-user-input" id='sign-up-container' style='display: none;'>
+            <!-- Sign Up Form -->
+            <form id="sign-up-form" class="sign-in-user-input" style='display: none;' novalidate>
+                <label class="error-msg" id="reg-first-name-error"></label>
+                <input type="text" class='sign-in-input-box' placeholder='Enter first name' id="reg-first-name" autocomplete="off">
 
-                <!-- TODO: LAgays Incoorect format -->
-                <label for="reg-first-name" style='font-size: 0.8em; color: salmon; display: none;' id='reg-incorrect-format'>* Cannot be empty</label>
-                <input type="text" name='reg-first-name' class='sign-in-input-box' placeholder='Enter first name' id="reg-first-name">
+                <label class="error-msg" id="reg-last-name-error"></label>
+                <input type="text" class='sign-in-input-box' placeholder='Enter last name' id="reg-last-name" autocomplete="off">
 
-                <label for="reg-last-name" style='font-size: 0.8em; color: salmon; display: none;' id='reg-incorrect-format'>* Cannot be empty</label>
-                <input type="text" name='reg-last-name' class='sign-in-input-box' placeholder='Enter last name' id="reg-last-name">
+                <label class="error-msg" id="reg-email-error"></label>
+                <input type="email" class='sign-in-input-box' placeholder="Enter your email here" id='reg-email' autocomplete="off">
 
+                <label class="error-msg" id="reg-pass-error"></label>
+                <input type="password" class='sign-in-input-box' placeholder="Enter your password here" id='reg-pass' autocomplete="new-password">
 
-                <label for="reg-email-box" style='font-size: 0.8em; color: salmon; display: none;' id='reg-incorrect-format'>* Incorrect Format - Pasig Email Only</label>
-                <input type="email" name='reg-email-box' class='sign-in-input-box' placeholder="Enter your email here" id='reg-email'>
+                <label class="error-msg" id="reg-re-pass-error"></label>
+                <input type="password" class='sign-in-input-box' placeholder="Re-enter your password here" id='reg-re-pass' autocomplete="new-password">
 
-                <label for="reg-pass-box" style='font-size: 0.8em; color: salmon; display: none;' id='reg-empty-pass'>* Password cannot be empty</label>
-                <label for="reg-pass-box" style='font-size: 0.8em; color: salmon; display: none;' id='reg-less-pass'>* Cannot be less than 8 characters</label>
-                <label for="reg-pass-box" style='font-size: 0.8em; color: salmon; display: none;' id='reg-match-pass'>* Passwords don't match</label>
-                <input type="password" name='reg-pass-box' class='sign-in-input-box' placeholder="Enter your password here" id='reg-pass'>
+                <select id="reg-user-type" class='sign-in-input-box'>
+                    <option value="writer">Writer</option>
+                    <option value="reviewer">Reviewer</option>
+                </select>
 
-                <label for="reg-re-pass-box" style='font-size: 0.8em; color: salmon; display: none;' id='reg-re-empty-pass'>* Password cannot be empty</label>
-                <label for="reg-re-pass-box" style='font-size: 0.8em; color: salmon; display: none;' id='reg-re-less-pass'>* Cannot be less than 8 characters</label>
-                <label for="reg-re-pass-box" style='font-size: 0.8em; color: salmon; display: none;' id='reg-re-match-pass'>* Passwords don't match</label>
-                <input type="password" name='reg-re-pass-box' class='sign-in-input-box' placeholder="Re-enter your password here" id='reg-re-pass'>
-
-                <button id='sign-up-btn' class='sign-btn'>Create account</button>
-
+                <button type="submit" class='sign-btn'>Create account</button>
                 <hr>
-
-                <button id="back-sign-in" class='create-or-sign-in-btn'>Already Have Account</button>
-            </div>
+                <button type="button" id="back-sign-in" class='create-or-sign-in-btn'>Already Have Account</button>
+            </form>
         </section>
+
         <footer class='sign-in-footer'>
             <p>&copy; 2025 Lundayan - Student Publication - Pamantasan ng Lungsod ng Pasig. All rights reserved.</p>
         </footer>
     </main>
-    <!-- Handles the functioanlity -->
-    <script src="data_handler.js"></script>
+
+    <script>
+        function isValidPasigEmail(email) {
+            return /^[a-zA-Z0-9._%+-]+@plpasig\.edu\.ph$/.test(email);
+        }
+
+        $('#sign-in-form').submit(function(e) {
+            e.preventDefault();
+            let email = $('#sign-in-email').val().trim();
+            let pass = $('#sign-in-pass').val().trim();
+            let valid = true;
+
+            $('#sign-in-email-error').text('').removeClass('error-visible');
+            $('#sign-in-pass-error').text('').removeClass('error-visible');
+
+            if (!isValidPasigEmail(email)) {
+                $('#sign-in-email-error').text('* Incorrect Format - Pasig Email Only').addClass('error-visible');
+                valid = false;
+            }
+            if (!pass) {
+                $('#sign-in-pass-error').text('* Password cannot be empty').addClass('error-visible');
+                valid = false;
+            }
+
+            if (valid) {
+                const email = $('#sign-in-email').val();
+                const pass = $('#sign-in-pass').val();
+
+                $.ajax({
+                    url: 'login.php',
+                    method: 'POST',
+                    data: {
+                        email: email,
+                        pass: pass
+                    },
+                    dataType: 'json',
+                    success: function(result) {
+                        if (result.status === 'success') {
+                            window.location.href = 'editor-dashboard.php';
+                        } else {
+                            alert(result.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX Error:", status, error);
+                        console.log("Response:", xhr.responseText);
+                        alert("Something went wrong. Check the console.");
+                    }
+                });
+            }
+        });
+
+        $('#sign-up-form').submit(function(e) {
+            e.preventDefault();
+            let fname = $('#reg-first-name').val().trim();
+            let lname = $('#reg-last-name').val().trim();
+            let email = $('#reg-email').val().trim();
+            let pass = $('#reg-pass').val().trim();
+            let repass = $('#reg-re-pass').val().trim();
+            let valid = true;
+
+            $('.error-msg').text('').removeClass('error-visible');
+
+            if (!fname) {
+                $('#reg-first-name-error').text('* First name cannot be empty').addClass('error-visible');
+                valid = false;
+            }
+            if (!lname) {
+                $('#reg-last-name-error').text('* Last name cannot be empty').addClass('error-visible');
+                valid = false;
+            }
+            if (!isValidPasigEmail(email)) {
+                $('#reg-email-error').text('* Incorrect Format - Pasig Email Only').addClass('error-visible');
+                valid = false;
+            }
+            if (!pass) {
+                $('#reg-pass-error').text('* Password cannot be empty').addClass('error-visible');
+                valid = false;
+            } else if (pass.length < 8) {
+                $('#reg-pass-error').text('* Cannot be less than 8 characters').addClass('error-visible');
+                valid = false;
+            }
+            if (!repass || pass !== repass) {
+                $('#reg-re-pass-error').text('* Passwords don\'t match').addClass('error-visible');
+                valid = false;
+            }
+
+            if (valid) {
+                const first = $('#reg-first-name').val();
+                const last = $('#reg-last-name').val();
+                const email = $('#reg-email').val();
+                const pass = $('#reg-pass').val();
+                const re_pass = $('#reg-re-pass').val();
+                const user_type = $('#reg-user-type').val();
+
+                if (pass !== re_pass) {
+                    alert("Passwords do not match!");
+                    return;
+                }
+
+                $.post('register.php', {
+                    first,
+                    last,
+                    email,
+                    pass,
+                    user_type
+                }, function(data) {
+                    if (data.status === 'success') {
+                        alert("Account created! You can now log in.");
+                        $('#back-sign-in').click();
+                    } else {
+                        alert(data.message);
+                    }
+                }, 'json').fail(function(xhr) {
+                    console.error("Error:", xhr.responseText);
+                    alert("Something went wrong. See console.");
+                });
+            }
+        });
+    </script>
+
+    <!-- Some events -->
+
+    <script>
+        // Sign In - Trigger with Enter key
+        $('#sign-in-email, #sign-in-pass').on('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                $('#sign-in-btn').click();
+            }
+        });
+
+        // Sign Up - Trigger with Enter key
+        $('#reg-first-name, #reg-last-name, #reg-email, #reg-pass, #reg-re-pass').on('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                $('#sign-up-btn').click();
+            }
+        });
+
+        $('#create-account').click(function() {
+            $('#sign-in-form').hide();
+            $('#sign-up-form').show();
+        });
+
+        $('#back-sign-in').click(function() {
+            $('#sign-up-form').hide();
+            $('#sign-in-form').show();
+        });
+    </script>
 </body>
 
 </html>

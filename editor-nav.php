@@ -3,6 +3,16 @@
 $user_type = $_SESSION['user_type'];
 ?>
 
+<div class="sure-delete-container" style="display: none;" id="sure-sign-out">
+    <div class="sure-delete">
+        <h3 id="confirm-message">Sign out?</h3>
+        <div class="delete-button-container">
+            <button id="so_yes">Confirm</button>
+            <button id="so_no">Cancel</button>
+        </div>
+    </div>
+</div>
+
 <div class="off-screen-menu" id='off-screen-menu' style='align-items: center;'>
     <div id='menu-button-container' style='justify-content: center;'>
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" id="menuButton">
@@ -41,11 +51,24 @@ $user_type = $_SESSION['user_type'];
         <!-- AUDIT LOG PAGE -->
         <li>
             <a href="audit-log-page.php">
+                <!-- <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16 2H0V5H16V2Z" fill="#000000" />
+                    <path d="M1 7H5V9H11V7H15V15H1V7Z" fill="#000000" />
+                </svg> -->
+                <svg fill="#000000" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 24q0 0.832 0.576 1.44t1.44 0.576h1.984q0 2.496 1.76 4.224t4.256 1.76h6.688q-2.144-1.504-3.456-4h-3.232q-0.832 0-1.44-0.576t-0.576-1.408v-20q0-0.832 0.576-1.408t1.44-0.608h16q0.8 0 1.408 0.608t0.576 1.408v7.232q2.496 1.312 4 3.456v-10.688q0-2.496-1.76-4.256t-4.224-1.76h-16q-2.496 0-4.256 1.76t-1.76 4.256h-1.984q-0.832 0-1.44 0.576t-0.576 1.408 0.576 1.44 1.44 0.576h1.984v4h-1.984q-0.832 0-1.44 0.576t-0.576 1.408 0.576 1.44 1.44 0.576h1.984v4h-1.984q-0.832 0-1.44 0.576t-0.576 1.408zM10.016 24h2.080q0-0.064-0.032-0.416t-0.064-0.576 0.064-0.544 0.032-0.448h-2.080v1.984zM10.016 20h2.464q0.288-1.088 0.768-1.984h-3.232v1.984zM10.016 16h4.576q0.992-1.216 2.112-1.984h-6.688v1.984zM10.016 12h16v-1.984h-16v1.984zM10.016 8h16v-1.984h-16v1.984zM14.016 23.008q0 1.824 0.704 3.488t1.92 2.88 2.88 1.92 3.488 0.704 3.488-0.704 2.88-1.92 1.92-2.88 0.704-3.488-0.704-3.488-1.92-2.88-2.88-1.92-3.488-0.704-3.488 0.704-2.88 1.92-1.92 2.88-0.704 3.488zM18.016 23.008q0-2.080 1.44-3.52t3.552-1.472 3.52 1.472 1.472 3.52q0 2.080-1.472 3.52t-3.52 1.472-3.552-1.472-1.44-3.52zM22.016 23.008q0 0.416 0.288 0.704t0.704 0.288h1.984q0.416 0 0.704-0.288t0.32-0.704-0.32-0.704-0.704-0.288h-0.992v-0.992q0-0.416-0.288-0.704t-0.704-0.32-0.704 0.32-0.288 0.704v1.984z"></path>
+                </svg>
+                <p id='menu-audit-logs-button' style='display: none'>Audit Logs</p>
+            </a>
+        </li>
+        <!-- ARTICLE ARCHIVES PAGE -->
+        <li id='article-archives-hide'>
+            <a href="article-archives-page.php">
                 <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M16 2H0V5H16V2Z" fill="#000000" />
                     <path d="M1 7H5V9H11V7H15V15H1V7Z" fill="#000000" />
                 </svg>
-                <p id='menu-archive-button' style='display: none'>Audit Logs</p>
+                <p id='menu-archive-button' style='display: none'>Article Archives</p>
             </a>
         </li>
         <!-- HOME LUNDAYAN SITE -->
@@ -71,7 +94,7 @@ $user_type = $_SESSION['user_type'];
         </li>
         <!-- SIGN OUT -->
         <li>
-            <a href="php-backend/sign-out.php" id='sign-out-btn'>
+            <a href="#" id='sign-out-btn'>
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M6 3C4.34315 3 3 4.34315 3 6V18C3 19.6569 4.34315 21 6 21H17C17.5523 21 18 20.5523 18 20C18 19.4477 17.5523 19 17 19H6C5.44772 19 5 18.5523 5 18V6C5 5.44772 5.44772 5 6 5H17C17.5523 5 18 4.55228 18 4C18 3.44772 17.5523 3 17 3H6ZM15.7071 7.29289C15.3166 6.90237 14.6834 6.90237 14.2929 7.29289C13.9024 7.68342 13.9024 8.31658 14.2929 8.70711L16.5858 11H8C7.44772 11 7 11.4477 7 12C7 12.5523 7.44772 13 8 13H16.5858L14.2929 15.2929C13.9024 15.6834 13.9024 16.3166 14.2929 16.7071C14.6834 17.0976 15.3166 17.0976 15.7071 16.7071L19.7071 12.7071C20.0976 12.3166 20.0976 11.6834 19.7071 11.2929L15.7071 7.29289Z" fill="#000000" />
                 </svg>
@@ -85,9 +108,31 @@ $user_type = $_SESSION['user_type'];
     const userType = "<?php echo strtolower($user_type); ?>";
     const addArticleIcon = document.getElementById('add-article-icon');
     const reviewArticleIcon = document.getElementById('review-article-icon');
+    const articleArchives = document.getElementById('article-archives-hide');
     if (userType == 'writer') {
         reviewArticleIcon.remove();
     } else if (userType == 'reviewer') {
         addArticleIcon.remove();
+        articleArchives.remove();
     }
+</script>
+
+<script>
+    const signOutBtn = document.getElementById('sign-out-btn');
+    const sureContainer = document.getElementById('sure-sign-out');
+    const soYes = document.getElementById('so_yes');
+    const soNo = document.getElementById('so_no');
+
+    signOutBtn.addEventListener('click', () => {
+        sureContainer.style.display = 'flex';
+    });
+
+    soYes.addEventListener('click', () => {
+        window.location.href = 'php-backend/sign-out.php';
+        sureContainer.style.display = 'none';
+    });
+
+    soNo.addEventListener('click', () => {
+        sureContainer.style.display = 'none';
+    });
 </script>

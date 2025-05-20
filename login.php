@@ -26,7 +26,7 @@ if ($stmt->num_rows > 0) {
     $stmt->fetch();
 
     // ✅ Check plain text password (not hashed)
-    if ($pass === $db_pass) {
+    if (password_verify($pass, $db_pass)) {
         $_SESSION['user_id'] = $user_id;
         $_SESSION['user_first'] = $user_first;
         $_SESSION['user_last'] = $user_last;
