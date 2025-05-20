@@ -10,11 +10,12 @@ const home = document.getElementById('menu-home-button');
 const archive = document.getElementById('menu-archive-button');
 const addArticle = document.getElementById('add-article-nav-button')
 const reviewArticleBtnP = document.getElementById('review-articles-button-p');
+const lundayanHome = document.getElementById('lundayan-home-button');
 
 const accountSettings = document.getElementById('menu-account-settings-button');
 const signOut = document.getElementById('menu-sign-out-button');
 
-const pArray = [home, archive, reviewArticleBtnP, addArticle, accountSettings, signOut];
+const pArray = [home, archive, reviewArticleBtnP, addArticle, lundayanHome, accountSettings, signOut];
 
 const mainPage = document.getElementById('main-page');
 

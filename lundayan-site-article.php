@@ -1,9 +1,9 @@
 <?php
 
-$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
-$domain = $_SERVER['HTTP_HOST'];
-$uri = $_SERVER['REQUEST_URI'];
-$fullUrl = $protocol . $domain . $uri;
+// $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
+// $domain = $_SERVER['HTTP_HOST'];
+// $uri = $_SERVER['REQUEST_URI'];
+// $fullUrl = $protocol . $domain . $uri;
 
 include 'php-backend/connect.php';
 
@@ -22,7 +22,7 @@ if ($row = mysqli_fetch_assoc($result)) {
 }
 
 $title = $article['article_title'];
-$articleUrl = $protocol . $domain . "/article/" . $article_id . "/" . urlencode(strtolower(str_replace(" ", "-", $title)));
+// $articleUrl = $protocol . $domain . "/article/" . $article_id . "/" . urlencode(strtolower(str_replace(" ", "-", $title)));
 
 $content = $article['article_content'];
 $datePosted = $article['date_posted'];
@@ -40,7 +40,88 @@ if ($row = mysqli_fetch_assoc($result)) {
     $widget = $row;
 }
 
-$image = $widget['widget_img']
+$image = $widget['widget_img'];
+
+// --- Find Older Article (posted before current one) ---
+$olderQuery = "SELECT article_id, article_title FROM articles 
+    WHERE date_posted < '{$article['date_posted']}' 
+    AND approve_status = 'yes' 
+    AND completion_status = 'published' 
+    ORDER BY date_posted DESC 
+    LIMIT 1";
+
+$olderResult = mysqli_query($conn, $olderQuery);
+$olderArticle = mysqli_fetch_assoc($olderResult);
+
+// --- Find Newer Article (posted after current one) ---
+$newerQuery = "SELECT article_id, article_title FROM articles 
+    WHERE date_posted > '{$article['date_posted']}' 
+    AND approve_status = 'yes' 
+    AND completion_status = 'published' 
+    ORDER BY date_posted ASC 
+    LIMIT 1";
+
+$newerResult = mysqli_query($conn, $newerQuery);
+$newerArticle = mysqli_fetch_assoc($newerResult);
+
+function shortenTitle($title, $maxLength = 40)
+{
+    $decoded = htmlspecialchars_decode($title);
+    return strlen($decoded) > $maxLength ? substr($decoded, 0, $maxLength - 3) . '...' : $decoded;
+}
+
+function timeAgoLimited($datetime)
+{
+    if (!$datetime || strtotime($datetime) === false) {
+        return "unknown time";
+    }
+
+    $timestamp = strtotime($datetime);
+    $now = time();
+
+    if ($timestamp > $now) {
+        return "just now";
+    }
+
+    $difference = $now - $timestamp;
+
+    if ($difference < 60) {
+        return "$difference minutes ago";
+    } elseif ($difference < 3600) {
+        $minutes = floor($difference / 60);
+        return "$minutes minutes ago";
+    } elseif ($difference < 86400) {
+        $hours = floor($difference / 3600);
+        return "$hours hours ago";
+    } elseif ($difference < 2592000) {
+        $days = floor($difference / 86400);
+        return "$days days ago";
+    } else {
+        return "more than 30 days ago";
+    }
+}
+
+
+// Get writer info
+$writerId = $article['user_owner'];
+$writerQuery = "SELECT user_first_name, user_last_name, user_type, profile_picture FROM users WHERE user_id = $writerId";
+$writerResult = mysqli_query($conn, $writerQuery);
+$writer = mysqli_fetch_assoc($writerResult);
+$writerName = $writer['user_first_name'] . ' ' . $writer['user_last_name'];
+$writerType = ucfirst($writer['user_type']); // "Writer"
+$writerPfp = $writer['profile_picture'];
+$timeAgo = timeAgoLimited($article['date_posted']);
+
+
+
+$reviewersQuery = "
+    SELECT DISTINCT u.user_id, u.user_first_name, u.user_last_name, u.profile_picture
+    FROM comments c
+    JOIN users u ON c.user_owner = u.user_id
+    WHERE c.article_owner = $article_id
+";
+$reviewersResult = mysqli_query($conn, $reviewersQuery);
+
 
 ?>
 
@@ -57,11 +138,11 @@ $image = $widget['widget_img']
     <meta property="og:image" content="data:image/png;base64,<?php echo $image; ?>" />
 
     <title>Lundayan : Article</title>
-    <link rel="stylesheet" href="styles-lundayan-site.css">
-    <link rel="icon" href="pics/lundayan-logo.png">
+    <link rel="stylesheet" href="/G16-CMS/styles-lundayan-site.css">
+    <link rel="icon" href="/G16-CMS/pics/lundayan-logo.png">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <link href="quill.css" rel="stylesheet" />
-    <script src="scripts/quill.js"></script>
+    <link href="/G16-CMS/quill.css" rel="stylesheet" />
+    <script src="/G16-CMS/scripts/quill.js"></script>
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
 </head>
@@ -70,24 +151,23 @@ $image = $widget['widget_img']
     <?php include 'lundayan-site-upper-nav.php' ?>
     <?php include 'lundayan-site-nav.php'; ?>
     <main>
-        <!-- <div class="news-banner">
-            <div class="scrolling-text">
-                <span>
-                    | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE
-                    | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE | ARTICLE |
-                </span>
-            </div>
-        </div> -->
         <section class="article-image-container" style='background-image: url(<?php echo 'data:image/png;base64,' . $image; ?>);'>
             <div class="article-image">
                 <div class="image-gradient">
-                    <!-- <img src="<?php echo 'data:image/png;base64,' . $image; ?>" alt="<?php echo $title; ?>"> -->
                 </div>
-                <div class="back-next">
-                    <a href="#">« Older Post</a>
-                    <a href="#">Newer Post »</a>
-                </div>
+
                 <div class="text-container-article">
+
+                    <div>
+                        <?php if ($olderArticle): ?>
+                            <a href="/G16-CMS/lundayan-site-article.php?article_id=<?php echo $olderArticle['article_id']; ?>"
+                                title="<?php echo htmlspecialchars_decode($olderArticle['article_title']); ?>">
+                                « <?php echo shortenTitle($olderArticle['article_title']); ?>
+                            </a>
+
+                        <?php endif; ?>
+                    </div>
+
                     <div class='article-time-title-tags-container'>
                         <p class="time-posted"><span id="latest-news-day-posted"></span></p>
                         <h1><?php echo $title ?></h1>
@@ -96,21 +176,64 @@ $image = $widget['widget_img']
 
                         </div>
                     </div>
-                    <!-- TODO : MAKE THIS DYNAMIC -->
-                    <!-- <a href="lundayan-site-article.php" id='latest-read-more'>Read More</a> -->
+
+                    <div>
+                        <?php if ($newerArticle): ?>
+                            <a style='justify-self: flex-end;' href="/G16-CMS/lundayan-site-article.php?article_id=<?php echo $newerArticle['article_id']; ?>"
+                                title="<?php echo htmlspecialchars_decode($newerArticle['article_title']); ?>">
+                                <?php echo shortenTitle($newerArticle['article_title']); ?> »
+                            </a>
+
+                        <?php endif; ?>
+                    </div>
+
+
                 </div>
             </div>
         </section>
 
+        <!-- WRITERS, READERS AND ARTICLE CONTENT -->
+        <div class="writers-readers-article-content-container">
+
+            <!-- WRITERS AND READERS -->
+            <div class="writers-readers-container">
+                <!-- WRITERS -->
+                <div class="article-meta writer">
+                    <h3><?php echo $writerType; ?></h3>
+                    <div class="user-card">
+                        <img class="pfp" src="data:image/png;base64,<?php echo $writerPfp; ?>" alt="Writer PFP">
+                        <div class="user-info">
+                            <p class="name"><?php echo $writerName; ?></p>
+                            <p class="time"><?php echo $timeAgo; ?></p>
+                        </div>
+                    </div>
+                </div>
 
 
+                <!-- READERS -->
+                <div class="article-meta reviewers">
+                    <h3>Reviewers</h3>
+                    <?php while ($reviewer = mysqli_fetch_assoc($reviewersResult)) : ?>
+                        <div class="user-card">
+                            <img class="pfp" src="data:image/png;base64,<?php echo $reviewer['profile_picture']; ?>" alt="Reviewer PFP">
+                            <div class="user-info">
+                                <p class="name"><?php echo $reviewer['user_first_name'] . ' ' . $reviewer['user_last_name']; ?></p>
+                            </div>
+                        </div>
+                    <?php endwhile; ?>
+                </div>
+
+            </div>
 
 
-        <div class="ql-snow" id='article-information'>
-            <div class="ql-editor" style="padding: 0;">
-                <?php echo html_entity_decode($content); ?>
+            <!-- ARTICLE CONTENT -->
+            <div class="ql-snow" id='article-information'>
+                <div class="ql-editor" style="padding: 0;">
+                    <?php echo html_entity_decode($content); ?>
+                </div>
             </div>
         </div>
+
         <section class="article-gallery">
             <div class="gallery-title-container">
                 <h2>Gallery</h2>

@@ -48,6 +48,15 @@ $user_type = $_SESSION['user_type'];
                 <p id='menu-archive-button' style='display: none'>Audit Logs</p>
             </a>
         </li>
+        <!-- HOME LUNDAYAN SITE -->
+        <li>
+            <a href="lundayan-site-home.php">
+                <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione-monotone" preserveAspectRatio="xMidYMid meet">
+                    <path d="M32 2C15.432 2 2 15.432 2 32s13.432 30 30 30s30-13.432 30-30S48.568 2 32 2zm11.275 44.508h-20.55V17.492h6.063v23.799h14.488v5.217z" fill="#000000"></path>
+                </svg>
+                <p id='lundayan-home-button' style='display: none'>Lundayan Home</p>
+            </a>
+        </li>
     </ul>
     <ul id='menu-account-items'>
         <!-- ACCOUNT SETTINGS -->

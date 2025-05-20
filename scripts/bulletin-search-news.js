@@ -50,8 +50,7 @@ function loadSearchData(page = 1, searchFor = '') {
             readMoreButtons.forEach(button => {
                 button.addEventListener('click', (e) => {
                     e.preventDefault(); // Prevent the default anchor behavior
-                    const articleId = button.getAttribute('articleid');
-                    goToArticle(articleId); // Call the function to navigate to the article page
+                    goToArticle(button); // Call the function to navigate to the article page
                 });
             });
 
@@ -86,8 +85,8 @@ $(document).on('click', '.page-link', function (e) {
 
 // Function to navigate to the article page
 function goToArticle(articleId) {
-    console.log("Navigating to article with ID:", articleId);
-    window.location.href = `/G16-CMS/lundayan-site-article.php?article_id=${articleId}`;
+    const article_id = articleId.getAttribute('articleId');
+    window.location.href = `/G16-CMS/lundayan-site-article.php?article_id=${article_id}`;
 }
 
 // Initial load (if needed, on page load)

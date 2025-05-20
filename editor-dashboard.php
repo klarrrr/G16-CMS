@@ -125,9 +125,6 @@ while ($row = mysqli_fetch_assoc($result)) {
     <!-- Script for Menu Button on Top Left -->
     <script src="scripts/menu_button.js"></script>
 
-    <!-- Populate the Selection Input of all the pages -->
-    <script src="scripts/nav_panel_switcher.js"></script>
-
     <!-- Assign user id to js var -->
     <script>
         const userId = '<?php echo $user_id ?>';

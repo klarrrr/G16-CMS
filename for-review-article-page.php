@@ -45,10 +45,12 @@ if (strtolower($_SESSION['user_type']) != 'reviewer') {
             </div>
         </div>
     </div>
+
     <!-- Script for Menu Button on Top Left -->
     <script src="scripts/menu_button.js"></script>
     <!-- populate article container with articles -->
     <script src="scripts/add-for-review-articles.js"></script>
+
 </body>
 
 </html>

@@ -1,9 +1,5 @@
 Things to do in the website:
 
-2. About Page
-
-	Tell the users all about the lundayan site of plp.
-
 4. Article Archive
 
 	This is a new page. The reviewer will be able to move the article in the article archive.
@@ -37,7 +33,7 @@ Things to do in the website:
 		3. Alphabetical Desc
 		4. 
 
-
+16. Add Insert Video Locally in Quill NavBar
 
 Ma'am Siao:
 
@@ -53,7 +49,7 @@ Bulletin - filtered by month
 
 Comments - interval refresh
 
-Approve article - invite one person who is responsible with approving articles 
+Approve article - invite one person who is responsible with approving articles
 
 Share link to Facebook
 
@@ -113,4 +109,8 @@ Calendar - will display archived articles too
 9. Announcements/Upcoming Events
 
 	Display all the events that have article type = announcement
+
+2. About Page
+
+	Tell the users all about the lundayan site of plp.
 	

@@ -70,8 +70,7 @@ function loadNewsByTags(page = 1) {
             readMoreButtons.forEach(button => {
                 button.addEventListener('click', (e) => {
                     e.preventDefault(); // Prevent the default anchor behavior
-                    const articleId = button.getAttribute('articleid');
-                    goToArticle(articleId); // Call the function to navigate to the article page
+                    goToArticle(button); // Call the function to navigate to the article page
                 });
             });
 
