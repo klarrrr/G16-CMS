@@ -1,5 +1,7 @@
 <?php
+
 use PHPMailer\PHPMailer\PHPMailer;
+
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
 require 'PHPMailer/src/Exception.php';
@@ -14,6 +16,10 @@ $mail->SMTPSecure = 'tls';
 $mail->Port = 587;
 
 $mail->setFrom('lundayan.studentpublication@gmail.com', 'Lundayan Contact Form');
+
+// TODO: Make this dynamic
+// Admin Side will be able to change this
+
 $mail->addAddress('depadua_charlesjeramy@plpasig.edu.ph');
 
 $mail->isHTML(true);
@@ -32,4 +38,3 @@ if ($mail->send()) {
 } else {
     echo 'Mailer Error: ' . $mail->ErrorInfo;
 }
-?>
