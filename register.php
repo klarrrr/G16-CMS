@@ -11,13 +11,7 @@ $first = trim($_POST['first'] ?? '');
 $last = trim($_POST['last'] ?? '');
 $email = trim($_POST['email'] ?? '');
 $pass = trim($_POST['pass'] ?? '');
-<<<<<<< HEAD
-<<<<<<< HEAD
 $user_type = trim($_POST['user_type'] ?? '');
-=======
->>>>>>> parent of 050e155 (Basta Marami bruhhhhhhh)
-=======
->>>>>>> parent of 050e155 (Basta Marami bruhhhhhhh)
 
 // Validate fields
 if (empty($user_type)) {
@@ -49,21 +43,24 @@ if ($check->num_rows > 0) {
 }
 $check->close();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 // Use plain password (⚠️ Not secure, for demonstration/testing only)
 $stmt = $conn->prepare("INSERT INTO users (user_first_name, user_last_name, user_email, user_pass, user_type, date_created) VALUES (?, ?, ?, ?, ?, NOW())");
 $stmt->bind_param("sssss", $first, $last, $email, $pass, $user_type);
-=======
+
 // Insert user with plain password (⚠️ not secure for production)
 $stmt = $conn->prepare("INSERT INTO users (user_first_name, user_last_name, user_email, user_pass, date_created) VALUES (?, ?, ?, ?, NOW())");
 $stmt->bind_param("ssss", $first, $last, $email, $pass);
->>>>>>> parent of 050e155 (Basta Marami bruhhhhhhh)
-=======
+
+
 // Insert user with plain password (⚠️ not secure for production)
 $stmt = $conn->prepare("INSERT INTO users (user_first_name, user_last_name, user_email, user_pass, date_created) VALUES (?, ?, ?, ?, NOW())");
 $stmt->bind_param("ssss", $first, $last, $email, $pass);
->>>>>>> parent of 050e155 (Basta Marami bruhhhhhhh)
+
+
+// Insert user with plain password (⚠️ not secure for production)
+$stmt = $conn->prepare("INSERT INTO users (user_first_name, user_last_name, user_email, user_pass, date_created) VALUES (?, ?, ?, ?, NOW())");
+$stmt->bind_param("ssss", $first, $last, $email, $pass);
+
 
 if ($stmt->execute()) {
     echo json_encode(['status' => 'success']);
@@ -73,4 +70,3 @@ if ($stmt->execute()) {
 
 $stmt->close();
 $conn->close();
-?>

@@ -2217,8 +2217,7 @@ tbody td:hover {
 .user-card .user-info .time {
     font-size: 0.9rem;
     color: gray;
-<<<<<<< HEAD
-<<<<<<< HEAD
+    <<<<<<< HEAD <<<<<<< HEAD <<<<<<< HEAD
 }
 
 @media (max-width: 768px) {
@@ -2237,9 +2236,11 @@ tbody td:hover {
 .password-toggle-container {
     position: relative;
 }
+
 .password-toggle-container input {
     width: 100%;
 }
+
 .toggle-password {
     position: absolute;
     right: 10px;
@@ -2248,9 +2249,3 @@ tbody td:hover {
     cursor: pointer;
     font-size: 1.2em;
 }
-=======
-}
->>>>>>> parent of 050e155 (Basta Marami bruhhhhhhh)
-=======
-}
->>>>>>> parent of 050e155 (Basta Marami bruhhhhhhh)

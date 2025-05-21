@@ -37,15 +37,19 @@ if (isset($_SESSION['user_id'])) {
                 <label for="empty-pass" style='font-size: 0.8em; color: salmon; display: none;' id='empty-pass'>* Password cannot be empty</label>
                 <input type="password" name='pass-box' class='sign-in-input-box' placeholder="Enter your password here" id='sign-in-pass'>
 
-<<<<<<< HEAD
+
+
                 <label class="error-msg" id="sign-in-pass-error"></label>
                 <div class="password-toggle-container">
                     <input type="password" class='sign-in-input-box' placeholder="Enter your password here" id='sign-in-pass' autocomplete="current-password">
                     <i class='bx bx-hide toggle-password' data-target="sign-in-pass"></i>
                 </div>
-=======
+
                 <button id='sign-in-btn' class='sign-btn'>Sign in</button>
->>>>>>> parent of 050e155 (Basta Marami bruhhhhhhh)
+
+
+                <button id='sign-in-btn' class='sign-btn'>Sign in</button>
+
 
                 <a href="#" id='forgot-pass'>Forgot Password?</a>
 
@@ -63,7 +67,8 @@ if (isset($_SESSION['user_id'])) {
                 <label for="reg-last-name" style='font-size: 0.8em; color: salmon; display: none;' id='reg-incorrect-format'>* Cannot be empty</label>
                 <input type="text" name='reg-last-name' class='sign-in-input-box' placeholder='Enter last name' id="reg-last-name">
 
-<<<<<<< HEAD
+
+
                 <label class="error-msg" id="reg-pass-error"></label>
                 <div class="password-toggle-container">
                     <input type="password" class='sign-in-input-box' placeholder="Enter your password here" id='reg-pass' autocomplete="new-password">
@@ -75,11 +80,17 @@ if (isset($_SESSION['user_id'])) {
                     <input type="password" class='sign-in-input-box' placeholder="Re-enter your password here" id='reg-re-pass' autocomplete="new-password">
                     <i class='bx bx-hide toggle-password' data-target="reg-re-pass"></i>
                 </div>
-=======
+
 
                 <label for="reg-email-box" style='font-size: 0.8em; color: salmon; display: none;' id='reg-incorrect-format'>* Incorrect Format - Pasig Email Only</label>
                 <input type="email" name='reg-email-box' class='sign-in-input-box' placeholder="Enter your email here" id='reg-email'>
->>>>>>> parent of 050e155 (Basta Marami bruhhhhhhh)
+
+
+
+
+                <label for="reg-email-box" style='font-size: 0.8em; color: salmon; display: none;' id='reg-incorrect-format'>* Incorrect Format - Pasig Email Only</label>
+                <input type="email" name='reg-email-box' class='sign-in-input-box' placeholder="Enter your email here" id='reg-email'>
+
 
                 <label for="reg-pass-box" style='font-size: 0.8em; color: salmon; display: none;' id='reg-empty-pass'>* Password cannot be empty</label>
                 <label for="reg-pass-box" style='font-size: 0.8em; color: salmon; display: none;' id='reg-less-pass'>* Cannot be less than 8 characters</label>
@@ -102,7 +113,8 @@ if (isset($_SESSION['user_id'])) {
             <p>&copy; 2025 Lundayan - Student Publication - Pamantasan ng Lungsod ng Pasig. All rights reserved.</p>
         </footer>
     </main>
-<<<<<<< HEAD
+
+
 
     <script>
         function isValidPasigEmail(email) {
@@ -262,10 +274,14 @@ if (isset($_SESSION['user_id'])) {
             $('#sign-in-form').show();
         });
     </script>
-=======
+
     <!-- Handles the functioanlity -->
     <script src="data_handler.js"></script>
->>>>>>> parent of 050e155 (Basta Marami bruhhhhhhh)
+
+
+    <!-- Handles the functioanlity -->
+    <script src="data_handler.js"></script>
+
 </body>
 
 </html>
