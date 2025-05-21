@@ -12,30 +12,14 @@ $offset = ($page - 1) * $limit;
 // Prepare the search term for SQL (use LIKE for partial matching)
 $searchTerm = '%' . $search . '%';
 
-// Step 1: Get the total number of matching records with article filters
-$stmt = $conn->prepare("
-    SELECT COUNT(*) 
-    FROM widgets w
-    JOIN articles a ON w.article_owner = a.article_id
-    WHERE (w.widget_title LIKE ? OR w.widget_paragraph LIKE ?)
-    AND a.approve_status = 'yes'
-    AND a.completion_status = 'published'
-");
+// Step 1: Get the total number of records that match the search query
+$stmt = $conn->prepare("SELECT COUNT(*) FROM widgets WHERE widget_title LIKE ? OR widget_paragraph LIKE ?");
 $stmt->bind_param("ss", $searchTerm, $searchTerm);
 $stmt->execute();
 $totalRecords = $stmt->get_result()->fetch_row()[0];
 
-// Step 2: Fetch the paginated records with filtering
-$stmt = $conn->prepare("
-    SELECT w.* 
-    FROM widgets w
-    JOIN articles a ON w.article_owner = a.article_id
-    WHERE (w.widget_title LIKE ? OR w.widget_paragraph LIKE ?)
-    AND a.approve_status = 'yes'
-    AND a.completion_status = 'published'
-    ORDER BY w.widget_id DESC
-    LIMIT ?, ?
-");
+// Step 2: Fetch the paginated records that match the search query
+$stmt = $conn->prepare("SELECT * FROM widgets WHERE widget_title LIKE ? OR widget_paragraph LIKE ? ORDER BY widget_id DESC LIMIT ?, ?");
 $stmt->bind_param("ssii", $searchTerm, $searchTerm, $offset, $limit);
 $stmt->execute();
 $results = $stmt->get_result();

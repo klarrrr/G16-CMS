@@ -11,7 +11,6 @@ $stmt = $conn->prepare("
     WHERE a.approve_status = 'yes'
       AND a.completion_status = 'published'
       AND a.date_posted IS NOT NULL
-      AND a.article_type = 'regular'
       AND NOW() >= a.date_posted
       AND NOW() <= a.date_expired
     ORDER BY a.date_posted DESC

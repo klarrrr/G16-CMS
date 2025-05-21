@@ -47,7 +47,7 @@ if (isset($_SESSION['user_id'])) {
 
                 <label class="error-msg" id="sign-in-pass-error"></label>
                 <div class="password-toggle-container">
-                    <input type="password" class='sign-in-input-box' placeholder="Enter your password here" id='sign-in-pass' autocomplete="current-password" style="appearance: none; -webkit-text-security: disc;">
+                    <input type="password" class='sign-in-input-box' placeholder="Enter your password here" id='sign-in-pass' autocomplete="current-password">
                     <i class='bx bx-hide toggle-password' data-target="sign-in-pass"></i>
                 </div>
 
@@ -71,13 +71,13 @@ if (isset($_SESSION['user_id'])) {
 
                 <label class="error-msg" id="reg-pass-error"></label>
                 <div class="password-toggle-container">
-                    <input type="password" class='sign-in-input-box' placeholder="Enter your password here" id='reg-pass' autocomplete="new-password" style="appearance: none; -webkit-text-security: disc;">
+                    <input type="password" class='sign-in-input-box' placeholder="Enter your password here" id='reg-pass' autocomplete="new-password">
                     <i class='bx bx-hide toggle-password' data-target="reg-pass"></i>
                 </div>
 
                 <label class="error-msg" id="reg-re-pass-error"></label>
                 <div class="password-toggle-container">
-                    <input type="password" class='sign-in-input-box' placeholder="Re-enter your password here" id='reg-re-pass' autocomplete="new-password" style="appearance: none; -webkit-text-security: disc;">
+                    <input type="password" class='sign-in-input-box' placeholder="Re-enter your password here" id='reg-re-pass' autocomplete="new-password">
                     <i class='bx bx-hide toggle-password' data-target="reg-re-pass"></i>
                 </div>
 

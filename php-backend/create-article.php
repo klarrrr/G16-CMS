@@ -3,6 +3,18 @@ include 'connect.php';
 session_start();
 // Insert 
 
+/*
+
+title = Article Title
+content = Your content goes here...
+user_owner = session_id of user
+edit status = editing 
+completion_status = draft 
+
+S
+
+*/
+
 $title = $_POST['title'];
 $content = $_POST['content'];
 $shortDesc = $_POST['shortDesc'];
@@ -71,8 +83,31 @@ $userOwner
 
 mysqli_query($conn, $widgetQuery);
 
+
+// After inserting all required details, get all of them.
+
+// Article
+
+$articleAttribs = [];
+
+$getArticleQuery = "SELECT * FROM articles WHERE article_id = (SELECT max(article_id) FROM articles)";
+
+$result = mysqli_query($conn, $getArticleQuery);
+$articleAttribs = mysqli_fetch_assoc($result);
+
+
+// Widgets
+
+$widgetAttribs = [];
+
+$getWidgetQuery = "SELECT * FROM widgets WHERE widget_id = (SELECT max(widget_id) FROM widgets)";
+
+$result = mysqli_query($conn, $getWidgetQuery);
+$widgetAttribs = mysqli_fetch_assoc($result);
+
 mysqli_close($conn);
 
 echo json_encode([
-    'status' => 'success'
+    'article' => $articleAttribs,
+    'widget' => $widgetAttribs
 ]);

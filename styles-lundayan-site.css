@@ -1320,6 +1320,7 @@ tbody td:hover {
 }
 
 .ql-editor {
+    pointer-events: none;
     -webkit-user-select: text;
     user-select: text;
 }
@@ -1438,7 +1439,7 @@ tbody td:hover {
     padding-right: 6rem;
     display: flex;
     align-items: center;
-    height: 100vh;
+    height: 100%;
     background-image:
         linear-gradient(rgba(10, 92, 54, 0.95), rgba(20, 69, 47, 0.95)),
         url(pics/plp-outside.jpg);
@@ -1557,8 +1558,6 @@ tbody td:hover {
     position: absolute;
     align-self: center;
 }
-
-/* END OF SIGN IN */
 
 .popup-backdrop {
     position: fixed;
@@ -2218,6 +2217,7 @@ tbody td:hover {
 .user-card .user-info .time {
     font-size: 0.9rem;
     color: gray;
+<<<<<<< HEAD
 }
 
 @media (max-width: 768px) {
@@ -2247,3 +2247,6 @@ tbody td:hover {
     cursor: pointer;
     font-size: 1.2em;
 }
+=======
+}
+>>>>>>> parent of 050e155 (Basta Marami bruhhhhhhh)

@@ -9,9 +9,6 @@ if (strtolower($_SESSION['user_type']) == 'reviewer') {
     header('Location: editor-dashboard.php');
     exit;
 }
-
-$user_id = $_SESSION['user_id'];
-$profile_pic = $_SESSION['profile_picture'];
 ?>
 
 <!DOCTYPE html>
@@ -36,23 +33,15 @@ $profile_pic = $_SESSION['profile_picture'];
             <div class="add-article-title-container">
                 <div class="article-page-title">
                     <h1>Articles</h1>
-                    <p>Recent Articles</p>
+                    <p>Article Drafts</p>
                 </div>
                 <div class="search-container">
-                    <select id="sort-articles-dropdown" class="sort-dropdown">
-                        <option value="desc" selected>Date Updated Descending</option>
-                        <option value="asc">Date Updated Ascending</option>
-                    </select>
-                    <input type="text" placeholder="Search for you articles" id='search-your-active-articles' class='search-your-articles'>
-                    <div class="pfp-container">
-                        <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : 'data:image/png;base64,' . $profile_pic; ?>" alt="" id='pfp-circle'>
-                    </div>
+                    <input type="text" placeholder="Search for you articles" id='search-your-articles'>
                 </div>
             </div>
             <div class="articles-boxes-container" id='articles-boxes-container'>
 
             </div>
-            <div id="pagination" class="pagination-container"></div>
             <button class='article-add-article-button' id='article-add-article-button'>+</button>
         </div>
     </div>
@@ -71,51 +60,29 @@ $profile_pic = $_SESSION['profile_picture'];
                     content: '<p>Your article content journey starts here...</p>',
                     shortDesc: 'Your short description is here...'
                 },
-                success: (res) => {
-                    if (res.status == 'success') {
-                        // Get the latest article's id
-                        $.ajax({
-                            url: 'php-backend/add-article-get-latest-article.php',
-                            type: 'post',
-                            dataType: 'json',
-                            data: {},
-                            success: (res) => {
-                                if (res.status == 'success') {
-                                    // go to edit page with the get id
-                                    window.location.href = 'edit-article.php?article_id=' + res.latestArticle;
-                                }
-                            },
-                            error: (error) => {
-                                console.log("Create Article Error :" + error);
-                            }
-                        });
-                    }
-                },
+                success: (res) => {},
                 error: (error) => {
                     console.log("Create Article Error :" + error);
                 }
             });
+            // Get the latest article's id
+            $.ajax({
+                url: 'php-backend/add-article-get-latest-article.php',
+                type: 'post',
+                dataType: 'json',
+                data: {},
+                success: (res) => {
+                    // go to edit page with the get id
+                    window.location.href = 'edit-article.php?article_id=' + res;
+                },
+                error: (error) => {
+
+                }
+            });
         });
     </script>
-
-
-    <!-- Grab active articles -->
-    <script>
-        const user_id = '<?php echo $user_id ?>';
-    </script>
-    <script src="scripts/fetch-active-articles.js"></script>
-
-    <!-- \Go to account settings -->
-    <script>
-        const pfpCircle = document.getElementById('pfp-circle');
-        pfpCircle.addEventListener('click', () => {
-            window.location.href = 'account-settings.php';
-        });
-    </script>
-
-
-
-
+    <!-- populate article container with articles -->
+    <script src="scripts/add_article.js"></script>
 </body>
 
 </html>

@@ -1,13 +1,49 @@
 Things to do in the website:
 
+4. Article Archive
+
+	This is a new page. The reviewer will be able to move the article in the article archive.
+
+	Add Archived in Completion Status in the Database
+	
+	When completion status is changed to archived, move the article widget from Add Article page to Article Archive page
+
+5. Audit Log
+
+	Everytime there is a change in the articles, it gets send to the audit log.
+	(Option: Replace this to be Article Archive)
+
 11. Share Link
 
 	Add a share article link when share button is clicked. In Lundayan Site
-	Share link to Facebook
+
+12. Sign In and Register
+
+	Update everything and make sure everything is secured.
+
+14. Profile Picture on NavBar
+
+	If click go to account settings
+
+15. Add Article Page Sort
+
+	User can sort by:
+		1. Approved
+		2. Alphabetical Asc
+		3. Alphabetical Desc
+		4. 
+
+16. Add Insert Video Locally in Quill NavBar
 
 Ma'am Siao:
 
+
+
 Only show a portion of article page
+
+Archive - Stores past events to be reused in the future. 
+
+Articles - add a start and end date to article after which archive the article
 
 Bulletin - filtered by month
 
@@ -15,14 +51,18 @@ Comments - interval refresh
 
 Approve article - invite one person who is responsible with approving articles
 
+Share link to Facebook
+
+
 
 
 Ma'am Daluyon:
 
-19. Admin Side
 
-	Can Manage all accounts and has overview over all articles.
-	Can edit and manipulate some information in lundayan site. For example the contacts and about.
+
+User type in account creation
+
+System settings - Editable contact information in admin side
 
 
  
@@ -73,41 +113,4 @@ Calendar - will display archived articles too
 2. About Page
 
 	Tell the users all about the lundayan site of plp.
-
-15. Add Article Page Sort
-
-	User can sort by date ascending or descending
-
-4. Article Archive
-
-	This is a new page. The reviewer will be able to move the article in the article archive.
-
-	Add Archived in Completion Status in the Database
-	
-	When completion status is changed to archived, move the article widget from Add Article page to Article Archive page
-
-Archive - Stores past events to be reused in the future. 
-
-Articles - add a start and end date to article after which archive the article
-
-16. Add Insert Video Locally in Quill NavBar
-
-17. Fix Archive by date_expired
-
-
-5. Audit Log
-
-	Everytime there is a change in the articles, it gets send to the audit log.
-
-14. Profile Picture on NavBar
-
-	If click go to account settings
-
-
-User type in account creation
-
-12. Sign In and Register
-
-	Update everything and make sure everything is secured.
-
 	

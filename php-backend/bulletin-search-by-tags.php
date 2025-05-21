@@ -6,20 +6,19 @@ $page = $_POST['page'];
 $tag_ids = $_POST['tag_ids'];
 
 // Convert the tag_ids array to a comma-separated string
-$tag_ids_string = implode(",", array_map('intval', $tag_ids)); // Sanitize input
+$tag_ids_string = implode(",", $tag_ids);
+
+// Get all the articles based on tag ids
 
 $articles = [];
 
-// Updated query: Join with articles and filter by approve_status and completion_status
+// Update query to ensure that only articles assigned to all the selected tags are fetched
 $query = "
-    SELECT ta.assigned_article 
-    FROM tag_assign ta
-    JOIN articles a ON ta.assigned_article = a.article_id
-    WHERE ta.assigned_tag IN ($tag_ids_string)
-    AND a.approve_status = 'yes'
-    AND a.completion_status = 'published'
-    GROUP BY ta.assigned_article
-    HAVING COUNT(DISTINCT ta.assigned_tag) = " . count($tag_ids);
+    SELECT assigned_article 
+    FROM tag_assign 
+    WHERE assigned_tag IN ($tag_ids_string)
+    GROUP BY assigned_article
+    HAVING COUNT(DISTINCT assigned_tag) = " . count($tag_ids);
 
 $stmt = $conn->prepare($query);
 $stmt->execute();
@@ -36,15 +35,12 @@ if (empty($articles)) {
 }
 
 // Convert article IDs to a string for the next query
-$articles_string = implode(",", array_map('intval', $articles)); // Sanitize input
+$articles_string = implode(",", $articles);
 
 // Get the widgets for these articles
 $widgets = [];
 
-$query = "
-    SELECT * 
-    FROM widgets 
-    WHERE article_owner IN ($articles_string)";
+$query = "SELECT * FROM widgets WHERE article_owner IN ($articles_string)";
 
 $stmt = $conn->prepare($query);
 $stmt->execute();

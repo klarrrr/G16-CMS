@@ -1,7 +1,9 @@
 <?php
+// Return JSON format
 header('Content-Type: application/json');
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+
 require 'php-backend/connect.php';
 
 // Get inputs safely
@@ -9,7 +11,10 @@ $first = trim($_POST['first'] ?? '');
 $last = trim($_POST['last'] ?? '');
 $email = trim($_POST['email'] ?? '');
 $pass = trim($_POST['pass'] ?? '');
+<<<<<<< HEAD
 $user_type = trim($_POST['user_type'] ?? '');
+=======
+>>>>>>> parent of 050e155 (Basta Marami bruhhhhhhh)
 
 // Validate fields
 if (empty($user_type)) {
@@ -27,11 +32,6 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL) || !str_ends_with($email, '@plpas
     exit;
 }
 
-if (!in_array($user_type, ['writer', 'reviewer'])) {
-    echo json_encode(['status' => 'error', 'message' => 'Invalid user type.']);
-    exit;
-}
-
 // Check if email already exists
 $check = $conn->prepare("SELECT user_id FROM users WHERE user_email = ?");
 $check->bind_param("s", $email);
@@ -46,9 +46,15 @@ if ($check->num_rows > 0) {
 }
 $check->close();
 
+<<<<<<< HEAD
 // Use plain password (⚠️ Not secure, for demonstration/testing only)
 $stmt = $conn->prepare("INSERT INTO users (user_first_name, user_last_name, user_email, user_pass, user_type, date_created) VALUES (?, ?, ?, ?, ?, NOW())");
 $stmt->bind_param("sssss", $first, $last, $email, $pass, $user_type);
+=======
+// Insert user with plain password (⚠️ not secure for production)
+$stmt = $conn->prepare("INSERT INTO users (user_first_name, user_last_name, user_email, user_pass, date_created) VALUES (?, ?, ?, ?, NOW())");
+$stmt->bind_param("ssss", $first, $last, $email, $pass);
+>>>>>>> parent of 050e155 (Basta Marami bruhhhhhhh)
 
 if ($stmt->execute()) {
     echo json_encode(['status' => 'success']);
@@ -58,3 +64,4 @@ if ($stmt->execute()) {
 
 $stmt->close();
 $conn->close();
+?>

@@ -25,7 +25,11 @@ if ($stmt->num_rows > 0) {
     $stmt->bind_result($user_id, $user_first, $user_last, $user_type, $user_email, $profile_picture, $cover_photo, $db_pass);
     $stmt->fetch();
 
+<<<<<<< HEAD
     // ✅ Plain text password comparison (no hashing)
+=======
+    // ✅ Check plain text password (not hashed)
+>>>>>>> parent of 050e155 (Basta Marami bruhhhhhhh)
     if ($pass === $db_pass) {
         $_SESSION['user_id'] = $user_id;
         $_SESSION['user_first'] = $user_first;
