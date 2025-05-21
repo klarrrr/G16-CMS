@@ -7,6 +7,7 @@ if (isset($_SESSION['user_id'])) {
 }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,17 +19,6 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="styles-lundayan-site.css">
     <link rel="icon" href="pics/lundayan-logo.png">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <style>
-        .error-msg {
-            font-size: 0.8em;
-            color: salmon;
-            display: none;
-        }
-
-        .error-visible {
-            display: block !important;
-        }
-    </style>
 </head>
 
 <body>
@@ -39,36 +29,41 @@ if (isset($_SESSION['user_id'])) {
                 <h1>LUNDAYAN</h1>
                 <p id='sign-in-paragraph'>Sign in to modify, create and share <br>exciting news and posts</p>
             </div>
+            <!-- SIGN IN -->
+            <div class="sign-in-user-input" id='sign-in-container' style='display: flex;'>
+                <label for="email-box" style='font-size: 0.8em; color: salmon; display: none;' id='incorret-format'>* Incorrect Format - Pasig Email Only</label>
+                <input type="email" name='email-box' class='sign-in-input-box' placeholder="Enter your email here" id='sign-in-email'>
 
-            <!-- Sign In Form -->
-            <form id="sign-in-form" class="sign-in-user-input" style='display: flex;' novalidate>
-                <label class="error-msg" id="sign-in-email-error"></label>
-                <input type="email" class='sign-in-input-box' placeholder="Enter your email here" id='sign-in-email' autocomplete="email">
+                <label for="empty-pass" style='font-size: 0.8em; color: salmon; display: none;' id='empty-pass'>* Password cannot be empty</label>
+                <input type="password" name='pass-box' class='sign-in-input-box' placeholder="Enter your password here" id='sign-in-pass'>
 
+<<<<<<< HEAD
                 <label class="error-msg" id="sign-in-pass-error"></label>
                 <div class="password-toggle-container">
                     <input type="password" class='sign-in-input-box' placeholder="Enter your password here" id='sign-in-pass' autocomplete="current-password">
                     <i class='bx bx-hide toggle-password' data-target="sign-in-pass"></i>
                 </div>
+=======
+                <button id='sign-in-btn' class='sign-btn'>Sign in</button>
+>>>>>>> parent of 050e155 (Basta Marami bruhhhhhhh)
 
-                <button type="submit" class='sign-btn'>Sign in</button>
                 <a href="#" id='forgot-pass'>Forgot Password?</a>
 
                 <hr>
-                <button type="button" id="create-account" class='create-or-sign-in-btn'>Create New Account</button>
-            </form>
 
-            <!-- Sign Up Form -->
-            <form id="sign-up-form" class="sign-in-user-input" style='display: none;' novalidate>
-                <label class="error-msg" id="reg-first-name-error"></label>
-                <input type="text" class='sign-in-input-box' placeholder='Enter first name' id="reg-first-name" autocomplete="off">
+                <button id="create-account" class='create-or-sign-in-btn'>Create New Account</button>
+            </div>
+            <!-- SIGN UP REGISTER -->
+            <div class="sign-in-user-input" id='sign-up-container' style='display: none;'>
 
-                <label class="error-msg" id="reg-last-name-error"></label>
-                <input type="text" class='sign-in-input-box' placeholder='Enter last name' id="reg-last-name" autocomplete="off">
+                <!-- TODO: LAgays Incoorect format -->
+                <label for="reg-first-name" style='font-size: 0.8em; color: salmon; display: none;' id='reg-incorrect-format'>* Cannot be empty</label>
+                <input type="text" name='reg-first-name' class='sign-in-input-box' placeholder='Enter first name' id="reg-first-name">
 
-                <label class="error-msg" id="reg-email-error"></label>
-                <input type="email" class='sign-in-input-box' placeholder="Enter your email here" id='reg-email' autocomplete="off">
+                <label for="reg-last-name" style='font-size: 0.8em; color: salmon; display: none;' id='reg-incorrect-format'>* Cannot be empty</label>
+                <input type="text" name='reg-last-name' class='sign-in-input-box' placeholder='Enter last name' id="reg-last-name">
 
+<<<<<<< HEAD
                 <label class="error-msg" id="reg-pass-error"></label>
                 <div class="password-toggle-container">
                     <input type="password" class='sign-in-input-box' placeholder="Enter your password here" id='reg-pass' autocomplete="new-password">
@@ -80,22 +75,34 @@ if (isset($_SESSION['user_id'])) {
                     <input type="password" class='sign-in-input-box' placeholder="Re-enter your password here" id='reg-re-pass' autocomplete="new-password">
                     <i class='bx bx-hide toggle-password' data-target="reg-re-pass"></i>
                 </div>
+=======
 
-                <select id="reg-user-type" class='sign-in-input-box'>
-                    <option value="writer">Writer</option>
-                    <option value="reviewer">Reviewer</option>
-                </select>
+                <label for="reg-email-box" style='font-size: 0.8em; color: salmon; display: none;' id='reg-incorrect-format'>* Incorrect Format - Pasig Email Only</label>
+                <input type="email" name='reg-email-box' class='sign-in-input-box' placeholder="Enter your email here" id='reg-email'>
+>>>>>>> parent of 050e155 (Basta Marami bruhhhhhhh)
 
-                <button type="submit" class='sign-btn'>Create account</button>
+                <label for="reg-pass-box" style='font-size: 0.8em; color: salmon; display: none;' id='reg-empty-pass'>* Password cannot be empty</label>
+                <label for="reg-pass-box" style='font-size: 0.8em; color: salmon; display: none;' id='reg-less-pass'>* Cannot be less than 8 characters</label>
+                <label for="reg-pass-box" style='font-size: 0.8em; color: salmon; display: none;' id='reg-match-pass'>* Passwords don't match</label>
+                <input type="password" name='reg-pass-box' class='sign-in-input-box' placeholder="Enter your password here" id='reg-pass'>
+
+                <label for="reg-re-pass-box" style='font-size: 0.8em; color: salmon; display: none;' id='reg-re-empty-pass'>* Password cannot be empty</label>
+                <label for="reg-re-pass-box" style='font-size: 0.8em; color: salmon; display: none;' id='reg-re-less-pass'>* Cannot be less than 8 characters</label>
+                <label for="reg-re-pass-box" style='font-size: 0.8em; color: salmon; display: none;' id='reg-re-match-pass'>* Passwords don't match</label>
+                <input type="password" name='reg-re-pass-box' class='sign-in-input-box' placeholder="Re-enter your password here" id='reg-re-pass'>
+
+                <button id='sign-up-btn' class='sign-btn'>Create account</button>
+
                 <hr>
-                <button type="button" id="back-sign-in" class='create-or-sign-in-btn'>Already Have Account</button>
-            </form>
-        </section>
 
+                <button id="back-sign-in" class='create-or-sign-in-btn'>Already Have Account</button>
+            </div>
+        </section>
         <footer class='sign-in-footer'>
             <p>&copy; 2025 Lundayan - Student Publication - Pamantasan ng Lungsod ng Pasig. All rights reserved.</p>
         </footer>
     </main>
+<<<<<<< HEAD
 
     <script>
         function isValidPasigEmail(email) {
@@ -255,6 +262,10 @@ if (isset($_SESSION['user_id'])) {
             $('#sign-in-form').show();
         });
     </script>
+=======
+    <!-- Handles the functioanlity -->
+    <script src="data_handler.js"></script>
+>>>>>>> parent of 050e155 (Basta Marami bruhhhhhhh)
 </body>
 
 </html>
