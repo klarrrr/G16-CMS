@@ -9,9 +9,14 @@ $first = trim($_POST['first'] ?? '');
 $last = trim($_POST['last'] ?? '');
 $email = trim($_POST['email'] ?? '');
 $pass = trim($_POST['pass'] ?? '');
-$user_type = trim($_POST['user_type'] ?? 'writer'); // Default to 'writer'
+$user_type = trim($_POST['user_type'] ?? '');
 
 // Validate fields
+if (empty($user_type)) {
+    echo json_encode(['status' => 'error', 'message' => 'User type is required.']);
+    exit;
+}
+
 if (empty($first) || empty($last) || empty($email) || empty($pass)) {
     echo json_encode(['status' => 'error', 'message' => 'All fields are required.']);
     exit;
@@ -41,12 +46,9 @@ if ($check->num_rows > 0) {
 }
 $check->close();
 
-// Hash password
-$hashed_pass = password_hash($pass, PASSWORD_DEFAULT);
-
-// Insert user
+// Use plain password (⚠️ Not secure, for demonstration/testing only)
 $stmt = $conn->prepare("INSERT INTO users (user_first_name, user_last_name, user_email, user_pass, user_type, date_created) VALUES (?, ?, ?, ?, ?, NOW())");
-$stmt->bind_param("sssss", $first, $last, $email, $hashed_pass, $user_type);
+$stmt->bind_param("sssss", $first, $last, $email, $pass, $user_type);
 
 if ($stmt->execute()) {
     echo json_encode(['status' => 'success']);
