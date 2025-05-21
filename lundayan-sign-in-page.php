@@ -14,6 +14,7 @@ if (isset($_SESSION['user_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lundayan : Sign In</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="styles-lundayan-site.css">
     <link rel="icon" href="pics/lundayan-logo.png">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
@@ -45,7 +46,10 @@ if (isset($_SESSION['user_id'])) {
                 <input type="email" class='sign-in-input-box' placeholder="Enter your email here" id='sign-in-email' autocomplete="email">
 
                 <label class="error-msg" id="sign-in-pass-error"></label>
-                <input type="password" class='sign-in-input-box' placeholder="Enter your password here" id='sign-in-pass' autocomplete="current-password">
+                <div class="password-toggle-container">
+                    <input type="password" class='sign-in-input-box' placeholder="Enter your password here" id='sign-in-pass' autocomplete="current-password">
+                    <i class='bx bx-hide toggle-password' data-target="sign-in-pass"></i>
+                </div>
 
                 <button type="submit" class='sign-btn'>Sign in</button>
                 <a href="#" id='forgot-pass'>Forgot Password?</a>
@@ -66,10 +70,16 @@ if (isset($_SESSION['user_id'])) {
                 <input type="email" class='sign-in-input-box' placeholder="Enter your email here" id='reg-email' autocomplete="off">
 
                 <label class="error-msg" id="reg-pass-error"></label>
-                <input type="password" class='sign-in-input-box' placeholder="Enter your password here" id='reg-pass' autocomplete="new-password">
+                <div class="password-toggle-container">
+                    <input type="password" class='sign-in-input-box' placeholder="Enter your password here" id='reg-pass' autocomplete="new-password">
+                    <i class='bx bx-hide toggle-password' data-target="reg-pass"></i>
+                </div>
 
                 <label class="error-msg" id="reg-re-pass-error"></label>
-                <input type="password" class='sign-in-input-box' placeholder="Re-enter your password here" id='reg-re-pass' autocomplete="new-password">
+                <div class="password-toggle-container">
+                    <input type="password" class='sign-in-input-box' placeholder="Re-enter your password here" id='reg-re-pass' autocomplete="new-password">
+                    <i class='bx bx-hide toggle-password' data-target="reg-re-pass"></i>
+                </div>
 
                 <select id="reg-user-type" class='sign-in-input-box'>
                     <option value="writer">Writer</option>
@@ -210,6 +220,16 @@ if (isset($_SESSION['user_id'])) {
     <!-- Some events -->
 
     <script>
+
+        $(document).on('click', '.toggle-password', function () {
+            const inputId = $(this).data('target');
+            const input = document.getElementById(inputId);
+            const isPassword = input.type === 'password';
+
+            input.type = isPassword ? 'text' : 'password';
+            $(this).toggleClass('bx-hide bx-show');
+        });
+
         // Sign In - Trigger with Enter key
         $('#sign-in-email, #sign-in-pass').on('keydown', function(e) {
             if (e.key === 'Enter') {
