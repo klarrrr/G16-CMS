@@ -84,7 +84,7 @@ if (isset($_SESSION['user_id'])) {
             </div>
 
             <div class="roles-container">
-                <div class="role" style="background-image: url(pics/typewriter.jpg);">
+                <div class="role" style="background-image: url(pics/typewriter.jpg);" title="Writer Box">
                     <p>Writers contribute original articles covering a wide range of topics.</p>
                     <h3>Writer</h3>
                     <hr>
