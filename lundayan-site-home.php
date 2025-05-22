@@ -25,8 +25,6 @@
                         <p class="time-posted"><span id='latest-news-day-posted'></span></p>
                         <h1 id='latest-news-title'></h1>
                     </div>
-                    <!-- TODO : MAKE THIS DYNAMIC -->
-                    <!-- <a href="lundayan-site-article.php" id='latest-read-more'>Read More</a> -->
                 </div>
             </div>
         </section>

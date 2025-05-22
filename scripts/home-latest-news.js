@@ -19,15 +19,22 @@ $.ajax({
         const widgets = res.widget;
 
         if (!widgets || widgets.length === 0) {
-            // If no widgets were returned
+            // Fallback for card section
             cardNewsContainer.innerHTML = `
                 <div class="no-news-message">
                     <p>It looks empty in here... 😕</p>
                     <h3>Looks like there are still no updates.</h3>
                 </div>
             `;
+
+            // Fallback for highlight section
+            highlightArticle.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.65), rgb(0, 0, 0)), url('pics/plp-outside.jpg')";
+            latestNewsTitle.innerHTML = "Stay tuned!";
+            latestNewsDate.innerHTML = "No updates yet.";
+
             return;
         }
+
 
         const topNews = widgets[0];
 

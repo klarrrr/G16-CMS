@@ -2244,3 +2244,18 @@ tbody td:hover {
     color: #555;
     font-style: italic;
 }
+
+.no-news-message {
+    text-align: center;
+    padding: 2rem;
+    color: #c3c3c3;
+}
+
+.no-news-message p {
+    font-size: 1.2rem;
+}
+
+.no-news-message h3 {
+    font-size: 1.5rem;
+    color: #fcb404;
+}

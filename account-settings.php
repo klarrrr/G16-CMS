@@ -32,75 +32,70 @@ $cover_photo = $_SESSION['cover_photo'];
     <div class="left-editor-container">
         <?php include 'editor-nav.php'; ?>
     </div>
-    <div class="right-editor-container">
+    <div class="right-editor-container" id='act-settings'>
         <section class="account-settings" id='account-settings'>
 
-            <div class="settings-container">
+            <div class="cover-pic">
 
-                <div class="cover-pic">
-                    <label class="-label-cover" for="cover-file">
-                        <span>Change Cover Photo</span>
-                    </label>
+                <label class="-label-cover" for="cover-file">
+                    <span>Change Cover Photo</span>
+                </label>
 
-                    <input id="cover-file" type="file" onchange="loadCover(event)" />
+                <input id="cover-file" type="file" onchange="loadCover(event)" />
 
-                    <img src="<?php echo (!$cover_photo) ? 'pics/plp-outside.jpg' : 'data:image/png;base64,' . $cover_photo; ?>" id="cover" />
+                <img src="<?php echo (!$cover_photo) ? 'pics/plp-outside.jpg' : 'data:image/png;base64,' . $cover_photo; ?>" id="cover" />
+            </div>
+
+            <div class="person-info-container">
+
+                <div>
+                    <h1 style='font-family: "main"; font-size: 2rem;'>Account Settings</h1>
                 </div>
 
-                <div class="person-info-container">
+                <div class="below-account-title">
+                    <div class="pictures-container">
+                        <div class="profile-pic-account">
 
-                    <div>
-                        <h1 style='font-family: "main"; font-size: 2rem;'>Account Settings</h1>
+                            <label class="-label" for="pfp-file">
+                                <span>Change Profile Picture</span>
+                            </label>
+
+                            <input id="pfp-file" type="file" onchange="loadPfp(event)" />
+
+
+                            <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : 'data:image/png;base64,' . $profile_pic; ?>" id="pfp" />
+                        </div>
                     </div>
 
-                    <div class="below-account-title">
-                        <div class="pictures-container">
-                            <div class="profile-pic-account">
 
-                                <label class="-label" for="pfp-file">
-                                    <span>Change Profile Picture</span>
-                                </label>
-
-                                <input id="pfp-file" type="file" onchange="loadPfp(event)" />
-
-
-                                <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : 'data:image/png;base64,' . $profile_pic; ?>" id="pfp" />
-                            </div>
-                        </div>
-
-
-                        <div class="input-fields">
-                            <div class="first-last">
-                                <div class='input-box-container'>
-                                    <p>First name</p>
-                                    <input type="text" placeholder="First Name" value='<?php echo $fname; ?>' id='user-first-name'>
-                                </div>
-
-                                <div class='input-box-container'>
-                                    <p>Last name</p>
-                                    <input type="text" placeholder="Last Name" value='<?php echo $lname; ?>' id='user-last-name'>
-                                </div>
+                    <div class="input-fields">
+                        <div class="first-last">
+                            <div class='input-box-container'>
+                                <p>First name</p>
+                                <input type="text" placeholder="First Name" value='<?php echo $fname; ?>' id='user-first-name'>
                             </div>
 
                             <div class='input-box-container'>
-                                <p>Email address</p>
-                                <input type="email" placeholder="Email Address" value='<?php echo $email; ?>' id='user-email'>
-                            </div>
-
-                            <!-- <input type="text" placeholder="Bio"> -->
-
-                            <!-- Save & Discard Buttons -->
-                            <div class="save-buttons">
-                                <input type="button" name="saveChanges" value="Save Changes" onclick="saveChanges()">
+                                <p>Last name</p>
+                                <input type="text" placeholder="Last Name" value='<?php echo $lname; ?>' id='user-last-name'>
                             </div>
                         </div>
+
+                        <div class='input-box-container'>
+                            <p>Email address</p>
+                            <input type="email" placeholder="Email Address" value='<?php echo $email; ?>' id='user-email'>
+                        </div>
+
+                        <!-- <input type="text" placeholder="Bio"> -->
+
+                        <!-- Save & Discard Buttons -->
+                        <div class="save-buttons">
+                            <input type="button" name="saveChanges" value="Save Changes" onclick="saveChanges()">
+                        </div>
                     </div>
-
-
-
                 </div>
-
             </div>
+
         </section>
     </div>
 
