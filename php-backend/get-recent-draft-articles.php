@@ -35,6 +35,7 @@ if ($user_type === 'writer') {
         FROM articles a
         LEFT JOIN widgets w ON a.article_id = w.article_owner
         WHERE a.completion_status = 'draft'
+        AND a.approve_status = 'no'
         ORDER BY a.date_updated DESC
         LIMIT 5
     ";
@@ -55,7 +56,6 @@ while ($row = $result->fetch_assoc()) {
         'article_title' => $row['article_title'],
         'article_content' => $row['article_content'],
         'date_updated' => $row['date_updated'],
-        // Add other article fields as needed
     ];
 
     // Add widget if it exists
@@ -63,14 +63,12 @@ while ($row = $result->fetch_assoc()) {
         $widgets[] = [
             'widget_id' => $row['widget_id'],
             'widget_img' => $row['widget_img'],
-            // Add other widget fields as needed
         ];
     }
 
     $articles[] = $article;
 }
 
-// Step 4: Return the result as JSON
 echo json_encode([
     'articles' => $articles,
     'widgets' => $widgets,

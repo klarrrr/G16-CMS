@@ -35,6 +35,7 @@ if ($user_type === 'writer') {
         FROM articles a
         LEFT JOIN widgets w ON a.article_id = w.article_owner
         WHERE a.completion_status = 'published'
+        AND a.approve_status = 'no'
         ORDER BY a.date_updated DESC
         LIMIT 5
     ";
