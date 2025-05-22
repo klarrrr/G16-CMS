@@ -100,7 +100,7 @@ const renderCalendar = (month, year) => {
 
                 cell.addEventListener("click", (e) => {
                     if (articlesByDate[dateKey]) {
-                        console.log(articlesByDate[dateKey])
+                        // console.log(articlesByDate[dateKey])
                         showEventBox(e.target, thisDay, month, year);
                     } else {
                         hideEventBox();
@@ -127,22 +127,27 @@ function updateDropdowns() {
 
 function showEventBox(cell, day, month, year) {
     const box = document.getElementById("event-box");
+    const backdrop = document.getElementById("event-backdrop");
 
     const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-    const rect = cell.getBoundingClientRect();
     const events = articlesByDate[dateKey] || [];
 
     if (events.length === 0) {
-        box.style.display = "none";
+        hideEventBox();
         return;
     }
 
     const cards = events.map(event => `
         <div class="event-card" articleid="${event.article_id}">
-            <strong>${event.article_title}</strong>
-            <p>${event.widget_paragraph || ""}</p>
+            <h3 class="event-title">${event.article_title}</h3>
+            <p class="event-description">${event.widget_paragraph || "No summary available."}</p>
+            <div class="event-meta">
+                <span class="event-author">By ${event.author || "Unknown"}</span>
+                <span class="event-date">${new Date(event.date_posted).toLocaleString()}</span>
+            </div>
         </div>
     `).join("");
+
 
     box.innerHTML = `
         <div class='close-event-box-container'>
@@ -153,23 +158,23 @@ function showEventBox(cell, day, month, year) {
     `;
 
     box.style.display = "block";
-    box.style.top = `${rect.top + window.scrollY + 10}px`;
-    box.style.left = `${rect.left + window.scrollX + 10}px`;
+    backdrop.style.display = "block";
 
-    // Close button functionality
     document.getElementById('close-event-box').addEventListener('click', hideEventBox);
 
-    // Add click listener for each event card
     box.querySelectorAll('.event-card').forEach(card => {
         card.addEventListener('click', function () {
             goToArticle(this);
         });
     });
+
+    // Optional: click outside box closes it
+    backdrop.onclick = hideEventBox;
 }
 
 function hideEventBox() {
-    const box = document.getElementById("event-box");
-    box.style.display = "none";
+    document.getElementById("event-box").style.display = "none";
+    document.getElementById("event-backdrop").style.display = "none";
 }
 
 function updateTime() {

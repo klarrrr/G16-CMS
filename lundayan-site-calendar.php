@@ -112,6 +112,9 @@
 
     </main>
     <div id="event-box" style="display:none; position:absolute; z-index:1000;"></div>
+    <div id="event-backdrop"></div>
+    <div id="event-box"></div>
+
 
     <?php include 'lundayan-site-footer.php' ?>
 

@@ -1,17 +1,3 @@
-<?php
-
-session_start();
-
-$role = 'reader';
-
-if (isset($_SESSION['user_id'])) {
-    $role = $_SESSION['user_type'];
-}
-
-
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -107,40 +93,9 @@ if (isset($_SESSION['user_id'])) {
             <p class='end-p'>Whether you want to express your ideas, stay informed, or support student journalism— Lundayan is here for you.</p>
         </div>
 
-        <section class="member-note" role="note" aria-live="polite">
-            <div class="info-container-center">
-                <h2>Are you a member?</h2>
-                <hr>
-            </div>
-            <div class="member-role-container">
-                <p>👁 You are viewing this page as a <strong><?php echo htmlspecialchars($role) ?></strong> of Lundayan.</p>
-                <a href="lundayan-sign-in-page.php" id="sign-in-link">Sign in if you're a member</a>
-                <a href="editor-dashboard.php" id="editor-dashboard-link">Go to Editor Dashboard</a>
-            </div>
-        </section>
-
-
     </main>
 
     <?php include 'lundayan-site-footer.php' ?>
-
-    <script>
-        // Pass PHP $user_id to JS, null if not set
-        const userId = <?php echo isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 'null'; ?>;
-
-        const signInLink = document.getElementById('sign-in-link');
-        const editorDashboardLink = document.getElementById('editor-dashboard-link');
-
-        if (userId) {
-            // User logged in: show editor dashboard link, hide sign-in
-            signInLink.style.display = 'none';
-            editorDashboardLink.style.display = 'inline'; // or 'block' if you want block display
-        } else {
-            // User not logged in: show sign-in, hide editor dashboard
-            signInLink.style.display = 'inline';
-            editorDashboardLink.style.display = 'none';
-        }
-    </script>
 
 </body>
 

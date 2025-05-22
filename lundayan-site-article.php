@@ -1,10 +1,5 @@
 <?php
 
-// $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
-// $domain = $_SERVER['HTTP_HOST'];
-// $uri = $_SERVER['REQUEST_URI'];
-// $fullUrl = $protocol . $domain . $uri;
-
 include 'php-backend/connect.php';
 
 if (!isset($_GET['article_id'])) {
