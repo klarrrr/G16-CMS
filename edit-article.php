@@ -91,7 +91,7 @@ $archiveStatus = $articles['archive_status'];
                         </div>
                     </div>
                     <div class="nav-one-buttons">
-                        <button id="post-article">Post Article</button>
+                        <button id="post-article" title="Upload for approval">Post Article</button>
                         <span id="open-widget">》 Hide Comment Box</span>
                     </div>
                 </div>
@@ -101,18 +101,18 @@ $archiveStatus = $articles['archive_status'];
 
                     <div class="size-manip">
                         <!-- Header -->
-                        <select class="ql-header">
-                            <option value="1">H1</option>
-                            <option value="2">H2</option>
-                            <option value="3">H3</option>
-                            <option value="4">H4</option>
-                            <option value="5">H5</option>
-                            <option value="6">H6</option>
-                            <option value="false">Normal</option>
+                        <select class="ql-header" title="Styles">
+                            <option value="1" title="Heading 1">H1</option>
+                            <option value="2" title="Heading 2">H2</option>
+                            <option value="3" title="Heading 3">H3</option>
+                            <option value="4" title="Heading 4">H4</option>
+                            <option value="5" title="Heading 5">H5</option>
+                            <option value="6" title="Heading 6">H6</option>
+                            <option value="false" title="Normal text">Normal</option>
                         </select>
 
                         <!-- font size -->
-                        <select class="ql-size">
+                        <select class="ql-size" title="Font Size">
                             <option value="small">Small</option>
                             <option selected></option> <!-- Default size -->
                             <option value="large">Large</option>
@@ -124,30 +124,32 @@ $archiveStatus = $articles['archive_status'];
 
                     <!-- Font Style -->
                     <div class="font-style">
-                        <button class="ql-bold">B</button>
-                        <button class="ql-italic">I</button>
-                        <button class="ql-underline">U</button>
-                        <button class="ql-strike">B</button>
+                        <button class="ql-bold" title="Bold (Ctrl + B)">B</button>
+                        <button class="ql-italic" title="Italic (Ctrl + I)">I</button>
+                        <button class="ql-underline" title="Underline (Ctrl + U)">U</button>
+                        <button class="ql-strike" title="Strikethrough">B</button>
 
                         <!-- Text Color BG COlor -->
-                        <select class="ql-color">
-                            <option value="red">Red</option>
-                            <option value="blue">Blue</option>
-                            <option value="green">Green</option>
+                        <select class="ql-color" title="Text color">
+                            <option value="black" title="Black">Black</option>
+                            <option value="red" title="Red">Red</option>
+                            <option value="blue" title="Blue">Blue</option>
+                            <option value="green" title="Green">Green</option>
                             <!-- Add more color options -->
                         </select>
 
                         <!-- Background of text -->
-                        <select class="ql-background">
-                            <option value="yellow">Yellow</option>
-                            <option value="pink">Pink</option>
-                            <option value="gray">Gray</option>
+                        <select class="ql-background" title="Highlight color">
+                            <option value="default" title="No color">No Color</option>
+                            <option value="yellow" title="Yellow">Yellow</option>
+                            <option value="pink" title="Pink">Pink</option>
+                            <option value="gray" title="Gray">Gray</option>
                             <!-- Add more background options -->
                         </select>
 
                         <!-- Font Script -->
-                        <button class="ql-script" value="sub"></button>
-                        <button class="ql-script" value="super"></button>
+                        <button class="ql-script" value="sub" title="Subscript"></button>
+                        <button class="ql-script" value="super" title="Superscript"></button>
                     </div>
 
 
@@ -155,40 +157,40 @@ $archiveStatus = $articles['archive_status'];
 
                     <!-- Lists -->
                     <div class="lists-container">
-                        <button class="ql-list" value="ordered">OL</button>
-                        <button class="ql-list" value="bullet">UL</button>
-                        <button class="ql-list" value="check">Checklist</button>
+                        <button class="ql-list" value="ordered" title="Numbered list">OL</button>
+                        <button class="ql-list" value="bullet" title="Bulleted list">UL</button>
+                        <button class="ql-list" value="check" title="Checklist">Checklist</button>
                     </div>
 
                     <div class="separator"></div>
 
                     <!-- Indent -->
                     <div class="indents-container">
-                        <button class="ql-indent" value="-1">Outdent</button>
-                        <button class="ql-indent" value="+1">Indent</button>
+                        <button class="ql-indent" value="-1" title="Decrease indent">Outdent</button>
+                        <button class="ql-indent" value="+1" title="Increase indent">Indent</button>
                     </div>
 
                     <div class="separator"></div>
 
                     <div class="align-container">
                         <!-- Text Alignment -->
-                        <select class="ql-align"></select>
+                        <select class="ql-align" title="Align"></select>
                     </div>
 
                     <div class="separator"></div>
 
                     <div class="media-container">
                         <!-- Links -->
-                        <button class="ql-link">Link</button>
+                        <button class="ql-link" title="Insert link (Ctrl + K)">Link</button>
 
                         <!-- Images -->
-                        <button class="ql-image">Image</button>
+                        <button class="ql-image" title="Insert pictures">Image</button>
 
                         <!-- Link Video -->
-                        <button class="ql-video">Video</button>
+                        <button class="ql-video" title="Insert online videos">Video</button>
 
                         <!-- Local Video -->
-                        <button id="custom-video-button">
+                        <button id="custom-video-button" title="Upload videos from local files">
                             <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
                                 <path fill="#444" d="m768 576 192-64v320l-192-64v96a32 32 0 0 1-32 32H96a32 32 0 0 1-32-32V480a32 32 0 0 1 32-32h640a32 32 0 0 1 32 32v96zM192 768v64h384v-64H192zm192-480a160 160 0 0 1 320 0 160 160 0 0 1-320 0zm64 0a96 96 0 1 0 192.064-.064A96 96 0 0 0 448 288zm-320 32a128 128 0 1 1 256.064.064A128 128 0 0 1 128 320zm64 0a64 64 0 1 0 128 0 64 64 0 0 0-128 0z" />
                             </svg>
@@ -198,18 +200,18 @@ $archiveStatus = $articles['archive_status'];
                     <div class="separator"></div>
 
                     <!-- Blockquote and code block -->
-                    <button class="ql-blockquote">Quote</button>
-                    <button class="ql-code-block">Code</button>
+                    <button class="ql-blockquote" title="Mark as quotation">Quote</button>
+                    <button class="ql-code-block" title="Mark as code">Code</button>
 
                     <div class="separator"></div>
 
                     <!-- formula -->
-                    <button class="ql-formula">Formula</button>
+                    <button class="ql-formula" title="Formula">Formula</button>
 
                     <div class="separator"></div>
 
                     <!-- Clearn Format -->
-                    <button class="ql-clean">Clear</button>
+                    <button class="ql-clean" title="Clear all formatting">Clear</button>
 
                     <div class="separator"></div>
                 </div>
@@ -290,7 +292,7 @@ $archiveStatus = $articles['archive_status'];
                                 </div>
                                 <div class="tags-input-container">
                                     <input type="text" placeholder="Enter tags here" id='widget-tags-input'>
-                                    <button id="save-tags-button">Save Tags</button>
+                                    <button id="save-tags-button" title="Reminder: 'Enter' on tag first to save">Save Tags</button>
                                 </div>
                             </div>
                         </div>
