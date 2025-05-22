@@ -47,7 +47,7 @@ if (isset($_SESSION['user_id'])) {
                 <label class="error-msg" id="sign-in-pass-error"></label>
                 <input type="password" class='sign-in-input-box' placeholder="Enter your password here" id='sign-in-pass' autocomplete="current-password">
 
-                <button type="submit" class='sign-btn'>Sign in</button>
+                <button type="submit" class='sign-btn' id='sign-in-btn'>Sign in</button>
                 <a href="#" id='forgot-pass'>Forgot Password?</a>
 
                 <hr>
@@ -76,7 +76,7 @@ if (isset($_SESSION['user_id'])) {
                     <option value="reviewer">Reviewer</option>
                 </select>
 
-                <button type="submit" class='sign-btn'>Create account</button>
+                <button type="submit" class='sign-btn' id='sign-up-btn'>Create account</button>
                 <hr>
                 <button type="button" id="back-sign-in" class='create-or-sign-in-btn'>Already Have Account</button>
             </form>
@@ -210,19 +210,19 @@ if (isset($_SESSION['user_id'])) {
     <!-- Some events -->
 
     <script>
-        // Sign In - Trigger with Enter key
-        $('#sign-in-email, #sign-in-pass').on('keydown', function(e) {
+        // Global Enter key listener
+        $(document).on('keydown', function(e) {
             if (e.key === 'Enter') {
-                e.preventDefault();
-                $('#sign-in-btn').click();
-            }
-        });
+                const isSignInVisible = $('#sign-in-form').is(':visible');
+                const isSignUpVisible = $('#sign-up-form').is(':visible');
 
-        // Sign Up - Trigger with Enter key
-        $('#reg-first-name, #reg-last-name, #reg-email, #reg-pass, #reg-re-pass').on('keydown', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                $('#sign-up-btn').click();
+                if (isSignInVisible) {
+                    e.preventDefault();
+                    $('#sign-in-btn').click();
+                } else if (isSignUpVisible) {
+                    e.preventDefault();
+                    $('#sign-up-btn').click();
+                }
             }
         });
 
