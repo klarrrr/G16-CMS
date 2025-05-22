@@ -14,13 +14,6 @@
         <?php include 'lundayan-site-upper-nav.php' ?>
         <?php include 'lundayan-site-nav.php'; ?>
         <main>
-
-            <!-- <div class="news-banner">
-                <div class="scrolling-text">
-                    <span> | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | CONTACT US | </span>
-                </div>
-            </div> -->
-
             <section class="contact">
                 <div class="contact-title-container">
                     <div class="send-container-title">

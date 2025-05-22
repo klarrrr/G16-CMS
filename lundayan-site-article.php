@@ -141,10 +141,15 @@ $reviewersResult = mysqli_query($conn, $reviewersQuery);
     <link rel="stylesheet" href="/G16-CMS/styles-lundayan-site.css">
     <link rel="icon" href="/G16-CMS/pics/lundayan-logo.png">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <link href="/G16-CMS/quill.css" rel="stylesheet" />
-    <script src="/G16-CMS/scripts/quill.js"></script>
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
+    <!-- Online Quill Css -->
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+    <!-- Offline Quill css -->
+    <!-- <link href="quill.css" rel="stylesheet" /> -->
+    <!-- Online Quill JS -->
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+    <!-- Offline Quill JS -->
+    <!-- <script src="scripts/quill.js"></script> -->
 </head>
 
 <body>
