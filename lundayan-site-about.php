@@ -84,19 +84,19 @@ if (isset($_SESSION['user_id'])) {
             </div>
 
             <div class="roles-container">
-                <div class="role" style="background-image: url(pics/typewriter.jpg);">
+                <div class="role" style="background-image: url(pics/typewriter.jpg);" title="What writer does">
                     <p>Writers contribute original articles covering a wide range of topics.</p>
                     <h3>Writer</h3>
                     <hr>
                     <div class="darken-bg"></div>
                 </div>
-                <div class="role" style="background-image: url(pics/reviewer.jpg);">
+                <div class="role" style="background-image: url(pics/reviewer.jpg);" title="What reviewer does">
                     <p>Reviewers ensure each piece meets editorial and factual standards.</p>
                     <h3>Reviewer</h3>
                     <hr>
                     <div class="darken-bg"></div>
                 </div>
-                <div class="role" style="background-image: url(pics/reader.jpg);">
+                <div class="role" style="background-image: url(pics/reader.jpg);" title="What reader does">
                     <p>Readers enjoy fresh, meaningful, and reliable content.</p>
                     <h3>Reader</h3>
                     <hr>

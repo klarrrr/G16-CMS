@@ -53,7 +53,7 @@
                     <h2>Upcoming Events</h2>
                 </div>
                 <!-- Upcoming Events -->
-                <div class="events" id="upcoming-events-container" style='border: 1px solid #fcb404; background-color: #fff; border-radius: 0.5rem;'>
+                <div class="events" id="upcoming-events-container" style='border: 1px solid #fcb404; background-color: #fff; border-radius: 0.5rem;' title="Stay tuned!">
                     <!-- JS will inject events here -->
                 </div>
 
