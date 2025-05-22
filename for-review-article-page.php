@@ -64,6 +64,9 @@ $profile_pic = $_SESSION['profile_picture'];
     <!-- Grab active articles -->
     <script src="scripts/fetch-review-active-articles.js"></script>
 
+    <!-- Go to account settings pfp -->
+    <script src="scripts/pfp-go-to-account-settings.js"></script>
+
 </body>
 
 </html>

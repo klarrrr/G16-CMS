@@ -188,6 +188,9 @@ $profile_pic = $_SESSION['profile_picture'];
                 });
             }
         </script>
+
+        <!-- Go to Account Settings PFP -->
+        <script src="scripts/pfp-go-to-account-settings.js"></script>
 </body>
 
 </html>

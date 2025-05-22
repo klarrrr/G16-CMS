@@ -15,7 +15,7 @@ $stmt = $conn->prepare("
       AND NOW() >= a.date_posted
       AND NOW() <= a.date_expired
     ORDER BY a.date_posted DESC
-    LIMIT 7
+    LIMIT 10
 ");
 
 $stmt->execute();
