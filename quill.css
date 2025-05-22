@@ -536,6 +536,10 @@
     background-color: #93f
 }
 
+.ql-editor .ql-bg-default {
+    color: #ffffff00;
+}
+
 .ql-editor .ql-color-white {
     color: #fff
 }
@@ -563,6 +567,12 @@
 .ql-editor .ql-color-purple {
     color: #93f
 }
+
+.ql-editor .ql-color-black{
+    color: #000;
+}
+
+
 
 .ql-editor .ql-font-serif {
     font-family: Georgia, Times New Roman, serif

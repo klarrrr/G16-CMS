@@ -42,16 +42,16 @@ if (isset($_SESSION['user_id'])) {
             <!-- Sign In Form -->
             <form id="sign-in-form" class="sign-in-user-input" style='display: flex;' novalidate>
                 <label class="error-msg" id="sign-in-email-error"></label>
-                <input type="email" class='sign-in-input-box' placeholder="Enter your email here" id='sign-in-email' autocomplete="email">
+                <input type="email" class='sign-in-input-box' placeholder="Enter your email here" id='sign-in-email' autocomplete="email" title="Input valid email">
 
                 <label class="error-msg" id="sign-in-pass-error"></label>
-                <input type="password" class='sign-in-input-box' placeholder="Enter your password here" id='sign-in-pass' autocomplete="current-password">
+                <input type="password" class='sign-in-input-box' placeholder="Enter your password here" id='sign-in-pass' autocomplete="current-password" title="Input password">
 
                 <button type="submit" class='sign-btn' id='sign-in-btn'>Sign in</button>
                 <a href="#" id='forgot-pass'>Forgot Password?</a>
 
                 <hr>
-                <button type="button" id="create-account" class='create-or-sign-in-btn'>Create New Account</button>
+                <button type="button" id="create-account" class='create-or-sign-in-btn' title="Sign up here">Create New Account</button>
             </form>
 
             <!-- Sign Up Form -->
@@ -63,15 +63,15 @@ if (isset($_SESSION['user_id'])) {
                 <input type="text" class='sign-in-input-box' placeholder='Enter last name' id="reg-last-name" autocomplete="off">
 
                 <label class="error-msg" id="reg-email-error"></label>
-                <input type="email" class='sign-in-input-box' placeholder="Enter your email here" id='reg-email' autocomplete="off">
+                <input type="email" class='sign-in-input-box' placeholder="Enter your email here" id='reg-email' autocomplete="off" title="Enter valid email (e.g. example@plpasig.edu.ph)">
 
                 <label class="error-msg" id="reg-pass-error"></label>
                 <input type="password" class='sign-in-input-box' placeholder="Enter your password here" id='reg-pass' autocomplete="new-password">
 
                 <label class="error-msg" id="reg-re-pass-error"></label>
-                <input type="password" class='sign-in-input-box' placeholder="Re-enter your password here" id='reg-re-pass' autocomplete="new-password">
+                <input type="password" class='sign-in-input-box' placeholder="Re-enter your password here" id='reg-re-pass' autocomplete="new-password" title="Confirm password">
 
-                <select id="reg-user-type" class='sign-in-input-box'>
+                <select id="reg-user-type" class='sign-in-input-box' title="Choose user type">
                     <option value="writer">Writer</option>
                     <option value="reviewer">Reviewer</option>
                 </select>

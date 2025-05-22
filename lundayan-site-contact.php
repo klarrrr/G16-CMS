@@ -62,9 +62,9 @@
                                 <div class="inside-two-vertical">
                                     <h3>Stay Connected</h3>
                                     <div class="soc-med">
-                                        <a href="https://www.facebook.com/LundayanPLP" target="_blank"><img src="svg/fb.svg" alt=""></a>
-                                        <a href="#"><img src="svg/pinterest.svg" alt=""></a>
-                                        <a href="#"><img src="svg/ig.svg" alt=""></a>
+                                        <a href="https://www.facebook.com/LundayanPLP" target="_blank"><img src="svg/fb.svg" alt="" title="Facebook"></a>
+                                        <a href="#"><img src="svg/pinterest.svg" alt="" title="Pinterest"></a>
+                                        <a href="#"><img src="svg/ig.svg" alt="" title="Instagram"></a>
                                     </div>
                                 </div>
                             </div>

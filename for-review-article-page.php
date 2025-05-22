@@ -45,7 +45,7 @@ $profile_pic = $_SESSION['profile_picture'];
                         <option value="asc">Date Updated Ascending</option>
                     </select>
                     <input type="text" placeholder="Search for you articles" id='search-your-active-articles' class='search-your-articles'>
-                    <div class="pfp-container">
+                    <div class="pfp-container" title="Account Settings">
                         <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : 'data:image/png;base64,' . $profile_pic; ?>" alt="" id='pfp-circle'>
                     </div>
                 </div>
