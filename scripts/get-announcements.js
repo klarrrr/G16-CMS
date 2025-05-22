@@ -6,6 +6,11 @@ $.ajax({
         const container = document.getElementById('upcoming-events-container');
         container.innerHTML = ''; // Clear previous items
 
+        if (data.length === 0) {
+            container.innerHTML = `<div class="no-events-message">No upcoming events at the moment 😔</div>`;
+            return;
+        }
+
         data.forEach(article => {
             const div = document.createElement('div');
             div.classList.add('event');
@@ -28,5 +33,7 @@ $.ajax({
     },
     error: function (xhr, status, error) {
         console.error("Failed to fetch announcements:", error);
+        const container = document.getElementById('upcoming-events-container');
+        container.innerHTML = `<div class="no-events-message">Unable to load upcoming events.</div>`;
     }
 });

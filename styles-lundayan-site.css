@@ -2237,3 +2237,10 @@ tbody td:hover {
         overflow: visible;
     }
 }
+
+.no-events-message {
+    padding: 1rem;
+    text-align: center;
+    color: #555;
+    font-style: italic;
+}
