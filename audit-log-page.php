@@ -63,9 +63,9 @@ $profile_pic = $_SESSION['profile_picture'];
                         <th>Article</th>
                         <th>Action</th>
                         <th>Date & Time</th>
-                        <th>Manage</th>
                     </tr>
                 </thead>
+
                 <tbody id="log-table-body">
                     <!-- Logs will be loaded here -->
                 </tbody>
@@ -103,18 +103,17 @@ $profile_pic = $_SESSION['profile_picture'];
                         tbody.empty();
 
                         if (res.logs.length === 0) {
-                            tbody.append('<tr><td colspan="5">No logs found.</td></tr>');
+                            tbody.append('<tr><td colspan="4">No logs found.</td></tr>');
                         } else {
                             res.logs.forEach(log => {
                                 tbody.append(`
-                        <tr>
-                            <td>${log.user_name}</td>
-                            <td>${log.article_title}</td>
-                            <td>${log.action}</td>
-                            <td>${formatDateTime(log.log_time)}</td>
-                            <td><button class='delete-log' data-id="${log.log_id}">Delete</button></td>
-                        </tr>
-                    `);
+                                    <tr>
+                                        <td>${log.user_name}</td>
+                                        <td>${log.article_title}</td>
+                                        <td>${log.action}</td>
+                                        <td>${formatDateTime(log.log_time)}</td>
+                                    </tr>
+                        `);
                             });
                         }
 
@@ -188,42 +187,6 @@ $profile_pic = $_SESSION['profile_picture'];
                     loadLogs(currentPage, searchValue, sortValue);
                 });
             }
-        </script>
-
-
-        <!-- Delete log -->
-        <script>
-            $(document).on('click', '.delete-log', function() {
-                const logId = $(this).data('id');
-
-                if (!confirm('Are you sure you want to delete this log entry?')) return;
-
-                $.ajax({
-                    url: 'php-backend/delete-audit-log.php',
-                    type: 'POST',
-                    data: {
-                        log_id: logId
-                    },
-                    success: function(response) {
-                        try {
-                            const res = JSON.parse(response);
-                            if (res.success) {
-                                alert('Log deleted successfully.');
-                                loadLogs(currentPage, $('#search-your-active-articles').val());
-                            } else {
-                                alert('Failed to delete log: ' + res.message);
-                            }
-                        } catch (e) {
-                            console.error('Invalid response:', response);
-                            alert('Unexpected error occurred.');
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('AJAX error:', error);
-                        alert('Failed to delete log due to a server error.');
-                    }
-                });
-            });
         </script>
 </body>
 
