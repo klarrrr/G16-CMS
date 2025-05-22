@@ -39,6 +39,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contento : Dashboard Page</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="pics/lundayan-logo.png">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 
@@ -109,7 +110,10 @@ while ($row = mysqli_fetch_assoc($result)) {
         <div class="dashboard-main-page" id='dashboard-main-page'>
             <div class="dashboard-recent-articles">
                 <!-- Recenter Articles posted by the user -->
-                <h2>Recent Posts</h2>
+                <h2>
+                    <?php echo ($user_type == 'Reviewer') ? 'Pending Published Articles' : 'Recent Posts'; ?>
+                </h2>
+
 
                 <div class="recent-post-container" id='recent-post-container'>
                     <!-- Populate here -->
@@ -118,7 +122,10 @@ while ($row = mysqli_fetch_assoc($result)) {
             </div>
             <div class="dashboard-draft-articles">
                 <!-- All the unposted/unfinished articles of the user -->
-                <h2>Recent Drafts</h2>
+                <h2>
+                    <?php echo ($user_type == 'Reviewer') ? 'Pending Draft Articles' : 'Recent Drafts'; ?>
+                </h2>
+
 
                 <div class="recent-drafts-container" id='recent-drafts-container'>
                     <!-- Populate her -->
@@ -135,63 +142,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     </script>
 
     <!-- Shortcut Create butons -->
-    <script>
-        const addArticleBtn = document.getElementById('shortcut-create-article');
-
-        const reviewArticle = document.getElementById('shortcut-review-article');
-
-        const auditBtn = document.getElementById('shortcut-audit-log');
-
-        const accountSettingsBtn = document.getElementById('shortcut-account-settings');
-
-        addArticleBtn.addEventListener('click', () => {
-            $.ajax({
-                url: 'php-backend/create-article.php',
-                type: 'post',
-                dataType: 'json',
-                data: {
-                    title: 'Article Default Title',
-                    content: '<p>Your article content journey starts here...</p>',
-                    shortDesc: 'Your short description is here...'
-                },
-                success: (res) => {
-                    if (res.status == 'success') {
-                        // Get the latest article's id
-                        $.ajax({
-                            url: 'php-backend/add-article-get-latest-article.php',
-                            type: 'post',
-                            dataType: 'json',
-                            data: {},
-                            success: (res) => {
-                                if (res.status == 'success') {
-                                    // go to edit page with the get id
-                                    window.location.href = 'edit-article.php?article_id=' + res.latestArticle;
-                                }
-                            },
-                            error: (error) => {
-
-                            }
-                        });
-                    }
-                },
-                error: (error) => {
-                    console.log("Create Article Error :" + error);
-                }
-            });
-        });
-
-        reviewArticle.addEventListener('click', () => {
-            window.location.href = 'for-review-article-page.php';
-        });
-
-        auditBtn.addEventListener('click', () => {
-            window.location.href = 'audit-log-page.php';
-        });
-
-        accountSettingsBtn.addEventListener('click', () => {
-            window.location.href = 'account-settings.php';
-        })
-    </script>
+    <script src="scripts/shorcut-create-buttons.js"></script>
 
     <!-- Populate recent posts -->
     <script src='scripts/dashboard-get-recent-posted-articles.js'></script>

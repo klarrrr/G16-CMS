@@ -46,6 +46,7 @@ $archiveStatus = $articles['archive_status'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contento : Edit Article Page</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="pics/lundayan-logo.png">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
     <link href="quill.css" rel="stylesheet" />
