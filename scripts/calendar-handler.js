@@ -85,7 +85,7 @@ const renderCalendar = (month, year) => {
                     month === today.getMonth() &&
                     year === today.getFullYear()
                 ) {
-                    cell.classList.add("td-highlighted");  // highlight today always
+                    cell.classList.add("td-today");  // highlight today always
                 }
 
                 // Format date to "YYYY-MM-DD"

@@ -75,21 +75,26 @@ while ($row = mysqli_fetch_assoc($result)) {
                     <div class="dashboard-quick-action-buttons">
                         <!-- Shortcut for all the main buttons of all pages -->
 
+                        <!-- Create Article Button -->
                         <button id='shortcut-create-article'><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M8.29289 3.70711L1 11V15H5L12.2929 7.70711L8.29289 3.70711Z" fill="#f4f4f4" />
                                 <path d="M9.70711 2.29289L13.7071 6.29289L15.1716 4.82843C15.702 4.29799 16 3.57857 16 2.82843C16 1.26633 14.7337 0 13.1716 0C12.4214 0 11.702 0.297995 11.1716 0.828428L9.70711 2.29289Z" fill="#f4f4f4" />
                             </svg>Create Article</button>
 
+                        <!-- Review Article Button -->
                         <button id='shortcut-review-article'>
                             <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M16 1H4V11H8L10 13L12 11H16V1Z" fill="#f4f4f4" />
                                 <path d="M2 5V13H7.17157L8.70711 14.5355L7.29289 15.9497L6.34315 15H0V5H2Z" fill="#f4f4f4" />
                             </svg>Review Article</button>
 
+                        <!-- Audit Log Button -->
                         <button id='shortcut-audit-log'><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M16 2H0V5H16V2Z" fill="#f4f4f4" />
                                 <path d="M1 7H5V9H11V7H15V15H1V7Z" fill="#f4f4f4" />
                             </svg>Audit Log</button>
+
+                        <!-- Account Settings button -->
                         <button id='shortcut-account-settings'><svg fill="#f4f4f4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M9.6,3.32a3.86,3.86,0,1,0,3.86,3.85A3.85,3.85,0,0,0,9.6,3.32M16.35,11a.26.26,0,0,0-.25.21l-.18,1.27a4.63,4.63,0,0,0-.82.45l-1.2-.48a.3.3,0,0,0-.3.13l-1,1.66a.24.24,0,0,0,.06.31l1,.79a3.94,3.94,0,0,0,0,1l-1,.79a.23.23,0,0,0-.06.3l1,1.67c.06.13.19.13.3.13l1.2-.49a3.85,3.85,0,0,0,.82.46l.18,1.27a.24.24,0,0,0,.25.2h1.93a.24.24,0,0,0,.23-.2l.18-1.27a5,5,0,0,0,.81-.46l1.19.49c.12,0,.25,0,.32-.13l1-1.67a.23.23,0,0,0-.06-.3l-1-.79a4,4,0,0,0,0-.49,2.67,2.67,0,0,0,0-.48l1-.79a.25.25,0,0,0,.06-.31l-1-1.66c-.06-.13-.19-.13-.31-.13L19.5,13a4.07,4.07,0,0,0-.82-.45l-.18-1.27a.23.23,0,0,0-.22-.21H16.46M9.71,13C5.45,13,2,14.7,2,16.83v1.92h9.33a6.65,6.65,0,0,1,0-5.69A13.56,13.56,0,0,0,9.71,13m7.6,1.43a1.45,1.45,0,1,1,0,2.89,1.45,1.45,0,0,1,0-2.89Z" />
                             </svg>Account Settings</button>
@@ -117,7 +122,6 @@ while ($row = mysqli_fetch_assoc($result)) {
 
                 <div class="recent-drafts-container" id='recent-drafts-container'>
                     <!-- Populate her -->
-
                 </div>
             </div>
         </div>
@@ -150,23 +154,28 @@ while ($row = mysqli_fetch_assoc($result)) {
                     content: '<p>Your article content journey starts here...</p>',
                     shortDesc: 'Your short description is here...'
                 },
-                success: (res) => {},
-                error: (error) => {
-                    console.log("Create Article Error :" + error);
-                }
-            });
-            // Get the latest article's id
-            $.ajax({
-                url: 'php-backend/add-article-get-latest-article.php',
-                type: 'post',
-                dataType: 'json',
-                data: {},
                 success: (res) => {
-                    // go to edit page with the get id
-                    window.location.href = 'edit-article.php?article_id=' + res;
+                    if (res.status == 'success') {
+                        // Get the latest article's id
+                        $.ajax({
+                            url: 'php-backend/add-article-get-latest-article.php',
+                            type: 'post',
+                            dataType: 'json',
+                            data: {},
+                            success: (res) => {
+                                if (res.status == 'success') {
+                                    // go to edit page with the get id
+                                    window.location.href = 'edit-article.php?article_id=' + res.latestArticle;
+                                }
+                            },
+                            error: (error) => {
+
+                            }
+                        });
+                    }
                 },
                 error: (error) => {
-
+                    console.log("Create Article Error :" + error);
                 }
             });
         });
