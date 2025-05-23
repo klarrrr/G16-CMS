@@ -1,9 +1,11 @@
 <?php
-ob_start();
 include 'php-backend/connect.php';
 
 $user_id = $_SESSION['user_id'] ?? null;
 $pic = $_SESSION['profile_picture'] ?? null;
+
+$pfp = ($pic) ? ('data:image/png;base64,' . $pic) : 'pics/no-pic.jpg';
+
 ?>
 
 <header>
@@ -13,9 +15,9 @@ $pic = $_SESSION['profile_picture'] ?? null;
             <li><a href="lundayan-site-archive.php">Archive</a></li>
             <li><a href="lundayan-site-calendar.php">Calendar</a></li>
 
-            <?php if ($user_id && $pic): ?>
+            <?php if ($user_id): ?>
                 <li>
-                    <img src="data:image/png;base64,<?= htmlspecialchars($pic) ?>" alt="Profile Picture" id="lundayan-pfp" style="height: 40px; width: 40px; border-radius: 50%;">
+                    <img src="<?php echo $pfp ?>" alt="Profile Picture" id="lundayan-pfp" style="height: 40px; width: 40px; border-radius: 50%;">
                 </li>
             <?php endif; ?>
 
@@ -31,6 +33,11 @@ $pic = $_SESSION['profile_picture'] ?? null;
 </header>
 
 <script>
+
+const pfp = '<?php echo $pfp ?>';
+
+console.log(pfp);
+    
     document.getElementById('lundayan-pfp').addEventListener('click', () => {
         window.location.href = 'editor-dashboard.php';
     });
