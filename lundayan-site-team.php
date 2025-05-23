@@ -249,7 +249,7 @@
                 name: "MIGUEL CARLOS R. BERMUDEZ",
                 role: "G6 Member",
                 desc: "Description for Miguel.",
-                img: "pics/bermudez.jpg"
+                img: "pics/bermudez_stand.png"
             },
             {
                 name: "CHARL JOVEN V. CASTRO",
@@ -297,7 +297,7 @@
                 name: "GRACI AL DEI R. MEDRANO",
                 role: "G1 Member",
                 desc: "Description for Graci.",
-                img: "pics/graci.jpg"
+                img: "pics/graci_stand.png"
             },
             {
                 name: "JOHN CHESTER Q. MODANCIA",
