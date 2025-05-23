@@ -271,15 +271,7 @@
             <div class="sidebar-header">
                 <h2>Admin Panel</h2>
             </div>
-            <nav class="sidebar-menu">
-                <ul>
-                    <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                    <li><a href="users.html"><i class="fas fa-users"></i> Users</a></li>
-                    <li><a href="articles.html"><i class="fas fa-newspaper"></i> Articles</a></li>
-                    <li><a href="audit-logs.html" class="active"><i class="fas fa-clipboard-list"></i> Audit Logs</a></li>
-                    <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
-                </ul>
-            </nav>
+            <?php include 'admin-side-bar.php' ?>
         </div>
 
         <!-- Main Content -->
