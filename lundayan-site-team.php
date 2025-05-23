@@ -39,11 +39,16 @@
         }
 
         .breadcrumb {
-            font-size: 0.9rem;
-            color: #f4f4f4;
             display: flex;
             justify-content: space-between;
             margin-bottom: 1rem;
+
+            p {
+                font-size: 0.9rem;
+                color: #f4f4f4;
+                letter-spacing: 0.5rem;
+                font-weight: bold;
+            }
         }
 
         .profile-container {
@@ -149,7 +154,7 @@
 
         .team-member span {
             font-size: 0.7rem;
-            color: #666;
+            color: #c6c6c6;
         }
     </style>
 </head>
@@ -163,20 +168,20 @@
             <button class="arrow-left">&larr;</button>
             <div class="team-main">
                 <div class="breadcrumb">
-                    <p style='color: #f4f4f4; font-weight: bolder;'>G-16</p>
-                    <p style='color: #f4f4f4; font-weight: bolder;'>BSIT-2C</p>
+                    <p>G-16</p>
+                    <p>BSIT-2C</p>
                 </div>
 
                 <div class="profile-container">
                     <div class="profile-info">
-                        <h1>Sydney Sweeney</h1>
-                        <h3>Chairman & CEO</h3>
+                        <h1>Marvin Gallardo</h1>
+                        <h3>G1 Secretary</h3>
                         <p>
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut pariatur fugit sed cupiditate temporibus vel, quidem odit! Corrupti sequi delectus enim tempore ipsa consectetur eius nobis voluptatum, ipsam tempora placeat? Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel quam maxime ab. Voluptatibus non officia, perferendis fugiat dignissimos eligendi commodi quibusdam soluta nostrum consequatur maiores nesciunt dolorum libero ipsam laborum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore iure, error similique, eum ex eveniet in enim pariatur accusantium temporibus fuga commodi tempora hic voluptates deleniti. Veniam sint voluptatem aut.
                         </p>
                     </div>
                     <div class="profile-photo">
-                        <img src="pics/Sydney-Sweeney-Jumpsuit-Half-Body-Buddy-Cutout_158f0d7b-cde9-4a63-a131-d010cbc4e3f8.dd61fa9b72e4f5837911ec00c8df7283.webp" alt="Chang Qiu Sheng" />
+                        <img src="pics/486323055_9429894183798307_5671286570096958651_n-removebg-preview.png" alt="Chang Qiu Sheng" />
                     </div>
                 </div>
             </div>
@@ -185,54 +190,54 @@
 
         <div class="team-carousel">
             <div class="team-member">
-                <img src="chang-qiu-sheng.jpg" alt="BERMUDEZ, MIGUEL CARLOS R." />
+                <img src="pics/bermudez.jpg" alt="BERMUDEZ, MIGUEL CARLOS R." />
                 <strong>MIGUEL CARLOS R. BERMUDEZ</strong>
-                <span>CEO</span>
+                <span>G6 Member</span>
             </div>
             <div class="team-member">
-                <img src="vicky-tsui.jpg" alt="CASTRO, CHARL JOVEN V." />
+                <img src="pics/cj_pogi.jpg" alt="CASTRO, CHARL JOVEN V." />
                 <strong>CHARL JOVEN V. CASTRO</strong>
-                <span>VP of Marketing</span>
+                <span>G1 Member</span>
             </div>
             <div class="team-member">
                 <img src="pics/90477869_583028765758138_5089600927967477760_n.jpg" alt="DE PADUA, CHARLES JERAMY C." />
                 <strong>CHARLES JERAMY C. DE PADUA</strong>
-                <span>VP of Flight Operation</span>
+                <span>G1 Member</span>
             </div>
             <div class="team-member">
-                <img src="bob-li.jpg" alt="FRANCISCO, PAUL JUSTIN D." />
+                <img src="pics/paul.jpg" alt="FRANCISCO, PAUL JUSTIN D." />
                 <strong>PAUL JUSTIN D. FRANCISCO</strong>
-                <span>VP of Operations</span>
+                <span>G6 Leader</span>
             </div>
             <div class="team-member">
-                <img src="david-du.jpg" alt="GALLARDO, MARVIN D." />
+                <img src="pics/vin.jpg" alt="GALLARDO, MARVIN D." />
                 <strong>MARVIN D. GALLARDO</strong>
-                <span>Executive VP</span>
+                <span>G1 Secretary</span>
             </div>
             <div class="team-member">
-                <img src="zoe-zhao.jpg" alt="GARCIA, SEAN PAUL F." />
+                <img src="pics/garcia.jpg" alt="GARCIA, SEAN PAUL F." />
                 <strong>SEAN PAUL F. GARCIA</strong>
-                <span>VP of Finance</span>
+                <span>G6 Member</span>
             </div>
             <div class="team-member">
-                <img src="nicole-chen.jpg" alt="JUMAO-AS, SAMANTHA O." />
+                <img src="pics/sam.jpg" alt="JUMAO-AS, SAMANTHA O." />
                 <strong>SAMANTHA O. JUMAO-AS</strong>
-                <span>VP of HR</span>
+                <span>G1 Member</span>
             </div>
             <div class="team-member">
-                <img src="nicole-chen.jpg" alt="MANRIQUE, KLARENZ COBIE O." />
+                <img src="pics/klarenz.jpg" alt="MANRIQUE, KLARENZ COBIE O." />
                 <strong>KLARENZ COBIE O. MANRIQUE</strong>
-                <span>VP of HR</span>
+                <span>G1 Leader</span>
             </div>
             <div class="team-member">
-                <img src="nicole-chen.jpg" alt="MEDRANO, GRACI AL DEI R." />
+                <img src="pics/graci.jpg" alt="MEDRANO, GRACI AL DEI R." />
                 <strong>GRACI AL DEI R. MEDRANO</strong>
-                <span>VP of HR</span>
+                <span>G1 Member</span>
             </div>
             <div class="team-member">
-                <img src="nicole-chen.jpg" alt="MODANCIA, JOHN CHESTER Q." />
+                <img src="pics/modancia.jpg" alt="MODANCIA, JOHN CHESTER Q." />
                 <strong>JOHN CHESTER Q. MODANCIA</strong>
-                <span>VP of HR</span>
+                <span>G1 Member</span>
             </div>
         </div>
 
