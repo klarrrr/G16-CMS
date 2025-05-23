@@ -8,7 +8,7 @@ function getContactInfo() {
         'address' => '',
         'open_time' => '',
         'phone' => '',
-        'email' => '', // Make sure this exists
+        'email' => '', 
         'socials' => []
     ];
 
@@ -35,11 +35,20 @@ function getContactInfo() {
                     case 'phone':
                         $contactInfo['phone'] = $row['setting_value'];
                         break;
-                    case 'email': // This case was likely missing
-                        $contactInfo['email'] = $row['setting_value'];
-                        break;
                 }
             }
+        }
+
+        // Get email from mail group
+        $emailQuery = $conn->query("
+            SELECT setting_value 
+            FROM site_settings 
+            WHERE setting_group = 'mail' AND setting_name = 'email'
+            LIMIT 1
+        ");
+        
+        if ($emailQuery && $emailRow = $emailQuery->fetch_assoc()) {
+            $contactInfo['email'] = $emailRow['setting_value'];
         }
 
         // Format open time
