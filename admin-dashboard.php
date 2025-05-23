@@ -110,9 +110,9 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
 </head>
 
 <body>
+    
     <div class="admin-container">
         <?php include 'admin-side-bar.php' ?>
-
         <main class="main-content">
             <header>
                 <div class="welcome-message">

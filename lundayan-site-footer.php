@@ -1,3 +1,8 @@
+<?php 
+require_once 'footer-functions.php';
+$contactInfo = getContactInfo();
+?>
+
 <footer class="footer">
     <div class="footer-container">
 
@@ -12,7 +17,7 @@
             <div class="footer-logos">
                 <img src="pics/lundayan-logo.png" alt="Lundayan Logo">
                 <img src="pics/PLP_Logo.png" alt="PLP Logo">
-                <p>&copy; <?php echo date('Y'); ?> <strong class="highlight">Lundayan</strong>. All rights reserved.</p>
+                <p>&copy; <?= date('Y'); ?> <strong class="highlight">Lundayan</strong>. All rights reserved.</p>
             </div>
         </div>
 
@@ -30,23 +35,35 @@
         <div class="footer-contact">
             <div>
                 <h3>Address</h3>
-                <p>12-B Alcalde Jose, Pasig, 1600 Metro Manila</p>
+                <p><?= htmlspecialchars($contactInfo['address'] ?? '12-B Alcalde Jose, Pasig, 1600 Metro Manila') ?></p>
             </div>
             <div>
                 <h3>Open Time</h3>
-                <p>Monday - Friday: 10:00–20:00</p>
+                <p>Monday - Friday: <?= htmlspecialchars($contactInfo['open_time'] ?? '10:00–20:00') ?></p>
             </div>
             <div>
                 <h3>Contact</h3>
-                <p>Phone: 2-8643-1014</p>
-                <p>Email: lundayan@plpasig.edu.ph</p>
+                <p>Phone: <?= htmlspecialchars($contactInfo['phone'] ?? '2-8643-1014') ?></p>
+                <p>Email: <?= htmlspecialchars($contactInfo['email'] ?? 'lundayan@plpasig.edu.ph') ?></p>
             </div>
             <div>
                 <h3>Stay Connected</h3>
                 <div class="footer-socials">
-                    <a href="https://www.facebook.com/LundayanPLP" target="_blank"><img src="svg/fb.svg" alt="Facebook"></a>
-                    <a href="#"><img src="svg/ig.svg" alt="Instagram"></a>
-                    <a href="#"><img src="svg/pinterest.svg" alt="Pinterest"></a>
+                    <?php if (!empty($contactInfo['socials']['facebook_url'])): ?>
+                        <a href="<?= htmlspecialchars($contactInfo['socials']['facebook_url']) ?>" target="_blank">
+                            <img src="svg/fb.svg" alt="Facebook">
+                        </a>
+                    <?php endif; ?>
+                    <?php if (!empty($contactInfo['socials']['instagram_url'])): ?>
+                        <a href="<?= htmlspecialchars($contactInfo['socials']['instagram_url']) ?>" target="_blank">
+                            <img src="svg/ig.svg" alt="Instagram">
+                        </a>
+                    <?php endif; ?>
+                    <?php if (!empty($contactInfo['socials']['pinterest_url'])): ?>
+                        <a href="<?= htmlspecialchars($contactInfo['socials']['pinterest_url']) ?>" target="_blank">
+                            <img src="svg/pinterest.svg" alt="Pinterest">
+                        </a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

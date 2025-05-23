@@ -1,7 +1,21 @@
-<?php session_start(); ?>
+<?php
+session_start();
+require_once 'php-backend/connect.php';
+
+// Fetch all site settings
+$settingsQuery = $conn->query("SELECT * FROM site_settings");
+$siteSettings = [];
+while ($row = $settingsQuery->fetch_assoc()) {
+    $siteSettings[$row['setting_group']][$row['setting_name']] = $row['setting_value'];
+}
+
+// Format open hours
+$openTime = isset($siteSettings['contact']['open_time_start']) ? date("H:i", strtotime($siteSettings['contact']['open_time_start'])) : '10:00';
+$closeTime = isset($siteSettings['contact']['open_time_end']) ? date("H:i", strtotime($siteSettings['contact']['open_time_end'])) : '20:00';
+$openHours = "Monday - Friday : $openTime-$closeTime";
+?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -175,6 +189,7 @@
 <body>
     <?php include 'lundayan-site-upper-nav.php' ?>
     <?php include 'lundayan-site-nav.php'; ?>
+    
     <main>
         <section class="contact">
             <div class="contact-title-container">
@@ -199,6 +214,16 @@
                     <button type="submit" name="submit">Send Message</button>
                 </form>
 
+                <div class="own-info">
+                    <div class="info-box">
+                        <div class="vertical-two">
+                            <div class="inside-two-vertical">
+                                <h3>Address</h3>
+                                <p><?= htmlspecialchars($siteSettings['contact']['address'] ?? '12-B Alcalde Jose, Pasig, 1600 Metro Manila') ?></p>
+                            </div>
+                            <div class="inside-two-vertical">
+                                <h3>Open Time</h3>
+                                <p><?= htmlspecialchars($openHours) ?></p>
                 <div class="faq-container">
                     <div class="faq-container-title">
                         <h2 class="faq-container-h2">FAQS</h2>
@@ -265,6 +290,25 @@
                                 If you notice an error, please contact us via our "Contact Us" page and specify the article title and the issue. We take corrections seriously and will update the article as needed.
                             </p>
                         </div>
+                        <div class="vertical-two">
+                            <div class="inside-two-vertical">
+                                <h3>Contact</h3>
+                                <p>Phone: <?= htmlspecialchars($siteSettings['contact']['phone'] ?? '2-8643-1014') ?></p>
+                                <p>Email: <?= htmlspecialchars($siteSettings['mail']['email'] ?? 'lundayan@plpasig.edu.ph') ?></p>
+                            </div>
+                            <div class="inside-two-vertical">
+                                <h3>Stay Connected</h3>
+                                <div class="soc-med">
+                                    <?php if (!empty($siteSettings['social']['facebook_url'])): ?>
+                                        <a href="<?= htmlspecialchars($siteSettings['social']['facebook_url']) ?>" target="_blank"><img src="svg/fb.svg" alt="" title="Facebook"></a>
+                                    <?php endif; ?>
+                                    <?php if (!empty($siteSettings['social']['pinterest_url'])): ?>
+                                        <a href="<?= htmlspecialchars($siteSettings['social']['pinterest_url']) ?>"><img src="svg/pinterest.svg" alt="" title="Pinterest"></a>
+                                    <?php endif; ?>
+                                    <?php if (!empty($siteSettings['social']['instagram_url'])): ?>
+                                        <a href="<?= htmlspecialchars($siteSettings['social']['instagram_url']) ?>"><img src="svg/ig.svg" alt="" title="Instagram"></a>
+                                    <?php endif; ?>
+                                </div>
 
                         <div class="faq-box">
                             <div class="faq-title">
@@ -307,7 +351,6 @@
         </div>
     </div>
 
-
     <?php include 'lundayan-site-footer.php'; ?>
 
     <script>
@@ -325,7 +368,6 @@
             }
         });
     </script>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const faqBoxes = document.querySelectorAll('.faq-box');
@@ -388,7 +430,5 @@
                 });
         });
     </script>
-
 </body>
-
 </html>
