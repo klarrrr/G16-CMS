@@ -59,7 +59,8 @@ contentBox.addEventListener('paste', function (event) {
     if (window.updateTimeout) clearTimeout(window.updateTimeout);
 
     window.updateTimeout = setTimeout(() => {
-        updateContentBox(updatedContent, "User pasted something in the content");
+        updateContentBox(updatedContent, article_id);
         // console.log('Paste triggered update');
+        updateDateUpdated(article_id, "Pasted something in content");
     }, 500);
 });
