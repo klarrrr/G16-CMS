@@ -1326,30 +1326,6 @@ width: 100%;
 
 /* FREQUENTLY ASKED QUESTIONS */
 
-.faq-container{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-
-    h2{
-        font-family: robinson;
-        font-size: 10rem;
-        font-weight: lighter;
-        line-height: normal;
-        color: #f4f4f4;
-        line-height: 9rem;
-        text-align: center;
-    }
-
-    p{
-        font-size: 1em;
-        color: #f4f4f4;
-        text-align: center;
-        width: 50%;
-    }
-}
 
 .own-info {
     display: flex;

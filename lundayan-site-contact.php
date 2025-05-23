@@ -10,6 +10,76 @@
     <link rel="icon" href="pics/lundayan-logo.png">
 </head>
 
+<style>
+
+    .faq-container{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+
+        .faq-container-h2{
+            font-family: robinson;
+            font-size: 10rem;
+            font-weight: lighter;
+            line-height: normal;
+            color: #f4f4f4;
+            line-height: 9rem;
+            text-align: center;
+        }
+
+        .faq-container-p{
+            font-size: 1em;
+            color: #f4f4f4;
+            text-align: center;
+            width: 50%;
+        }
+    }
+
+    .faq-container-title{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .faqs{
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .faq-box{
+        display: flex;
+        flex-direction: column;
+        background-color: #1D2E28;
+        padding: 2rem;
+        border-radius: 1rem;
+    }
+
+    .faq-open{
+        font-size: 2rem;
+        align-self: center;
+        font-weight: bold;
+    }
+
+    .faq-title{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .faq-h2{
+        
+    }
+
+    .faq-p{
+
+    }
+</style>
+
 <body>
     <?php include 'lundayan-site-upper-nav.php' ?>
     <?php include 'lundayan-site-nav.php'; ?>
@@ -68,8 +138,33 @@
                 </div> -->
 
                 <div class="faq-container">
-                    <h2>FAQS</h2>
-                    <p>Have questions? Check out our FAQ Section for Quick and Helpful Answers</p>
+                    <div class="faq-container-title">
+                        <h2 class="faq-container-h2">FAQS</h2>
+                        <p class="faq-container-p">Have questions? Check out our FAQ Section for Quick and Helpful Answers</p>
+                    </div>
+                  
+                    <div class="faqs">
+                        <div class="faq-box">
+                            <div class="faq-title">
+                                <h2 class="faq-h2">What type of content do you publish?</h2>
+                                <span class="faq-open">+</span>
+                            </div>
+                            <p class="faq-p">
+                                We publish a wide range of content including news articles, opinion pieces, tutorials, how-to guides, interviews, and expert analysis in various categories such as technology, health, lifestyle, education, entertainment, and more.
+                            </p>
+                        </div>
+
+                         <div class="faq-box">
+                            <div class="faq-title">
+                                <h2 class="faq-h2">What type of content do you publish?</h2>
+                                <span class="faq-open">+</span>
+                            </div>
+                            <p class="faq-p">
+                                We publish a wide range of content including news articles, opinion pieces, tutorials, how-to guides, interviews, and expert analysis in various categories such as technology, health, lifestyle, education, entertainment, and more.
+                            </p>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
@@ -108,6 +203,10 @@
                 document.getElementById('popup-backdrop').style.display = 'flex';
             }
         });
+    </script>
+
+    <script>
+
     </script>
 
 </body>
