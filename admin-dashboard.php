@@ -92,7 +92,7 @@
                 <li><a href="#">Inbox</a></li>
                 <li><a href="#">Manage Users</a></li>
                 <li><a href="#">Audit Log</a></li>
-                <li><a href="#">Settings</a></li>
+                <li><a href="admin-settings.php">Settings</a></li>
                 <li><a href="#">Logout</a></li>
             </ul>
         </aside>
