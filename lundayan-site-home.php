@@ -27,7 +27,7 @@
             border: 1px solid #ddd;
             border-radius: 4px;
             text-decoration: none;
-            color: #333;
+            color: #ddd;
             transition: all 0.2s;
         }
 

@@ -6,7 +6,7 @@ $widgetArray = [];
 $search = isset($_GET['search']) ? $_GET['search'] : ''; // Get search term, default to empty if not set
 
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$limit = 10; // Number of records per page
+$limit = 9; // Number of records per page
 $offset = ($page - 1) * $limit;
 
 // Prepare the search term for SQL (use LIKE for partial matching)
