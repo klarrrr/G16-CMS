@@ -33,12 +33,9 @@ $pfp = ($pic) ? ('data:image/png;base64,' . $pic) : 'pics/no-pic.jpg';
 </header>
 
 <script>
-
-const pfp = '<?php echo $pfp ?>';
-
-console.log(pfp);
-    
-    document.getElementById('lundayan-pfp').addEventListener('click', () => {
-        window.location.href = 'editor-dashboard.php';
-    });
+    if (document.getElementById('lundayan-pfp')) {
+        document.getElementById('lundayan-pfp').addEventListener('click', () => {
+            window.location.href = 'editor-dashboard.php';
+        });
+    }
 </script>

@@ -255,37 +255,37 @@
                 name: "CHARL JOVEN V. CASTRO",
                 role: "G1 Member",
                 desc: "Description for Charl.",
-                img: "pics/cj_pogi.jpg"
+                img: "pics/cj_stand.png"
             },
             {
                 name: "CHARLES JERAMY C. DE PADUA",
                 role: "G1 Member",
                 desc: "Description for Charles.",
-                img: "pics/90477869_583028765758138_5089600927967477760_n.jpg"
+                img: "pics/charles_stand.png"
             },
             {
                 name: "PAUL JUSTIN D. FRANCISCO",
                 role: "G6 Leader",
                 desc: "Description for Paul.",
-                img: "pics/paul.jpg"
+                img: "pics/paul_stand.png"
             },
             {
                 name: "MARVIN D. GALLARDO",
                 role: "G1 Secretary",
                 desc: "Description for Marvin.",
-                img: "pics/486323055_9429894183798307_5671286570096958651_n-removebg-preview.png"
+                img: "pics/vin_stand.png"
             },
             {
                 name: "SEAN PAUL F. GARCIA",
                 role: "G6 Member",
                 desc: "Description for Sean.",
-                img: "pics/garcia.jpg"
+                img: "pics/garcia_stand.png"
             },
             {
                 name: "SAMANTHA O. JUMAO-AS",
                 role: "G1 Member",
                 desc: "Description for Samantha.",
-                img: "pics/sam.jpg"
+                img: "pics/sam_stand.png"
             },
             {
                 name: "KLARENZ COBIE O. MANRIQUE",
@@ -303,7 +303,7 @@
                 name: "JOHN CHESTER Q. MODANCIA",
                 role: "G1 Member",
                 desc: "Description for John.",
-                img: "pics/modancia.jpg"
+                img: "pics/modancia_stand.png"
             }
         ];
 
