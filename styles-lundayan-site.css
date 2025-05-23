@@ -2244,3 +2244,13 @@ tbody td:hover {
     color: #555;
     font-style: italic;
 }
+
+.read-more {
+    color: #000000;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.read-more:hover {
+    color: #004499;
+}
+ 

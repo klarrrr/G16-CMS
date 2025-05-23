@@ -22,12 +22,9 @@ if ($row = mysqli_fetch_assoc($result)) {
 }
 
 $title = $article['article_title'];
-// $articleUrl = $protocol . $domain . "/article/" . $article_id . "/" . urlencode(strtolower(str_replace(" ", "-", $title)));
-
 $content = $article['article_content'];
 $datePosted = $article['date_posted'];
 
-// Pag di pa published or di pa approved yung article WAG.
 if ($article['completion_status'] == 'draft' || $article['approve_status'] == 'no') {
     header('Location: lundayan-site-home.php');
     exit;
@@ -122,7 +119,23 @@ $reviewersQuery = "
 ";
 $reviewersResult = mysqli_query($conn, $reviewersQuery);
 
-
+// Function to safely limit HTML content
+function limitHtmlContent($content, $limit = 300) {
+    $decoded = html_entity_decode($content);
+    $plainText = strip_tags($decoded);
+    
+    if (strlen($plainText) <= $limit) {
+        return $content;
+    }
+    
+    $truncated = substr($plainText, 0, $limit);
+    $lastSpace = strrpos($truncated, ' ');
+    if ($lastSpace !== false) {
+        $truncated = substr($truncated, 0, $lastSpace);
+    }
+    
+    return htmlspecialchars($truncated) . '... <a href="#" class="read-more">Read More</a>';
+}
 ?>
 
 <!DOCTYPE html>
@@ -230,11 +243,61 @@ $reviewersResult = mysqli_query($conn, $reviewersQuery);
 
             </div>
 
-
+<?php
+// More advanced HTML-aware truncation
+function limitHtmlContentAdvanced($content, $limit = 300) {
+    $content = html_entity_decode($content);
+    if (strlen(strip_tags($content)) <= $limit) {
+        return $content;
+    }
+    
+    $dom = new DOMDocument();
+    @$dom->loadHTML('<div>'.$content.'</div>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+    
+    $xpath = new DOMXPath($dom);
+    $node = $dom->getElementsByTagName('div')->item(0);
+    $toRemove = array();
+    $totalLength = 0;
+    
+    foreach ($xpath->query('.//*|./text()', $node) as $child) {
+        if ($child instanceof DOMText) {
+            $text = $child->nodeValue;
+            $remaining = $limit - $totalLength;
+            
+            if (strlen($text) > $remaining) {
+                $child->nodeValue = substr($text, 0, $remaining);
+                $totalLength += $remaining;
+                break;
+            } else {
+                $totalLength += strlen($text);
+            }
+        }
+        
+        if ($totalLength >= $limit) {
+            $toRemove[] = $child;
+        }
+    }
+    
+    // Remove excess nodes
+    foreach ($toRemove as $child) {
+        $child->parentNode->removeChild($child);
+    }
+    
+    $result = $dom->saveHTML();
+    $result = str_replace(['<div>', '</div>'], '', $result);
+    
+    return $result . '... <a href="#" class="read-more">Read More</a>';
+}
+?>
             <!-- ARTICLE CONTENT -->
             <div class="ql-snow" id='article-information'>
                 <div class="ql-editor" style="padding: 0;">
-                    <?php echo html_entity_decode($content); ?>
+                    <div class="limited-content">
+                        <?php echo limitHtmlContent($content, 300); ?>
+                    </div>
+                    <div class="full-content" style="display: none;">
+                        <?php echo html_entity_decode($content); ?>
+                    </div>
                 </div>
             </div>
         </div>
@@ -269,6 +332,11 @@ $reviewersResult = mysqli_query($conn, $reviewersQuery);
         const galleryContainer = document.querySelector('.gallery-images');
     </script>
     <script src="scripts/lundayan-load-article.js"></script>
+    <!-- Load Galllery -->
+    <script src="scripts/lundayan-load-article.js"></script>
+    <!-- Limit Article -->
+    <script src="scripts/article-limiter.js"></script>
+
 </body>
 
 </html>
