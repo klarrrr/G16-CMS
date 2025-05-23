@@ -3,9 +3,11 @@ session_start();
 
 // Check if user is logged in and is an admin
 if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admin') {
-    header('Location: login.php');
+    header('Location: lundayan-sign-in-page.php');
     exit;
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
