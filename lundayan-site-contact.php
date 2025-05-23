@@ -1,7 +1,21 @@
-<?php session_start(); ?>
+<?php
+session_start();
+require_once 'php-backend/connect.php';
+
+// Fetch all site settings
+$settingsQuery = $conn->query("SELECT * FROM site_settings");
+$siteSettings = [];
+while ($row = $settingsQuery->fetch_assoc()) {
+    $siteSettings[$row['setting_group']][$row['setting_name']] = $row['setting_value'];
+}
+
+// Format open hours
+$openTime = isset($siteSettings['contact']['open_time_start']) ? date("H:i", strtotime($siteSettings['contact']['open_time_start'])) : '10:00';
+$closeTime = isset($siteSettings['contact']['open_time_end']) ? date("H:i", strtotime($siteSettings['contact']['open_time_end'])) : '20:00';
+$openHours = "Monday - Friday : $openTime-$closeTime";
+?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,6 +27,7 @@
 <body>
     <?php include 'lundayan-site-upper-nav.php' ?>
     <?php include 'lundayan-site-nav.php'; ?>
+    
     <main>
         <section class="contact">
             <div class="contact-title-container">
@@ -27,7 +42,7 @@
             </div>
 
             <div class="contact-container">
-                <form class="send-info" method="POST" action="/G16-CMS/php-backend/ContactController.php">
+                <form class="send-info" method="POST" action="php-backend/ContactController.php">
                     <div class="two-input">
                         <input name='first_name' type="text" placeholder="First Name" required>
                         <input name='last_name' type="text" placeholder="Last Name" required>
@@ -46,25 +61,31 @@
                         <div class="vertical-two">
                             <div class="inside-two-vertical">
                                 <h3>Address</h3>
-                                <p>12-B Alcalde Jose, Pasig, 1600 Metro Manila</p>
+                                <p><?= htmlspecialchars($siteSettings['contact']['address'] ?? '12-B Alcalde Jose, Pasig, 1600 Metro Manila') ?></p>
                             </div>
                             <div class="inside-two-vertical">
                                 <h3>Open Time</h3>
-                                <p>Monday - Friday : 10:00-20:00</p>
+                                <p><?= htmlspecialchars($openHours) ?></p>
                             </div>
                         </div>
                         <div class="vertical-two">
                             <div class="inside-two-vertical">
                                 <h3>Contact</h3>
-                                <p>Phone: 2-8643-1014</p>
-                                <p>Email: lundayan@plpasig.edu.ph</p>
+                                <p>Phone: <?= htmlspecialchars($siteSettings['contact']['phone'] ?? '2-8643-1014') ?></p>
+                                <p>Email: <?= htmlspecialchars($siteSettings['mail']['email'] ?? 'lundayan@plpasig.edu.ph') ?></p>
                             </div>
                             <div class="inside-two-vertical">
                                 <h3>Stay Connected</h3>
                                 <div class="soc-med">
-                                    <a href="https://www.facebook.com/LundayanPLP" target="_blank"><img src="svg/fb.svg" alt="" title="Facebook"></a>
-                                    <a href="#"><img src="svg/pinterest.svg" alt="" title="Pinterest"></a>
-                                    <a href="#"><img src="svg/ig.svg" alt="" title="Instagram"></a>
+                                    <?php if (!empty($siteSettings['social']['facebook_url'])): ?>
+                                        <a href="<?= htmlspecialchars($siteSettings['social']['facebook_url']) ?>" target="_blank"><img src="svg/fb.svg" alt="" title="Facebook"></a>
+                                    <?php endif; ?>
+                                    <?php if (!empty($siteSettings['social']['pinterest_url'])): ?>
+                                        <a href="<?= htmlspecialchars($siteSettings['social']['pinterest_url']) ?>"><img src="svg/pinterest.svg" alt="" title="Pinterest"></a>
+                                    <?php endif; ?>
+                                    <?php if (!empty($siteSettings['social']['instagram_url'])): ?>
+                                        <a href="<?= htmlspecialchars($siteSettings['social']['instagram_url']) ?>"><img src="svg/ig.svg" alt="" title="Instagram"></a>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
@@ -89,7 +110,6 @@
         </div>
     </div>
 
-
     <?php include 'lundayan-site-footer.php'; ?>
 
     <script>
@@ -107,7 +127,5 @@
             }
         });
     </script>
-
 </body>
-
 </html>

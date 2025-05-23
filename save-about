@@ -1,0 +1,35 @@
+<?php
+session_start();
+require_once 'php-backend/connect.php';
+require_once 'php-backend/auth-check.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $section = $_GET['section'] ?? '';
+    $adminId = $_SESSION['admin_id'];
+    
+    try {
+        $stmt = $conn->prepare("
+            INSERT INTO about_settings (section_type, title, content, image_url, updated_by) 
+            VALUES (?, ?, ?, ?, ?)
+            ON DUPLICATE KEY UPDATE 
+                title = VALUES(title),
+                content = VALUES(content),
+                image_url = VALUES(image_url),
+                updated_by = VALUES(updated_by)
+        ");
+        
+        $title = $_POST['title'] ?? null;
+        $content = $_POST['content'] ?? null;
+        $imageUrl = $_POST['image_url'] ?? null;
+        
+        $stmt->bind_param("ssssi", $section, $title, $content, $imageUrl, $adminId);
+        $stmt->execute();
+        
+        $_SESSION['success'] = ucfirst($section) . ' updated successfully!';
+    } catch (Exception $e) {
+        $_SESSION['error'] = 'Error updating section: ' . $e->getMessage();
+    }
+    
+    header("Location: admin-settings.php");
+    exit;
+}
