@@ -244,6 +244,97 @@
     </main>
 
     <?php include 'lundayan-site-footer.php' ?>
+    <script>
+        const profiles = [{
+                name: "MIGUEL CARLOS R. BERMUDEZ",
+                role: "G6 Member",
+                desc: "Description for Miguel.",
+                img: "pics/bermudez.jpg"
+            },
+            {
+                name: "CHARL JOVEN V. CASTRO",
+                role: "G1 Member",
+                desc: "Description for Charl.",
+                img: "pics/cj_pogi.jpg"
+            },
+            {
+                name: "CHARLES JERAMY C. DE PADUA",
+                role: "G1 Member",
+                desc: "Description for Charles.",
+                img: "pics/90477869_583028765758138_5089600927967477760_n.jpg"
+            },
+            {
+                name: "PAUL JUSTIN D. FRANCISCO",
+                role: "G6 Leader",
+                desc: "Description for Paul.",
+                img: "pics/paul.jpg"
+            },
+            {
+                name: "MARVIN D. GALLARDO",
+                role: "G1 Secretary",
+                desc: "Description for Marvin.",
+                img: "pics/486323055_9429894183798307_5671286570096958651_n-removebg-preview.png"
+            },
+            {
+                name: "SEAN PAUL F. GARCIA",
+                role: "G6 Member",
+                desc: "Description for Sean.",
+                img: "pics/garcia.jpg"
+            },
+            {
+                name: "SAMANTHA O. JUMAO-AS",
+                role: "G1 Member",
+                desc: "Description for Samantha.",
+                img: "pics/sam.jpg"
+            },
+            {
+                name: "KLARENZ COBIE O. MANRIQUE",
+                role: "G1 Leader",
+                desc: "Description for Klarenz.",
+                img: "pics/IMG_20240604_113030_221.png"
+            },
+            {
+                name: "GRACI AL DEI R. MEDRANO",
+                role: "G1 Member",
+                desc: "Description for Graci.",
+                img: "pics/graci.jpg"
+            },
+            {
+                name: "JOHN CHESTER Q. MODANCIA",
+                role: "G1 Member",
+                desc: "Description for John.",
+                img: "pics/modancia.jpg"
+            }
+        ];
+
+        let currentIndex = 7;
+
+        const nameEl = document.querySelector(".profile-info h1");
+        const roleEl = document.querySelector(".profile-info h3");
+        const descEl = document.querySelector(".profile-info p");
+        const imgEl = document.querySelector(".profile-photo img");
+
+        function updateProfile(index) {
+            const profile = profiles[index];
+            nameEl.textContent = profile.name;
+            roleEl.textContent = profile.role;
+            descEl.textContent = profile.desc;
+            imgEl.src = profile.img;
+            imgEl.alt = profile.name;
+        }
+
+        updateProfile(currentIndex);
+
+        document.querySelector(".arrow-left").addEventListener("click", () => {
+            currentIndex = (currentIndex - 1 + profiles.length) % profiles.length;
+            updateProfile(currentIndex);
+        });
+
+        document.querySelector(".arrow-right").addEventListener("click", () => {
+            currentIndex = (currentIndex + 1) % profiles.length;
+            updateProfile(currentIndex);
+        });
+    </script>
 
 </body>
 
