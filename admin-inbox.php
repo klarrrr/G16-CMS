@@ -9,7 +9,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <style>
         :root {
-            --primary-color: #3498db;
+            --primary-color: #0F5132;
             --secondary-color: #2c3e50;
             --success-color: #2ecc71;
             --danger-color: #e74c3c;
@@ -36,10 +36,10 @@
         }
 
         .sidebar {
-            width: 250px;
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 20px 0;
+            background-color: #0F5132;
+            color: #ecf0f1;
+            padding: 20px;
+            height: 100vh;
         }
 
         .sidebar-header {

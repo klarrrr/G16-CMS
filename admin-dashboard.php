@@ -26,7 +26,7 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
 
         .sidebar {
             width: 250px;
-            background-color: #2c3e50;
+            background-color: #0F5132;
             color: #ecf0f1;
             padding: 20px;
             height: 100vh;
