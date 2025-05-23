@@ -6,9 +6,6 @@ $user_id = $_GET['user_id'] ?? '';
 $action = $_GET['action'] ?? '';
 $date_from = $_GET['date_from'] ?? '';
 $date_to = $_GET['date_to'] ?? '';
-$page = intval($_GET['page'] ?? 1);
-$limit = 10; // Items per page
-$offset = ($page - 1) * $limit;
 
 // Build WHERE conditions
 $conditions = [];
@@ -41,36 +38,22 @@ if (!empty($date_to)) {
 
 $where = empty($conditions) ? '1=1' : implode(' AND ', $conditions);
 
-// Count total records
-$countQuery = "SELECT COUNT(*) as total FROM audit_logs WHERE $where";
-$countStmt = $conn->prepare($countQuery);
-
-if (!empty($params)) {
-    $countStmt->bind_param($types, ...$params);
-}
-
-$countStmt->execute();
-$total = $countStmt->get_result()->fetch_assoc()['total'];
-$countStmt->close();
-
-// Fetch logs with user and article info
+// Prepare query
 $query = "
     SELECT 
-        audit_logs.*, 
+        audit_logs.log_id,
         CONCAT(users.user_first_name, ' ', users.user_last_name) AS user_name,
-        articles.article_title
+        articles.article_title,
+        audit_logs.action,
+        audit_logs.log_time
     FROM audit_logs
     LEFT JOIN users ON audit_logs.user_owner = users.user_id
     LEFT JOIN articles ON audit_logs.article_owner = articles.article_id
     WHERE $where
     ORDER BY audit_logs.log_time DESC
-    LIMIT ? OFFSET ?
 ";
 
 $stmt = $conn->prepare($query);
-$types .= 'ii';
-$params[] = $limit;
-$params[] = $offset;
 
 if (!empty($params)) {
     $stmt->bind_param($types, ...$params);
@@ -78,16 +61,35 @@ if (!empty($params)) {
 
 $stmt->execute();
 $result = $stmt->get_result();
-$logs = $result->fetch_all(MYSQLI_ASSOC);
-$stmt->close();
 
-// Return JSON response
-header('Content-Type: application/json');
-echo json_encode([
-    'success' => true,
-    'data' => $logs,
-    'total' => $total,
-    'page' => $page,
-    'per_page' => $limit,
-    'total_pages' => ceil($total / $limit)
+// Set headers for CSV download
+header('Content-Type: text/csv; charset=utf-8');
+header('Content-Disposition: attachment; filename=audit_logs_export_' . date('Y-m-d') . '.csv');
+
+// Create output stream
+$output = fopen('php://output', 'w');
+
+// Write CSV headers
+fputcsv($output, [
+    'Log ID',
+    'User',
+    'Article',
+    'Action',
+    'Timestamp'
 ]);
+
+// Write data rows
+while ($row = $result->fetch_assoc()) {
+    fputcsv($output, [
+        $row['log_id'],
+        $row['user_name'] ?? 'N/A',
+        $row['article_title'] ?? 'N/A',
+        $row['action'],
+        $row['log_time']
+    ]);
+}
+
+// Close connections
+fclose($output);
+$stmt->close();
+$conn->close();
