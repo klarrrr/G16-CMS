@@ -291,8 +291,8 @@ $archiveStatus = $articles['archive_status'];
                                     <!-- Population of tags will be here -->
                                 </div>
                                 <div class="tags-input-container">
-                                    <input type="text" placeholder="Enter tags here" id='widget-tags-input'>
-                                    <button id="save-tags-button" title="Reminder: 'Enter' on tag first to save">Save Tags</button>
+                                    <input type="text" placeholder="Enter tags here" id='widget-tags-input' title="Press 'Enter' after putting tag">
+                                    <button id="save-tags-button">Save Tags</button>
                                 </div>
                             </div>
                         </div>
