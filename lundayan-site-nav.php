@@ -1,7 +1,6 @@
 <?php
+ob_start();
 include 'php-backend/connect.php';
-
-session_start();
 
 $user_id = $_SESSION['user_id'] ?? null;
 $pic = $_SESSION['profile_picture'] ?? null;
@@ -22,7 +21,7 @@ $pic = $_SESSION['profile_picture'] ?? null;
 
             <li><a href="lundayan-site-contact.php">Contact</a></li>
             <li><a href="lundayan-site-about.php">About</a></li>
-            <li><a href="#">Team</a></li>
+            <li><a href="lundayan-site-team.php">Team</a></li>
 
             <?php if (!$user_id): ?>
                 <li><a href="lundayan-sign-in-page.php">Login</a></li>
