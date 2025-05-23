@@ -17,12 +17,8 @@
         <section class="contact">
             <div class="contact-title-container">
                 <div class="send-container-title">
-                    <p>Contact Us</p>
                     <h2>Join us in Creating Something Great</h2>
-                </div>
-                <div class="img-container">
-                    <img src="pics/lundayan-logo.png" alt="" id='lundayan-logo'>
-                    <img src="pics/PLP_Logo.png" alt="" id='plp-logo'>
+                     <p>Reach out through the form, and we will respond within the next 24 hours. If you prefer to email instead, you can reach out to us at lundayan@plpasig.edu.ph</p>
                 </div>
             </div>
 
@@ -37,11 +33,11 @@
                         <input name='phone' type="text" placeholder="Phone Number">
                     </div>
                     <input name='subject' type="text" placeholder="Subject" required>
-                    <textarea name="message" placeholder="Message" required></textarea>
+                    <textarea name="message" placeholder="Message" required rows="15"></textarea>
                     <button type="submit" name="submit">Send Message</button>
                 </form>
 
-                <div class="own-info">
+                <!-- <div class="own-info">
                     <div class="info-box">
                         <div class="vertical-two">
                             <div class="inside-two-vertical">
@@ -69,7 +65,13 @@
                             </div>
                         </div>
                     </div>
+                </div> -->
+
+                <div class="faq-container">
+                    <h2>FAQS</h2>
+                    <p>Have questions? Check out our FAQ Section for Quick and Helpful Answers</p>
                 </div>
+
             </div>
         </section>
 
