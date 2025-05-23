@@ -45,7 +45,7 @@ if (empty($matchedArticleIds)) {
 
 // Step 2: Paginate article IDs
 $total = count($matchedArticleIds);
-$limit = 10;
+$limit = 9;
 $totalPages = ceil($total / $limit);
 $offset = ($page - 1) * $limit;
 

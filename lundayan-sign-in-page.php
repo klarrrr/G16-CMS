@@ -27,6 +27,84 @@ if (isset($_SESSION['user_id'])) {
         .error-visible {
             display: block !important;
         }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(15px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .modal h2 {
+            margin-top: 0;
+            color: #0a5c36;
+        }
+
+        .modal p {
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .modal-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #0a5c36;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .modal-btn:hover {
+            background-color: #084b2d;
+        }
     </style>
 </head>
 
@@ -51,34 +129,6 @@ if (isset($_SESSION['user_id'])) {
                 <a href="#" id='forgot-pass'>Forgot Password?</a>
 
                 <hr>
-                <button type="button" id="create-account" class='create-or-sign-in-btn' title="Sign up here">Create New Account</button>
-            </form>
-
-            <!-- Sign Up Form -->
-            <form id="sign-up-form" class="sign-in-user-input" style='display: none;' novalidate>
-                <label class="error-msg" id="reg-first-name-error"></label>
-                <input type="text" class='sign-in-input-box' placeholder='Enter first name' id="reg-first-name" autocomplete="off">
-
-                <label class="error-msg" id="reg-last-name-error"></label>
-                <input type="text" class='sign-in-input-box' placeholder='Enter last name' id="reg-last-name" autocomplete="off">
-
-                <label class="error-msg" id="reg-email-error"></label>
-                <input type="email" class='sign-in-input-box' placeholder="Enter your email here" id='reg-email' autocomplete="off" title="Enter valid email (e.g. example@plpasig.edu.ph)">
-
-                <label class="error-msg" id="reg-pass-error"></label>
-                <input type="password" class='sign-in-input-box' placeholder="Enter your password here" id='reg-pass' autocomplete="new-password">
-
-                <label class="error-msg" id="reg-re-pass-error"></label>
-                <input type="password" class='sign-in-input-box' placeholder="Re-enter your password here" id='reg-re-pass' autocomplete="new-password" title="Confirm password">
-
-                <select id="reg-user-type" class='sign-in-input-box' title="Choose user type">
-                    <option value="writer">Writer</option>
-                    <option value="reviewer">Reviewer</option>
-                </select>
-
-                <button type="submit" class='sign-btn' id='sign-up-btn'>Create account</button>
-                <hr>
-                <button type="button" id="back-sign-in" class='create-or-sign-in-btn'>Already Have Account</button>
             </form>
         </section>
 
@@ -87,11 +137,25 @@ if (isset($_SESSION['user_id'])) {
         </footer>
     </main>
 
-    <script>
-        function isValidPasigEmail(email) {
-            return /^[a-zA-Z0-9._%+-]+@plpasig\.edu\.ph$/.test(email);
-        }
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeForgotPasswordModal()">&times;</span>
+            <h2>Forgot Password</h2>
+            <p>Enter your email address and we'll notify the admin to reset your password.</p>
 
+            <div class="form-group">
+                <label for="forgotEmail">Email Address</label>
+                <input type="email" id="forgotEmail" class="modal-input" placeholder="Your registered email">
+                <div id="forgotEmailError" class="error-msg"></div>
+            </div>
+
+            <button id="submitForgotPassword" class="modal-btn" onclick="submitForgotPassword()">Send Request</button>
+        </div>
+    </div>
+
+    <script>
+        // Sign In Form Submission
         $('#sign-in-form').submit(function(e) {
             e.preventDefault();
             let email = $('#sign-in-email').val().trim();
@@ -101,10 +165,10 @@ if (isset($_SESSION['user_id'])) {
             $('#sign-in-email-error').text('').removeClass('error-visible');
             $('#sign-in-pass-error').text('').removeClass('error-visible');
 
-            if (!isValidPasigEmail(email)) {
-                $('#sign-in-email-error').text('* Incorrect Format - Pasig Email Only').addClass('error-visible');
-                valid = false;
-            }
+            // if (!isValidPasigEmail(email)) {
+            //     $('#sign-in-email-error').text('* Incorrect Format - Pasig Email Only').addClass('error-visible');
+            //     valid = false;
+            // }
             if (!pass) {
                 $('#sign-in-pass-error').text('* Password cannot be empty').addClass('error-visible');
                 valid = false;
@@ -124,7 +188,7 @@ if (isset($_SESSION['user_id'])) {
                     dataType: 'json',
                     success: function(result) {
                         if (result.status === 'success') {
-                            window.location.href = 'editor-dashboard.php';
+                            window.location.href = result.redirect; // Use redirect from backend
                         } else {
                             alert(result.message);
                         }
@@ -138,73 +202,88 @@ if (isset($_SESSION['user_id'])) {
             }
         });
 
-        $('#sign-up-form').submit(function(e) {
+        // Forgot Password Modal Functions
+        $('#forgot-pass').click(function(e) {
             e.preventDefault();
-            let fname = $('#reg-first-name').val().trim();
-            let lname = $('#reg-last-name').val().trim();
-            let email = $('#reg-email').val().trim();
-            let pass = $('#reg-pass').val().trim();
-            let repass = $('#reg-re-pass').val().trim();
-            let valid = true;
+            openForgotPasswordModal();
+        });
 
-            $('.error-msg').text('').removeClass('error-visible');
+        function openForgotPasswordModal() {
+            $('#forgotPasswordModal').show();
+            $('#forgotEmail').val($('#sign-in-email').val()); // Pre-fill with email from sign-in form
+        }
 
-            if (!fname) {
-                $('#reg-first-name-error').text('* First name cannot be empty').addClass('error-visible');
-                valid = false;
-            }
-            if (!lname) {
-                $('#reg-last-name-error').text('* Last name cannot be empty').addClass('error-visible');
-                valid = false;
-            }
-            if (!isValidPasigEmail(email)) {
-                $('#reg-email-error').text('* Incorrect Format - Pasig Email Only').addClass('error-visible');
-                valid = false;
-            }
-            if (!pass) {
-                $('#reg-pass-error').text('* Password cannot be empty').addClass('error-visible');
-                valid = false;
-            } else if (pass.length < 8) {
-                $('#reg-pass-error').text('* Cannot be less than 8 characters').addClass('error-visible');
-                valid = false;
-            }
-            if (!repass || pass !== repass) {
-                $('#reg-re-pass-error').text('* Passwords don\'t match').addClass('error-visible');
-                valid = false;
+        function closeForgotPasswordModal() {
+            $('#forgotPasswordModal').hide();
+            $('#forgotEmailError').text('').removeClass('error-visible');
+        }
+
+        function submitForgotPassword() {
+            const email = $('#forgotEmail').val().trim();
+            $('#forgotEmailError').text('').removeClass('error-visible');
+
+            if (!email) {
+                $('#forgotEmailError').text('* Email is required').addClass('error-visible');
+                return;
             }
 
-            if (valid) {
-                const first = $('#reg-first-name').val();
-                const last = $('#reg-last-name').val();
-                const email = $('#reg-email').val();
-                const pass = $('#reg-pass').val();
-                const re_pass = $('#reg-re-pass').val();
-                const user_type = $('#reg-user-type').val();
+            // if (!isValidPasigEmail(email)) {
+            //     $('#forgotEmailError').text('* Must be a valid Pasig email').addClass('error-visible');
+            //     return;
+            // }
 
-                if (pass !== re_pass) {
-                    alert("Passwords do not match!");
-                    return;
-                }
+            // Show loading state
+            $('#submitForgotPassword').prop('disabled', true).text('Sending...');
 
-                $.post('register.php', {
-                    first,
-                    last,
-                    email,
-                    pass,
-                    user_type
-                }, function(data) {
-                    if (data.status === 'success') {
-                        alert("Account created! You can now log in.");
-                        $('#back-sign-in').click();
+            $.ajax({
+                url: 'php-backend/forgot-password.php',
+                method: 'POST',
+                data: {
+                    email: email
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        alert('Password reset request sent to admin. You will be notified once your password is reset.');
+                        closeForgotPasswordModal();
                     } else {
-                        alert(data.message);
+                        alert(response.message || 'Failed to send request. Please try again.');
                     }
-                }, 'json').fail(function(xhr) {
-                    console.error("Error:", xhr.responseText);
-                    alert("Something went wrong. See console.");
-                });
+                },
+                error: function() {
+                    alert('An error occurred. Please try again later.');
+                },
+                complete: function() {
+                    $('#submitForgotPassword').prop('disabled', false).text('Send Request');
+                }
+            });
+        }
+
+        // Global Enter key listener
+        $(document).on('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const isSignInVisible = $('#sign-in-form').is(':visible');
+                const isSignUpVisible = $('#sign-up-form').is(':visible');
+                const isForgotPasswordVisible = $('#forgotPasswordModal').is(':visible');
+
+                if (isSignInVisible) {
+                    e.preventDefault();
+                    $('#sign-in-btn').click();
+                } else if (isSignUpVisible) {
+                    e.preventDefault();
+                    $('#sign-up-btn').click();
+                } else if (isForgotPasswordVisible) {
+                    e.preventDefault();
+                    $('#submitForgotPassword').click();
+                }
             }
         });
+
+        // Helper function to validate Pasig email
+        function isValidPasigEmail(email) {
+            const pasigDomain = /@plpasig\.edu\.ph$/i;
+            return pasigDomain.test(email);
+        }
     </script>
 
     <!-- Some events -->
@@ -224,16 +303,6 @@ if (isset($_SESSION['user_id'])) {
                     $('#sign-up-btn').click();
                 }
             }
-        });
-
-        $('#create-account').click(function() {
-            $('#sign-in-form').hide();
-            $('#sign-up-form').show();
-        });
-
-        $('#back-sign-in').click(function() {
-            $('#sign-up-form').hide();
-            $('#sign-in-form').show();
         });
     </script>
 </body>

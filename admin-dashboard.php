@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+// Check if user is logged in and is an admin
+if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admin') {
+    header('Location: lundayan-sign-in-page.php');
+    exit;
+}
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,16 +26,13 @@
             transition: 0.3s ease-in-out;
         }
 
-        .admin-container {
-            display: flex;
-            height: 100vh;
-        }
-
         .sidebar {
             width: 250px;
-            background-color: #2c3e50;
+            background-color: #0F5132;
             color: #ecf0f1;
             padding: 20px;
+            height: 100vh;
+            position: fixed;
         }
 
         .sidebar h2 {
@@ -42,16 +50,25 @@
         .sidebar ul li a {
             color: #ecf0f1;
             text-decoration: none;
+            display: block;
+            padding: 8px 0;
         }
 
         .sidebar ul li a:hover {
             text-decoration: underline;
         }
 
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
         .main-content {
             flex: 1;
             background-color: #f4f4f4;
             padding: 20px;
+            margin-left: 250px;
+            /* Same as sidebar width */
         }
 
         header h1 {
@@ -67,6 +84,7 @@
             border-collapse: collapse;
             background-color: white;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
         }
 
         th,
@@ -80,27 +98,27 @@
             background-color: #3498db;
             color: white;
         }
+
+        .welcome-message {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 
 <body>
     
     <div class="admin-container">
-        <aside class="sidebar">
-            <h2>Admin Panel</h2>
-            <ul>
-                <li><a href="#">Dashboard</a></li>
-                <li><a href="#">Inbox</a></li>
-                <li><a href="#">Manage Users</a></li>
-                <li><a href="#">Audit Log</a></li>
-                <li><a href="admin-settings.php">Settings</a></li>
-                <li><a href="#">Logout</a></li>
-            </ul>
-        </aside>
-
+        <?php include 'admin-side-bar.php' ?>
         <main class="main-content">
             <header>
-                <h1>Welcome, Admin</h1>
+                <div class="welcome-message">
+                    <h1>Welcome, <?php echo htmlspecialchars($_SESSION['user_first']) . ' ' . htmlspecialchars($_SESSION['user_last']); ?></h1>
+                    <p>You are logged in as <?php echo htmlspecialchars($_SESSION['user_type']); ?></p>
+                </div>
             </header>
             <section class="admin-info">
                 <h2>Admin Details</h2>
@@ -109,15 +127,20 @@
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Email</th>
-                        <th>Date Created</th>
+                        <th>Profile Picture</th>
                     </tr>
                     <tr>
-                        <td>Jane</td>
-                        <td>Doe</td>
-                        <td>jane.doe@example.com</td>
-                        <td>2025-05-23</td>
+                        <td><?php echo htmlspecialchars($_SESSION['user_first']); ?></td>
+                        <td><?php echo htmlspecialchars($_SESSION['user_last']); ?></td>
+                        <td><?php echo htmlspecialchars($_SESSION['user_email']); ?></td>
+                        <td>
+                            <?php if (!empty($_SESSION['profile_picture'])): ?>
+                                <img src="<?php echo htmlspecialchars($_SESSION['profile_picture']); ?>" alt="Profile Picture" style="width: 50px; height: 50px; border-radius: 50%;">
+                            <?php else: ?>
+                                No image
+                            <?php endif; ?>
+                        </td>
                     </tr>
-                    <!-- More rows can go here -->
                 </table>
             </section>
         </main>

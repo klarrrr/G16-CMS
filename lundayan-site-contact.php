@@ -24,6 +24,168 @@ $openHours = "Monday - Friday : $openTime-$closeTime";
     <link rel="icon" href="pics/lundayan-logo.png">
 </head>
 
+<style>
+    .faq-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        padding: 2rem 0;
+    }
+
+    .faq-container-h2 {
+        font-family: robinson;
+        font-size: 10rem;
+        font-weight: lighter;
+        line-height: normal;
+        color: #f4f4f4;
+        line-height: 9rem;
+        text-align: center;
+    }
+
+    .faq-container-p {
+        font-size: 1em;
+        color: #f4f4f4;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .faq-container-title {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .faqs {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        width: 80%;
+        max-width: 800px;
+    }
+
+    .faq-box {
+        display: flex;
+        flex-direction: column;
+        background-color: #1D2E28;
+        padding: 2rem;
+        border-radius: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .faq-box.active {
+        background-color: #2a3d36;
+    }
+
+    .faq-title {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .faq-h2 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #f4f4f4;
+        margin: 0;
+        flex: 1;
+    }
+
+    .faq-p {
+        color: #e0e0e0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease, padding-top 0.3s ease;
+        line-height: 1.6;
+    }
+
+    .faq-box.active .faq-p {
+        max-height: 500px;
+        /* Adjust based on your longest content */
+        padding-top: 1rem;
+    }
+
+    .faq-open {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #f4f4f4;
+        transition: transform 0.3s ease;
+        margin-left: 1rem;
+    }
+
+    .faq-box.active .faq-open {
+        transform: rotate(45deg);
+    }
+
+    @media (max-width: 768px) {
+        .faq-container-h2 {
+            font-size: 5rem;
+            line-height: 5rem;
+        }
+
+        .faq-container-p {
+            width: 80%;
+        }
+
+        .faqs {
+            width: 95%;
+        }
+
+        .faq-h2 {
+            font-size: 1rem;
+        }
+    }
+
+
+    .popup-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .popup-message {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 8px;
+        max-width: 400px;
+        width: 90%;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .popup-message p {
+        margin-bottom: 1.5rem;
+        font-size: 1.1rem;
+    }
+
+    .popup-message button {
+        padding: 0.5rem 1.5rem;
+        background-color: #0a5c36;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s;
+    }
+
+    .popup-message button:hover {
+        background-color: #084b2d;
+    }
+</style>
+
 <body>
     <?php include 'lundayan-site-upper-nav.php' ?>
     <?php include 'lundayan-site-nav.php'; ?>
@@ -32,17 +194,13 @@ $openHours = "Monday - Friday : $openTime-$closeTime";
         <section class="contact">
             <div class="contact-title-container">
                 <div class="send-container-title">
-                    <p>Contact Us</p>
                     <h2>Join us in Creating Something Great</h2>
-                </div>
-                <div class="img-container">
-                    <img src="pics/lundayan-logo.png" alt="" id='lundayan-logo'>
-                    <img src="pics/PLP_Logo.png" alt="" id='plp-logo'>
+                    <p>Reach out through the form, and we will respond within the next 24 hours. If you prefer to email instead, you can reach out to us at lundayan@plpasig.edu.ph</p>
                 </div>
             </div>
 
             <div class="contact-container">
-                <form class="send-info" method="POST" action="php-backend/ContactController.php">
+                <form class="send-info" id="contactForm" method="POST">
                     <div class="two-input">
                         <input name='first_name' type="text" placeholder="First Name" required>
                         <input name='last_name' type="text" placeholder="Last Name" required>
@@ -52,7 +210,7 @@ $openHours = "Monday - Friday : $openTime-$closeTime";
                         <input name='phone' type="text" placeholder="Phone Number">
                     </div>
                     <input name='subject' type="text" placeholder="Subject" required>
-                    <textarea name="message" placeholder="Message" required></textarea>
+                    <textarea name="message" placeholder="Message" required rows="15"></textarea>
                     <button type="submit" name="submit">Send Message</button>
                 </form>
 
@@ -66,7 +224,71 @@ $openHours = "Monday - Friday : $openTime-$closeTime";
                             <div class="inside-two-vertical">
                                 <h3>Open Time</h3>
                                 <p><?= htmlspecialchars($openHours) ?></p>
+                <div class="faq-container">
+                    <div class="faq-container-title">
+                        <h2 class="faq-container-h2">FAQS</h2>
+                        <p class="faq-container-p">Have questions? Check out our FAQ Section for Quick and Helpful Answers</p>
+                    </div>
+
+                    <div class="faqs">
+                        <div class="faq-box">
+                            <div class="faq-title">
+                                <h2 class="faq-h2">What type of content do you publish?</h2>
+                                <span class="faq-open">+</span>
                             </div>
+                            <p class="faq-p">
+                                We publish a wide range of content including news articles about PLP, opinion pieces, tutorials, how-to guides, interviews, and expert analysis in various categories such as technology, health, lifestyle, education, entertainment, and more.
+                            </p>
+                        </div>
+
+                        <div class="faq-box">
+                            <div class="faq-title">
+                                <h2 class="faq-h2">How do I search for specific topics or articles?</h2>
+                                <span class="faq-open">+</span>
+                            </div>
+                            <p class="faq-p">
+                                You can use the search bar at the Archive Page to find articles by keyword, title, or topic. You can also browse by category or tags for more specific content.
+                            </p>
+                        </div>
+
+                        <div class="faq-box">
+                            <div class="faq-title">
+                                <h2 class="faq-h2">Are the articles fact-checked?</h2>
+                                <span class="faq-open">+</span>
+                            </div>
+                            <p class="faq-p">
+                                Yes, we prioritize accuracy and credibility. All articles go through editorial review, and factual information is verified using reliable sources before publication.
+                            </p>
+                        </div>
+
+                        <div class="faq-box">
+                            <div class="faq-title">
+                                <h2 class="faq-h2">Can I share articles from this website on social media?</h2>
+                                <span class="faq-open">+</span>
+                            </div>
+                            <p class="faq-p">
+                                Absolutely! We encourage readers to share our content on social platforms using the share buttons provided at the top or bottom of each article.
+                            </p>
+                        </div>
+
+                        <div class="faq-box">
+                            <div class="faq-title">
+                                <h2 class="faq-h2">Do you have a mobile app?</h2>
+                                <span class="faq-open">+</span>
+                            </div>
+                            <p class="faq-p">
+                                Currently, we do not have a dedicated mobile app, but our website is fully responsive and optimized for smartphones and tablets.
+                            </p>
+                        </div>
+
+                        <div class="faq-box">
+                            <div class="faq-title">
+                                <h2 class="faq-h2">How do I report an error or request a correction in an article?</h2>
+                                <span class="faq-open">+</span>
+                            </div>
+                            <p class="faq-p">
+                                If you notice an error, please contact us via our "Contact Us" page and specify the article title and the issue. We take corrections seriously and will update the article as needed.
+                            </p>
                         </div>
                         <div class="vertical-two">
                             <div class="inside-two-vertical">
@@ -87,10 +309,29 @@ $openHours = "Monday - Friday : $openTime-$closeTime";
                                         <a href="<?= htmlspecialchars($siteSettings['social']['instagram_url']) ?>"><img src="svg/ig.svg" alt="" title="Instagram"></a>
                                     <?php endif; ?>
                                 </div>
+
+                        <div class="faq-box">
+                            <div class="faq-title">
+                                <h2 class="faq-h2">How do I contact the editorial team?</h2>
+                                <span class="faq-open">+</span>
                             </div>
+                            <p class="faq-p">
+                                You can reach out to our editorial team using the contact form or by emailing us at <a href="mailto:lundayan@plpasig.edu.ph" style="color: #fcb404;">lundayan@plpasig.edu.ph</a>. We welcome feedback, story suggestions, and inquiries.
+                            </p>
+                        </div>
+
+                        <div class="faq-box">
+                            <div class="faq-title">
+                                <h2 class="faq-h2">Can I republish your articles on my own blog or website?</h2>
+                                <span class="faq-open">+</span>
+                            </div>
+                            <p class="faq-p">
+                                Republishing articles without permission is not allowed. However, you may quote short excerpts with proper attribution and a backlink to the original article. For full republishing rights, please contact us.
+                            </p>
                         </div>
                     </div>
                 </div>
+
             </div>
         </section>
 
@@ -125,6 +366,68 @@ $openHours = "Monday - Friday : $openTime-$closeTime";
                 document.getElementById('popup-text').textContent = text;
                 document.getElementById('popup-backdrop').style.display = 'flex';
             }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqBoxes = document.querySelectorAll('.faq-box');
+
+            faqBoxes.forEach(box => {
+                box.addEventListener('click', function() {
+                    // Close all other FAQs
+                    faqBoxes.forEach(otherBox => {
+                        if (otherBox !== box && otherBox.classList.contains('active')) {
+                            otherBox.classList.remove('active');
+                        }
+                    });
+
+                    // Toggle current FAQ
+                    this.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const form = e.target;
+            const formData = new FormData(form);
+            const submitButton = form.querySelector('button[type="submit"]');
+
+            // Disable button during submission
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending...';
+
+            fetch('/G16-CMS/php-backend/ContactController.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        // Show success popup
+                        document.getElementById('popup-text').textContent = 'Message sent successfully!';
+                        document.getElementById('popup-backdrop').style.display = 'flex';
+
+                        // Reset form
+                        form.reset();
+                    } else {
+                        // Show error message
+                        document.getElementById('popup-text').textContent = data.message || 'Failed to send message. Please try again.';
+                        document.getElementById('popup-backdrop').style.display = 'flex';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('popup-text').textContent = 'An error occurred. Please try again.';
+                    document.getElementById('popup-backdrop').style.display = 'flex';
+                })
+                .finally(() => {
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Send Message';
+                });
         });
     </script>
 </body>

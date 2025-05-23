@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!datePosted || !dateExpired) {
             if (!datePosted) datePostedInput.style.border = '1px solid red';
             if (!dateExpired) dateExpiredInput.style.border = '1px solid red';
+            alert("Please complete the dates Post On and Archive On First! 🙏")
             return;
         }
 

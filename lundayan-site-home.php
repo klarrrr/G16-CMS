@@ -13,6 +13,45 @@
     <div id="fb-root"></div>
     <!-- Fb -->
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v22.0"></script>
+    <style>
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .pagination .page-link {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #ddd;
+            transition: all 0.2s;
+        }
+
+        .pagination .page-link:hover {
+            background-color: #f5f5f5;
+        }
+
+        .pagination .page-link.active {
+            background-color: #fcb404;
+            color: #161616;
+            border-color: #fcb404;
+        }
+
+        .no-news-message {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+
+        .no-news-message h3 {
+            margin-top: 0.5rem;
+            color: #333;
+        }
+    </style>
 </head>
 
 
@@ -46,6 +85,8 @@
                     <!-- To be filled up -->
 
                 </div>
+                <!-- Add this pagination container -->
+                <div class="pagination" id='pagination'></div>
             </div>
             <div class="extras-container">
                 <div class="remaining-texts">
