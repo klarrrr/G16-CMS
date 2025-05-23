@@ -28,6 +28,15 @@ $.ajax({
 
             const p = document.createElement('p');
             p.textContent = htmlEntityDecode(title);
+            p.style.color = '#f4f4f4';
+            p.title = title;
+
+            // Date
+            const date = document.createElement('span');
+            date.textContent = formatDateOnly(articles[i].date_updated); // Format accordingly
+            date.style.fontSize = '0.7rem';
+            date.style.opacity = '0.7';
+            recentArticleLayout.appendChild(date);
 
             recentArticleLayout.appendChild(img);
             recentArticleLayout.appendChild(p);

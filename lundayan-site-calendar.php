@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,7 +47,7 @@
                 <div class="calendar-right">
                     <div class="calendar-controls">
                         <div class="adjust-calendar-container">
-                            <div class="month-container">
+                            <div class="month-container" title="Month">
                                 <div class="select">
                                     <select id="month-select">
                                         <option value="0">January</option>
@@ -64,7 +65,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="year-container">
+                            <div class="year-container" title="Year">
                                 <div class="select">
                                     <select id="year-select">
                                         <!-- Ppoulate with oldest year - 1 and year + 1 -->
@@ -112,6 +113,9 @@
 
     </main>
     <div id="event-box" style="display:none; position:absolute; z-index:1000;"></div>
+    <div id="event-backdrop"></div>
+    <div id="event-box"></div>
+
 
     <?php include 'lundayan-site-footer.php' ?>
 

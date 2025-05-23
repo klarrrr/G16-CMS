@@ -100,7 +100,7 @@ $ownerPicture = $userInfo['profile_picture'];
                 <button id='approve-btn'>Approve Post</button>
                 <button id='add-comment' disabled>Add a Comment</button>
                 <!-- Keep this at the bottom here -->
-                <div class="pfp-container">
+                <div class="pfp-container" title="Account Settings">
                     <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : 'data:image/png;base64,' . $profile_pic; ?>" alt="" id='pfp-circle'>
                 </div>
             </div>

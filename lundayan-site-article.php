@@ -1,9 +1,6 @@
-<?php
+<?php session_start(); ?>
 
-// $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
-// $domain = $_SERVER['HTTP_HOST'];
-// $uri = $_SERVER['REQUEST_URI'];
-// $fullUrl = $protocol . $domain . $uri;
+<?php
 
 include 'php-backend/connect.php';
 

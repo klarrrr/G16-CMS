@@ -107,15 +107,7 @@ $profile_pic = $_SESSION['profile_picture'];
     <script src="scripts/fetch-active-articles.js"></script>
 
     <!-- \Go to account settings -->
-    <script>
-        const pfpCircle = document.getElementById('pfp-circle');
-        pfpCircle.addEventListener('click', () => {
-            window.location.href = 'account-settings.php';
-        });
-    </script>
-
-
-
+    <script src="scripts/pfp-go-to-account-settings.js"></script>
 
 </body>
 

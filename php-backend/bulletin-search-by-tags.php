@@ -2,15 +2,19 @@
 
 include 'connect.php';
 
-$page = $_POST['page'];
-$tag_ids = $_POST['tag_ids'];
+$page = isset($_POST['page']) ? intval($_POST['page']) : 1;
+$tag_ids = isset($_POST['tag_ids']) ? $_POST['tag_ids'] : [];
 
-// Convert the tag_ids array to a comma-separated string
-$tag_ids_string = implode(",", array_map('intval', $tag_ids)); // Sanitize input
+if (empty($tag_ids)) {
+    echo json_encode([]);
+    exit();
+}
 
-$articles = [];
+// Sanitize tag_ids
+$tag_ids = array_map('intval', $tag_ids);
+$tag_ids_string = implode(",", $tag_ids);
 
-// Updated query: Join with articles and filter by approve_status and completion_status
+// Step 1: Get all article IDs that match ALL selected tags
 $query = "
     SELECT ta.assigned_article 
     FROM tag_assign ta
@@ -19,40 +23,49 @@ $query = "
     AND a.approve_status = 'yes'
     AND a.completion_status = 'published'
     GROUP BY ta.assigned_article
-    HAVING COUNT(DISTINCT ta.assigned_tag) = " . count($tag_ids);
+    HAVING COUNT(DISTINCT ta.assigned_tag) = ?
+";
 
 $stmt = $conn->prepare($query);
+$stmt->bind_param("i", $tagCount);
+$tagCount = count($tag_ids);
 $stmt->execute();
 $result = $stmt->get_result();
 
-while ($row = mysqli_fetch_assoc($result)) {
-    $articles[] = $row['assigned_article'];
+$matchedArticleIds = [];
+while ($row = $result->fetch_assoc()) {
+    $matchedArticleIds[] = intval($row['assigned_article']);
 }
 
-// If there are no articles, return an empty result
-if (empty($articles)) {
+// If none matched
+if (empty($matchedArticleIds)) {
     echo json_encode([]);
     exit();
 }
 
-// Convert article IDs to a string for the next query
-$articles_string = implode(",", array_map('intval', $articles)); // Sanitize input
+// Step 2: Paginate article IDs
+$total = count($matchedArticleIds);
+$limit = 10;
+$totalPages = ceil($total / $limit);
+$offset = ($page - 1) * $limit;
 
-// Get the widgets for these articles
+$paginatedArticleIds = array_slice($matchedArticleIds, $offset, $limit);
+$articles_string = implode(",", $paginatedArticleIds);
+
+// Step 3: Fetch widget data for those article IDs
 $widgets = [];
 
-$query = "
-    SELECT * 
-    FROM widgets 
-    WHERE article_owner IN ($articles_string)";
-
+$query = "SELECT * FROM widgets WHERE article_owner IN ($articles_string)";
 $stmt = $conn->prepare($query);
 $stmt->execute();
 $result = $stmt->get_result();
 
-while ($row = mysqli_fetch_assoc($result)) {
+while ($row = $result->fetch_assoc()) {
     $widgets[] = $row;
 }
 
-// Return the widgets
-echo json_encode($widgets);
+echo json_encode([
+    'widget' => $widgets,
+    'totalPages' => $totalPages,
+    'totalRecords' => $total
+]);

@@ -7,7 +7,7 @@ $.ajax({
         container.innerHTML = ''; // Clear previous items
 
         if (data.length === 0) {
-            container.innerHTML = `<div class="no-events-message">No upcoming events at the moment 😔</div>`;
+            container.innerHTML = `<div class="no-events-message" id='calendar-no-event'>No upcoming events at the moment 😔</div>`;
             return;
         }
 

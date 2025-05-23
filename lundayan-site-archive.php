@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,12 +50,10 @@
 
     <!-- Date formatter Function -->
     <script src="scripts/date-formatter.js"></script>
-    <!-- Script for search -->
-    <script src="scripts/bulletin-search-news.js"></script>
-    <!-- Script for gettings tags -->
+    <!-- Get Tags First -->
     <script src="scripts/bulletin-gets-tags.js"></script>
-    <!-- Filter by Tags -->
-    <script src="scripts/bulletin-search-by-tags.js"></script>
+    <!-- Script for Search via search bar and tags -->
+    <script src="scripts/bulletin-search-by-news-and-tags.js"></script>
     <!-- Tag Filter Algorithm -->
     <script src="scripts/tag-click-handler.js"></script>
 </body>

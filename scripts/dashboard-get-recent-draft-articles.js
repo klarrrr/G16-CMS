@@ -13,32 +13,50 @@ $.ajax({
         const articles = res.articles;
         const widgets = res.widgets;
 
+        // Clear container first if needed
+        recentDraftsContainer.innerHTML = '';
+
+        // Fallback message
+        if (articles.length === 0) {
+            const emptyMsg = document.createElement('p');
+            emptyMsg.textContent = "No recent draft articles found.";
+            emptyMsg.style.color = '#999';
+            emptyMsg.style.textAlign = 'center';
+            emptyMsg.style.padding = '1rem';
+            emptyMsg.style.fontStyle = 'italic';
+            recentDraftsContainer.appendChild(emptyMsg);
+            return; // Stop further execution
+        }
+
         const fragment = document.createDocumentFragment();
 
         for (let i = 0; i < articles.length; i++) {
             const articleId = articles[i].article_id;
             const title = articles[i].article_title;
-            const pic = widgets[i] ? widgets[i].widget_img : 'pics/plp-outside.jpg';  // Handle case when widget might be undefined
+            const pic = widgets[i] ? widgets[i].widget_img : 'pics/plp-outside.jpg';
 
-            // Create the div element for each recent article
             const recentArticleLayout = document.createElement('div');
             recentArticleLayout.classList.add('recent-box');
 
-            // Create the image element and set attributes
             const img = document.createElement('img');
-            img.src = pic ? 'data:image/png;base64,' + pic : 'pics/plp-outside.jpg';  // Check for pic existence
+            img.src = pic ? 'data:image/png;base64,' + pic : 'pics/plp-outside.jpg';
             img.alt = title;
 
-            // Create the paragraph element for the title
             const p = document.createElement('p');
             p.textContent = htmlEntityDecode(title);
+            p.style.color = '#f4f4f4';
+            p.title = title;
 
-            // Append the image and paragraph to the recentArticleLayout
+            const date = document.createElement('span');
+            date.textContent = formatDateOnly(articles[i].date_updated);
+            date.style.fontSize = '0.7rem';
+            date.style.opacity = '0.7';
+
             recentArticleLayout.appendChild(img);
             recentArticleLayout.appendChild(p);
+            recentArticleLayout.appendChild(date);
             recentArticleLayout.setAttribute('articleid', articleId);
 
-            // If writer or reviewer
             if (userType === 'writer') {
                 recentArticleLayout.addEventListener('click', (event) => {
                     editArticle(event.currentTarget);
@@ -49,13 +67,10 @@ $.ajax({
                 });
             }
 
-            // Append the recentArticleLayout to the fragment
             fragment.appendChild(recentArticleLayout);
         }
 
-        // Append the fragment to the container
         recentDraftsContainer.appendChild(fragment);
-
     },
     error: (error) => {
         console.log(error);

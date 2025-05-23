@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,8 +27,6 @@
                         <p class="time-posted"><span id='latest-news-day-posted'></span></p>
                         <h1 id='latest-news-title'></h1>
                     </div>
-                    <!-- TODO : MAKE THIS DYNAMIC -->
-                    <!-- <a href="lundayan-site-article.php" id='latest-read-more'>Read More</a> -->
                 </div>
             </div>
         </section>
@@ -53,7 +53,7 @@
                     <h2>Upcoming Events</h2>
                 </div>
                 <!-- Upcoming Events -->
-                <div class="events" id="upcoming-events-container" style='border: 1px solid #fcb404; background-color: #fff; border-radius: 0.5rem;'>
+                <div class="events" id="upcoming-events-container" style='border: 1px solid #fcb404; background-color: #fff; border-radius: 0.5rem;' title="Stay tuned!">
                     <!-- JS will inject events here -->
                 </div>
 
