@@ -120,7 +120,7 @@ $reviewersQuery = "
 $reviewersResult = mysqli_query($conn, $reviewersQuery);
 
 // Function to safely limit HTML content
-function limitHtmlContent($content, $limit = 300) {
+function limitHtmlContent($content, $limit = 600) {
     $decoded = html_entity_decode($content);
     $plainText = strip_tags($decoded);
     
@@ -242,65 +242,21 @@ function limitHtmlContent($content, $limit = 300) {
                 </div>
 
             </div>
-
-<?php
-// More advanced HTML-aware truncation
-function limitHtmlContentAdvanced($content, $limit = 300) {
-    $content = html_entity_decode($content);
-    if (strlen(strip_tags($content)) <= $limit) {
-        return $content;
-    }
-    
-    $dom = new DOMDocument();
-    @$dom->loadHTML('<div>'.$content.'</div>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-    
-    $xpath = new DOMXPath($dom);
-    $node = $dom->getElementsByTagName('div')->item(0);
-    $toRemove = array();
-    $totalLength = 0;
-    
-    foreach ($xpath->query('.//*|./text()', $node) as $child) {
-        if ($child instanceof DOMText) {
-            $text = $child->nodeValue;
-            $remaining = $limit - $totalLength;
-            
-            if (strlen($text) > $remaining) {
-                $child->nodeValue = substr($text, 0, $remaining);
-                $totalLength += $remaining;
-                break;
-            } else {
-                $totalLength += strlen($text);
-            }
-        }
-        
-        if ($totalLength >= $limit) {
-            $toRemove[] = $child;
-        }
-    }
-    
-    // Remove excess nodes
-    foreach ($toRemove as $child) {
-        $child->parentNode->removeChild($child);
-    }
-    
-    $result = $dom->saveHTML();
-    $result = str_replace(['<div>', '</div>'], '', $result);
-    
-    return $result . '... <a href="#" class="read-more">Read More</a>';
-}
-?>
             <!-- ARTICLE CONTENT -->
             <div class="ql-snow" id='article-information'>
-                <div class="ql-editor" style="padding: 0;">
-                    <div class="limited-content">
-                        <?php echo limitHtmlContent($content, 300); ?>
-                    </div>
-                    <div class="full-content" style="display: none;">
-                        <?php echo html_entity_decode($content); ?>
-                    </div>
-                </div>
+                        <div class="ql-editor" style="padding: 0;">
+            <div class="limited-content">
+                <?php echo htmlspecialchars_decode($content, 600); ?>
+            </div>
+            <div class="full-content">
+                <?php echo htmlspecialchars_decode($content); ?>
+            </div>
+            <div class="read-more-container">
+                <a href="#" class="read-more">Read More</a>
             </div>
         </div>
+                    </div>
+                </div>
 
         <section class="article-gallery">
             <div class="gallery-title-container">
