@@ -19,12 +19,9 @@ if ($row = mysqli_fetch_assoc($result)) {
 }
 
 $title = $article['article_title'];
-// $articleUrl = $protocol . $domain . "/article/" . $article_id . "/" . urlencode(strtolower(str_replace(" ", "-", $title)));
-
 $content = $article['article_content'];
 $datePosted = $article['date_posted'];
 
-// Pag di pa published or di pa approved yung article WAG.
 if ($article['completion_status'] == 'draft' || $article['approve_status'] == 'no') {
     header('Location: lundayan-site-home.php');
     exit;
@@ -119,7 +116,23 @@ $reviewersQuery = "
 ";
 $reviewersResult = mysqli_query($conn, $reviewersQuery);
 
-
+// Function to safely limit HTML content
+function limitHtmlContent($content, $limit = 600) {
+    $decoded = html_entity_decode($content);
+    $plainText = strip_tags($decoded);
+    
+    if (strlen($plainText) <= $limit) {
+        return $content;
+    }
+    
+    $truncated = substr($plainText, 0, $limit);
+    $lastSpace = strrpos($truncated, ' ');
+    if ($lastSpace !== false) {
+        $truncated = substr($truncated, 0, $lastSpace);
+    }
+    
+    return htmlspecialchars($truncated) . '... <a href="#" class="read-more">Read More</a>';
+}
 ?>
 
 <!DOCTYPE html>
@@ -226,15 +239,21 @@ $reviewersResult = mysqli_query($conn, $reviewersQuery);
                 </div>
 
             </div>
-
-
             <!-- ARTICLE CONTENT -->
             <div class="ql-snow" id='article-information'>
-                <div class="ql-editor" style="padding: 0;">
-                    <?php echo html_entity_decode($content); ?>
-                </div>
+                        <div class="ql-editor" style="padding: 0;">
+            <div class="limited-content">
+                <?php echo htmlspecialchars_decode($content, 600); ?>
+            </div>
+            <div class="full-content">
+                <?php echo htmlspecialchars_decode($content); ?>
+            </div>
+            <div class="read-more-container">
+                <a href="#" class="read-more">Read More</a>
             </div>
         </div>
+                    </div>
+                </div>
 
         <section class="article-gallery">
             <div class="gallery-title-container">
@@ -266,6 +285,11 @@ $reviewersResult = mysqli_query($conn, $reviewersQuery);
         const galleryContainer = document.querySelector('.gallery-images');
     </script>
     <script src="scripts/lundayan-load-article.js"></script>
+    <!-- Load Galllery -->
+    <script src="scripts/lundayan-load-article.js"></script>
+    <!-- Limit Article -->
+    <script src="scripts/article-limiter.js"></script>
+
 </body>
 
 </html>
