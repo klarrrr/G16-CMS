@@ -51,34 +51,6 @@ if (isset($_SESSION['user_id'])) {
                 <a href="#" id='forgot-pass'>Forgot Password?</a>
 
                 <hr>
-                <button type="button" id="create-account" class='create-or-sign-in-btn' title="Sign up here">Create New Account</button>
-            </form>
-
-            <!-- Sign Up Form -->
-            <form id="sign-up-form" class="sign-in-user-input" style='display: none;' novalidate>
-                <label class="error-msg" id="reg-first-name-error"></label>
-                <input type="text" class='sign-in-input-box' placeholder='Enter first name' id="reg-first-name" autocomplete="off">
-
-                <label class="error-msg" id="reg-last-name-error"></label>
-                <input type="text" class='sign-in-input-box' placeholder='Enter last name' id="reg-last-name" autocomplete="off">
-
-                <label class="error-msg" id="reg-email-error"></label>
-                <input type="email" class='sign-in-input-box' placeholder="Enter your email here" id='reg-email' autocomplete="off" title="Enter valid email (e.g. example@plpasig.edu.ph)">
-
-                <label class="error-msg" id="reg-pass-error"></label>
-                <input type="password" class='sign-in-input-box' placeholder="Enter your password here" id='reg-pass' autocomplete="new-password">
-
-                <label class="error-msg" id="reg-re-pass-error"></label>
-                <input type="password" class='sign-in-input-box' placeholder="Re-enter your password here" id='reg-re-pass' autocomplete="new-password" title="Confirm password">
-
-                <select id="reg-user-type" class='sign-in-input-box' title="Choose user type">
-                    <option value="writer">Writer</option>
-                    <option value="reviewer">Reviewer</option>
-                </select>
-
-                <button type="submit" class='sign-btn' id='sign-up-btn'>Create account</button>
-                <hr>
-                <button type="button" id="back-sign-in" class='create-or-sign-in-btn'>Already Have Account</button>
             </form>
         </section>
 
@@ -88,10 +60,6 @@ if (isset($_SESSION['user_id'])) {
     </main>
 
     <script>
-        function isValidPasigEmail(email) {
-            return /^[a-zA-Z0-9._%+-]+@plpasig\.edu\.ph$/.test(email);
-        }
-
         $('#sign-in-form').submit(function(e) {
             e.preventDefault();
             let email = $('#sign-in-email').val().trim();
@@ -137,74 +105,6 @@ if (isset($_SESSION['user_id'])) {
                 });
             }
         });
-
-        $('#sign-up-form').submit(function(e) {
-            e.preventDefault();
-            let fname = $('#reg-first-name').val().trim();
-            let lname = $('#reg-last-name').val().trim();
-            let email = $('#reg-email').val().trim();
-            let pass = $('#reg-pass').val().trim();
-            let repass = $('#reg-re-pass').val().trim();
-            let valid = true;
-
-            $('.error-msg').text('').removeClass('error-visible');
-
-            if (!fname) {
-                $('#reg-first-name-error').text('* First name cannot be empty').addClass('error-visible');
-                valid = false;
-            }
-            if (!lname) {
-                $('#reg-last-name-error').text('* Last name cannot be empty').addClass('error-visible');
-                valid = false;
-            }
-            if (!isValidPasigEmail(email)) {
-                $('#reg-email-error').text('* Incorrect Format - Pasig Email Only').addClass('error-visible');
-                valid = false;
-            }
-            if (!pass) {
-                $('#reg-pass-error').text('* Password cannot be empty').addClass('error-visible');
-                valid = false;
-            } else if (pass.length < 8) {
-                $('#reg-pass-error').text('* Cannot be less than 8 characters').addClass('error-visible');
-                valid = false;
-            }
-            if (!repass || pass !== repass) {
-                $('#reg-re-pass-error').text('* Passwords don\'t match').addClass('error-visible');
-                valid = false;
-            }
-
-            if (valid) {
-                const first = $('#reg-first-name').val();
-                const last = $('#reg-last-name').val();
-                const email = $('#reg-email').val();
-                const pass = $('#reg-pass').val();
-                const re_pass = $('#reg-re-pass').val();
-                const user_type = $('#reg-user-type').val();
-
-                if (pass !== re_pass) {
-                    alert("Passwords do not match!");
-                    return;
-                }
-
-                $.post('register.php', {
-                    first,
-                    last,
-                    email,
-                    pass,
-                    user_type
-                }, function(data) {
-                    if (data.status === 'success') {
-                        alert("Account created! You can now log in.");
-                        $('#back-sign-in').click();
-                    } else {
-                        alert(data.message);
-                    }
-                }, 'json').fail(function(xhr) {
-                    console.error("Error:", xhr.responseText);
-                    alert("Something went wrong. See console.");
-                });
-            }
-        });
     </script>
 
     <!-- Some events -->
@@ -224,16 +124,6 @@ if (isset($_SESSION['user_id'])) {
                     $('#sign-up-btn').click();
                 }
             }
-        });
-
-        $('#create-account').click(function() {
-            $('#sign-in-form').hide();
-            $('#sign-up-form').show();
-        });
-
-        $('#back-sign-in').click(function() {
-            $('#sign-up-form').hide();
-            $('#sign-in-form').show();
         });
     </script>
 </body>
