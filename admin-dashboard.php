@@ -15,11 +15,6 @@
             transition: 0.3s ease-in-out;
         }
 
-        .admin-container {
-            display: flex;
-            height: 100vh;
-        }
-
         .sidebar {
             width: 250px;
             background-color: #2c3e50;
@@ -46,6 +41,11 @@
 
         .sidebar ul li a:hover {
             text-decoration: underline;
+        }
+
+        .admin-container {
+            display: flex;
+            height: 100vh;
         }
 
         .main-content {
@@ -85,17 +85,7 @@
 
 <body>
     <div class="admin-container">
-        <aside class="sidebar">
-            <h2>Admin Panel</h2>
-            <ul>
-                <li><a href="#">Dashboard</a></li>
-                <li><a href="#">Inbox</a></li>
-                <li><a href="#">Manage Users</a></li>
-                <li><a href="#">Audit Log</a></li>
-                <li><a href="#">Settings</a></li>
-                <li><a href="#">Logout</a></li>
-            </ul>
-        </aside>
+        <?php include 'admin-side-bar.php' ?>
 
         <main class="main-content">
             <header>
