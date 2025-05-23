@@ -27,6 +27,84 @@ if (isset($_SESSION['user_id'])) {
         .error-visible {
             display: block !important;
         }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(15px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .modal h2 {
+            margin-top: 0;
+            color: #0a5c36;
+        }
+
+        .modal p {
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .modal-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #0a5c36;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .modal-btn:hover {
+            background-color: #084b2d;
+        }
     </style>
 </head>
 
@@ -59,7 +137,25 @@ if (isset($_SESSION['user_id'])) {
         </footer>
     </main>
 
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeForgotPasswordModal()">&times;</span>
+            <h2>Forgot Password</h2>
+            <p>Enter your email address and we'll notify the admin to reset your password.</p>
+
+            <div class="form-group">
+                <label for="forgotEmail">Email Address</label>
+                <input type="email" id="forgotEmail" class="modal-input" placeholder="Your registered email">
+                <div id="forgotEmailError" class="error-msg"></div>
+            </div>
+
+            <button id="submitForgotPassword" class="modal-btn" onclick="submitForgotPassword()">Send Request</button>
+        </div>
+    </div>
+
     <script>
+        // Sign In Form Submission
         $('#sign-in-form').submit(function(e) {
             e.preventDefault();
             let email = $('#sign-in-email').val().trim();
@@ -105,6 +201,89 @@ if (isset($_SESSION['user_id'])) {
                 });
             }
         });
+
+        // Forgot Password Modal Functions
+        $('#forgot-pass').click(function(e) {
+            e.preventDefault();
+            openForgotPasswordModal();
+        });
+
+        function openForgotPasswordModal() {
+            $('#forgotPasswordModal').show();
+            $('#forgotEmail').val($('#sign-in-email').val()); // Pre-fill with email from sign-in form
+        }
+
+        function closeForgotPasswordModal() {
+            $('#forgotPasswordModal').hide();
+            $('#forgotEmailError').text('').removeClass('error-visible');
+        }
+
+        function submitForgotPassword() {
+            const email = $('#forgotEmail').val().trim();
+            $('#forgotEmailError').text('').removeClass('error-visible');
+
+            if (!email) {
+                $('#forgotEmailError').text('* Email is required').addClass('error-visible');
+                return;
+            }
+
+            if (!isValidPasigEmail(email)) {
+                $('#forgotEmailError').text('* Must be a valid Pasig email').addClass('error-visible');
+                return;
+            }
+
+            // Show loading state
+            $('#submitForgotPassword').prop('disabled', true).text('Sending...');
+
+            $.ajax({
+                url: 'php-backend/forgot-password.php',
+                method: 'POST',
+                data: {
+                    email: email
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        alert('Password reset request sent to admin. You will be notified once your password is reset.');
+                        closeForgotPasswordModal();
+                    } else {
+                        alert(response.message || 'Failed to send request. Please try again.');
+                    }
+                },
+                error: function() {
+                    alert('An error occurred. Please try again later.');
+                },
+                complete: function() {
+                    $('#submitForgotPassword').prop('disabled', false).text('Send Request');
+                }
+            });
+        }
+
+        // Global Enter key listener
+        $(document).on('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const isSignInVisible = $('#sign-in-form').is(':visible');
+                const isSignUpVisible = $('#sign-up-form').is(':visible');
+                const isForgotPasswordVisible = $('#forgotPasswordModal').is(':visible');
+
+                if (isSignInVisible) {
+                    e.preventDefault();
+                    $('#sign-in-btn').click();
+                } else if (isSignUpVisible) {
+                    e.preventDefault();
+                    $('#sign-up-btn').click();
+                } else if (isForgotPasswordVisible) {
+                    e.preventDefault();
+                    $('#submitForgotPassword').click();
+                }
+            }
+        });
+
+        // Helper function to validate Pasig email
+        function isValidPasigEmail(email) {
+            const pasigDomain = /@plpasig\.edu\.ph$/i;
+            return pasigDomain.test(email);
+        }
     </script>
 
     <!-- Some events -->
