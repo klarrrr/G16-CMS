@@ -1,10 +1,30 @@
 <?php
-
 include 'connect.php';
+
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$limit = isset($_GET['limit']) ? intval($_GET['limit']) : 7; // Default to 7 (1 highlight + 6 cards)
+$offset = ($page - 1) * $limit;
 
 $widgetArray = [];
 
-$stmt = $conn->prepare("
+// First get total count
+$countQuery = "
+    SELECT COUNT(*) as total 
+    FROM widgets w
+    INNER JOIN articles a ON w.article_owner = a.article_id
+    WHERE a.approve_status = 'yes'
+      AND a.completion_status = 'published'
+      AND a.date_posted IS NOT NULL
+      AND a.article_type = 'regular'
+      AND NOW() >= a.date_posted
+      AND NOW() <= a.date_expired
+";
+$countResult = mysqli_query($conn, $countQuery);
+$totalRecords = mysqli_fetch_assoc($countResult)['total'];
+$totalPages = ceil($totalRecords / $limit);
+
+// Then get paginated results
+$query = "
     SELECT w.* 
     FROM widgets w
     INNER JOIN articles a ON w.article_owner = a.article_id
@@ -15,9 +35,10 @@ $stmt = $conn->prepare("
       AND NOW() >= a.date_posted
       AND NOW() <= a.date_expired
     ORDER BY a.date_posted DESC
-    LIMIT 10
-");
+    LIMIT $limit OFFSET $offset
+";
 
+$stmt = $conn->prepare($query);
 $stmt->execute();
 $results = $stmt->get_result();
 
@@ -32,7 +53,11 @@ foreach ($widgetArray as &$widget) {
 }
 
 $jsonOutput = json_encode([
-    'widget' => $widgetArray
+    'widget' => $widgetArray,
+    'totalRecords' => $totalRecords,
+    'totalPages' => $totalPages,
+    'currentPage' => $page
 ]);
 
+header('Content-Type: application/json');
 echo $jsonOutput;
