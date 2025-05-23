@@ -8,8 +8,8 @@
             border-bottom: 1px solid rgba(252,180,4,0,3);
             line-height: 1.4;
         ">
-            Lundayan is developed and maintained by <strong style="color: #FBC404">G16</strong> — a collaborative team from <strong>BSIT-2C</strong> at Pamantasan ng Lungsod ng Pasig.
-            The group is a fusion of two creative units: <strong style="color: #FBC404">Group 1</strong> and <strong>Group 6</strong>, united by a shared passion for technology, media, and communication.
+            Lundayan is developed and maintained by <strong style="color: #FBC404">G16</strong> — a collaborative team from <strong style="color: #FBC404">BSIT-2C</strong> at Pamantasan ng Lungsod ng Pasig.
+            The group is a fusion of two creative units: <strong style="color: #FBC404">Group 1</strong> and <strong style="color: #FBC404">Group 6</strong>, united by a shared passion for technology, media, and communication.
         </p>
         <h1 style="margin: 0.25rem 0; font-size: 2rem; letter-spacing: 0.5px">LUNDAYAN</h1>
 
