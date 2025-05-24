@@ -294,10 +294,10 @@ $archiveStatus = $articles['archive_status'];
                         </div>
 
 
-                        <div class="invite-reviewer-container">
+                        <!-- <div class="invite-reviewer-container">
                             <h3 class='widget-article-h3'>Invite a Reviewer</h3>
                             <button id="invite-reviewer-btn">Invite Reviewer</button>
-                        </div>
+                        </div> -->
 
 
                     </div>
@@ -486,7 +486,7 @@ $archiveStatus = $articles['archive_status'];
     <script src='scripts/edit-switch-article-type.js'></script>
 
     <!-- Invite Reviwers -->
-    <script src="scripts/edit-invite-reviewer.js"></script>
+    <!-- <script src="scripts/edit-invite-reviewer.js"></script> -->
 </body>
 
 </html>
