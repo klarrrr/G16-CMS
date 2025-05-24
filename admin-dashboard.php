@@ -8,157 +8,169 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Lundayan Admin Dashboard</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-        body {
-            background-color: #e9f1ea; /* Light greenish background */
-        }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      min-height: 100vh;
+    }
 
-        .sidebar {
-            width: 250px;
-            background-color: #0F5132; /* Dark green */
-            color: #fff;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            padding: 20px;
-        }
+    .sidebar {
+      width: 250px;
+      background-color: #0F5132;
+      color: #ecf0f1;
+      padding: 20px;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      overflow-y: auto;
+    }
 
-        .sidebar h2 {
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-        }
+    .sidebar h2 {
+      margin-bottom: 20px;
+    }
 
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-        }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
 
-        .sidebar ul li {
-            margin: 15px 0;
-        }
+    .sidebar ul li {
+      margin: 15px 0;
+    }
 
-        .sidebar ul li a {
-            color: #d1e7dd; /* Light greenish text */
-            text-decoration: none;
-            display: block;
-            padding: 8px 0;
-        }
+    .sidebar ul li a {
+      color: #ecf0f1;
+      text-decoration: none;
+      display: block;
+      padding: 8px 0;
+    }
 
-        .sidebar ul li a:hover {
-            text-decoration: underline;
-            color: #a3cfbb; /* Hover light green */
-        }
+    .sidebar ul li a:hover {
+      text-decoration: underline;
+    }
 
-        .main-content {
-            margin-left: 250px;
-            padding: 2rem;
-        }
+    main.dashboard-content {
+      flex: 1;
+      padding: 2rem;
+      overflow-y: auto;
+    }
 
-        .welcome-message {
-            background: #ffffff;
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(15, 81, 50, 0.3);
-            margin-bottom: 2rem;
-        }
+    .welcome-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 2rem;
+    }
 
-        .welcome-message h1 {
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-            color: #0F5132; /* Dark green */
-        }
+    .welcome-card h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      color: #0F5132;
+    }
 
-        .welcome-message p {
-            color: #2e7d32; /* Medium green */
-        }
+    .welcome-card p {
+      color: #555;
+    }
 
-        .admin-info h2 {
-            margin-bottom: 1rem;
-            font-size: 1.4rem;
-            color: #0F5132;
-        }
+    .admin-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(15, 81, 50, 0.2);
-        }
+    .admin-card h2 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: #0F5132;
+    }
 
-        th,
-        td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid #d4edda; /* Light greenish border */
-        }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
 
-        th {
-            background-color: #198754; /* Bootstrap green */
-            color: white;
-        }
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
 
-        td img {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 2px solid #198754; /* subtle green border */
-        }
-    </style>
+    th {
+      background-color: #0F5132;
+      color: white;
+    }
+
+    tr:hover {
+      background-color: #f8f9fa;
+    }
+
+    .profile-pic {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #0F5132;
+    }
+
+    .no-image {
+      color: #666;
+      font-style: italic;
+    }
+  </style>
 </head>
 
 <body>
+  <?php include 'admin-side-bar.php'; ?>
 
-    <?php include 'admin-side-bar.php'; ?>
+  <main class="dashboard-content">
+    <div class="welcome-card">
+      <h1>Welcome, <?php echo htmlspecialchars($_SESSION['user_first']) . ' ' . htmlspecialchars($_SESSION['user_last']); ?></h1>
+      <p>You are logged in as <?php echo htmlspecialchars($_SESSION['user_type']); ?></p>
+    </div>
 
-    <main class="main-content">
-        <header>
-            <div class="welcome-message">
-                <h1>Welcome, <?php echo htmlspecialchars($_SESSION['user_first']) . ' ' . htmlspecialchars($_SESSION['user_last']); ?></h1>
-                <p>You are logged in as <?php echo htmlspecialchars($_SESSION['user_type']); ?></p>
-            </div>
-        </header>
-
-        <section class="admin-info">
-            <h2>Admin Details</h2>
-            <table>
-                <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Profile Picture</th>
-                </tr>
-                <tr>
-                    <td><?php echo htmlspecialchars($_SESSION['user_first']); ?></td>
-                    <td><?php echo htmlspecialchars($_SESSION['user_last']); ?></td>
-                    <td><?php echo htmlspecialchars($_SESSION['user_email']); ?></td>
-                    <td>
-                        <?php if (!empty($_SESSION['profile_picture'])) : ?>
-                            <img src="<?php echo htmlspecialchars($_SESSION['profile_picture']); ?>" alt="Profile Picture" />
-                        <?php else : ?>
-                            No image
-                        <?php endif; ?>
-                    </td>
-                </tr>
-            </table>
-        </section>
-    </main>
-
+    <div class="admin-card">
+      <h2>Admin Details</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Profile Picture</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><?php echo htmlspecialchars($_SESSION['user_first']); ?></td>
+            <td><?php echo htmlspecialchars($_SESSION['user_last']); ?></td>
+            <td><?php echo htmlspecialchars($_SESSION['user_email']); ?></td>
+            <td>
+              <?php if (!empty($_SESSION['profile_picture'])) : ?>
+                <img src="<?php echo htmlspecialchars($_SESSION['profile_picture']); ?>" alt="Profile Picture" class="profile-pic" />
+              <?php else : ?>
+                <span class="no-image">No image</span>
+              <?php endif; ?>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
 </body>
-
 </html>
