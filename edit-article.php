@@ -233,10 +233,10 @@ $archiveStatus = $articles['archive_status'];
                         </div>
 
                         <div class="post-on-container">
-                            <label class='widget-article-h3' for="schedule-choose-date" style="color: #161616; font-weight: bolder;">Post on:</label>
+                            <label class='widget-article-h3' for="schedule-choose-date" style="color: #161616; font-weight: bolder;">Post on: <span class='required'>*</span></label>
                             <input type="datetime-local" id="schedule-choose-date" value="<?php echo $articles['date_posted'] ?? ''; ?>">
 
-                            <label class='widget-article-h3' for="expire-choose-date" style="color: #161616; font-weight: bolder;">Archive on:</label>
+                            <label class='widget-article-h3' for="expire-choose-date" style="color: #161616; font-weight: bolder;">Archive on: <span class='required'>*</span></label>
                             <input type="datetime-local" id="expire-choose-date" value="<?php echo $articles['date_expired'] ?? ''; ?>">
                         </div>
 
@@ -252,6 +252,13 @@ $archiveStatus = $articles['archive_status'];
                             <h3 class="widget-article-h3">Archive Article : <i id='archi-stat'><?php echo ucwords($archiveStatus); ?></i></h3>
                             <button class='archive-article-btn' id='archive-article-btn'>Archive Article</button>
                         </div>
+
+
+                        <div class="invite-reviewer-container">
+                            <h3 class='widget-article-h3'>Invite a Reviewer</h3>
+                            <button id="invite-reviewer-btn">Invite Reviewer</button>
+                        </div>
+
 
                     </div>
 
@@ -307,6 +314,18 @@ $archiveStatus = $articles['archive_status'];
             <div class="widget-toolbar" id='edit-article-comments-container'>
 
             </div>
+        </div>
+    </div>
+
+    <!-- Invite Popup (hidden by default) -->
+    <div class="invite-popup" id="invite-popup" style="display: none;">
+        <div class="invite-popup-content">
+            <span class="close-popup">&times;</span>
+            <h3>Select a Reviewer</h3>
+            <div class="reviewers-list" id="reviewers-list">
+                <!-- Reviewers will be populated here -->
+            </div>
+            <button id="submit-invite">Send Invitation</button>
         </div>
     </div>
 
