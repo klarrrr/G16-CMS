@@ -282,7 +282,7 @@
                 name: "CHARLES JERAMY C. DE PADUA",
                 role: "G1 Member",
                 desc: "Lalalalava Chichichichiken, Steve's lava chicken yeah it's tasty as hell.",
-                img: "pics/charles_stand.png"
+                img: "pics/matigas.png"
             },
             {
                 name: "PAUL JUSTIN D. FRANCISCO",
