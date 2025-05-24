@@ -1,3 +1,135 @@
+<?php
+session_start();
+require_once 'php-backend/connect.php';
+
+// Fetch all settings
+$siteSettings = [];
+$aboutSettings = [];
+
+// Get site settings grouped by their groups
+$settingsQuery = $conn->query("SELECT setting_group, setting_name, setting_value FROM site_settings");
+while ($row = $settingsQuery->fetch_assoc()) {
+    $siteSettings[$row['setting_group']][$row['setting_name']] = $row['setting_value'];
+}
+
+// Get about settings
+$aboutQuery = $conn->query("SELECT section_type, title, content, image_url, video_url FROM about_settings");
+while ($row = $aboutQuery->fetch_assoc()) {
+    $aboutSettings[$row['section_type']] = $row;
+}
+
+// Handle form submissions
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $group = $_GET['group'] ?? '';
+    $section = $_GET['section'] ?? '';
+    
+    // Handle regular settings updates
+    if (!empty($group)) {
+        try {
+            $conn->begin_transaction();
+            
+            $stmt = $conn->prepare("
+                INSERT INTO site_settings (setting_group, setting_name, setting_value) 
+                VALUES (?, ?, ?)
+                ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)
+            ");
+            
+            switch ($group) {
+                case 'mail':
+                    $settings = [
+                        ['mail', 'email', $_POST['mail-email']],
+                        ['mail', 'password', $_POST['mail-password']],
+                        ['mail', 'sender_name', $_POST['mail-name']]
+                    ];
+                    break;
+                    
+                case 'social':
+                    $settings = [
+                        ['social', 'facebook_url', $_POST['facebook']],
+                        ['social', 'instagram_url', $_POST['instagram']],
+                        ['social', 'pinterest_url', $_POST['pinterest']]
+                    ];
+                    break;
+                    
+                case 'contact':
+                    $settings = [
+                        ['contact', 'address', $_POST['address']],
+                        ['contact', 'open_time_start', $_POST['open_time_start'] . ':00'],
+                        ['contact', 'open_time_end', $_POST['open_time_end'] . ':00'],
+                        ['contact', 'phone', $_POST['phone']]
+                    ];
+                    break;
+                    
+                default:
+                    throw new Exception("Invalid settings group");
+            }
+            
+            foreach ($settings as $setting) {
+                $stmt->bind_param("sss", $setting[0], $setting[1], $setting[2]);
+                $stmt->execute();
+            }
+            
+            $conn->commit();
+            $_SESSION['success'] = ucfirst($group) . ' settings updated successfully!';
+            header("Location: admin-settings.php");
+            exit;
+        } catch (Exception $e) {
+            $conn->rollback();
+            $_SESSION['error'] = 'Error updating settings: ' . $e->getMessage();
+            header("Location: admin-settings.php");
+            exit;
+        }
+    }
+    
+    // Handle about page updates
+    if (!empty($section)) {
+        try {
+            $stmt = $conn->prepare("
+                INSERT INTO about_settings (section_type, title, content, image_url, video_url) 
+                VALUES (?, ?, ?, ?, ?)
+                ON DUPLICATE KEY UPDATE 
+                    title = VALUES(title),
+                    content = VALUES(content),
+                    image_url = VALUES(image_url),
+                    video_url = VALUES(video_url)
+            ");
+            
+            $title = $_POST['title'] ?? null;
+            $content = $_POST['content'] ?? null;
+            
+            // Process image URL - allow both full URLs and local paths
+            $imageUrl = $_POST['image_url'] ?? null;
+            if ($imageUrl) {
+                // Clean up the path by removing leading ./ or /
+                $imageUrl = preg_replace('/^\.?\//', '', $imageUrl);
+                
+                // If it's not a full URL, ensure it's a proper path
+                if (!preg_match('/^https?:\/\//i', $imageUrl)) {
+                    // Remove any potentially dangerous characters
+                    $imageUrl = preg_replace('/[^a-zA-Z0-9\-_\.\/]/', '', $imageUrl);
+                }
+            }
+            
+            // Process video URL - should be full URL or empty
+            $videoUrl = $_POST['video_url'] ?? null;
+            if ($videoUrl && !preg_match('/^https?:\/\//i', $videoUrl)) {
+                $videoUrl = ''; // Clear invalid video URLs
+            }
+            
+            $stmt->bind_param("sssss", $section, $title, $content, $imageUrl, $videoUrl);
+            $stmt->execute();
+            
+            $_SESSION['success'] = 'About section updated successfully!';
+            header("Location: admin-settings.php");
+            exit;
+        } catch (Exception $e) {
+            $_SESSION['error'] = 'Error updating about section: ' . $e->getMessage();
+            header("Location: admin-settings.php");
+            exit;
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
