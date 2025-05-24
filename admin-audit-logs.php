@@ -5,548 +5,481 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
     header('Location: lundayan-sign-in-page.php');
     exit;
 }
-
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Audit Logs</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <style>
-        :root {
-            --primary-color: #3498db;
-            --secondary-color: #2c3e50;
-            --success-color: #2ecc71;
-            --danger-color: #e74c3c;
-            --warning-color: #f39c12;
-            --light-color: #ecf0f1;
-            --dark-color: #34495e;
-            --text-color: #333;
-            --border-color: #ddd;
-        }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-        body {
-            background-color: #f5f7fa;
-            color: var(--text-color);
-        }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
 
-        .container {
-            display: flex;
-            min-height: 100vh;
-        }
+    .sidebar {
+      width: 250px;
+      background-color: #0F5132;
+      color: #ecf0f1;
+      padding: 20px;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
 
-        .sidebar {
-            width: 250px;
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 20px 0;
-            transition: all 0.3s;
-        }
+    .sidebar h2 {
+      margin-bottom: 20px;
+    }
 
-        .sidebar-header {
-            padding: 0 20px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
 
-        .sidebar-menu {
-            padding: 20px;
-        }
+    .sidebar ul li {
+      margin: 15px 0;
+    }
 
-        .sidebar-menu ul {
-            list-style: none;
-        }
+    .sidebar ul li a {
+      color: #ecf0f1;
+      text-decoration: none;
+      display: block;
+      padding: 8px 0;
+    }
 
-        .sidebar-menu li {
-            margin-bottom: 10px;
-        }
+    .sidebar ul li a:hover {
+      text-decoration: underline;
+    }
 
-        .sidebar-menu a {
-            color: white;
-            text-decoration: none;
-            display: block;
-            padding: 10px;
-            border-radius: 5px;
-            transition: all 0.3s;
-        }
+    main.audit-logs {
+      margin-left: 250px;
+      padding: 2rem;
+      width: calc(100% - 250px);
+    }
+.main-content {
+  margin-left: 250px;
+  padding: 2rem;
+  width: calc(100% - 250px);
+}
 
-        .sidebar-menu a:hover,
-        .sidebar-menu a.active {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
 
-        .sidebar-menu i {
-            margin-right: 10px;
-            width: 20px;
-            text-align: center;
-        }
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 2rem;
+    }
 
-        .main-content {
-            flex: 1;
-            padding: 30px;
-            overflow-y: auto;
-        }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #eee;
+    }
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
+    .filters {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
 
-        .page-title {
-            font-size: 24px;
-            font-weight: 600;
-        }
+    .filter-group {
+      flex: 1;
+      min-width: 150px;
+    }
 
-        .card {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            padding: 20px;
-            margin-bottom: 30px;
-        }
+    select, input[type="date"] {
+      width: 100%;
+      padding: 0.6rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
 
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--border-color);
-        }
+    .btn {
+      padding: 0.6rem 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
 
-        .card-title {
-            font-size: 18px;
-            font-weight: 600;
-        }
+    .btn-primary {
+      background: #0F5132;
+      color: white;
+    }
 
-        .filters {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
 
-        .filter-group {
-            flex: 1;
-        }
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
 
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
-        }
+    th {
+      background-color: #f8f9fa;
+      font-weight: 600;
+    }
 
-        select,
-        input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            background-color: white;
-        }
+    .badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+    }
 
-        .btn {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
+    .badge-success {
+      background: #d4edda;
+      color: #155724;
+    }
 
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-        }
+    .badge-warning {
+      background: #fff3cd;
+      color: #856404;
+    }
 
-        .btn-primary:hover {
-            background-color: #2980b9;
-        }
+    .badge-danger {
+      background: #f8d7da;
+      color: #721c24;
+    }
 
-        .table-responsive {
-            overflow-x: auto;
-        }
+    .badge-info {
+      background: #d1ecf1;
+      color: #0c5460;
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
 
-        th,
-        td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-        }
+    .pagination a {
+      padding: 0.5rem 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      text-decoration: none;
+      color: #333;
+    }
 
-        th {
-            background-color: #f8f9fa;
-            font-weight: 600;
-            position: sticky;
-            top: 0;
-        }
+    .pagination a.active {
+      background: #0F5132;
+      color: white;
+      border-color: #0F5132;
+    }
 
-        tr:hover {
-            background-color: #f8f9fa;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        .badge-success {
-            background-color: #d4edda;
-            color: #155724;
-        }
-
-        .badge-danger {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-
-        .badge-warning {
-            background-color: #fff3cd;
-            color: #856404;
-        }
-
-        .badge-info {
-            background-color: #d1ecf1;
-            color: #0c5460;
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-            gap: 5px;
-        }
-
-        .pagination a {
-            padding: 8px 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            text-decoration: none;
-            color: var(--text-color);
-        }
-
-        .pagination a.active {
-            background-color: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-        }
-
-        .no-records {
-            text-align: center;
-            padding: 30px;
-            color: #6c757d;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-
-            .sidebar {
-                width: 100%;
-                height: auto;
-            }
-
-            .filters {
-                flex-direction: column;
-            }
-        }
-    </style>
+    .no-records {
+      text-align: center;
+      padding: 2rem;
+      color: #666;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="container">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <div class="sidebar-header">
-                <h2>Admin Panel</h2>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Admin Panel</h2>
+        </div>
+        <?php include 'admin-side-bar.php' ?>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1 class="page-title">Audit Logs</h1>
+            <div>
+                <button class="btn btn-primary" id="exportBtn">
+                    <i class="fas fa-download"></i> Export
+                </button>
             </div>
-            <?php include 'admin-side-bar.php' ?>
         </div>
 
-        <!-- Main Content -->
-        <div class="main-content">
-            <div class="header">
-                <h1 class="page-title">Audit Logs</h1>
-                <div>
-                    <button class="btn btn-primary" id="exportBtn">
-                        <i class="fas fa-download"></i> Export
-                    </button>
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Recent Activities</h2>
+            </div>
+
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="userFilter">User</label>
+                    <select id="userFilter">
+                        <option value="">All Users</option>
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="actionFilter">Action</label>
+                    <select id="actionFilter">
+                        <option value="">All Actions</option>
+                        <option value="create">Create</option>
+                        <option value="update">Update</option>
+                        <option value="delete">Delete</option>
+                        <option value="login">Login</option>
+                        <option value="logout">Logout</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="dateFrom">Date From</label>
+                    <input type="date" id="dateFrom" />
+                </div>
+                <div class="filter-group">
+                    <label for="dateTo">Date To</label>
+                    <input type="date" id="dateTo" />
+                </div>
+                <div class="filter-group" style="align-self: flex-end;">
+                    <button class="btn btn-primary" id="filterBtn">Filter</button>
                 </div>
             </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Recent Activities</h2>
+            <div class="table-responsive">
+                <table id="auditTable" aria-label="Audit logs table">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Action</th>
+                            <th>Description</th>
+                            <th>Date & Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Rows populated dynamically -->
+                    </tbody>
+                </table>
+                <div id="noRecords" class="no-records" style="display:none;">
+                    No audit log records found.
                 </div>
+            </div>
 
-                <div class="filters">
-                    <div class="filter-group">
-                        <label for="userFilter">User</label>
-                        <select id="userFilter">
-                            <option value="">All Users</option>
-                            <!-- Will be populated by JavaScript -->
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label for="actionFilter">Action</label>
-                        <select id="actionFilter">
-                            <option value="">All Actions</option>
-                            <option value="create">Create</option>
-                            <option value="update">Update</option>
-                            <option value="delete">Delete</option>
-                            <option value="login">Login</option>
-                            <option value="logout">Logout</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label for="dateFrom">From</label>
-                        <input type="date" id="dateFrom">
-                    </div>
-                    <div class="filter-group">
-                        <label for="dateTo">To</label>
-                        <input type="date" id="dateTo">
-                    </div>
-                    <div class="filter-group" style="align-self: flex-end;">
-                        <button class="btn btn-primary" id="applyFilters">
-                            <i class="fas fa-filter"></i> Apply
-                        </button>
-                    </div>
-                </div>
-
-                <div class="table-responsive">
-                    <table id="auditLogsTable">
-                        <thead>
-                            <tr>
-                                <th>Log ID</th>
-                                <th>User</th>
-                                <th>Article</th>
-                                <th>Action</th>
-                                <th>Timestamp</th>
-                                <th>Details</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Will be populated by JavaScript -->
-                            <tr>
-                                <td colspan="6" class="no-records">Loading audit logs...</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="pagination" id="pagination">
-                    <!-- Will be populated by JavaScript -->
-                </div>
+            <div class="pagination" id="pagination">
+                <!-- Pagination links -->
             </div>
         </div>
     </div>
 
     <script>
-        $(document).ready(function() {
-            // Initialize date filters to last 30 days
-            const today = new Date();
-            const thirtyDaysAgo = new Date();
-            thirtyDaysAgo.setDate(today.getDate() - 30);
+        $(document).ready(function () {
+            let auditLogs = [];
+            let currentPage = 1;
+            const rowsPerPage = 10;
 
-            $('#dateFrom').val(thirtyDaysAgo.toISOString().split('T')[0]);
-            $('#dateTo').val(today.toISOString().split('T')[0]);
+            // Fetch audit logs data from server via AJAX
+            function fetchAuditLogs() {
+                // You can replace this with an actual AJAX call to your server API
+                $.ajax({
+                    url: 'fetch-audit-logs.php', // Replace with your API endpoint
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        auditLogs = data;
+                        populateUserFilter();
+                        renderTable();
+                        renderPagination();
+                    },
+                    error: function () {
+                        alert('Failed to load audit logs.');
+                    }
+                });
+            }
 
-            // Load users for filter dropdown
-            loadUsers();
+            // Populate User filter dropdown
+            function populateUserFilter() {
+                const userSet = new Set(auditLogs.map(log => log.user));
+                const userFilter = $('#userFilter');
+                userFilter.empty().append('<option value="">All Users</option>');
+                Array.from(userSet).sort().forEach(user => {
+                    userFilter.append(`<option value="${user}">${user}</option>`);
+                });
+            }
 
-            // Load audit logs
-            loadAuditLogs();
+            // Render the audit logs table
+            function renderTable() {
+                const tbody = $('#auditTable tbody');
+                tbody.empty();
 
-            // Apply filters button
-            $('#applyFilters').click(function() {
-                loadAuditLogs();
-            });
+                let filteredLogs = auditLogs.filter(log => {
+                    const userVal = $('#userFilter').val();
+                    const actionVal = $('#actionFilter').val();
+                    const dateFromVal = $('#dateFrom').val();
+                    const dateToVal = $('#dateTo').val();
 
-            // Export button
-            $('#exportBtn').click(function() {
-                exportAuditLogs();
-            });
-        });
+                    let match = true;
 
-        function loadUsers() {
-            $.ajax({
-                url: 'php-backend/admin-populate-users.php',
-                type: 'GET',
-                dataType: 'json',
-                success: function(users) {
-                    const userFilter = $('#userFilter');
-                    userFilter.empty();
-                    userFilter.append('<option value="">All Users</option>');
+                    if (userVal && log.user !== userVal) match = false;
+                    if (actionVal && log.action !== actionVal) match = false;
 
-                    users.forEach(user => {
-                        userFilter.append(`<option value="${user.user_id}">${user.user_first_name} ${user.user_last_name}</option>`);
-                    });
-                },
-                error: function(error) {
-                    console.error('Error loading users:', error);
-                }
-            });
-        }
-
-        function loadAuditLogs(page = 1) {
-            const filters = {
-                user_id: $('#userFilter').val(),
-                action: $('#actionFilter').val(),
-                date_from: $('#dateFrom').val(),
-                date_to: $('#dateTo').val(),
-                page: page
-            };
-
-            $.ajax({
-                url: 'php-backend/fetch-audit-logs.php',
-                type: 'GET',
-                data: filters,
-                dataType: 'json',
-                success: function(response) {
-                    const tbody = $('#auditLogsTable tbody');
-                    tbody.empty();
-
-                    if (response.data.length === 0) {
-                        tbody.append('<tr><td colspan="6" class="no-records">No audit logs found</td></tr>');
-                        return;
+                    if (dateFromVal) {
+                        const dateFrom = new Date(dateFromVal);
+                        const logDate = new Date(log.datetime);
+                        if (logDate < dateFrom) match = false;
                     }
 
-                    response.data.forEach(log => {
-                        const actionBadge = getActionBadge(log.action);
+                    if (dateToVal) {
+                        const dateTo = new Date(dateToVal);
+                        const logDate = new Date(log.datetime);
+                        if (logDate > dateTo) match = false;
+                    }
 
-                        tbody.append(`
-                            <tr>
-                                <td>${log.log_id}</td>
-                                <td>${log.user_name || 'System'}</td>
-                                <td>${log.article_title || 'N/A'}</td>
-                                <td>${actionBadge}</td>
-                                <td>${formatDateTime(log.log_time)}</td>
-                                <td><button class="btn btn-sm" onclick="showLogDetails(${log.log_id})"><i class="fas fa-eye"></i></button></td>
-                            </tr>
-                        `);
-                    });
+                    return match;
+                });
 
-                    renderPagination(response.total, response.per_page, page);
-                },
-                error: function(error) {
-                    console.error('Error loading audit logs:', error);
-                    $('#auditLogsTable tbody').html('<tr><td colspan="6" class="no-records">Error loading audit logs</td></tr>');
+                const totalRecords = filteredLogs.length;
+                if (totalRecords === 0) {
+                    $('#auditTable').hide();
+                    $('#noRecords').show();
+                    $('#pagination').hide();
+                    return;
+                } else {
+                    $('#auditTable').show();
+                    $('#noRecords').hide();
+                    $('#pagination').show();
+                }
+
+                // Pagination
+                const start = (currentPage - 1) * rowsPerPage;
+                const end = start + rowsPerPage;
+                const paginatedLogs = filteredLogs.slice(start, end);
+
+                paginatedLogs.forEach(log => {
+                    const dateTime = new Date(log.datetime).toLocaleString();
+                    let actionBadgeClass = 'badge-info';
+                    switch (log.action) {
+                        case 'create': actionBadgeClass = 'badge-success'; break;
+                        case 'update': actionBadgeClass = 'badge-warning'; break;
+                        case 'delete': actionBadgeClass = 'badge-danger'; break;
+                        case 'login':
+                        case 'logout': actionBadgeClass = 'badge-info'; break;
+                    }
+
+                    tbody.append(`
+                        <tr>
+                            <td>${log.user}</td>
+                            <td><span class="badge ${actionBadgeClass}">${log.action}</span></td>
+                            <td>${log.description}</td>
+                            <td>${dateTime}</td>
+                        </tr>
+                    `);
+                });
+
+                renderPagination(filteredLogs.length);
+            }
+
+            // Render pagination links
+            function renderPagination(totalFilteredRecords = auditLogs.length) {
+                const totalPages = Math.ceil(totalFilteredRecords / rowsPerPage);
+                const pagination = $('#pagination');
+                pagination.empty();
+
+                if (totalPages <= 1) {
+                    pagination.hide();
+                    return;
+                }
+                pagination.show();
+
+                for (let i = 1; i <= totalPages; i++) {
+                    const activeClass = i === currentPage ? 'active' : '';
+                    pagination.append(`<a href="#" class="${activeClass}" data-page="${i}">${i}</a>`);
+                }
+            }
+
+            // Event handlers
+            $('#filterBtn').on('click', function () {
+                currentPage = 1;
+                renderTable();
+            });
+
+            $('#pagination').on('click', 'a', function (e) {
+                e.preventDefault();
+                const page = Number($(this).data('page'));
+                if (page !== currentPage) {
+                    currentPage = page;
+                    renderTable();
                 }
             });
-        }
 
-        function getActionBadge(action) {
-            const actions = {
-                'create': {
-                    class: 'badge-success',
-                    icon: 'plus'
-                },
-                'update': {
-                    class: 'badge-info',
-                    icon: 'edit'
-                },
-                'delete': {
-                    class: 'badge-danger',
-                    icon: 'trash'
-                },
-                'login': {
-                    class: 'badge-success',
-                    icon: 'sign-in-alt'
-                },
-                'logout': {
-                    class: 'badge-warning',
-                    icon: 'sign-out-alt'
-                }
-            };
+            $('#exportBtn').on('click', function () {
+                exportToCSV();
+            });
 
-            const config = actions[action.toLowerCase()] || {
-                class: 'badge-info',
-                icon: 'info-circle'
-            };
+            function exportToCSV() {
+                let csvContent = "data:text/csv;charset=utf-8,";
+                csvContent += "User,Action,Description,Date & Time\n";
 
-            return `
-                <span class="badge ${config.class}">
-                    <i class="fas fa-${config.icon}"></i> ${action}
-                </span>
-            `;
-        }
+                // Export filtered data
+                let filteredLogs = auditLogs.filter(log => {
+                    const userVal = $('#userFilter').val();
+                    const actionVal = $('#actionFilter').val();
+                    const dateFromVal = $('#dateFrom').val();
+                    const dateToVal = $('#dateTo').val();
 
-        function formatDateTime(datetime) {
-            if (!datetime) return 'N/A';
+                    let match = true;
 
-            const date = new Date(datetime);
-            return date.toLocaleString();
-        }
+                    if (userVal && log.user !== userVal) match = false;
+                    if (actionVal && log.action !== actionVal) match = false;
 
-        function renderPagination(total, perPage, currentPage) {
-            const totalPages = Math.ceil(total / perPage);
-            const pagination = $('#pagination');
-            pagination.empty();
+                    if (dateFromVal) {
+                        const dateFrom = new Date(dateFromVal);
+                        const logDate = new Date(log.datetime);
+                        if (logDate < dateFrom) match = false;
+                    }
 
-            if (totalPages <= 1) return;
+                    if (dateToVal) {
+                        const dateTo = new Date(dateToVal);
+                        const logDate = new Date(log.datetime);
+                        if (logDate > dateTo) match = false;
+                    }
 
-            // Previous button
-            if (currentPage > 1) {
-                pagination.append(`<a href="#" onclick="loadAuditLogs(${currentPage - 1})"><i class="fas fa-chevron-left"></i></a>`);
+                    return match;
+                });
+
+                filteredLogs.forEach(log => {
+                    const row = [
+                        log.user,
+                        log.action,
+                        `"${log.description.replace(/"/g, '""')}"`,
+                        new Date(log.datetime).toLocaleString()
+                    ].join(',');
+                    csvContent += row + "\n";
+                });
+
+                const encodedUri = encodeURI(csvContent);
+                const link = document.createElement('a');
+                link.setAttribute('href', encodedUri);
+                link.setAttribute('download', 'audit_logs.csv');
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
             }
 
-            // Page numbers
-            for (let i = 1; i <= totalPages; i++) {
-                if (i === currentPage) {
-                    pagination.append(`<a href="#" class="active">${i}</a>`);
-                } else {
-                    pagination.append(`<a href="#" onclick="loadAuditLogs(${i})">${i}</a>`);
-                }
-            }
-
-            // Next button
-            if (currentPage < totalPages) {
-                pagination.append(`<a href="#" onclick="loadAuditLogs(${currentPage + 1})"><i class="fas fa-chevron-right"></i></a>`);
-            }
-        }
-
-        function showLogDetails(logId) {
-            // In a real implementation, this would show a modal with detailed log information
-            alert(`Showing details for log ID: ${logId}`);
-        }
-
-        function exportAuditLogs() {
-            const filters = {
-                user_id: $('#userFilter').val(),
-                action: $('#actionFilter').val(),
-                date_from: $('#dateFrom').val(),
-                date_to: $('#dateTo').val()
-            };
-
-            // Convert filters to query string
-            const queryString = Object.keys(filters)
-                .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(filters[key])}`)
-                .join('&');
-
-            // Trigger download
-            window.location.href = `php-backend/export-audit-logs.php?${queryString}`;
-        }
+            fetchAuditLogs();
+        });
     </script>
 </body>
 
