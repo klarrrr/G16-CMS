@@ -1,2 +1,0 @@
-<br />
-<b>Warning</b>:  session_start(): Session cannot be started after headers have already been sent in <b>C:\xampp\htdocs\G16-CMS\lundayan-site-nav.php</b> on line <b>4</b><br />
