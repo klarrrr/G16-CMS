@@ -1,3 +1,4 @@
+<?php
 session_start();
 include 'connect.php';
 
@@ -71,3 +72,4 @@ if ($stmt->execute()) {
 
 $stmt->close();
 $conn->close();
+?>
