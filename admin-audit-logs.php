@@ -2,8 +2,8 @@
 session_start();
 // Check if user is logged in and is an admin
 if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admin') {
-    header('Location: lundayan-sign-in-page.php');
-    exit;
+  header('Location: lundayan-sign-in-page.php');
+  exit;
 }
 ?>
 
@@ -11,11 +11,11 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Audit Logs</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Audit Logs</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
   <style>
     * {
@@ -70,11 +70,12 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
       padding: 2rem;
       width: calc(100% - 250px);
     }
-.main-content {
-  margin-left: 250px;
-  padding: 2rem;
-  width: calc(100% - 250px);
-}
+
+    .main-content {
+      margin-left: 250px;
+      padding: 2rem;
+      width: calc(100% - 250px);
+    }
 
     .header {
       display: flex;
@@ -112,7 +113,8 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
       min-width: 150px;
     }
 
-    select, input[type="date"] {
+    select,
+    input[type="date"] {
       width: 100%;
       padding: 0.6rem;
       border: 1px solid #ddd;
@@ -136,7 +138,8 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
       border-collapse: collapse;
     }
 
-    th, td {
+    th,
+    td {
       padding: 12px 15px;
       text-align: left;
       border-bottom: 1px solid #eee;
@@ -205,282 +208,272 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
 </head>
 
 <body>
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <h2>Admin Panel</h2>
-        </div>
-        <?php include 'admin-side-bar.php' ?>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>Admin Panel</h2>
+    </div>
+    <?php include 'admin-side-bar.php' ?>
+  </div>
+
+  <div class="main-content">
+    <div class="header">
+      <h1 class="page-title">Audit Logs</h1>
+      <!-- <div>
+        <button class="btn btn-primary" id="exportBtn">
+          <i class="fas fa-download"></i> Export
+        </button>
+      </div> -->
     </div>
 
-    <div class="main-content">
-        <div class="header">
-            <h1 class="page-title">Audit Logs</h1>
-            <div>
-                <button class="btn btn-primary" id="exportBtn">
-                    <i class="fas fa-download"></i> Export
-                </button>
-            </div>
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">Recent Activities</h2>
+      </div>
+
+      <div class="filters">
+        <div class="filter-group">
+          <label for="userFilter">User</label>
+          <select id="userFilter">
+            <option value="">All Users</option>
+            <!-- Populated dynamically -->
+          </select>
         </div>
-
-        <div class="card">
-            <div class="card-header">
-                <h2 class="card-title">Recent Activities</h2>
-            </div>
-
-            <div class="filters">
-                <div class="filter-group">
-                    <label for="userFilter">User</label>
-                    <select id="userFilter">
-                        <option value="">All Users</option>
-                        <!-- Populated dynamically -->
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="actionFilter">Action</label>
-                    <select id="actionFilter">
-                        <option value="">All Actions</option>
-                        <option value="create">Create</option>
-                        <option value="update">Update</option>
-                        <option value="delete">Delete</option>
-                        <option value="login">Login</option>
-                        <option value="logout">Logout</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="dateFrom">Date From</label>
-                    <input type="date" id="dateFrom" />
-                </div>
-                <div class="filter-group">
-                    <label for="dateTo">Date To</label>
-                    <input type="date" id="dateTo" />
-                </div>
-                <div class="filter-group" style="align-self: flex-end;">
-                    <button class="btn btn-primary" id="filterBtn">Filter</button>
-                </div>
-            </div>
-
-            <div class="table-responsive">
-                <table id="auditTable" aria-label="Audit logs table">
-                    <thead>
-                        <tr>
-                            <th>User</th>
-                            <th>Action</th>
-                            <th>Description</th>
-                            <th>Date & Time</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Rows populated dynamically -->
-                    </tbody>
-                </table>
-                <div id="noRecords" class="no-records" style="display:none;">
-                    No audit log records found.
-                </div>
-            </div>
-
-            <div class="pagination" id="pagination">
-                <!-- Pagination links -->
-            </div>
+        <div class="filter-group">
+          <label for="actionFilter">Action</label>
+          <select id="actionFilter">
+            <option value="">All Actions</option>
+            <option value="create">Create</option>
+            <option value="update">Update</option>
+            <option value="delete">Delete</option>
+            <option value="login">Login</option>
+            <option value="logout">Logout</option>
+          </select>
         </div>
+        <div class="filter-group">
+          <label for="dateFrom">Date From</label>
+          <input type="date" id="dateFrom" />
+        </div>
+        <div class="filter-group">
+          <label for="dateTo">Date To</label>
+          <input type="date" id="dateTo" />
+        </div>
+        <div class="filter-group" style="align-self: flex-end;">
+          <button class="btn btn-primary" id="filterBtn">Filter</button>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table id="auditTable" aria-label="Audit logs table">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Action</th>
+              <th>Description</th>
+              <th>Date & Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Rows populated dynamically -->
+          </tbody>
+        </table>
+        <div id="noRecords" class="no-records" style="display:none;">
+          No audit log records found.
+        </div>
+      </div>
+
+      <div class="pagination" id="pagination">
+        <!-- Pagination links -->
+      </div>
     </div>
+  </div>
 
-    <script>
-        $(document).ready(function () {
-            let auditLogs = [];
-            let currentPage = 1;
-            const rowsPerPage = 10;
+  <script>
+    $(document).ready(function() {
+      // Initialize date filters to last 30 days
+      const today = new Date();
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(today.getDate() - 30);
 
-            // Fetch audit logs data from server via AJAX
-            function fetchAuditLogs() {
-                // You can replace this with an actual AJAX call to your server API
-                $.ajax({
-                    url: 'fetch-audit-logs.php', // Replace with your API endpoint
-                    method: 'GET',
-                    dataType: 'json',
-                    success: function (data) {
-                        auditLogs = data;
-                        populateUserFilter();
-                        renderTable();
-                        renderPagination();
-                    },
-                    error: function () {
-                        alert('Failed to load audit logs.');
-                    }
-                });
-            }
+      $('#dateFrom').val(thirtyDaysAgo.toISOString().split('T')[0]);
+      $('#dateTo').val(today.toISOString().split('T')[0]);
 
-            // Populate User filter dropdown
-            function populateUserFilter() {
-                const userSet = new Set(auditLogs.map(log => log.user));
-                const userFilter = $('#userFilter');
-                userFilter.empty().append('<option value="">All Users</option>');
-                Array.from(userSet).sort().forEach(user => {
-                    userFilter.append(`<option value="${user}">${user}</option>`);
-                });
-            }
+      // Load users for filter dropdown
+      loadUsers();
 
-            // Render the audit logs table
-            function renderTable() {
-                const tbody = $('#auditTable tbody');
-                tbody.empty();
+      // Load audit logs
+      loadAuditLogs();
 
-                let filteredLogs = auditLogs.filter(log => {
-                    const userVal = $('#userFilter').val();
-                    const actionVal = $('#actionFilter').val();
-                    const dateFromVal = $('#dateFrom').val();
-                    const dateToVal = $('#dateTo').val();
+      // Apply filters button
+      $('#applyFilters').click(function() {
+        loadAuditLogs();
+      });
 
-                    let match = true;
+      // Export button
+      $('#exportBtn').click(function() {
+        exportAuditLogs();
+      });
+    });
 
-                    if (userVal && log.user !== userVal) match = false;
-                    if (actionVal && log.action !== actionVal) match = false;
+    function loadUsers() {
+      $.ajax({
+        url: 'php-backend/admin-populate-users.php',
+        type: 'GET',
+        dataType: 'json',
+        success: function(users) {
+          const userFilter = $('#userFilter');
+          userFilter.empty();
+          userFilter.append('<option value="">All Users</option>');
 
-                    if (dateFromVal) {
-                        const dateFrom = new Date(dateFromVal);
-                        const logDate = new Date(log.datetime);
-                        if (logDate < dateFrom) match = false;
-                    }
+          users.forEach(user => {
+            userFilter.append(`<option value="${user.user_id}">${user.user_first_name} ${user.user_last_name}</option>`);
+          });
+        },
+        error: function(error) {
+          console.error('Error loading users:', error);
+        }
+      });
+    }
 
-                    if (dateToVal) {
-                        const dateTo = new Date(dateToVal);
-                        const logDate = new Date(log.datetime);
-                        if (logDate > dateTo) match = false;
-                    }
+    function loadAuditLogs(page = 1) {
+      const filters = {
+        user_id: $('#userFilter').val(),
+        action: $('#actionFilter').val(),
+        date_from: $('#dateFrom').val(),
+        date_to: $('#dateTo').val(),
+        page: page
+      };
 
-                    return match;
-                });
+      $.ajax({
+        url: 'php-backend/fetch-audit-logs.php',
+        type: 'GET',
+        data: filters,
+        dataType: 'json',
+        success: function(response) {
+          const tbody = $('#auditTable tbody');
+          tbody.empty();
 
-                const totalRecords = filteredLogs.length;
-                if (totalRecords === 0) {
-                    $('#auditTable').hide();
-                    $('#noRecords').show();
-                    $('#pagination').hide();
-                    return;
-                } else {
-                    $('#auditTable').show();
-                    $('#noRecords').hide();
-                    $('#pagination').show();
-                }
+          if (response.data.length === 0) {
+            tbody.append('<tr><td colspan="6" class="no-records">No audit logs found</td></tr>');
+            return;
+          }
 
-                // Pagination
-                const start = (currentPage - 1) * rowsPerPage;
-                const end = start + rowsPerPage;
-                const paginatedLogs = filteredLogs.slice(start, end);
+          response.data.forEach(log => {
+            const actionBadge = getActionBadge(log.action);
 
-                paginatedLogs.forEach(log => {
-                    const dateTime = new Date(log.datetime).toLocaleString();
-                    let actionBadgeClass = 'badge-info';
-                    switch (log.action) {
-                        case 'create': actionBadgeClass = 'badge-success'; break;
-                        case 'update': actionBadgeClass = 'badge-warning'; break;
-                        case 'delete': actionBadgeClass = 'badge-danger'; break;
-                        case 'login':
-                        case 'logout': actionBadgeClass = 'badge-info'; break;
-                    }
+            tbody.append(`
+                            <tr>
+                                <td>${log.log_id}</td>
+                                <td>${log.user_name || 'System'}</td>
+                                <td>${log.article_title || 'N/A'}</td>
+                                <td>${actionBadge}</td>
+                                <td>${formatDateTime(log.log_time)}</td>
+                                <td><button class="btn btn-sm" onclick="showLogDetails(${log.log_id})"><i class="fas fa-eye"></i></button></td>
+                            </tr>
+                        `);
+          });
 
-                    tbody.append(`
-                        <tr>
-                            <td>${log.user}</td>
-                            <td><span class="badge ${actionBadgeClass}">${log.action}</span></td>
-                            <td>${log.description}</td>
-                            <td>${dateTime}</td>
-                        </tr>
-                    `);
-                });
+          renderPagination(response.total, response.per_page, page);
+        },
+        error: function(error) {
+          console.error('Error loading audit logs:', error);
+          $('#auditLogsTable tbody').html('<tr><td colspan="6" class="no-records">Error loading audit logs</td></tr>');
+        }
+      });
+    }
 
-                renderPagination(filteredLogs.length);
-            }
+    function getActionBadge(action) {
+      const actions = {
+        'create': {
+          class: 'badge-success',
+          icon: 'plus'
+        },
+        'update': {
+          class: 'badge-info',
+          icon: 'edit'
+        },
+        'delete': {
+          class: 'badge-danger',
+          icon: 'trash'
+        },
+        'login': {
+          class: 'badge-success',
+          icon: 'sign-in-alt'
+        },
+        'logout': {
+          class: 'badge-warning',
+          icon: 'sign-out-alt'
+        }
+      };
 
-            // Render pagination links
-            function renderPagination(totalFilteredRecords = auditLogs.length) {
-                const totalPages = Math.ceil(totalFilteredRecords / rowsPerPage);
-                const pagination = $('#pagination');
-                pagination.empty();
+      const config = actions[action.toLowerCase()] || {
+        class: 'badge-info',
+        icon: 'info-circle'
+      };
 
-                if (totalPages <= 1) {
-                    pagination.hide();
-                    return;
-                }
-                pagination.show();
+      return `
+                <span class="badge ${config.class}">
+                    <i class="fas fa-${config.icon}"></i> ${action}
+                </span>
+            `;
+    }
 
-                for (let i = 1; i <= totalPages; i++) {
-                    const activeClass = i === currentPage ? 'active' : '';
-                    pagination.append(`<a href="#" class="${activeClass}" data-page="${i}">${i}</a>`);
-                }
-            }
+    function formatDateTime(datetime) {
+      if (!datetime) return 'N/A';
 
-            // Event handlers
-            $('#filterBtn').on('click', function () {
-                currentPage = 1;
-                renderTable();
-            });
+      const date = new Date(datetime);
+      return date.toLocaleString();
+    }
 
-            $('#pagination').on('click', 'a', function (e) {
-                e.preventDefault();
-                const page = Number($(this).data('page'));
-                if (page !== currentPage) {
-                    currentPage = page;
-                    renderTable();
-                }
-            });
+    function renderPagination(total, perPage, currentPage) {
+      const totalPages = Math.ceil(total / perPage);
+      const pagination = $('#pagination');
+      pagination.empty();
 
-            $('#exportBtn').on('click', function () {
-                exportToCSV();
-            });
+      if (totalPages <= 1) return;
 
-            function exportToCSV() {
-                let csvContent = "data:text/csv;charset=utf-8,";
-                csvContent += "User,Action,Description,Date & Time\n";
+      // Previous button
+      if (currentPage > 1) {
+        pagination.append(`<a href="#" onclick="loadAuditLogs(${currentPage - 1})"><i class="fas fa-chevron-left"></i></a>`);
+      }
 
-                // Export filtered data
-                let filteredLogs = auditLogs.filter(log => {
-                    const userVal = $('#userFilter').val();
-                    const actionVal = $('#actionFilter').val();
-                    const dateFromVal = $('#dateFrom').val();
-                    const dateToVal = $('#dateTo').val();
+      // Page numbers
+      for (let i = 1; i <= totalPages; i++) {
+        if (i === currentPage) {
+          pagination.append(`<a href="#" class="active">${i}</a>`);
+        } else {
+          pagination.append(`<a href="#" onclick="loadAuditLogs(${i})">${i}</a>`);
+        }
+      }
 
-                    let match = true;
+      // Next button
+      if (currentPage < totalPages) {
+        pagination.append(`<a href="#" onclick="loadAuditLogs(${currentPage + 1})"><i class="fas fa-chevron-right"></i></a>`);
+      }
+    }
 
-                    if (userVal && log.user !== userVal) match = false;
-                    if (actionVal && log.action !== actionVal) match = false;
+    function showLogDetails(logId) {
+      // In a real implementation, this would show a modal with detailed log information
+      alert(`Showing details for log ID: ${logId}`);
+    }
 
-                    if (dateFromVal) {
-                        const dateFrom = new Date(dateFromVal);
-                        const logDate = new Date(log.datetime);
-                        if (logDate < dateFrom) match = false;
-                    }
+    function exportAuditLogs() {
+      const filters = {
+        user_id: $('#userFilter').val(),
+        action: $('#actionFilter').val(),
+        date_from: $('#dateFrom').val(),
+        date_to: $('#dateTo').val()
+      };
 
-                    if (dateToVal) {
-                        const dateTo = new Date(dateToVal);
-                        const logDate = new Date(log.datetime);
-                        if (logDate > dateTo) match = false;
-                    }
+      // Convert filters to query string
+      const queryString = Object.keys(filters)
+        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(filters[key])}`)
+        .join('&');
 
-                    return match;
-                });
+      // Trigger download
+      window.location.href = `php-backend/export-audit-logs.php?${queryString}`;
+    }
+  </script>
 
-                filteredLogs.forEach(log => {
-                    const row = [
-                        log.user,
-                        log.action,
-                        `"${log.description.replace(/"/g, '""')}"`,
-                        new Date(log.datetime).toLocaleString()
-                    ].join(',');
-                    csvContent += row + "\n";
-                });
-
-                const encodedUri = encodeURI(csvContent);
-                const link = document.createElement('a');
-                link.setAttribute('href', encodedUri);
-                link.setAttribute('download', 'audit_logs.csv');
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }
-
-            fetchAuditLogs();
-        });
-    </script>
 </body>
 
 </html>
