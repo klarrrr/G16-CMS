@@ -57,6 +57,46 @@ $archiveStatus = $articles['archive_status'];
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
     <!-- Offline Quill JS -->
     <!-- <script src="scripts/quill.js"></script> -->
+    <style>
+        .invite-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .invite-popup-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 400px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .reviewer-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .reviewer-item input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .close-popup {
+            float: right;
+            cursor: pointer;
+            font-size: 20px;
+        }
+    </style>
 </head>
 
 <body class="body">
@@ -444,6 +484,9 @@ $archiveStatus = $articles['archive_status'];
 
     <!-- Switch Article Type -->
     <script src='scripts/edit-switch-article-type.js'></script>
+
+    <!-- Invite Reviwers -->
+    <script src="scripts/edit-invite-reviewer.js"></script>
 </body>
 
 </html>
