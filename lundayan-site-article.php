@@ -34,7 +34,8 @@ if ($row = mysqli_fetch_assoc($result)) {
     $widget = $row;
 }
 
-$image = $widget['widget_img'];
+$image = !empty($widget['widget_img']) ? $widget['widget_img'] : null;
+$fallbackImage = '/G16-CMS/pics/plp-outside.jpg';
 
 // --- Find Older Article (posted before current one) ---
 $olderQuery = "SELECT article_id, article_title FROM articles 
@@ -117,20 +118,21 @@ $reviewersQuery = "
 $reviewersResult = mysqli_query($conn, $reviewersQuery);
 
 // Function to safely limit HTML content
-function limitHtmlContent($content, $limit = 600) {
+function limitHtmlContent($content, $limit = 600)
+{
     $decoded = html_entity_decode($content);
     $plainText = strip_tags($decoded);
-    
+
     if (strlen($plainText) <= $limit) {
         return $content;
     }
-    
+
     $truncated = substr($plainText, 0, $limit);
     $lastSpace = strrpos($truncated, ' ');
     if ($lastSpace !== false) {
         $truncated = substr($truncated, 0, $lastSpace);
     }
-    
+
     return htmlspecialchars($truncated) . '... <a href="#" class="read-more">Read More</a>';
 }
 ?>
@@ -166,7 +168,8 @@ function limitHtmlContent($content, $limit = 600) {
     <?php include 'lundayan-site-upper-nav.php' ?>
     <?php include 'lundayan-site-nav.php'; ?>
     <main>
-        <section class="article-image-container" style='background-image: url(<?php echo 'data:image/png;base64,' . $image; ?>);'>
+        <section class="article-image-container" style='background-image: url("<?php echo $image ? 'data:image/png;base64,' . $image : $fallbackImage; ?>");'>
+
             <div class="article-image">
                 <div class="image-gradient">
                 </div>
@@ -241,19 +244,19 @@ function limitHtmlContent($content, $limit = 600) {
             </div>
             <!-- ARTICLE CONTENT -->
             <div class="ql-snow" id='article-information'>
-                        <div class="ql-editor" style="padding: 0;">
-            <div class="limited-content">
-                <?php echo htmlspecialchars_decode($content, 600); ?>
-            </div>
-            <div class="full-content">
-                <?php echo htmlspecialchars_decode($content); ?>
-            </div>
-            <div class="read-more-container">
-                <a href="#" class="read-more">Read More</a>
-            </div>
-        </div>
+                <div class="ql-editor" style="padding: 0;">
+                    <div class="limited-content">
+                        <?php echo htmlspecialchars_decode($content, 600); ?>
+                    </div>
+                    <div class="full-content">
+                        <?php echo htmlspecialchars_decode($content); ?>
+                    </div>
+                    <div class="read-more-container">
+                        <a href="#" class="read-more">Read More</a>
                     </div>
                 </div>
+            </div>
+        </div>
 
         <section class="article-gallery">
             <div class="gallery-title-container">
