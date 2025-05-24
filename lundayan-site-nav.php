@@ -3,10 +3,11 @@ include 'php-backend/connect.php';
 
 $user_id = $_SESSION['user_id'] ?? null;
 $pic = $_SESSION['profile_picture'] ?? null;
+$user_type = $_SESSION['user_type'] ?? null; // Get user type from session
 
 $pfp = ($pic) ? ('data:image/png;base64,' . $pic) : 'pics/no-pic.jpg';
-
 ?>
+
 
 <header>
     <nav>
@@ -33,9 +34,18 @@ $pfp = ($pic) ? ('data:image/png;base64,' . $pic) : 'pics/no-pic.jpg';
 </header>
 
 <script>
-    if (document.getElementById('lundayan-pfp')) {
-        document.getElementById('lundayan-pfp').addEventListener('click', () => {
-            window.location.href = 'editor-dashboard.php';
+    const userType = <?php echo json_encode($user_type); ?>;
+
+    const pfp = document.getElementById('lundayan-pfp');
+    if (pfp) {
+        pfp.addEventListener('click', () => {
+            if (userType === 'Admin') {
+                window.location.href = 'admin-dashboard.php';
+            } else if (userType === 'Reviewer' || userType === 'Writer') {
+                window.location.href = 'editor-dashboard.php';
+            } else {
+                alert("Unknown user type.");
+            }
         });
     }
 </script>
