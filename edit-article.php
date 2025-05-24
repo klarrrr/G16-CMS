@@ -409,6 +409,10 @@ $archiveStatus = $articles['archive_status'];
     <script src="scripts/edit-update-gallery-in-db.js"></script>
 
     <script src="scripts/edit-update-gallery-list.js"></script>
+    <!-- Call one time on load -->
+    <script>
+        updateGalleryList(article_id);
+    </script>
 
     <script src='scripts/edit-delete-image-gallery.js'></script>
 

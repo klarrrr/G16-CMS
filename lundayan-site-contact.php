@@ -16,6 +16,7 @@ $openHours = "Monday - Friday : $openTime-$closeTime";
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -189,7 +190,7 @@ $openHours = "Monday - Friday : $openTime-$closeTime";
 <body>
     <?php include 'lundayan-site-upper-nav.php' ?>
     <?php include 'lundayan-site-nav.php'; ?>
-    
+
     <main>
         <section class="contact">
             <div class="contact-title-container">
@@ -224,6 +225,32 @@ $openHours = "Monday - Friday : $openTime-$closeTime";
                             <div class="inside-two-vertical">
                                 <h3>Open Time</h3>
                                 <p><?= htmlspecialchars($openHours) ?></p>
+                                <div class="vertical-two">
+                                    <div class="inside-two-vertical">
+                                        <h3>Contact</h3>
+                                        <p>Phone: <?= htmlspecialchars($siteSettings['contact']['phone'] ?? '2-8643-1014') ?></p>
+                                        <p>Email: <?= htmlspecialchars($siteSettings['mail']['email'] ?? 'lundayan@plpasig.edu.ph') ?></p>
+                                    </div>
+                                    <div class="inside-two-vertical">
+                                        <h3>Stay Connected</h3>
+                                        <div class="soc-med">
+                                            <?php if (!empty($siteSettings['social']['facebook_url'])): ?>
+                                                <a href="<?= htmlspecialchars($siteSettings['social']['facebook_url']) ?>" target="_blank"><img src="svg/fb.svg" alt="" title="Facebook"></a>
+                                            <?php endif; ?>
+                                            <?php if (!empty($siteSettings['social']['pinterest_url'])): ?>
+                                                <a href="<?= htmlspecialchars($siteSettings['social']['pinterest_url']) ?>"><img src="svg/pinterest.svg" alt="" title="Pinterest"></a>
+                                            <?php endif; ?>
+                                            <?php if (!empty($siteSettings['social']['instagram_url'])): ?>
+                                                <a href="<?= htmlspecialchars($siteSettings['social']['instagram_url']) ?>"><img src="svg/ig.svg" alt="" title="Instagram"></a>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="faq-container">
                     <div class="faq-container-title">
                         <h2 class="faq-container-h2">FAQS</h2>
@@ -290,25 +317,8 @@ $openHours = "Monday - Friday : $openTime-$closeTime";
                                 If you notice an error, please contact us via our "Contact Us" page and specify the article title and the issue. We take corrections seriously and will update the article as needed.
                             </p>
                         </div>
-                        <div class="vertical-two">
-                            <div class="inside-two-vertical">
-                                <h3>Contact</h3>
-                                <p>Phone: <?= htmlspecialchars($siteSettings['contact']['phone'] ?? '2-8643-1014') ?></p>
-                                <p>Email: <?= htmlspecialchars($siteSettings['mail']['email'] ?? 'lundayan@plpasig.edu.ph') ?></p>
-                            </div>
-                            <div class="inside-two-vertical">
-                                <h3>Stay Connected</h3>
-                                <div class="soc-med">
-                                    <?php if (!empty($siteSettings['social']['facebook_url'])): ?>
-                                        <a href="<?= htmlspecialchars($siteSettings['social']['facebook_url']) ?>" target="_blank"><img src="svg/fb.svg" alt="" title="Facebook"></a>
-                                    <?php endif; ?>
-                                    <?php if (!empty($siteSettings['social']['pinterest_url'])): ?>
-                                        <a href="<?= htmlspecialchars($siteSettings['social']['pinterest_url']) ?>"><img src="svg/pinterest.svg" alt="" title="Pinterest"></a>
-                                    <?php endif; ?>
-                                    <?php if (!empty($siteSettings['social']['instagram_url'])): ?>
-                                        <a href="<?= htmlspecialchars($siteSettings['social']['instagram_url']) ?>"><img src="svg/ig.svg" alt="" title="Instagram"></a>
-                                    <?php endif; ?>
-                                </div>
+
+
 
                         <div class="faq-box">
                             <div class="faq-title">
@@ -331,8 +341,6 @@ $openHours = "Monday - Friday : $openTime-$closeTime";
                         </div>
                     </div>
                 </div>
-
-            </div>
         </section>
 
         <section class="map">
@@ -431,4 +439,5 @@ $openHours = "Monday - Friday : $openTime-$closeTime";
         });
     </script>
 </body>
+
 </html>

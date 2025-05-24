@@ -52,6 +52,4 @@ function updateGalleryList(article_id) {
             console.log(error);
         }
     });
-
-    updateGalleryList(article_id);
 }

@@ -189,53 +189,74 @@
         </section>
 
         <div class="team-carousel">
+
             <div class="team-member">
-                <img src="pics/bermudez.jpg" alt="BERMUDEZ, MIGUEL CARLOS R." />
+                <a href="https://www.facebook.com/Micoish" target="_blank" rel="noopener noreferrer">
+                    <img src="pics/bermudez.jpg" alt="BERMUDEZ, MIGUEL CARLOS R." />
+                </a>
                 <strong>MIGUEL CARLOS R. BERMUDEZ</strong>
                 <span>G6 Member</span>
             </div>
             <div class="team-member">
-                <img src="pics/cj_pogi.jpg" alt="CASTRO, CHARL JOVEN V." />
+                <a href="https://www.facebook.com/castrogaming0509" target="_blank" rel="noopener noreferrer">
+                    <img src="pics/cj_pogi.jpg" alt="CASTRO, CHARL JOVEN V." />
+                </a>
                 <strong>CHARL JOVEN V. CASTRO</strong>
                 <span>G1 Member</span>
             </div>
             <div class="team-member">
-                <img src="pics/90477869_583028765758138_5089600927967477760_n.jpg" alt="DE PADUA, CHARLES JERAMY C." />
+                <a href="https://www.facebook.com/RattanNaJumboXL" target="_blank" rel="noopener noreferrer">
+                    <img src="pics/90477869_583028765758138_5089600927967477760_n.jpg" alt="DE PADUA, CHARLES JERAMY C." />
+                </a>
                 <strong>CHARLES JERAMY C. DE PADUA</strong>
                 <span>G1 Member</span>
             </div>
             <div class="team-member">
-                <img src="pics/paul.jpg" alt="FRANCISCO, PAUL JUSTIN D." />
+                <a href="https://www.facebook.com/paul.justin.francisco" target="_blank" rel="noopener noreferrer">
+                    <img src="pics/paul.jpg" alt="FRANCISCO, PAUL JUSTIN D." />
+                </a>
                 <strong>PAUL JUSTIN D. FRANCISCO</strong>
                 <span>G6 Leader</span>
             </div>
             <div class="team-member">
-                <img src="pics/vin.jpg" alt="GALLARDO, MARVIN D." />
+                <a href="https://www.facebook.com/Vingallardo21" target="_blank" rel="noopener noreferrer">
+                    <img src="pics/vin.jpg" alt="GALLARDO, MARVIN D." />
+                </a>
                 <strong>MARVIN D. GALLARDO</strong>
                 <span>G1 Secretary</span>
             </div>
             <div class="team-member">
-                <img src="pics/garcia.jpg" alt="GARCIA, SEAN PAUL F." />
+                <a href="https://www.facebook.com/snplgrc28" target="_blank" rel="noopener noreferrer">
+                    <img src="pics/garcia.jpg" alt="GARCIA, SEAN PAUL F." />
+                </a>
                 <strong>SEAN PAUL F. GARCIA</strong>
                 <span>G6 Member</span>
             </div>
             <div class="team-member">
-                <img src="pics/sam.jpg" alt="JUMAO-AS, SAMANTHA O." />
+                <a href="https://www.facebook.com/samjzz24" target="_blank" rel="noopener noreferrer">
+                    <img src="pics/sam.jpg" alt="JUMAO-AS, SAMANTHA O." />
+                </a>
                 <strong>SAMANTHA O. JUMAO-AS</strong>
                 <span>G1 Member</span>
             </div>
             <div class="team-member">
-                <img src="pics/klarenz.jpg" alt="MANRIQUE, KLARENZ COBIE O." />
+                <a href="https://www.facebook.com/klarenz.cobie" target="_blank" rel="noopener noreferrer">
+                    <img src="pics/klarenz.jpg" alt="MANRIQUE, KLARENZ COBIE O." />
+                </a>
                 <strong>KLARENZ COBIE O. MANRIQUE</strong>
                 <span>G1 Leader</span>
             </div>
             <div class="team-member">
-                <img src="pics/graci.jpg" alt="MEDRANO, GRACI AL DEI R." />
+                <a href="https://www.facebook.com/gracialdei.medrano" target="_blank" rel="noopener noreferrer">
+                    <img src="pics/graci.jpg" alt="MEDRANO, GRACI AL DEI R." />
+                </a>
                 <strong>GRACI AL DEI R. MEDRANO</strong>
                 <span>G1 Member</span>
             </div>
             <div class="team-member">
-                <img src="pics/modancia.jpg" alt="MODANCIA, JOHN CHESTER Q." />
+                <a href="https://www.facebook.com/johnchesterquitalig.modancia" target="_blank" rel="noopener noreferrer">
+                    <img src="pics/modancia.jpg" alt="MODANCIA, JOHN CHESTER Q." />
+                </a>
                 <strong>JOHN CHESTER Q. MODANCIA</strong>
                 <span>G1 Member</span>
             </div>
@@ -248,61 +269,61 @@
         const profiles = [{
                 name: "MIGUEL CARLOS R. BERMUDEZ",
                 role: "G6 Member",
-                desc: "Description for Miguel.",
+                desc: "Pain is temporary. Quitting lasts forever.",
                 img: "pics/bermudez_stand.png"
             },
             {
                 name: "CHARL JOVEN V. CASTRO",
                 role: "G1 Member",
-                desc: "Description for Charl.",
+                desc: "The only easy day was yesterday.",
                 img: "pics/cj_stand.png"
             },
             {
                 name: "CHARLES JERAMY C. DE PADUA",
                 role: "G1 Member",
-                desc: "Description for Charles.",
+                desc: "Lalalalava Chichichichiken, Steve's lava chicken yeah it's tasty as hell.",
                 img: "pics/charles_stand.png"
             },
             {
                 name: "PAUL JUSTIN D. FRANCISCO",
                 role: "G6 Leader",
-                desc: "Description for Paul.",
+                desc: "Discipline is choosing between what you want now and what you want most.",
                 img: "pics/paul_stand.png"
             },
             {
                 name: "MARVIN D. GALLARDO",
                 role: "G1 Secretary",
-                desc: "Description for Marvin.",
+                desc: "Sweat saves blood. Blood saves lives. And brains save both.",
                 img: "pics/vin_stand.png"
             },
             {
                 name: "SEAN PAUL F. GARCIA",
                 role: "G6 Member",
-                desc: "Description for Sean.",
+                desc: "The harder you work, the harder it is to surrender.",
                 img: "pics/garcia_stand.png"
             },
             {
                 name: "SAMANTHA O. JUMAO-AS",
                 role: "G1 Member",
-                desc: "Description for Samantha.",
+                desc: "You don’t get what you wish for. You get what you work for.",
                 img: "pics/sam_stand.png"
             },
             {
                 name: "KLARENZ COBIE O. MANRIQUE",
                 role: "G1 Leader",
-                desc: "Description for Klarenz.",
+                desc: "Ako ay may lobo lumipad sa langit di ko na nakita pumutok na pala sayang lang pera ko pambili ng lobo sa pagkain sana nabusog pa ako.",
                 img: "pics/IMG_20240604_113030_221.png"
             },
             {
                 name: "GRACI AL DEI R. MEDRANO",
                 role: "G1 Member",
-                desc: "Description for Graci.",
+                desc: "Excuses sound best to the person making them.",
                 img: "pics/graci_stand.png"
             },
             {
                 name: "JOHN CHESTER Q. MODANCIA",
                 role: "G1 Member",
-                desc: "Description for John.",
+                desc: "The only limit is the one you set yourself.",
                 img: "pics/modancia_stand.png"
             }
         ];

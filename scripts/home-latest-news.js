@@ -27,6 +27,8 @@ function renderWidgets(widgets) {
             highlightArticle.style.backgroundRepeat = 'no-repeat';
             highlightArticle.style.backgroundSize = 'contain';
             latestNewsContainer.style.backgroundImage = `linear-gradient(rgba(10, 92, 54, 0), rgba(0, 0, 0, 0.65), rgb(0, 0, 0)), url(${picUrl})`;
+            latestNewsTitle.onclick = () => goToArticle(latestNewsTitle);
+
         }
         // Remaining widgets are cards
         else {

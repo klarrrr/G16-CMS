@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once 'footer-functions.php';
 $contactInfo = getContactInfo();
 ?>
@@ -28,7 +28,7 @@ $contactInfo = getContactInfo();
                 <li><a href="lundayan-site-calendar.php">Calendar</a></li>
                 <li><a href="lundayan-site-contact.php">Contact</a></li>
                 <li><a href="lundayan-site-about.php">About Us</a></li>
-                <li><a href="#">Team</a></li>
+                <li><a href="lundayan-site-team.php">Team</a></li>
             </ul>
         </div>
 
