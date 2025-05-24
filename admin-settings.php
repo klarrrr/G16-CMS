@@ -150,33 +150,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       height: 100vh;
     }
 
-    .sidebar {
-      width: 250px;
-      background-color: #2c3e50;
-      color: #ecf0f1;
-      padding: 20px;
-    }
+     .sidebar {
+            width: 250px;
+            background-color: #0F5132;
+            color: #ecf0f1;
+            padding: 20px;
+            height: 100vh;
+            position: fixed;
+        }
 
-    .sidebar h2 {
-      margin-bottom: 20px;
-    }
+        .sidebar h2 {
+            margin-bottom: 20px;
+        }
 
-    .sidebar ul {
-      list-style: none;
-    }
+        .sidebar ul {
+            list-style: none;
+        }
 
-    .sidebar ul li {
-      margin: 15px 0;
-    }
+        .sidebar ul li {
+            margin: 15px 0;
+        }
 
-    .sidebar ul li a {
-      color: #ecf0f1;
-      text-decoration: none;
-    }
+        .sidebar ul li a {
+            color: #ecf0f1;
+            text-decoration: none;
+            display: block;
+            padding: 8px 0;
+        }
 
-    .sidebar ul li a:hover {
-      text-decoration: underline;
-    }
+        .sidebar ul li a:hover {
+            text-decoration: underline;
+        }
+
 
     .main-content {
       flex: 1;
@@ -306,17 +311,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
   <div class="admin-container">
-    <aside class="sidebar">
-      <h2>Admin Panel</h2>
-      <ul>
-        <li><a href="admin-dashboard.php">Dashboard</a></li>
-        <li><a href="#">Inbox</a></li>
-        <li><a href="#">Manage Users</a></li>
-        <li><a href="#">Audit Log</a></li>
-        <li><a href="admin-settings.php">Settings</a></li>
-        <li><a href="logout.php">Logout</a></li>
-      </ul>
-    </aside>
+    <?php include 'admin-side-bar.php' ?>
 
     <main class="main-content">
       <header>
