@@ -68,48 +68,83 @@
 
     .user-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 1.5rem;
     }
 
     .user-card {
       background: #fff;
       border-radius: 10px;
-      padding: 1.2rem;
+      overflow: hidden;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       cursor: pointer;
       transition: transform 0.2s;
-      overflow: hidden;
     }
 
     .user-card:hover {
       transform: translateY(-5px);
     }
 
+    .user-cover-photo {
+      width: 100%;
+      height: 120px;
+      background-color: #e1e1e1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .user-cover-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .user-details {
+      padding: 1rem;
+      display: flex;
+      gap: 1rem;
+    }
+
+    .user-profile-pic {
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+      background-color: #e1e1e1;
+      border: 3px solid white;
+      margin-top: -30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .user-profile-pic img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .user-info {
+      flex: 1;
+    }
+
     .user-name {
       font-size: 1.1rem;
       font-weight: bold;
+      margin-bottom: 0.3rem;
     }
 
     .user-email {
       font-size: 0.9rem;
       color: gray;
-      margin-bottom: 10px;
     }
 
-    .user-profile-pic img {
-      height: 50px;
-      width: 50px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    .user-cover-photo img {
-      width: 100%;
-      height: 100px;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-top: 10px;
+    .user-type {
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      background: #e1f5fe;
+      color: #0288d1;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
     }
 
     .modal {
@@ -168,7 +203,7 @@
     }
 
     .save-btn {
-      background: #3498db;
+      background: #0F5132;
       color: white;
     }
 
@@ -176,7 +211,7 @@
       position: fixed;
       bottom: 30px;
       right: 30px;
-      background: #2ecc71;
+      background: #0F5132;
       color: white;
       font-size: 2rem;
       border: none;
@@ -186,6 +221,16 @@
       cursor: pointer;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
       z-index: 100;
+    }
+
+    /* Fallback icon styles */
+    .fallback-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #888;
+      font-size: 24px;
     }
   </style>
 </head>
@@ -247,16 +292,69 @@
             const card = document.createElement('div');
             card.className = 'user-card';
             card.onclick = () => openUserModal(user.user_id);
-            card.innerHTML = `
+            
+            // Create cover photo container
+            const coverPhotoDiv = document.createElement('div');
+            coverPhotoDiv.className = 'user-cover-photo';
+            if (user.cover_photo) {
+              const coverImg = document.createElement('img');
+              coverImg.src = 'data:image/png;base64,' + user.cover_photo;
+              coverImg.alt = 'Cover Photo';
+              coverImg.onerror = function() {
+                this.style.display = 'none';
+                const fallback = document.createElement('div');
+                fallback.className = 'fallback-icon';
+                fallback.innerHTML = '📷';
+                coverPhotoDiv.appendChild(fallback);
+              };
+              coverPhotoDiv.appendChild(coverImg);
+            } else {
+              const fallback = document.createElement('div');
+              fallback.className = 'fallback-icon';
+              fallback.innerHTML = '🏞️';
+              coverPhotoDiv.appendChild(fallback);
+            }
+
+            // Create profile picture container
+            const profilePicDiv = document.createElement('div');
+            profilePicDiv.className = 'user-profile-pic';
+            if (user.profile_picture) {
+              const profileImg = document.createElement('img');
+              profileImg.src = 'data:image/png;base64,' + user.profile_picture;
+              profileImg.alt = 'Profile Picture';
+              profileImg.onerror = function() {
+                this.style.display = 'none';
+                const fallback = document.createElement('div');
+                fallback.className = 'fallback-icon';
+                fallback.innerHTML = '👤';
+                profilePicDiv.appendChild(fallback);
+              };
+              profilePicDiv.appendChild(profileImg);
+            } else {
+              const fallback = document.createElement('div');
+              fallback.className = 'fallback-icon';
+              fallback.innerHTML = '👤';
+              profilePicDiv.appendChild(fallback);
+            }
+
+            // Create user details
+            const userDetailsDiv = document.createElement('div');
+            userDetailsDiv.className = 'user-details';
+            userDetailsDiv.appendChild(profilePicDiv);
+
+            const userInfoDiv = document.createElement('div');
+            userInfoDiv.className = 'user-info';
+            userInfoDiv.innerHTML = `
               <div class="user-name">${user.user_first_name} ${user.user_last_name}</div>
               <div class="user-email">${user.user_email}</div>
-              <div class="user-profile-pic">
-                <img src="${user.profile_picture ? 'data:image/png;base64,' + user.profile_picture : 'default-profile.png'}" alt="Profile Picture">
-              </div>
-              <div class="user-cover-photo">
-                <img src="${user.cover_photo ? 'data:image/png;base64,' + user.cover_photo : 'default-cover.png'}" alt="Cover Photo">
-              </div>
+              <div class="user-type">${user.user_type}</div>
             `;
+            userDetailsDiv.appendChild(userInfoDiv);
+
+            // Assemble the card
+            card.appendChild(coverPhotoDiv);
+            card.appendChild(userDetailsDiv);
+            
             grid.appendChild(card);
           });
         },
