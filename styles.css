@@ -2428,3 +2428,112 @@ nav h1 {
     background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
 }
 
+/* Tags Input Container */
+.tags-input-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* Input field */
+#widget-tags-input {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    position: relative;
+    z-index: 2;
+    background-color: transparent;
+}
+
+/* Inline suggestion */
+.tag-suggestion {
+    position: absolute;
+    color: #aaa;
+    pointer-events: none;
+    font-size: 0.8rem;  
+    font-family: inherit;  
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    z-index: 1;
+    background-color: transparent;
+    white-space: pre;  
+}
+
+/* Dropdown suggestions */
+.tag-suggestions {
+    position: absolute;
+    background: white;
+    border: 1px solid #ddd;
+        font-family: inherit;  
+    border-radius: 4px;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin-top: 4px;
+    top: 100%;
+    left: 0;
+}
+
+/* Suggestion items */
+.tag-suggestion-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.2s;
+}
+
+.tag-suggestion-item:hover, 
+.tag-suggestion-item.selected {
+    background-color: #f8f8f8;
+}
+
+.tag-suggestion-item:last-child {
+    border-bottom: none;
+}
+
+/* Highlight matching text */
+.tag-suggestion-item strong {
+    color: #161616;
+    font-weight: normal;
+
+
+}/* Tag Suggestions Styling */
+.tag-suggestions {
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 1000;
+}
+
+.tag-suggestion-item {
+    color: black;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.tag-suggestion-item .tag-match {
+    font-weight: bold;
+}
+
+.tag-suggestion-item.selected {
+    background-color: black;
+    color: white;
+}
+
+.tag-suggestion-item.selected .tag-match {
+    color: white;
+    font-weight: bold;
+}
+
+.tag-suggestion {
+    color: black;
+    opacity: 0.7;
+    pointer-events: none;
+}
