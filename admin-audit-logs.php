@@ -266,10 +266,11 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
         <table id="auditTable" aria-label="Audit logs table">
           <thead>
             <tr>
-              <th>User</th>
-              <th>Action</th>
-              <th>Description</th>
-              <th>Date & Time</th>
+                <th>ID</th>
+                <th>User</th>
+                <th>Article Title</th>
+                <th>Action Performed</th>
+                <th>Timestamp</th>
             </tr>
           </thead>
           <tbody>
