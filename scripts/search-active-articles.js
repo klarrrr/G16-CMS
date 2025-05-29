@@ -56,7 +56,7 @@ searchInput.addEventListener('input', () => {
                 }
 
                 const imageHTML = widget_img
-                    ? `<img src="data:image/png;base64,${widget_img}" class="archive-img" alt="Article Image">`
+                    ? `<img src="${widget_img}" class="archive-img" alt="Article Image">`
                     : `<div class="archive-img placeholder-img">No image</div>`;
 
                 const authorFullName = `${htmlEntityDecode(user_first_name)} ${htmlEntityDecode(user_last_name)}`;

@@ -13,7 +13,7 @@ $.ajax({
 
         for (let i = 0; i < allData.length; i++) {
             const widget = allData[i];
-            const img = widget.widget_img ? 'data:image/png;base64,' + widget.widget_img : 'pics/plp-outside.jpg';
+            const img = widget.widget_img ? widget.widget_img : 'pics/plp-outside.jpg';
 
             const title = widget.widget_title;
             let status = widget.approve_status;

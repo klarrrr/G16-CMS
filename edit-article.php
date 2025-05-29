@@ -58,6 +58,292 @@ $archiveStatus = $articles['archive_status'];
     <!-- Offline Quill JS -->
     <!-- <script src="scripts/quill.js"></script> -->
     <style>
+        @font-face {
+            font-family: boldonse;
+            src: url(font/Boldonse-Regular.ttf)
+        }
+
+        @font-face {
+            font-family: main;
+            src: url(font/NanumMyeongjo-Regular.ttf)
+        }
+
+        @font-face {
+            font-family: sub;
+            src: url(font/NanumGothic-Regular.ttf)
+        }
+
+        html {
+            height: 100vh;
+            width: 100%
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: .3s ease
+        }
+
+        body {
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 4% 96%;
+            width: 100%
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center
+        }
+
+        nav {
+            display: flex;
+            width: 100%;
+            padding: 0 10px;
+            border-bottom: 1px solid #d3d3d3;
+            height: 7vh;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fff
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%
+        }
+
+        nav h1 {
+            font-family: boldonse;
+            font-size: 1em;
+            color: #161616
+        }
+
+        .left-editor-container {
+            height: fit-content
+        }
+
+        .right-editor-container {
+            width: 100%;
+            background-color: #fff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column
+        }
+
+        .main-page {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            height: 100vh
+        }
+
+        .edit-page-details {
+            border-right: 1px solid #d3d3d3;
+            height: 100%;
+            background-color: #fff
+        }
+
+        .choose-page-container {
+            border-bottom: 1px solid #d3d3d3;
+            height: 10vh;
+            display: flex;
+            padding: 15px;
+            justify-content: space-evenly;
+            gap: 15px
+        }
+
+        .choose-page-container * {
+            width: 100%
+        }
+
+        .choose-page-container #add-article-page-btn {
+            border: none;
+            background-color: #161616;
+            color: #fff;
+            border-radius: 3px;
+            transition: .2s ease-in-out;
+            cursor: pointer
+        }
+
+        .choose-page-container #add-article-page-btn:hover {
+            transform: translateY(-2px)
+        }
+
+        .page-details-container {
+            overflow-y: scroll;
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            gap: 50px;
+            height: 83vh
+        }
+
+        .del-article-btn:hover {
+            transform: translateY(-1px)
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0)
+            }
+
+            100% {
+                transform: rotate(360deg)
+            }
+        }
+
+        .no-content {
+            text-align: center;
+            font-size: 1em;
+            color: gray;
+            padding: 20px
+        }
+
+        .font-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px
+        }
+
+        .font-option {
+            border: 1px solid #d3d3d3;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: .2s ease-in-out;
+            background-color: #f9f9f9;
+            font-size: 16px
+        }
+
+        .font-option.selected,
+        .font-option:hover {
+            background-color: #161616;
+            color: #fff
+        }
+
+        .add-article-title-container {
+            padding: 1rem;
+            border-bottom: 1px solid #d3d3d3;
+            display: flex;
+            justify-content: space-between
+        }
+
+        .add-article-title-container h1 {
+            font-family: main;
+            font-size: 2rem
+        }
+
+        .article-add-article-button {
+            background-color: #161616;
+            color: #f4f4f4;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            min-width: 3.5rem;
+            min-height: 3.5rem;
+            font-size: 1.5rem;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            margin: 3rem;
+            box-shadow: rgba(22, 22, 22, .4) 5px 5px, rgba(22, 22, 22, .3) 10px 10px, rgba(22, 22, 22, .2) 15px 15px, rgba(22, 22, 22, .1) 20px 20px, rgba(22, 22, 22, .05) 25px 25px
+        }
+
+        .article-add-article-button:hover {
+            transform: scale(1.05);
+            box-shadow: rgba(14, 63, 126, .04) 0 0 0 1px, rgba(42, 51, 69, .04) 0 1px 1px -.5px, rgba(42, 51, 70, .04) 0 3px 3px -1.5px, rgba(42, 51, 70, .04) 0 6px 6px -3px, rgba(14, 63, 126, .04) 0 12px 12px -6px, rgba(14, 63, 126, .04) 0 24px 24px -12px
+        }
+
+        .add-article-title-container p {
+            font-family: sub;
+            font-size: .8rem
+        }
+
+        .article-box {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #161616;
+            border-radius: 3px;
+            height: fit-content
+        }
+
+        .article-box:hover {
+            transform: scale(1.02)
+        }
+
+        .article-img-container {
+            display: flex;
+            background-repeat: none;
+            background-size: cover;
+            background-position-y: center
+        }
+
+        .article-box h2 {
+            font-family: sub;
+            font-size: 1rem;
+            font-weight: 900;
+            line-clamp: 1;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis
+        }
+
+        .article-box h3 {
+            font-family: sub;
+            font-size: .8em;
+            color: #262626;
+            font-weight: lighter
+        }
+
+        .article-box h4 {
+            font-family: sub;
+            font-size: .7em;
+            color: #262626;
+            font-weight: lighter;
+            border-radius: .5rem
+        }
+
+        .article-title-status-container {
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            justify-content: center
+        }
+
+        .edit-article-button {
+            padding: 1rem;
+            background: #161616;
+            color: #f4f4f4;
+            border: none;
+            border-bottom-left-radius: 2px;
+            border-bottom-right-radius: 2px;
+            cursor: pointer
+        }
+
+        .edit-article-button:hover {
+            background-color: #262626
+        }
+
+        .dashboard-main-page {
+            width: 100%;
+            gap: 1rem;
+            height: 0;
+            padding: 0 12vw;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            position: relative
+        }
+
+        @media (max-width:1222px) {
+            .dashboard-main-page {
+                grid-template-columns: 1fr
+            }
+        }
+
         .invite-popup {
             position: fixed;
             top: 0;
@@ -310,8 +596,8 @@ $archiveStatus = $articles['archive_status'];
 
                             <span class='warning' style='display: none;' id='img-size-warning'>Image size is too large</span>
 
-                            <div id='thumbnail-image-container' class="thumbnail-image-container" style='background: url(<?php echo 'data:image/png;base64,' . $thumbnailImg ?>);'>
-                                <img src="<?php echo 'data:image/png;base64,' . $thumbnailImg ?>" alt="" id='show-thumbnail-image'>
+                            <div id='thumbnail-image-container' class="thumbnail-image-container" style='background: url(<?php echo $thumbnailImg ?>);'>
+                                <img src="<?php echo $thumbnailImg ?>" alt="" id='show-thumbnail-image'>
                             </div>
 
                             <input type="file" id='thumbnail-image' accept="image/*">
@@ -446,6 +732,7 @@ $archiveStatus = $articles['archive_status'];
 
     <!-- Update Short Desc -->
     <script src='scripts/edit-update-short-desc.js'></script>
+
     <!-- Update Thumbnail image -->
     <script src='scripts/edit-update-thumbnail-image.js'></script>
 

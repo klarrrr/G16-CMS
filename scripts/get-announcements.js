@@ -17,7 +17,7 @@ $.ajax({
             div.setAttribute('articleid', article.article_id);
 
             div.innerHTML = `
-                <img src="${'data:image/png;base64,' + article.widget_img}" alt="">
+                <img src="${article.widget_img}" alt="">
                 <div class="event-text-container">
                     <h3>${article.article_title}</h3>
                     <p>Posted on ${article.date_posted}</p>

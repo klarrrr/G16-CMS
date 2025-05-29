@@ -1,53 +1,54 @@
 const thumbnailImg = document.getElementById('thumbnail-image');
 thumbnailImg.addEventListener('change', (event) => {
-    // Debounce avoid flooding the server
     if (window.updateTimeout) clearTimeout(window.updateTimeout);
 
     window.updateTimeout = setTimeout(() => {
         updateThumbnailImg(article_id, event);
-        // console.log(updatedContent);
     }, 500);
 });
 
 function updateThumbnailImg(article_id, event) {
     const warningLbl = document.getElementById('img-size-warning');
-    const file = event.target.files[0]; // Get the selected file
+    const file = event.target.files[0];
+
     if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            const base64String = e.target.result.split(',')[1]; // Extract Base64 string
-            if (base64String.length > 16777215) {
-                // NO MORE THAN 16777215 chars
-                console.log("Image size is too large : " + base64String.length);
-                warningLbl.style.display = 'block';
-            } else {
-                // PWEDE basta less than 16777215 chars
-                console.log("This is allowed : " + base64String.length)
-                $.ajax({
-                    url: 'php-backend/edit-article-thumbnail-update.php',
-                    type: 'post',
-                    dataType: 'json',
-                    data: {
-                        base64String: base64String,
-                        article_id: article_id
-                    },
-                    success: (res) => {
-                        console.log(res.status);
+        // Optional: Check file size in bytes (e.g. 2MB = 2 * 1024 * 1024)
+        if (file.size > 10 * 1024 * 1024) {
+            console.log("Image file is too large: " + file.size);
+            warningLbl.style.display = 'block';
+            return;
+        }
 
-                        document.getElementById('show-thumbnail-image').src = 'data:image/png;base64,' + base64String;
-                        updateDateUpdated(article_id, "Article thumbnail image updated");
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('article_id', article_id);
 
-                        document.getElementById('thumbnail-image-container').style.background = `url(${'data:image/png;base64,' + base64String})`;
+        $.ajax({
+            url: 'php-backend/edit-article-thumbnail-update.php',
+            type: 'POST',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: (res) => {
+                console.log(res.status);
+                if (res.status === 'success') {
+                    const filePath = res.filePath;
 
-                        warningLbl.style.display = 'none';
-                    },
-                    error: (error) => {
-                        console.log(error);
-                    }
-                });
+                    document.getElementById('show-thumbnail-image').src = filePath;
+                    document.getElementById('thumbnail-image-container').style.background = `url(${filePath})`;
+
+                    updateDateUpdated(article_id, "Article thumbnail image updated");
+
+                    warningLbl.style.display = 'none';
+                } else {
+                    console.log(res.message);
+                }
+            },
+            error: (err) => {
+                console.log(err);
             }
-        };
-        reader.readAsDataURL(file); // Read file as Data URL
+        });
     } else {
         console.log('No file selected.');
     }

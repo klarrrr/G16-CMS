@@ -1,13 +1,44 @@
 <?php
-
 include 'connect.php';
 
-$base64img = $_POST['base64String'];
-$article_id = $_POST['article_id'];
+$response = ['status' => 'error', 'message' => '', 'filePath' => ''];
 
-$query = "UPDATE widgets SET widget_img = '$base64img' WHERE article_owner = $article_id";
-mysqli_query($conn, $query);
+if (isset($_FILES['image']) && isset($_POST['article_id'])) {
+    $article_id = (int) $_POST['article_id'];
+    $file = $_FILES['image'];
 
-echo json_encode([
-    'status' => 'success'
-]);
+    $uploadDir = '../uploaded-pics/';
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0755, true);
+    }
+
+    $fileName = basename($file['name']);
+    $fileName = time() . '_' . preg_replace("/[^a-zA-Z0-9\._-]/", "", $fileName); // sanitize
+    $targetFilePath = $uploadDir . $fileName;
+    $relativePath = 'uploaded-pics/' . $fileName; // This is what's stored in DB and sent to frontend
+
+    // Optional: Validate file type
+    $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    if (!in_array($file['type'], $allowedTypes)) {
+        $response['message'] = 'Invalid file type.';
+    } elseif (move_uploaded_file($file['tmp_name'], $targetFilePath)) {
+        // Update widgets table with file path
+        $stmt = $conn->prepare("UPDATE widgets SET widget_img = ? WHERE article_owner = ?");
+        $stmt->bind_param("si", $relativePath, $article_id);
+
+        if ($stmt->execute()) {
+            $response['status'] = 'success';
+            $response['filePath'] = $relativePath;
+        } else {
+            $response['message'] = 'Database update failed.';
+        }
+
+        $stmt->close();
+    } else {
+        $response['message'] = 'File upload failed.';
+    }
+} else {
+    $response['message'] = 'Missing image file or article ID.';
+}
+
+echo json_encode($response);

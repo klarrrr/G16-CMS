@@ -54,6 +54,8 @@ $ownerLName = $userInfo['user_last_name'];
 $ownerEmail = $userInfo['user_email'];
 $ownerPicture = $userInfo['profile_picture'];
 
+$fallbackImage = 'pics/plp-outside.jpg';
+
 ?>
 
 <!DOCTYPE html>
@@ -135,8 +137,8 @@ $ownerPicture = $userInfo['profile_picture'];
                         <div class="widget-article-image">
                             <h3 class='widget-article-h3'>Thumbnail Image</h3>
 
-                            <div class="thumbnail-image-container" style='background: url(<?php echo 'data:image/png;base64,' . $thumbnailImg ?>);'>
-                                <img src="<?php echo 'data:image/png;base64,' . $thumbnailImg ?>" alt="" id='show-thumbnail-image'>
+                            <div class="thumbnail-image-container" style='background: url(<?php echo $thumbnailImg ? $thumbnailImg : $fallbackImage ?>);'>
+                                <img src="<?php echo $thumbnailImg ? $thumbnailImg : $fallbackImage ?>" alt="" id='show-thumbnail-image'>
                             </div>
                         </div>
                         <div class="tags-del-container">
