@@ -14,6 +14,7 @@ $openTime = isset($siteSettings['contact']['open_time_start']) ? date("H:i", str
 $closeTime = isset($siteSettings['contact']['open_time_end']) ? date("H:i", strtotime($siteSettings['contact']['open_time_end'])) : '20:00';
 $openHours = "Monday - Friday : $openTime-$closeTime";
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 

@@ -4,7 +4,7 @@ const searchBar = document.getElementById('search-bar');
 function renderWidgets(widgets) {
     const rows = widgets.map(widget => {
         const picUrl = widget.widget_img
-            ? `data:image/png;base64,${widget.widget_img}`
+            ? `${widget.widget_img}`
             : 'pics/plp-outside.jpg';
 
         return `

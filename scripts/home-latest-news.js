@@ -14,7 +14,7 @@ function renderWidgets(widgets) {
 
     widgets.forEach((widget, index) => {
         const picUrl = widget.widget_img
-            ? `data:image/png;base64,${widget.widget_img}`
+            ? `${widget.widget_img}`
             : 'pics/plp-outside.jpg';
 
         // First widget is the highlight article

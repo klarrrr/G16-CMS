@@ -39,7 +39,7 @@ $.ajax({
             recentArticleLayout.classList.add('recent-box');
 
             const img = document.createElement('img');
-            img.src = pic ? 'data:image/png;base64,' + pic : 'pics/plp-outside.jpg';
+            img.src = pic ? pic : 'pics/plp-outside.jpg';
             img.alt = title;
 
             const p = document.createElement('p');

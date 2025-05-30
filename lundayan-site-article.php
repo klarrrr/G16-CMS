@@ -35,7 +35,7 @@ if ($row = mysqli_fetch_assoc($result)) {
 }
 
 $image = !empty($widget['widget_img']) ? $widget['widget_img'] : null;
-$fallbackImage = '/G16-CMS/pics/plp-outside.jpg';
+$fallbackImage = 'pics/plp-outside.jpg';
 
 // --- Find Older Article (posted before current one) ---
 $olderQuery = "SELECT article_id, article_title FROM articles 
@@ -147,7 +147,7 @@ function limitHtmlContent($content, $limit = 600)
     <meta property="og:type" content="article" />
     <meta property="og:title" content="<?php echo htmlspecialchars($title); ?>" />
     <meta property="og:description" content="<?php echo substr(strip_tags(html_entity_decode($content)), 0, 150); ?>..." />
-    <meta property="og:image" content="data:image/png;base64,<?php echo $image; ?>" />
+    <meta property="og:image" content="<?php echo $image; ?>" />
 
     <title>Lundayan : Article</title>
     <link rel="stylesheet" href="/G16-CMS/styles-lundayan-site.css">
@@ -168,7 +168,7 @@ function limitHtmlContent($content, $limit = 600)
     <?php include 'lundayan-site-upper-nav.php' ?>
     <?php include 'lundayan-site-nav.php'; ?>
     <main>
-        <section class="article-image-container" style='background-image: url("<?php echo $image ? 'data:image/png;base64,' . $image : $fallbackImage; ?>");'>
+        <section class="article-image-container" style='background-image: url("<?php echo $image ? $image : $fallbackImage; ?>");'>
 
             <div class="article-image">
                 <div class="image-gradient">
