@@ -58,6 +58,7 @@ $query = "
     SELECT 
         audit_logs.*, 
         CONCAT(users.user_first_name, ' ', users.user_last_name) AS user_name,
+        users.user_type,
         articles.article_title
     FROM audit_logs
     LEFT JOIN users ON audit_logs.user_owner = users.user_id

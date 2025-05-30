@@ -238,6 +238,16 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
             <!-- Populated dynamically -->
           </select>
         </div>
+
+<div class="filter-group">
+  <label for="userTypeFilter">User Type</label>
+  <select id="userTypeFilter">
+    <option value="">All Types</option>
+    <option value="writer">Writer</option>
+    <option value="reviewer">Reviewer</option>
+  </select>
+</div>
+        
         <div class="filter-group">
           <label for="actionFilter">Action</label>
           <select id="actionFilter">
@@ -266,10 +276,12 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
         <table id="auditTable" aria-label="Audit logs table">
           <thead>
             <tr>
+              <th>ID</th>
               <th>User</th>
-              <th>Action</th>
-              <th>Description</th>
-              <th>Date & Time</th>
+              <th>User Type</th>
+              <th>Article Title</th>
+              <th>Action Performed</th>
+              <th>Timestamp</th>
             </tr>
           </thead>
           <tbody>
@@ -357,20 +369,20 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
             return;
           }
 
-          response.data.forEach(log => {
-            const actionBadge = getActionBadge(log.action);
+response.data.forEach(log => {
+    const actionBadge = getActionBadge(log.action);
 
-            tbody.append(`
-                            <tr>
-                                <td>${log.log_id}</td>
-                                <td>${log.user_name || 'System'}</td>
-                                <td>${log.article_title || 'N/A'}</td>
-                                <td>${actionBadge}</td>
-                                <td>${formatDateTime(log.log_time)}</td>
-                                <td><button class="btn btn-sm" onclick="showLogDetails(${log.log_id})"><i class="fas fa-eye"></i></button></td>
-                            </tr>
-                        `);
-          });
+    tbody.append(`
+        <tr>
+            <td>${log.log_id}</td>
+            <td>${log.user_name || 'System'}</td>
+            <td>${getUserTypeBadge(log.user_type)}</td>
+            <td>${log.article_title || 'N/A'}</td>
+            <td>${actionBadge}</td>
+            <td>${formatDateTime(log.log_time)}</td>
+        </tr>
+    `);
+}); // This closing bracket was missing
 
           renderPagination(response.total, response.per_page, page);
         },
@@ -380,7 +392,17 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
         }
       });
     }
-
+  function getUserTypeBadge(userType) {
+      const types = {
+          'admin': 'badge-admin',
+          'editor': 'badge-editor',
+          'user': 'badge-user'
+      };
+      
+      const badgeClass = types[userType?.toLowerCase()] || 'badge-user';
+      
+      return `<span class="badge ${badgeClass}">${userType || 'N/A'}</span>`;
+  }
     function getActionBadge(action) {
       const actions = {
         'create': {
