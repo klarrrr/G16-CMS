@@ -774,6 +774,7 @@ $archiveStatus = $articles['archive_status'];
 
     <!-- Invite Reviwers -->
     <!-- <script src="scripts/edit-invite-reviewer.js"></script> -->
+    <script src='scripts/edit-tag-autocomplete.js'></script>
 </body>
 
 </html>
