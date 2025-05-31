@@ -44,12 +44,12 @@
         .no-news-message {
             text-align: center;
             padding: 2rem;
-            color: #666;
+            color: #9a9a9a666;
         }
 
         .no-news-message h3 {
             margin-top: 0.5rem;
-            color: #333;
+            color: #b1b1b1;
         }
     </style>
 </head>
