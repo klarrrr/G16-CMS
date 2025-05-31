@@ -32,7 +32,7 @@ $.ajax({
             buildCommentBox.innerHTML = `
                 <div class="comment-upper-part">
                     <div class="pfp-container">
-                        <img src="data:image/png;base64, ${profilePic}" alt="">
+                        <img src="${(!profilePic) ? 'pics/no-pic.jpg' : profilePic}" alt="">
                     </div>
                     <div class="author-and-date">
                         <h2 class='comment-author'>${userFName} ${userLName}</h2>

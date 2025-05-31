@@ -103,7 +103,7 @@ nav h1 {
 
 .off-screen-menu {
     height: 100vh;
-    background-color: #f4f4f4;
+    background-color: #fff;
     display: flex;
     flex-direction: column;
     transition: 0.3s ease-in-out;
@@ -2414,7 +2414,8 @@ nav h1 {
 .article-preview {
     position: relative;
     overflow: hidden;
-    max-height: 150px; /* Adjust based on your needs */
+    max-height: 150px;
+    /* Adjust based on your needs */
     margin-bottom: 20px;
 }
 
@@ -2425,7 +2426,7 @@ nav h1 {
     left: 0;
     right: 0;
     height: 40px;
-    background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
 }
 
 /* Tags Input Container */
@@ -2452,14 +2453,14 @@ nav h1 {
     position: absolute;
     color: #aaa;
     pointer-events: none;
-    font-size: 0.8rem;  
-    font-family: inherit;  
+    font-size: 0.8rem;
+    font-family: inherit;
     top: 50%;
     transform: translateY(-50%);
     left: 0;
     z-index: 1;
     background-color: transparent;
-    white-space: pre;  
+    white-space: pre;
 }
 
 /* Dropdown suggestions */
@@ -2467,13 +2468,13 @@ nav h1 {
     position: absolute;
     background: white;
     border: 1px solid #ddd;
-        font-family: inherit;  
+    font-family: inherit;
     border-radius: 4px;
     width: 100%;
     max-height: 200px;
     overflow-y: auto;
     z-index: 1000;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-top: 4px;
     top: 100%;
     left: 0;
@@ -2489,7 +2490,7 @@ nav h1 {
     transition: background 0.2s;
 }
 
-.tag-suggestion-item:hover, 
+.tag-suggestion-item:hover,
 .tag-suggestion-item.selected {
     background-color: #f8f8f8;
 }
@@ -2504,11 +2505,13 @@ nav h1 {
     font-weight: normal;
 
 
-}/* Tag Suggestions Styling */
+}
+
+/* Tag Suggestions Styling */
 .tag-suggestions {
     background: white;
     border-radius: 4px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     z-index: 1000;
 }
 

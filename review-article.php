@@ -103,7 +103,7 @@ $fallbackImage = 'pics/plp-outside.jpg';
                 <button id='add-comment' disabled>Add a Comment</button>
                 <!-- Keep this at the bottom here -->
                 <div class="pfp-container" title="Account Settings">
-                    <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : 'data:image/png;base64,' . $profile_pic; ?>" alt="" id='pfp-circle'>
+                    <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : $profile_pic; ?>" alt="" id='pfp-circle'>
                 </div>
             </div>
         </div>
@@ -263,7 +263,7 @@ $fallbackImage = 'pics/plp-outside.jpg';
             newCommentBox.innerHTML = `
         <div class="comment-upper-part">
             <div class="pfp-container">
-                <img src="${'data:image/png;base64,' + addCommPfp}" alt="">
+                <img src="${addCommPfp}" alt="">
             </div>
             <div class="author-and-date">
                 <h2 class="comment-author">${firstName + ' ' + lastName}</h2>

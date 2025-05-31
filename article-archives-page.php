@@ -48,7 +48,7 @@ $profile_pic = $_SESSION['profile_picture'];
                     </select>
                     <input type="text" placeholder="Search for you articles" id='search-your-archived-articles' class='search-your-articles'>
                     <div class="pfp-container" title="Account Settings">
-                        <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : 'data:image/png;base64,' . $profile_pic; ?>" alt="" id='pfp-circle'>
+                        <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : $profile_pic; ?>" alt="" id='pfp-circle'>
                     </div>
                 </div>
             </div>

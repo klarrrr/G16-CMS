@@ -49,7 +49,8 @@ while ($row = mysqli_fetch_assoc($result)) {
     <div class="left-editor-container">
         <?php include 'editor-nav.php'; ?>
     </div>
-    <div class="right-editor-container" id='dashboard-right-container' style="background-image: url(<?php echo (!$cover_photo) ? 'pics/plp-outside.jpg' : 'data:image/png;base64,' . $cover_photo; ?>);">
+    <!-- echo (!$cover_photo) ? 'pics/plp-outside.jpg' : 'data:image/png;base64,' . $cover_photo;  -->
+    <div class="right-editor-container" id='dashboard-right-container' style="background-image: url('pics/plp-outside.jpg');">
         <!-- To Blur Background -->
         <div class='dashboard-bg-filter'></div>
 
@@ -60,7 +61,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             <div class="person-container">
                 <!-- Picture -->
                 <div class="profile-pic-dashboard">
-                    <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : 'data:image/png;base64,' . $profile_pic; ?>" id="output" width="200" />
+                    <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : $profile_pic; ?>" id="output" width="200" />
                 </div>
 
                 <!-- Personal Infos -->

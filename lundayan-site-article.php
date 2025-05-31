@@ -19,6 +19,7 @@ if ($row = mysqli_fetch_assoc($result)) {
 }
 
 $title = $article['article_title'];
+$title = mb_convert_encoding($title, 'UTF-8', 'UTF-8');
 $content = $article['article_content'];
 $datePosted = $article['date_posted'];
 
@@ -180,7 +181,7 @@ function limitHtmlContent($content, $limit = 600)
                         <?php if ($olderArticle): ?>
                             <a href="/G16-CMS/lundayan-site-article.php?article_id=<?php echo $olderArticle['article_id']; ?>"
                                 title="<?php echo htmlspecialchars_decode($olderArticle['article_title']); ?>">
-                                « <?php echo shortenTitle($olderArticle['article_title']); ?>
+                                « <?php echo mb_convert_encoding(shortenTitle($olderArticle['article_title']), 'UTF-8', 'UTF-8') ?>
                             </a>
 
                         <?php endif; ?>
@@ -199,7 +200,7 @@ function limitHtmlContent($content, $limit = 600)
                         <?php if ($newerArticle): ?>
                             <a style='justify-self: flex-end;' href="/G16-CMS/lundayan-site-article.php?article_id=<?php echo $newerArticle['article_id']; ?>"
                                 title="<?php echo htmlspecialchars_decode($newerArticle['article_title']); ?>">
-                                <?php echo shortenTitle($newerArticle['article_title']); ?> »
+                                <?php echo mb_convert_encoding(shortenTitle($newerArticle['article_title']), 'UTF-8', 'UTF-8') ?> »
                             </a>
 
                         <?php endif; ?>
@@ -219,7 +220,7 @@ function limitHtmlContent($content, $limit = 600)
                 <div class="article-meta writer">
                     <h3><?php echo $writerType; ?></h3>
                     <div class="user-card">
-                        <img class="pfp" src="data:image/png;base64,<?php echo $writerPfp; ?>" alt="Writer PFP">
+                        <img class="pfp" src="<?php echo $writerPfp; ?>" alt="Writer PFP">
                         <div class="user-info">
                             <p class="name"><?php echo $writerName; ?></p>
                             <p class="time"><?php echo $timeAgo; ?></p>
@@ -233,7 +234,7 @@ function limitHtmlContent($content, $limit = 600)
                     <h3>Reviewers</h3>
                     <?php while ($reviewer = mysqli_fetch_assoc($reviewersResult)) : ?>
                         <div class="user-card">
-                            <img class="pfp" src="data:image/png;base64,<?php echo $reviewer['profile_picture']; ?>" alt="Reviewer PFP">
+                            <img class="pfp" src="<?php echo $reviewer['profile_picture']; ?>" alt="Reviewer PFP">
                             <div class="user-info">
                                 <p class="name"><?php echo $reviewer['user_first_name'] . ' ' . $reviewer['user_last_name']; ?></p>
                             </div>
