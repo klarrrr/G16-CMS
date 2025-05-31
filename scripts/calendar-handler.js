@@ -5,11 +5,7 @@ const prevBtn = document.querySelector(".calendar-btns button:first-child");
 const nextBtn = document.querySelector(".calendar-btns button:last-child");
 
 let currentMonth, currentYear;
-
-// Store all articles fetched from the server
 let articles = [];
-
-// Map dates to their articles, key = "YYYY-MM-DD"
 let articlesByDate = {};
 
 const fetchArticles = () => {
@@ -30,7 +26,6 @@ const fetchArticles = () => {
                 articlesByDate[dateKey].push(article);
             });
 
-            // Populate year select dynamically
             if (res.minYear && res.maxYear) {
                 const startYear = parseInt(res.minYear) - 1;
                 const endYear = parseInt(res.maxYear) + 1;
@@ -43,7 +38,6 @@ const fetchArticles = () => {
                     yearSelect.appendChild(opt);
                 }
 
-                // Set currentYear to now if in range, otherwise fallback to endYear
                 const nowYear = new Date().getFullYear();
                 currentYear = nowYear >= startYear && nowYear <= endYear ? nowYear : endYear;
                 yearSelect.value = currentYear;
@@ -56,9 +50,6 @@ const fetchArticles = () => {
         }
     });
 };
-
-
-
 
 const renderCalendar = (month, year) => {
     const firstDay = new Date(year, month).getDay();
@@ -80,18 +71,12 @@ const renderCalendar = (month, year) => {
                 cell.textContent = date;
 
                 const today = new Date();
-                if (
-                    date === today.getDate() &&
-                    month === today.getMonth() &&
-                    year === today.getFullYear()
-                ) {
-                    cell.classList.add("td-today");  // highlight today always
+                if (date === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+                    cell.classList.add("td-today");
                 }
 
-                // Format date to "YYYY-MM-DD"
                 const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
 
-                // Highlight cells with articles
                 if (articlesByDate[dateKey]) {
                     cell.classList.add("td-highlighted");
                 }
@@ -100,7 +85,6 @@ const renderCalendar = (month, year) => {
 
                 cell.addEventListener("click", (e) => {
                     if (articlesByDate[dateKey]) {
-                        // console.log(articlesByDate[dateKey])
                         showEventBox(e.target, thisDay, month, year);
                     } else {
                         hideEventBox();
@@ -115,7 +99,6 @@ const renderCalendar = (month, year) => {
         }
 
         if (allCellsEmpty && date > daysInMonth) break;
-
         calendarBody.appendChild(row);
     }
 };
@@ -137,16 +120,26 @@ function showEventBox(cell, day, month, year) {
         return;
     }
 
-    const cards = events.map(event => `
-        <div class="event-card" articleid="${event.article_id}">
+const cards = events.map(event => {
+    const imageUrl = event.widget_img && event.widget_img.trim() !== "" ? event.widget_img : "pics/plp-outside.jpg";
+
+    return `
+    <div class="event-card" articleid="${event.article_id}">
+        <div class="event-image">
+            <img src="${imageUrl}" alt="${event.article_title}" onerror="this.onerror=null;this.src='pics/plp-outside.jpg';" />
+        </div>
+        <div class="event-content">
             <h3 class="event-title">${event.article_title}</h3>
             <p class="event-description">${event.widget_paragraph || "No summary available."}</p>
             <div class="event-meta">
-                <span class="event-author">By ${event.author || "Unknown"}</span>
+                <span class="event-author">By ${event.user_first_name || "Unknown"} ${event.user_last_name || ""}</span>
                 <span class="event-date">${new Date(event.date_posted).toLocaleString()}</span>
             </div>
         </div>
-    `).join("");
+    </div>
+    `;
+}).join("");
+
 
 
     box.innerHTML = `
@@ -157,24 +150,40 @@ function showEventBox(cell, day, month, year) {
         ${cards}
     `;
 
+    // Get current scroll position and viewport size
+    const scrollTop = window.scrollY;
+    const scrollLeft = window.scrollX;
+    const viewportHeight = window.innerHeight;
+    const viewportWidth = window.innerWidth;
+
+    // Set position based on viewport center + scroll
+    box.style.top = `${scrollTop + viewportHeight / 2}px`;
+    box.style.left = `${scrollLeft + viewportWidth / 2}px`;
+    box.style.transform = `translate(-50%, -50%)`;
+    box.style.position = "absolute";
     box.style.display = "block";
+
     backdrop.style.display = "block";
+    document.body.style.overflow = "hidden";
 
     document.getElementById('close-event-box').addEventListener('click', hideEventBox);
+    backdrop.onclick = hideEventBox;
 
     box.querySelectorAll('.event-card').forEach(card => {
         card.addEventListener('click', function () {
             goToArticle(this);
         });
     });
-
-    // Optional: click outside box closes it
-    backdrop.onclick = hideEventBox;
 }
 
+
 function hideEventBox() {
-    document.getElementById("event-box").style.display = "none";
-    document.getElementById("event-backdrop").style.display = "none";
+    const box = document.getElementById("event-box");
+    const backdrop = document.getElementById("event-backdrop");
+
+    box.style.display = "none";
+    backdrop.style.display = "none";
+    document.body.style.overflow = "";
 }
 
 function updateTime() {
@@ -189,11 +198,11 @@ function updateTime() {
     const timeContainer = document.querySelector(".time-day-text-container h3");
     const dateContainer = document.querySelector(".time-day-text-container p");
 
-    timeContainer.textContent = formattedTime;
-    dateContainer.textContent = formattedDate;
+    if (timeContainer) timeContainer.textContent = formattedTime;
+    if (dateContainer) dateContainer.textContent = formattedDate;
 }
 
-// Init
+// Initialize
 const now = new Date();
 currentMonth = now.getMonth();
 currentYear = now.getFullYear();
@@ -201,7 +210,6 @@ currentYear = now.getFullYear();
 monthSelect.value = currentMonth;
 yearSelect.value = currentYear;
 
-// Fetch articles first, then render calendar
 fetchArticles().then(() => {
     renderCalendar(currentMonth, currentYear);
 });
@@ -209,7 +217,7 @@ fetchArticles().then(() => {
 setInterval(updateTime, 1000);
 updateTime();
 
-// Events
+// Event listeners
 monthSelect.addEventListener("change", () => {
     currentMonth = parseInt(monthSelect.value);
     renderCalendar(currentMonth, currentYear);
