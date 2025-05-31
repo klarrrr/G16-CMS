@@ -26,6 +26,7 @@ function renderWidgets(widgets) {
             highlightArticle.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.65), rgb(0, 0, 0)), url(${picUrl})`;
             highlightArticle.style.backgroundRepeat = 'no-repeat';
             highlightArticle.style.backgroundSize = 'contain';
+            highlightArticle.style.backgroundPosition = 'center';
             latestNewsContainer.style.backgroundImage = `linear-gradient(rgba(10, 92, 54, 0), rgba(0, 0, 0, 0.65), rgb(0, 0, 0)), url(${picUrl})`;
             latestNewsTitle.onclick = () => goToArticle(latestNewsTitle);
 
@@ -34,7 +35,7 @@ function renderWidgets(widgets) {
         else {
             html += `
                 <div class="news-card" articleid="${widget.article_owner}" onclick="goToArticle(this)">
-                    <img src="${picUrl}">
+                    <img src="${picUrl}" loading="lazy">
                     <div class="latest-info-container">
                         <div class='news-card-date-container'>
                             <p class="news-card-date">${formatDateOnly(widget.date_posted)}</p>

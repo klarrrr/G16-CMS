@@ -76,18 +76,6 @@
             </div>
         </div> -->
         <section class="news-cards">
-            <div class="remaining-latest">
-                <div class="remaining-texts">
-                    <p>Browse and read the latest stuff</p>
-                    <h2>Latest News</h2>
-                </div>
-                <div class="card-news-container" id='card-news-container'>
-                    <!-- To be filled up -->
-
-                </div>
-                <!-- Add this pagination container -->
-                <div class="pagination" id='pagination'></div>
-            </div>
             <div class="extras-container">
                 <div class="remaining-texts">
                     <p>announcements</p>
@@ -102,10 +90,25 @@
                     <p>Lundayan on Facebook</p>
                     <h2>Facebook page</h2>
                 </div>
-                <div class="fb-page" data-href="https://www.facebook.com/LundayanPLP" data-tabs="timeline" data-width="800" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" data-lazy='true'>
-                    <blockquote cite="https://www.facebook.com/LundayanPLP" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/LundayanPLP">Lundayan Student Publication - PLPasig</a></blockquote>
+                <div class="fb-page-container">
+                    <div class="fb-page" data-href="https://www.facebook.com/LundayanPLP" data-tabs="timeline" data-width="500" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" data-lazy='true'>
+                        <blockquote cite="https://www.facebook.com/LundayanPLP" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/LundayanPLP">Lundayan Student Publication - PLPasig</a></blockquote>
+                    </div>
                 </div>
             </div>
+            <div class="remaining-latest">
+                <div class="remaining-texts">
+                    <p>Browse and read the latest stuff</p>
+                    <h2>Latest News</h2>
+                </div>
+                <div class="card-news-container" id='card-news-container'>
+                    <!-- To be filled up -->
+
+                </div>
+                <!-- Add this pagination container -->
+                <div class="pagination" id='pagination'></div>
+            </div>
+
         </section>
     </main>
 
