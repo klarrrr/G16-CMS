@@ -19,6 +19,7 @@ if ($row = mysqli_fetch_assoc($result)) {
 }
 
 $title = $article['article_title'];
+$title = mb_convert_encoding($title, 'UTF-8', 'UTF-8');
 $content = $article['article_content'];
 $datePosted = $article['date_posted'];
 
@@ -180,7 +181,7 @@ function limitHtmlContent($content, $limit = 600)
                         <?php if ($olderArticle): ?>
                             <a href="/G16-CMS/lundayan-site-article.php?article_id=<?php echo $olderArticle['article_id']; ?>"
                                 title="<?php echo htmlspecialchars_decode($olderArticle['article_title']); ?>">
-                                « <?php echo shortenTitle($olderArticle['article_title']); ?>
+                                « <?php echo mb_convert_encoding(shortenTitle($olderArticle['article_title']), 'UTF-8', 'UTF-8') ?>
                             </a>
 
                         <?php endif; ?>
@@ -199,7 +200,7 @@ function limitHtmlContent($content, $limit = 600)
                         <?php if ($newerArticle): ?>
                             <a style='justify-self: flex-end;' href="/G16-CMS/lundayan-site-article.php?article_id=<?php echo $newerArticle['article_id']; ?>"
                                 title="<?php echo htmlspecialchars_decode($newerArticle['article_title']); ?>">
-                                <?php echo shortenTitle($newerArticle['article_title']); ?> »
+                                <?php echo mb_convert_encoding(shortenTitle($newerArticle['article_title']), 'UTF-8', 'UTF-8') ?> »
                             </a>
 
                         <?php endif; ?>
