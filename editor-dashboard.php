@@ -49,7 +49,8 @@ while ($row = mysqli_fetch_assoc($result)) {
     <div class="left-editor-container">
         <?php include 'editor-nav.php'; ?>
     </div>
-    <div class="right-editor-container" id='dashboard-right-container' style="background-image: url(<?php echo (!$cover_photo) ? 'pics/plp-outside.jpg' : 'data:image/png;base64,' . $cover_photo; ?>);">
+    <!-- echo (!$cover_photo) ? 'pics/plp-outside.jpg' : 'data:image/png;base64,' . $cover_photo;  -->
+    <div class="right-editor-container" id='dashboard-right-container' style="background-image: url('pics/plp-outside.jpg');">
         <!-- To Blur Background -->
         <div class='dashboard-bg-filter'></div>
 

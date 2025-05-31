@@ -44,7 +44,7 @@
         .no-news-message {
             text-align: center;
             padding: 2rem;
-            color: #9a9a9a666;
+            color: #9a9a9a;
         }
 
         .no-news-message h3 {
