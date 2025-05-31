@@ -5,7 +5,7 @@ $user_id = $_SESSION['user_id'] ?? null;
 $pic = $_SESSION['profile_picture'] ?? null;
 $user_type = $_SESSION['user_type'] ?? null; // Get user type from session
 
-$pfp = ($pic) ? ('data:image/png;base64,' . $pic) : 'pics/no-pic.jpg';
+$pfp = ($pic) ? ($pic) : 'pics/no-pic.jpg';
 ?>
 
 
@@ -18,7 +18,7 @@ $pfp = ($pic) ? ('data:image/png;base64,' . $pic) : 'pics/no-pic.jpg';
 
             <?php if ($user_id): ?>
                 <li>
-                    <img src="<?php echo $pfp ?>" alt="Profile Picture" id="lundayan-pfp" style="height: 40px; width: 40px; border-radius: 50%;">
+                    <img src="<?php echo $pfp ?>" alt="Profile Picture" id="lundayan-pfp" style="height: 40px; width: 40px; border-radius: 50%; object-fit: cover;">
                 </li>
             <?php endif; ?>
 

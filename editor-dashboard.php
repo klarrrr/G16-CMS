@@ -61,7 +61,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             <div class="person-container">
                 <!-- Picture -->
                 <div class="profile-pic-dashboard">
-                    <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : 'data:image/png;base64,' . $profile_pic; ?>" id="output" width="200" />
+                    <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : $profile_pic; ?>" id="output" width="200" />
                 </div>
 
                 <!-- Personal Infos -->

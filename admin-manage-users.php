@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Admin Manage Users</title>
@@ -292,13 +293,13 @@
             const card = document.createElement('div');
             card.className = 'user-card';
             card.onclick = () => openUserModal(user.user_id);
-            
+
             // Create cover photo container
             const coverPhotoDiv = document.createElement('div');
             coverPhotoDiv.className = 'user-cover-photo';
             if (user.cover_photo) {
               const coverImg = document.createElement('img');
-              coverImg.src = 'data:image/png;base64,' + user.cover_photo;
+              coverImg.src = user.cover_photo;
               coverImg.alt = 'Cover Photo';
               coverImg.onerror = function() {
                 this.style.display = 'none';
@@ -320,7 +321,7 @@
             profilePicDiv.className = 'user-profile-pic';
             if (user.profile_picture) {
               const profileImg = document.createElement('img');
-              profileImg.src = 'data:image/png;base64,' + user.profile_picture;
+              profileImg.src = user.profile_picture;
               profileImg.alt = 'Profile Picture';
               profileImg.onerror = function() {
                 this.style.display = 'none';
@@ -354,7 +355,7 @@
             // Assemble the card
             card.appendChild(coverPhotoDiv);
             card.appendChild(userDetailsDiv);
-            
+
             grid.appendChild(card);
           });
         },
@@ -435,4 +436,5 @@
   </script>
 
 </body>
+
 </html>

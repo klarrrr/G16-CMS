@@ -220,7 +220,7 @@ function limitHtmlContent($content, $limit = 600)
                 <div class="article-meta writer">
                     <h3><?php echo $writerType; ?></h3>
                     <div class="user-card">
-                        <img class="pfp" src="data:image/png;base64,<?php echo $writerPfp; ?>" alt="Writer PFP">
+                        <img class="pfp" src="<?php echo $writerPfp; ?>" alt="Writer PFP">
                         <div class="user-info">
                             <p class="name"><?php echo $writerName; ?></p>
                             <p class="time"><?php echo $timeAgo; ?></p>
@@ -234,7 +234,7 @@ function limitHtmlContent($content, $limit = 600)
                     <h3>Reviewers</h3>
                     <?php while ($reviewer = mysqli_fetch_assoc($reviewersResult)) : ?>
                         <div class="user-card">
-                            <img class="pfp" src="data:image/png;base64,<?php echo $reviewer['profile_picture']; ?>" alt="Reviewer PFP">
+                            <img class="pfp" src="<?php echo $reviewer['profile_picture']; ?>" alt="Reviewer PFP">
                             <div class="user-info">
                                 <p class="name"><?php echo $reviewer['user_first_name'] . ' ' . $reviewer['user_last_name']; ?></p>
                             </div>

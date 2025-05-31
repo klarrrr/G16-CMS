@@ -43,7 +43,7 @@ $cover_photo = $_SESSION['cover_photo'];
 
                 <input id="cover-file" type="file" onchange="loadCover(event)" />
 
-                <img src="<?php echo (!$cover_photo) ? 'pics/plp-outside.jpg' : 'data:image/png;base64,' . $cover_photo; ?>" id="cover" />
+                <img src="<?php echo (!$cover_photo) ? 'pics/plp-outside.jpg' : $cover_photo; ?>" id="cover" />
             </div>
 
             <div class="person-info-container">
@@ -63,7 +63,7 @@ $cover_photo = $_SESSION['cover_photo'];
                             <input id="pfp-file" type="file" onchange="loadPfp(event)" />
 
 
-                            <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : 'data:image/png;base64,' . $profile_pic; ?>" id="pfp" />
+                            <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : $profile_pic; ?>" id="pfp" />
                         </div>
                     </div>
 
@@ -108,83 +108,55 @@ $cover_photo = $_SESSION['cover_photo'];
         function loadPfp(event) {
             const pfp = document.getElementById("pfp");
             const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const base64String = e.target.result.split(',')[1]; // Extract Base64 string
-                    if (base64String.length > 16777215) {
-                        // NO MORE THAN 16777215 chars
-                        console.log("Image size is too large : " + base64String.length);
-                        // TODO : Maglagay ng warning label
-                        // warningLbl.style.display = 'block';
-                    } else {
-                        // PWEDE basta less than 16777215 chars
-                        console.log("This is allowed : " + base64String.length)
-                        $.ajax({
-                            url: 'php-backend/account-settings-update-profile-pic.php',
-                            type: 'post',
-                            dataType: 'json',
-                            data: {
-                                base64String: base64String,
-                                user_id: user_id
-                            },
-                            success: (res) => {
-                                console.log(res.status);
-                                pfp.src = 'data:image/png;base64,' + base64String;
-                                updateDateUpdated(user_id);
-                                // warningLbl.style.display = 'none';
-                            },
-                            error: (error) => {
-                                console.log(error);
-                            }
-                        });
-                    }
-                };
-                reader.readAsDataURL(file); // Read file as Data URL
-            } else {
-                console.log('No file selected.');
-            }
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append("user_id", user_id);
+            formData.append("pfp_file", file);
+
+            $.ajax({
+                url: 'php-backend/account-settings-update-profile-pic.php',
+                type: 'post',
+                data: formData,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: (res) => {
+                    console.log(res.status);
+                    pfp.src = res.path;
+                    updateDateUpdated(user_id);
+                },
+                error: (error) => {
+                    console.log(error);
+                }
+            });
         }
 
         function loadCover(event) {
-            var cover = document.getElementById("cover");
+            const cover = document.getElementById("cover");
             const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const base64String = e.target.result.split(',')[1]; // Extract Base64 string
-                    if (base64String.length > 16777215) {
-                        // NO MORE THAN 16777215 chars
-                        console.log("Image size is too large : " + base64String.length);
-                        // TODO : Maglagay ng warning label
-                        // warningLbl.style.display = 'block';
-                    } else {
-                        // PWEDE basta less than 16777215 chars
-                        console.log("This is allowed : " + base64String.length)
-                        $.ajax({
-                            url: 'php-backend/account-settings-update-cover-pic.php',
-                            type: 'post',
-                            dataType: 'json',
-                            data: {
-                                base64String: base64String,
-                                user_id: user_id
-                            },
-                            success: (res) => {
-                                console.log(res.status);
-                                cover.src = 'data:image/png;base64,' + base64String;
-                                updateDateUpdated(user_id);
-                                // warningLbl.style.display = 'none';
-                            },
-                            error: (error) => {
-                                console.log(error);
-                            }
-                        });
-                    }
-                };
-                reader.readAsDataURL(file); // Read file as Data URL
-            } else {
-                console.log('No file selected.');
-            }
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append("user_id", user_id);
+            formData.append("cover_file", file);
+
+            $.ajax({
+                url: 'php-backend/account-settings-update-cover-pic.php',
+                type: 'post',
+                data: formData,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: (res) => {
+                    console.log(res.status);
+                    cover.src = res.path;
+                    updateDateUpdated(user_id);
+                },
+                error: (error) => {
+                    console.log(error);
+                }
+            });
         }
 
         function updateDateUpdated(user_id) {
