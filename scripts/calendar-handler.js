@@ -120,16 +120,27 @@ function showEventBox(cell, day, month, year) {
         return;
     }
 
-    const cards = events.map(event => `
-        <div class="event-card" articleid="${event.article_id}">
+const cards = events.map(event => {
+    const imageUrl = event.widget_img && event.widget_img.trim() !== "" ? event.widget_img : "pics/plp-outside.jpg";
+
+    return `
+    <div class="event-card" articleid="${event.article_id}">
+        <div class="event-image">
+            <img src="${imageUrl}" alt="${event.article_title}" onerror="this.onerror=null;this.src='pics/plp-outside.jpg';" />
+        </div>
+        <div class="event-content">
             <h3 class="event-title">${event.article_title}</h3>
             <p class="event-description">${event.widget_paragraph || "No summary available."}</p>
             <div class="event-meta">
-                <span class="event-author">By ${event.author || "Unknown"}</span>
+                <span class="event-author">By ${event.user_first_name || "Unknown"} ${event.user_last_name || ""}</span>
                 <span class="event-date">${new Date(event.date_posted).toLocaleString()}</span>
             </div>
         </div>
-    `).join("");
+    </div>
+    `;
+}).join("");
+
+
 
     box.innerHTML = `
         <div class='close-event-box-container'>
