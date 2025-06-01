@@ -2,6 +2,13 @@
 session_start();
 include 'connect.php';
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
+require 'PHPMailer/src/Exception.php';
+
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -52,24 +59,52 @@ $stmt->bind_param(
     $subject,
     $formattedMessage
 );
+try {
+    // Instantiate PHPMailer
+    $mail = new PHPMailer();
+    $mail->isSMTP();
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'lundayan.studentpublication@gmail.com';
+    // If something is changed in the gmail account
+    // App Password needs to be regenerated
+    $mail->Password = 'lmug rrup rumq epqh';
+    // $mail->SMTPDebug = 3; // Enable verbose debug output
+    $mail->SMTPSecure = 'ssl';
+    $mail->Port = 465;
 
-if ($stmt->execute()) {
-    // Send email notification to admin (optional)
-    $adminEmail = 'lundayan@plpasig.edu.ph';
-    $emailSubject = "New Contact Form Submission: $subject";
-    $emailMessage = "You have received a new message from $firstName $lastName ($email).\n\n";
-    $emailMessage .= "Subject: $subject\n";
-    $emailMessage .= "Message:\n$message\n\n";
-    $emailMessage .= "This message has been saved in your inbox.";
+    if ($stmt->execute()) {
+        $fullname = $firstName . ' ' . $lastName;
 
-    // Uncomment to actually send email
-    // mail($adminEmail, $emailSubject, $emailMessage);
+        $mail->setFrom($email, $fullname);
+        $mail->addAddress('lundayan.studentpublication@gmail.com');
 
-    echo json_encode(['status' => 'success']);
-} else {
-    echo json_encode(['status' => 'error', 'message' => 'Failed to save message. Please try again.']);
+        $mail->isHTML(true);
+        $mail->Subject = 'New Contact Form Submission';
+        $mail->Body = "
+        First Name: {$_POST['first_name']} <br>
+        Last Name: {$_POST['last_name']} <br>
+        Email: {$_POST['email']} <br>
+        Phone: {$_POST['phone']} <br>
+        Subject: {$_POST['subject']} <br>
+        Message: {$_POST['message']}
+        ";
+
+        if ($mail->send()) {
+            echo json_encode(['status' => 'success']);
+        } else {
+            echo json_encode([
+                'status' => $mail->ErrorInfo
+            ]);
+        }
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Failed to save message. Please try again.']);
+    }
+} catch (Exception $e) {
+    echo json_encode([
+        'status' => $e
+    ]);
 }
 
 $stmt->close();
 $conn->close();
-?>

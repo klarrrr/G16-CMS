@@ -24,6 +24,7 @@ $openHours = "Monday - Friday : $openTime-$closeTime";
     <title>Lundayan : Contact</title>
     <link rel="stylesheet" href="styles-lundayan-site.css">
     <link rel="icon" href="pics/lundayan-logo.png">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 
 <style>
@@ -252,7 +253,7 @@ $openHours = "Monday - Friday : $openTime-$closeTime";
                     </div>
                 </div>
 
-           
+
         </section>
 
         <section class="map">
@@ -273,6 +274,7 @@ $openHours = "Monday - Friday : $openTime-$closeTime";
 
     <?php include 'lundayan-site-footer.php'; ?>
 
+    <!-- Successful Sent Modal -->
     <script>
         function closePopup() {
             document.getElementById('popup-backdrop').style.display = 'none';
@@ -288,26 +290,8 @@ $openHours = "Monday - Friday : $openTime-$closeTime";
             }
         });
     </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const faqBoxes = document.querySelectorAll('.faq-box');
 
-            faqBoxes.forEach(box => {
-                box.addEventListener('click', function() {
-                    // Close all other FAQs
-                    faqBoxes.forEach(otherBox => {
-                        if (otherBox !== box && otherBox.classList.contains('active')) {
-                            otherBox.classList.remove('active');
-                        }
-                    });
-
-                    // Toggle current FAQ
-                    this.classList.toggle('active');
-                });
-            });
-        });
-    </script>
-
+    <!-- Contact Form -->
     <script>
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -320,31 +304,33 @@ $openHours = "Monday - Friday : $openTime-$closeTime";
             submitButton.disabled = true;
             submitButton.textContent = 'Sending...';
 
-            fetch('/G16-CMS/php-backend/ContactController.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 'success') {
-                        // Show success popup
-                        document.getElementById('popup-text').textContent = 'Message sent successfully!';
-                        document.getElementById('popup-backdrop').style.display = 'flex';
+            $.ajax({
+                    url: 'php-backend/ContactController.php',
+                    type: 'post',
+                    dataType: 'json',
+                    data: $(this).serialize(),
+                    success: (data) => {
+                        console.log(data.status);
+                        if (data.status === 'success') {
+                            // Show success popup
+                            document.getElementById('popup-text').textContent = 'Message sent successfully!';
+                            document.getElementById('popup-backdrop').style.display = 'flex';
 
-                        // Reset form
-                        form.reset();
-                    } else {
-                        // Show error message
-                        document.getElementById('popup-text').textContent = data.message || 'Failed to send message. Please try again.';
+                            // Reset form
+                            form.reset();
+                        } else {
+                            // Show error message
+                            document.getElementById('popup-text').textContent = data.message || 'Failed to send message. Please try again.';
+                            document.getElementById('popup-backdrop').style.display = 'flex';
+                        }
+                    },
+                    error: (error) => {
+                        console.log(error);
+                        document.getElementById('popup-text').textContent = 'An error occurred. Please try again.';
                         document.getElementById('popup-backdrop').style.display = 'flex';
-                    }
+                    },
                 })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('popup-text').textContent = 'An error occurred. Please try again.';
-                    document.getElementById('popup-backdrop').style.display = 'flex';
-                })
-                .finally(() => {
+                .always(() => {
                     submitButton.disabled = false;
                     submitButton.textContent = 'Send Message';
                 });
