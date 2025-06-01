@@ -60,15 +60,32 @@ $stmt->bind_param(
     $formattedMessage
 );
 try {
+    // Dynamically get the Website's Admin Email and App Pass
+    $emailQuery = $conn->query("
+                SELECT setting_value 
+                FROM site_settings 
+                WHERE setting_group = 'mail' AND setting_name = 'email'
+                LIMIT 1
+            ");
+    $mailEmail = $emailQuery->fetch_assoc()['setting_value'] ?? 'lundayan.studentpublication@gmail.com';
+
+    $passQuery = $conn->query("
+                SELECT setting_value 
+                FROM site_settings 
+                WHERE setting_group = 'mail' AND setting_name = 'password'
+                LIMIT 1
+            ");
+    $mailPassword = $passQuery->fetch_assoc()['setting_value'] ?? 'lmug rrup rumq epqh';
+
     // Instantiate PHPMailer
     $mail = new PHPMailer();
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
-    $mail->Username = 'lundayan.studentpublication@gmail.com';
+    $mail->Username = (string) $mailEmail;
     // If something is changed in the gmail account
     // App Password needs to be regenerated
-    $mail->Password = 'lmug rrup rumq epqh';
+    $mail->Password = (string) $mailPassword;
     // $mail->SMTPDebug = 3; // Enable verbose debug output
     $mail->SMTPSecure = 'ssl';
     $mail->Port = 465;
@@ -77,7 +94,7 @@ try {
         $fullname = $firstName . ' ' . $lastName;
 
         $mail->setFrom($email, $fullname);
-        $mail->addAddress('lundayan.studentpublication@gmail.com');
+        $mail->addAddress($mailEmail);
 
         $mail->isHTML(true);
         $mail->Subject = 'New Contact Form Submission';

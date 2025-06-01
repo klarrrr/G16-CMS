@@ -16,7 +16,7 @@ $action = isset($_GET['action']) ? $_GET['action'] : '';
 $date_from = isset($_GET['date_from']) ? $_GET['date_from'] : '';
 $date_to = isset($_GET['date_to']) ? $_GET['date_to'] : '';
 $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
-$limit = 10; // Items per page
+$limit = 15; // Items per page
 $offset = ($page - 1) * $limit;
 
 // Build WHERE conditions
@@ -120,4 +120,3 @@ echo json_encode([
     'total_pages' => ceil($total / $limit),
     'available_actions' => $availableActions
 ]);
-?>
