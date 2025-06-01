@@ -801,14 +801,22 @@ $archiveStatus = $articles['archive_status'];
             // Normalize to remove full-width/bold/special formatting
             text = text.normalize("NFKC");
 
-            // Remove invisible/control characters (except line breaks and tabs)
+            // Remove invisible/control characters EXCEPT:
+            // - Tab (\u0009)
+            // - Newline (\u000A)
+            // - Carriage return (\u000D)
             text = text.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]+/g, "");
 
-            // Remove any leftover private-use or non-character codepoints
+            // Remove private-use Unicode characters
             text = text.replace(/[\u{E000}-\u{F8FF}\u{F0000}-\u{FFFFD}\u{100000}-\u{10FFFD}]/gu, "");
 
-            return text.trim();
+            // Allow only one space
+            text = text.replace(/\s+/g, ' ');
+
+            // DO NOT trim here if you want to allow intentional leading/trailing spaces
+            return text;
         }
+
 
         // Attach the sanitizer to inputs and textareas
         function attachSanitizerToInputs() {
