@@ -6,49 +6,107 @@ const latestNewsContainer = document.getElementById('latest-news-container');
 const paginationContainer = document.getElementById('pagination');
 
 let currentPage = 1;
-const itemsPerPage = 6; // Matches your current layout (6 cards + 1 highlight)
+const itemsPerPage = 6; // Only for cards now
 
-// Utility to render article cards
-function renderWidgets(widgets) {
+// First, load the absolute latest article for the highlight
+function loadLatestHighlight() {
+    $.ajax({
+        url: 'php-backend/get-latest-highlight.php',
+        type: 'GET',
+        dataType: 'json',
+        success: (res) => {
+            if (res.widget) {
+                const widget = res.widget;
+                const picUrl = widget.widget_img
+                    ? `${widget.widget_img}`
+                    : 'pics/plp-outside.jpg';
+
+                latestNewsTitle.innerHTML = widget.widget_title;
+                latestNewsTitle.setAttribute('articleid', widget.article_owner);
+                latestNewsDate.innerHTML = formatDateTime(widget.date_posted);
+
+                highlightArticle.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.65), rgb(0, 0, 0)), url(${picUrl})`;
+                highlightArticle.style.backgroundRepeat = 'no-repeat';
+                highlightArticle.style.backgroundSize = 'contain';
+                highlightArticle.style.backgroundPosition = 'center';
+                latestNewsContainer.style.backgroundImage = `linear-gradient(rgba(10, 92, 54, 0), rgba(0, 0, 0, 0.65), rgb(0, 0, 0)), url(${picUrl})`;
+                latestNewsTitle.onclick = () => goToArticle(latestNewsTitle);
+            } else {
+                // Fallback if no articles exist
+                highlightArticle.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.65), rgb(0, 0, 0)), url('pics/plp-outside.jpg')";
+                latestNewsTitle.innerHTML = "Stay tuned!";
+                latestNewsDate.innerHTML = "No updates yet.";
+            }
+        },
+        error: (error) => {
+            console.log(error);
+            // Fallback on error
+            highlightArticle.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.65), rgb(0, 0, 0)), url('pics/plp-outside.jpg')";
+            latestNewsTitle.innerHTML = "Stay tuned!";
+            latestNewsDate.innerHTML = "No updates yet.";
+        }
+    });
+}
+
+// Load only card news with pagination
+function loadCardNews(page = 1) {
+    $.ajax({
+        url: 'php-backend/get-paginated-news.php',
+        type: 'GET',
+        dataType: 'json',
+        data: { page, limit: itemsPerPage },
+        success: (res) => {
+            if (!res.widget || res.widget.length === 0) {
+                cardNewsContainer.innerHTML = `
+                    <div class="no-news-message">
+                        <p>It looks empty in here... 😕</p>
+                        <h3>Looks like there are still no updates.</h3>
+                    </div>
+                `;
+                paginationContainer.innerHTML = '';
+                return;
+            }
+
+            renderCardWidgets(res.widget);
+            renderPagination(res.totalPages, page);
+        },
+        error: (error) => {
+            console.log(error);
+            cardNewsContainer.innerHTML = `
+                <div class="no-news-message">
+                    <p>Something went wrong... 😕</p>
+                    <h3>Unable to load news at this time.</h3>
+                </div>
+            `;
+            paginationContainer.innerHTML = '';
+        }
+    });
+}
+
+// Render only cards (no highlight)
+function renderCardWidgets(widgets) {
     let html = '';
 
-    widgets.forEach((widget, index) => {
+    widgets.forEach((widget) => {
         const picUrl = widget.widget_img
             ? `${widget.widget_img}`
             : 'pics/plp-outside.jpg';
 
-        // First widget is the highlight article
-        if (index === 0) {
-            latestNewsTitle.innerHTML = widget.widget_title;
-            latestNewsTitle.setAttribute('articleid', widget.article_owner);
-            latestNewsDate.innerHTML = formatDateTime(widget.date_posted);
-
-            highlightArticle.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.65), rgb(0, 0, 0)), url(${picUrl})`;
-            highlightArticle.style.backgroundRepeat = 'no-repeat';
-            highlightArticle.style.backgroundSize = 'contain';
-            highlightArticle.style.backgroundPosition = 'center';
-            latestNewsContainer.style.backgroundImage = `linear-gradient(rgba(10, 92, 54, 0), rgba(0, 0, 0, 0.65), rgb(0, 0, 0)), url(${picUrl})`;
-            latestNewsTitle.onclick = () => goToArticle(latestNewsTitle);
-
-        }
-        // Remaining widgets are cards
-        else {
-            html += `
-                <div class="news-card" articleid="${widget.article_owner}" onclick="goToArticle(this)">
-                    <img src="${picUrl}" loading="lazy">
-                    <div class="latest-info-container">
-                        <div class='news-card-date-container'>
-                            <p class="news-card-date">${formatDateOnly(widget.date_posted)}</p>
-                            <p class="news-card-date">${formatTimeOnly(widget.date_posted)}</p>
-                        </div>
-                        <div class="card-text-container">
-                            <h2>${widget.widget_title}</h2>
-                            <p>${widget.widget_paragraph}</p>
-                        </div>
+        html += `
+            <div class="news-card" articleid="${widget.article_owner}" onclick="goToArticle(this)">
+                <img src="${picUrl}" loading="lazy">
+                <div class="latest-info-container">
+                    <div class='news-card-date-container'>
+                        <p class="news-card-date">${formatDateOnly(widget.date_posted)}</p>
+                        <p class="news-card-date">${formatTimeOnly(widget.date_posted)}</p>
+                    </div>
+                    <div class="card-text-container">
+                        <h2>${widget.widget_title}</h2>
+                        <p>${widget.widget_paragraph}</p>
                     </div>
                 </div>
-            `;
-        }
+            </div>
+        `;
     });
 
     cardNewsContainer.innerHTML = html;
@@ -99,59 +157,18 @@ function renderPagination(totalPages, currentPage) {
     paginationContainer.innerHTML = pagination;
 }
 
-// Load news with pagination
-function loadLatestNews(page = 1) {
-    $.ajax({
-        url: 'php-backend/get-top-latest-news.php',
-        type: 'GET',
-        dataType: 'json',
-        data: { page, limit: itemsPerPage + 1 }, // +1 for the highlight article
-        success: (res) => {
-            if (!res.widget || res.widget.length === 0) {
-                // Fallback for empty results
-                cardNewsContainer.innerHTML = `
-                    <div class="no-news-message">
-                        <p>It looks empty in here... 😕</p>
-                        <h3>Looks like there are still no updates.</h3>
-                    </div>
-                `;
-
-                highlightArticle.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.65), rgb(0, 0, 0)), url('pics/plp-outside.jpg')";
-                latestNewsTitle.innerHTML = "Stay tuned!";
-                latestNewsDate.innerHTML = "No updates yet.";
-
-                paginationContainer.innerHTML = '';
-                return;
-            }
-
-            renderWidgets(res.widget);
-            renderPagination(res.totalPages, page);
-        },
-        error: (error) => {
-            console.log(error);
-            // Show error message
-            cardNewsContainer.innerHTML = `
-                <div class="no-news-message">
-                    <p>Something went wrong... 😕</p>
-                    <h3>Unable to load news at this time.</h3>
-                </div>
-            `;
-            paginationContainer.innerHTML = '';
-        }
-    });
-}
-
 // Handle pagination clicks
 $(document).on('click', '.page-link', function (e) {
     e.preventDefault();
     const page = $(this).data('page');
     currentPage = page;
-    loadLatestNews(page);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    loadCardNews(page);
+    window.scrollTo({ top: cardNewsContainer.offsetTop, behavior: 'smooth' });
 });
 
 // Initial load
-loadLatestNews(currentPage);
+loadLatestHighlight(); // Load highlight once
+loadCardNews(currentPage); // Load first page of cards
 
 function goToArticle(thisContainer) {
     const article_id = thisContainer.getAttribute('articleid');
