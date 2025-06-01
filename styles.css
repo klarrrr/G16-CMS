@@ -1015,7 +1015,7 @@ nav h1 {
 .editor {
     display: flex;
     flex-direction: column;
-    min-height: 50rem;
+    min-height: 100vh;
     padding: 12vh 8vw;
     background-color: white;
     font-size: 16px;
@@ -1051,7 +1051,7 @@ nav h1 {
 .ql-editor {
     background-color: white !important;
     overflow-x: hidden !important;
-    padding: 8vh 12vw !important;
+    padding: 8vh 4vw !important;
     border: 1px solid lightgray;
     overflow-y: hidden !important;
     object-fit: cover;
@@ -1061,14 +1061,14 @@ nav h1 {
 }
 
 .detail-box {
-    width: 100%;
     background-color: white;
     padding: 2rem;
     border-radius: 0.5rem;
     border: 1px solid lightgray;
     gap: 2rem;
-    display: grid;
-    grid-template-columns: 50% 1fr;
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
 
 
     .left-detail-box {
@@ -1305,8 +1305,8 @@ nav h1 {
 #create-canvas {
     height: 100%;
     overflow-y: scroll;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 30% 1fr;
     gap: 1rem;
 }
 
