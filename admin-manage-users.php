@@ -4,58 +4,16 @@
 <head>
   <meta charset="UTF-8">
   <title>Admin Manage Users</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles-admin.css">
+  <link rel="icon" href="pics/lundayan-logo.png">
   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: #f0f2f5;
-      margin: 0;
-      padding: 0;
-      display: flex;
-    }
-
-    .sidebar {
-      width: 250px;
-      background-color: #0F5132;
-      color: #ecf0f1;
-      padding: 20px;
+    .manager-users {
+      overflow-y: scroll;
       height: 100vh;
-      position: fixed;
-      top: 0;
-      left: 0;
-    }
-
-    .sidebar h2 {
-      margin-bottom: 20px;
-    }
-
-    .sidebar ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    .sidebar ul li {
-      margin: 15px 0;
-    }
-
-    .sidebar ul li a {
-      color: #ecf0f1;
-      text-decoration: none;
-      display: block;
-      padding: 8px 0;
-    }
-
-    .sidebar ul li a:hover {
-      text-decoration: underline;
     }
 
     main.manager-users {
-      margin-left: 250px;
       padding: 2rem;
       width: calc(100% - 250px);
     }
@@ -71,13 +29,18 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 1.5rem;
+
+      * {
+        font-family: sub;
+      }
     }
 
     .user-card {
       background: #fff;
       border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); */
+      border: 1px solid lightgray;
       cursor: pointer;
       transition: transform 0.2s;
     }
@@ -141,11 +104,12 @@
     .user-type {
       display: inline-block;
       padding: 0.2rem 0.5rem;
-      background: #e1f5fe;
-      color: #0288d1;
+      background: #14452F;
+      color: #f4f4f4;
       border-radius: 4px;
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       margin-top: 0.5rem;
+      text-transform: capitalize;
     }
 
     .modal {
@@ -172,10 +136,15 @@
       width: 100%;
       max-width: 400px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+
+      * {
+        font-family: sub;
+      }
     }
 
     .modal-content h2 {
       margin-bottom: 1rem;
+      font-family: main;
     }
 
     .modal-content input,
@@ -201,27 +170,47 @@
 
     .cancel-btn {
       background: #ccc;
+
+      &:hover {
+        background-color: #bbb;
+      }
     }
 
     .save-btn {
-      background: #0F5132;
-      color: white;
+      background-color: #161616;
+      color: #f4f4f4;
+      border: 1px solid #161616 !important;
+
+      &:hover {
+        background-color: #f4f4f4;
+        color: #161616;
+      }
     }
 
     .add-user-btn {
       position: fixed;
       bottom: 30px;
       right: 30px;
-      background: #0F5132;
+      background: #161616;
       color: white;
       font-size: 2rem;
       border: none;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      border-radius: 5px;
       cursor: pointer;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      margin: 1rem;
+      box-shadow: rgba(22, 22, 22, 0.4) 5px 5px,
+        rgba(22, 22, 22, 0.3) 10px 10px,
+        rgba(22, 22, 22, 0.2) 15px 15px,
+        rgba(22, 22, 22, 0.1) 20px 20px,
+        rgba(22, 22, 22, 0.05) 25px 25px;
       z-index: 100;
+
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: rgba(14, 63, 126, 0.04) 0px 0px 0px 1px, rgba(42, 51, 69, 0.04) 0px 1px 1px -0.5px, rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px, rgba(42, 51, 70, 0.04) 0px 6px 6px -3px, rgba(14, 63, 126, 0.04) 0px 12px 12px -6px, rgba(14, 63, 126, 0.04) 0px 24px 24px -12px;
+      }
     }
 
     /* Fallback icon styles */
@@ -378,6 +367,7 @@
         document.getElementById('email').value = user.user_email;
         document.getElementById('userType').value = user.user_type;
         document.getElementById('password').value = '';
+        document.getElementById('password').placeholder = 'Password (leave blank to keep current)';
       } else {
         editingUserId = null;
         document.getElementById('modalTitle').innerText = 'Add User';
@@ -386,6 +376,7 @@
         document.getElementById('email').value = '';
         document.getElementById('userType').value = 'writer';
         document.getElementById('password').value = '';
+        document.getElementById('password').placeholder = 'Password';
       }
     }
 

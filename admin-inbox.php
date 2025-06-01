@@ -1,57 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Admin Inbox</title>
+  <link rel="stylesheet" href="styles-admin.css">
+  <link rel="icon" href="pics/lundayan-logo.png">
   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: #f0f2f5;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      min-height: 100vh;
-    }
-
-    .sidebar {
-      width: 250px;
-      background-color: #0F5132;
-      color: #ecf0f1;
-      padding: 20px;
-      height: 100vh;
-      position: sticky;
-      top: 0;
-      overflow-y: auto;
-    }
-
-    .sidebar h2 {
-      margin-bottom: 20px;
-    }
-
-    .sidebar ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    .sidebar ul li {
-      margin: 15px 0;
-    }
-
-    .sidebar ul li a {
-      color: #ecf0f1;
-      text-decoration: none;
-      display: block;
-      padding: 8px 0;
-    }
-
-    .sidebar ul li a:hover {
-      text-decoration: underline;
+    .inbox-content * {
+      font-family: sub;
     }
 
     main.inbox-content {
@@ -75,8 +34,14 @@
     }
 
     .btn-primary {
-      background: #0F5132;
-      color: white;
+      background-color: #161616;
+      color: #f4f4f4;
+      border: 1px solid #161616;
+
+      &:hover {
+        background-color: #f4f4f4;
+        color: #161616;
+      }
     }
 
     .inbox-container {
@@ -89,12 +54,15 @@
       width: 350px;
       background: #fff;
       border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); */
       display: flex;
       flex-direction: column;
+      overflow: hidden;
+      border: 1px solid lightgray;
     }
 
     .message-items {
+      border-radius: 10px;
       flex: 1;
       overflow-y: auto;
     }
@@ -117,9 +85,10 @@
       flex: 1;
       background: #fff;
       border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); */
       display: flex;
       flex-direction: column;
+      border: 1px solid lightgray;
     }
 
     .message-header {
@@ -179,6 +148,14 @@
       width: 100%;
       max-width: 600px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+
+      * {
+        font-family: sub;
+      }
+
+      h2 {
+        font-family: main;
+      }
     }
 
     .modal-content input,
@@ -204,11 +181,21 @@
 
     .cancel-btn {
       background: #ccc;
+
+      &:hover {
+        background-color: #bbb;
+      }
     }
 
     .save-btn {
-      background: #0F5132;
-      color: white;
+      background-color: #161616;
+      color: #f4f4f4;
+      border: 1px solid #161616 !important;
+
+      &:hover {
+        background-color: #f4f4f4;
+        color: #161616;
+      }
     }
   </style>
 </head>
@@ -218,7 +205,7 @@
 
   <main class="inbox-content">
     <div class="header">
-      <h1>Inbox</h1>
+      <h1 style='font-family: main;'>Inbox</h1>
       <button class="btn btn-primary" id="refreshBtn">
         <i class="fas fa-sync-alt"></i> Refresh
       </button>
@@ -253,7 +240,7 @@
       <input type="text" id="replyToEmail" readonly placeholder="To...">
       <input type="text" id="replySubject" placeholder="Subject">
       <textarea id="replyMessage" rows="6"></textarea>
-      
+
       <div class="modal-actions">
         <button class="cancel-btn" onclick="closeReplyModal()">Cancel</button>
         <button class="save-btn" onclick="sendReply()">Send Reply</button>
@@ -269,13 +256,13 @@
 
     function loadMessages() {
       $('#messageList').html('<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Loading messages...</p></div>');
-      
+
       $.getJSON('php-backend/fetch-messages.php', function(messages) {
         if (!messages.length) {
           $('#messageList').html('<div class="empty-state"><i class="fas fa-inbox"></i><p>No messages found</p></div>');
           return;
         }
-        
+
         let html = '';
         messages.forEach(m => {
           html += `
@@ -285,7 +272,7 @@
               <small>${new Date(m.date_created).toLocaleString()}</small>
             </div>`;
         });
-        
+
         $('#messageList').html(html);
       }).fail(function() {
         $('#messageList').html('<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Failed to load messages</p></div>');
@@ -295,8 +282,10 @@
     function viewMessage(id) {
       $('.message-item').removeClass('active');
       $(`.message-item[data-id="${id}"]`).addClass('active');
-      
-      $.getJSON('php-backend/fetch-message.php', { id }, function(m) {
+
+      $.getJSON('php-backend/fetch-message.php', {
+        id
+      }, function(m) {
         const html = `
           <div class="message-header">
             <h2>${m.subject}</h2>
@@ -310,7 +299,7 @@
             </button>
           </div>
         `;
-        
+
         $('#messageDetail').html(html);
       }).fail(function() {
         $('#messageDetail').html('<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Failed to load message</p></div>');
@@ -359,4 +348,5 @@
     }
   </script>
 </body>
+
 </html>

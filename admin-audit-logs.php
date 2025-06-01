@@ -14,65 +14,18 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Audit Logs</title>
+  <link rel="stylesheet" href="styles-admin.css">
+  <link rel="icon" href="pics/lundayan-logo.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: #f0f2f5;
-      margin: 0;
-      padding: 0;
-      display: flex;
-    }
-
-    .sidebar {
-      width: 250px;
-      background-color: #0F5132;
-      color: #ecf0f1;
-      padding: 20px;
-      height: 100vh;
-      position: fixed;
-      top: 0;
-      left: 0;
-    }
-
-    .sidebar h2 {
-      margin-bottom: 20px;
-    }
-
-    .sidebar ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    .sidebar ul li {
-      margin: 15px 0;
-    }
-
-    .sidebar ul li a {
-      color: #ecf0f1;
-      text-decoration: none;
-      display: block;
-      padding: 8px 0;
-    }
-
-    .sidebar ul li a:hover {
-      text-decoration: underline;
-    }
-
     main.audit-logs {
-      margin-left: 250px;
       padding: 2rem;
       width: calc(100% - 250px);
     }
 
     .main-content {
-      margin-left: 250px;
       padding: 2rem;
       width: calc(100% - 250px);
     }
@@ -208,12 +161,7 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
 </head>
 
 <body>
-  <div class="sidebar">
-    <div class="sidebar-header">
-      <h2>Admin Panel</h2>
-    </div>
-    <?php include 'admin-side-bar.php' ?>
-  </div>
+  <?php include 'admin-side-bar.php' ?>
 
   <div class="main-content">
     <div class="header">
@@ -239,15 +187,15 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
           </select>
         </div>
 
-<div class="filter-group">
-  <label for="userTypeFilter">User Type</label>
-  <select id="userTypeFilter">
-    <option value="">All Types</option>
-    <option value="writer">Writer</option>
-    <option value="reviewer">Reviewer</option>
-  </select>
-</div>
-        
+        <div class="filter-group">
+          <label for="userTypeFilter">User Type</label>
+          <select id="userTypeFilter">
+            <option value="">All Types</option>
+            <option value="writer">Writer</option>
+            <option value="reviewer">Reviewer</option>
+          </select>
+        </div>
+
         <div class="filter-group">
           <label for="actionFilter">Action</label>
           <select id="actionFilter">
@@ -369,10 +317,10 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
             return;
           }
 
-response.data.forEach(log => {
-    const actionBadge = getActionBadge(log.action);
+          response.data.forEach(log => {
+            const actionBadge = getActionBadge(log.action);
 
-    tbody.append(`
+            tbody.append(`
         <tr>
             <td>${log.log_id}</td>
             <td>${log.user_name || 'System'}</td>
@@ -382,7 +330,7 @@ response.data.forEach(log => {
             <td>${formatDateTime(log.log_time)}</td>
         </tr>
     `);
-}); // This closing bracket was missing
+          }); // This closing bracket was missing
 
           renderPagination(response.total, response.per_page, page);
         },
@@ -392,17 +340,19 @@ response.data.forEach(log => {
         }
       });
     }
-  function getUserTypeBadge(userType) {
+
+    function getUserTypeBadge(userType) {
       const types = {
-          'admin': 'badge-admin',
-          'editor': 'badge-editor',
-          'user': 'badge-user'
+        'admin': 'badge-admin',
+        'editor': 'badge-editor',
+        'user': 'badge-user'
       };
-      
+
       const badgeClass = types[userType?.toLowerCase()] || 'badge-user';
-      
+
       return `<span class="badge ${badgeClass}">${userType || 'N/A'}</span>`;
-  }
+    }
+
     function getActionBadge(action) {
       const actions = {
         'create': {

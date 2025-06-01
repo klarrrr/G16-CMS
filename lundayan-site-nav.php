@@ -13,7 +13,7 @@ $pfp = ($pic) ? ($pic) : 'pics/no-pic.jpg';
     <div class="header-container">
 
         <?php if ($user_id): ?>
-            <img src="<?php echo $pfp ?>" alt="Profile Picture" id="lundayan-pfp" class="pfp-img">
+            <img src="<?php echo $pfp ?>" alt="Profile Picture" id="labas-pfp" class="pfp-img">
         <?php endif; ?>
 
         <h1 class="site-title" style='display: none;'>LUNDAYAN</h1>
@@ -33,7 +33,7 @@ $pfp = ($pic) ? ($pic) : 'pics/no-pic.jpg';
 
                 <?php if ($user_id): ?>
                     <li id='loob'>
-                        <img src="<?php echo $pfp ?>" alt="Profile Picture" id="lundayan-pfp" class="pfp-img">
+                        <img src="<?php echo $pfp ?>" alt="Profile Picture" id="loob-pfp" class="pfp-img">
                     </li>
                 <?php endif; ?>
 
@@ -53,9 +53,22 @@ $pfp = ($pic) ? ($pic) : 'pics/no-pic.jpg';
 <script>
     const userType = <?php echo json_encode($user_type); ?>;
 
-    const pfp = document.getElementById('lundayan-pfp');
-    if (pfp) {
-        pfp.addEventListener('click', () => {
+    const loobPfp = document.getElementById('loob-pfp');
+    if (loobPfp) {
+        loobPfp.addEventListener('click', () => {
+            if (userType === 'Admin') {
+                window.location.href = 'admin-dashboard.php';
+            } else if (userType === 'Reviewer' || userType === 'Writer') {
+                window.location.href = 'editor-dashboard.php';
+            } else {
+                alert("Unknown user type.");
+            }
+        });
+    }
+
+    const labasPfp = document.getElementById('labas-pfp');
+    if (labasPfp) {
+        labasPfp.addEventListener('click', () => {
             if (userType === 'Admin') {
                 window.location.href = 'admin-dashboard.php';
             } else if (userType === 'Reviewer' || userType === 'Writer') {
