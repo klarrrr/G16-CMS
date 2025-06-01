@@ -12,9 +12,8 @@ function updateThumbnailImg(article_id, event) {
     const file = event.target.files[0];
 
     if (file) {
-        // Optional: Check file size in bytes (e.g. 2MB = 2 * 1024 * 1024)
+        // Check file size (10MB max)
         if (file.size > 10 * 1024 * 1024) {
-            console.log("Image file is too large: " + file.size);
             warningLbl.style.display = 'block';
             return;
         }
@@ -31,16 +30,29 @@ function updateThumbnailImg(article_id, event) {
             contentType: false,
             processData: false,
             success: (res) => {
-                console.log(res.status);
                 if (res.status === 'success') {
                     const filePath = res.filePath;
+                    const container = document.getElementById('thumbnail-image-container');
 
-                    document.getElementById('show-thumbnail-image').src = filePath;
-                    document.getElementById('thumbnail-image-container').style.background = `url(${filePath})`;
+                    // Remove fallback emoji if present
+                    container.innerHTML = '';
 
-                    updateDateUpdated(article_id, "Article thumbnail image updated");
+                    // Recreate <img> tag
+                    const img = document.createElement('img');
+                    img.id = 'show-thumbnail-image';
+                    img.alt = 'Thumbnail Image';
+                    img.src = filePath;
+                    img.onerror = function () {
+                        this.style.display = 'none';
+                        container.innerHTML = '<div class="fallback-emoji">🖼️</div>';
+                    };
+
+                    container.appendChild(img);
+                    container.style.background = `url(${filePath})`;
 
                     warningLbl.style.display = 'none';
+
+                    updateDateUpdated(article_id, "Article thumbnail image updated");
                 } else {
                     console.log(res.message);
                 }
@@ -53,3 +65,4 @@ function updateThumbnailImg(article_id, event) {
         console.log('No file selected.');
     }
 }
+

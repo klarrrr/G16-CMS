@@ -33,6 +33,7 @@ $articleContent = $articles['article_content'];
 $title = $articles['article_title'];
 $shortDesc = $widgets['widget_paragraph'];
 $thumbnailImg = $widgets['widget_img'];
+$hasThumbnail = !empty($thumbnailImg);
 $dateUpdated = $articles['date_updated'];
 $archiveStatus = $articles['archive_status'];
 
@@ -550,11 +551,21 @@ $archiveStatus = $articles['archive_status'];
                     <div class="left-detail-box">
                         <div class="widget-article-title">
                             <h3 class='widget-article-h3'>Title <span class='required'>*</span></h3>
+
+                            <span id="title-warning" class="char-warning" style="font-family: sub; font-size: 0.8rem; display: none; color: red;">
+                                Title must not exceed 100 characters.
+                            </span>
+
                             <input type="text" placeholder="Short title here" id='title-box'>
                         </div>
 
                         <div class="widget-article-pargraph">
                             <h3 class='widget-article-h3'>Short Description <span class='required'>*</span></h3>
+
+                            <span id="desc-warning" class="char-warning" style="font-family: sub; font-size: 0.8rem; display: none; color: red;">
+                                Description must not exceed 300 characters.
+                            </span>
+
                             <textarea name="" id="short-desc-box" rows="10" placeholder="Short description here"></textarea>
                         </div>
 
@@ -596,8 +607,16 @@ $archiveStatus = $articles['archive_status'];
 
                             <span class='warning' style='display: none;' id='img-size-warning'>Image size is too large</span>
 
-                            <div id='thumbnail-image-container' class="thumbnail-image-container" style='background: url(<?php echo $thumbnailImg ?>);'>
-                                <img src="<?php echo $thumbnailImg ?>" alt="" id='show-thumbnail-image'>
+                            <div id="thumbnail-image-container" class="thumbnail-image-container" style="<?php if ($hasThumbnail): ?>background-image: url('<?php echo htmlspecialchars($thumbnailImg); ?>');<?php endif; ?>">
+                                <?php if ($hasThumbnail): ?>
+                                    <img
+                                        src="<?php echo htmlspecialchars($thumbnailImg); ?>"
+                                        alt="Thumbnail Image"
+                                        id="show-thumbnail-image"
+                                        onerror="this.style.display='none'; this.parentElement.innerHTML = '<div class=\'fallback-emoji\'>🖼️</div>';">
+                                <?php else: ?>
+                                    <div class="fallback-emoji" style='padding: 1rem; color: rgb(85, 85, 85); font-style: italic; font-family: sub; font-size: 0.8rem;'>🖼️ This article does not have a thumbnail image! Maybe put one?</div>
+                                <?php endif; ?>
                             </div>
 
                             <input type="file" id='thumbnail-image' accept="image/*">
@@ -775,6 +794,77 @@ $archiveStatus = $articles['archive_status'];
     <!-- Invite Reviwers -->
     <!-- <script src="scripts/edit-invite-reviewer.js"></script> -->
     <script src='scripts/edit-tag-autocomplete.js'></script>
+
+    <!-- Sanitize Input Boxes -->
+    <script>
+        function sanitizeInputText(text) {
+            // Normalize to remove full-width/bold/special formatting
+            text = text.normalize("NFKC");
+
+            // Remove invisible/control characters (except line breaks and tabs)
+            text = text.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]+/g, "");
+
+            // Remove any leftover private-use or non-character codepoints
+            text = text.replace(/[\u{E000}-\u{F8FF}\u{F0000}-\u{FFFFD}\u{100000}-\u{10FFFD}]/gu, "");
+
+            return text.trim();
+        }
+
+        // Attach the sanitizer to inputs and textareas
+        function attachSanitizerToInputs() {
+            const inputs = document.querySelectorAll("input[type='text'], textarea");
+
+            inputs.forEach(input => {
+                input.addEventListener('input', () => {
+                    const original = input.value;
+                    const cleaned = sanitizeInputText(original);
+                    if (original !== cleaned) {
+                        input.value = cleaned;
+                    }
+                });
+
+                input.addEventListener('paste', (e) => {
+                    e.preventDefault();
+                    const pastedText = (e.clipboardData || window.clipboardData).getData('text');
+                    const cleaned = sanitizeInputText(pastedText);
+                    document.execCommand("insertText", false, cleaned);
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', attachSanitizerToInputs);
+    </script>
+
+    <!-- Limit Character Input on Title and Description -->
+    <script>
+        // Character limits
+        const TITLE_LIMIT = 100;
+        const DESCRIPTION_LIMIT = 300;
+
+        function enforceCharacterLimit(inputEl, limit, warningId) {
+            inputEl.addEventListener('input', () => {
+                const value = inputEl.value;
+
+                // Show warning if limit is exceeded
+                const warning = document.getElementById(warningId);
+                if (value.length > limit) {
+                    inputEl.value = value.substring(0, limit); // Optionally trim to max
+                    inputEl.classList.add('limit-exceeded');
+                    if (warning) warning.style.display = 'block';
+                } else {
+                    inputEl.classList.remove('limit-exceeded');
+                    if (warning) warning.style.display = 'none';
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            enforceCharacterLimit(document.getElementById('title-box'), TITLE_LIMIT, 'title-warning');
+            enforceCharacterLimit(document.getElementById('short-desc-box'), DESCRIPTION_LIMIT, 'desc-warning');
+        });
+    </script>
+
+
 </body>
 
 </html>

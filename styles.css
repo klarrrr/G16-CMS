@@ -945,8 +945,8 @@ nav h1 {
     padding: 2rem;
     grid-area: widget;
     gap: 2rem;
-    overflow-y: scroll;
-    overflow-x: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     position: relative;
 }
 
@@ -1085,6 +1085,8 @@ nav h1 {
         .widget-article-image {
             .thumbnail-image-container {
                 width: 100%;
+                align-items: center;
+                justify-content: center;
                 display: flex;
                 justify-content: center;
                 background-position: center !important;
@@ -1099,6 +1101,11 @@ nav h1 {
                     backdrop-filter: blur(15px);
                     width: 100%;
                     border-radius: 0.5rem;
+                }
+
+                .fallback-emoji {
+                    font-size: 2rem;
+                    color: #999;
                 }
             }
         }

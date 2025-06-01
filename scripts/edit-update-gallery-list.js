@@ -1,55 +1,60 @@
 function updateGalleryList(article_id) {
-    // Fetch the list of images for the specific article from the database
     $.ajax({
         url: 'php-backend/get-article-gallery.php',
         type: 'GET',
         dataType: 'json',
-        data: {
-            article_id: article_id
-        },
+        data: { article_id: article_id },
         success: (res) => {
-            if (res.status === 'success') {
-                // Clear current gallery to prevent duplicate images
-                galleryContainer.innerHTML = '';
+            galleryContainer.innerHTML = ''; // Always clear gallery first
 
-                // Add new images to the gallery
+            if (res.status === 'success' && Array.isArray(res.data)) {
+                if (res.data.length === 0) {
+                    // No images: show fallback message
+                    const fallback = document.createElement('div');
+                    fallback.className = 'fallback-emoji';
+                    fallback.style.cssText = `
+                        padding: 1rem;
+                        color: rgb(85, 85, 85);
+                        font-style: italic;
+                        font-family: sub;
+                        font-size: 0.8rem;
+                    `;
+                    fallback.innerHTML = "🖼️ This article does not have any gallery images yet. Maybe upload some?";
+                    galleryContainer.appendChild(fallback);
+                    return;
+                }
+
+                // Images exist: render them
                 res.data.forEach(image => {
-                    // Create a container for each image (for positioning the delete button)
                     const imgContainer = document.createElement('div');
                     imgContainer.classList.add('image-container');
                     imgContainer.style.position = 'relative';
                     imgContainer.style.display = 'inline-block';
 
-                    // Create the image element
                     const imgElement = document.createElement('img');
                     imgElement.src = 'gallery/' + image.pic_path;
                     imgElement.alt = 'Gallery Image';
-                    imgElement.setAttribute('data-pic-id', image.pic_id); // Store the pic_id in the data attribute
+                    imgElement.setAttribute('data-pic-id', image.pic_id);
 
-                    // Create the delete button
                     const deleteButton = document.createElement('button');
                     deleteButton.textContent = 'X';
                     deleteButton.classList.add('delete-btn');
 
-                    // Append the delete button to the image container
                     imgContainer.appendChild(imgElement);
                     imgContainer.appendChild(deleteButton);
-
-                    // Add the image container to the gallery
                     galleryContainer.appendChild(imgContainer);
 
-                    // Bind delete function to the delete button
                     deleteButton.addEventListener('click', () => {
-                        const picId = imgElement.getAttribute('data-pic-id'); // Get the pic_id from the image's data attribute
-                        deleteImage(picId); // Call the deleteImage function
+                        const picId = imgElement.getAttribute('data-pic-id');
+                        deleteImage(picId);
                     });
                 });
             } else {
-                console.log('Error fetching gallery images');
+                console.log('Error: Gallery fetch returned bad status or data');
             }
         },
         error: (error) => {
-            console.log(error);
+            console.log('AJAX Error:', error);
         }
     });
 }
