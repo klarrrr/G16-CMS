@@ -73,6 +73,7 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      height: 100%;
       border: 1px solid lightgray;
     }
 
@@ -94,6 +95,34 @@
 
     .message-item.active {
       background: #e9ecef;
+    }
+
+    /* Messages Pagination */
+    .message-pagination {
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      border-top: 1px solid #eee;
+    }
+
+    .message-pagination button {
+      padding: 0.5rem 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background: white;
+      cursor: pointer;
+    }
+
+    .message-pagination button.active {
+      background: #161616;
+      color: white;
+      border-color: #161616;
+    }
+
+    .message-pagination button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
 
     .message-detail {
@@ -308,6 +337,7 @@
 
     <div class="inbox-container">
       <!-- Message List -->
+      <!-- Message List -->
       <div class="message-list">
         <div class="message-items" id="messageList">
           <div class="empty-state">
@@ -315,6 +345,7 @@
             <p>Loading messages...</p>
           </div>
         </div>
+        <div class="message-pagination" id="messagePagination"></div>
       </div>
 
       <!-- Message Detail -->
@@ -370,37 +401,110 @@
   <script>
     $(document).ready(function() {
       loadMessages();
-      $('#refreshBtn').click(loadMessages);
+      $('#refreshBtn').click(function() {
+        loadMessages(currentPage); // Refresh current page
+      });
     });
 
-    function loadMessages() {
+    let currentPage = 1;
+    const messagesPerPage = 10; // Adjust as needed
+
+    // Modify your loadMessages function
+    function loadMessages(page = 1) {
+      currentPage = page;
 
       // Refresh Loading Messages
       $('#messageList').html('<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Loading messages...</p></div>');
+      $('#messagePagination').html('');
 
-      // Empty Message Detail
-      $('#messageDetail').html('<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Failed to load message</p></div>');
-
-      $.getJSON('php-backend/fetch-messages.php', function(messages) {
-        if (!messages.length) {
+      $.getJSON('php-backend/fetch-messages.php', {
+        page,
+        per_page: messagesPerPage
+      }, function(response) {
+        if (!response.messages || !response.messages.length) {
           $('#messageList').html('<div class="empty-state"><i class="fas fa-inbox"></i><p>No messages found</p></div>');
           return;
         }
 
+        // Render messages
         let html = '';
-        messages.forEach(m => {
+        response.messages.forEach(m => {
           html += `
-            <div class="message-item" onclick="viewMessage(${m.inbox_id})" data-id="${m.inbox_id}">
-              <strong>${m.sender_first_name} ${m.sender_last_name}</strong><br>
-              <span>${m.subject}</span><br>
-              <small>${new Date(m.date_created).toLocaleString()}</small>
-            </div>`;
+        <div class="message-item" onclick="viewMessage(${m.inbox_id})" data-id="${m.inbox_id}">
+          <strong>${m.sender_first_name} ${m.sender_last_name}</strong><br>
+          <span>${m.subject}</span><br>
+          <small>${new Date(m.date_created).toLocaleString()}</small>
+        </div>`;
         });
-
         $('#messageList').html(html);
+
+        // Render pagination
+        renderPagination(response.total, messagesPerPage, page);
+
       }).fail(function() {
         $('#messageList').html('<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Failed to load messages</p></div>');
       });
+    }
+
+    // Pagination JSs
+
+    // Add this new function for pagination rendering
+    function renderPagination(totalMessages, perPage, currentPage) {
+      const totalPages = Math.ceil(totalMessages / perPage);
+      const pagination = $('#messagePagination');
+
+      if (totalPages <= 1) return;
+
+      // Previous button
+      pagination.append(`
+    <button onclick="loadMessages(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+      <i class="fas fa-chevron-left"></i>
+    </button>
+  `);
+
+      // Page numbers
+      const maxVisiblePages = 5;
+      let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+      let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+      // Adjust if we're at the end
+      if (endPage - startPage + 1 < maxVisiblePages) {
+        startPage = Math.max(1, endPage - maxVisiblePages + 1);
+      }
+
+      // Always show first page
+      if (startPage > 1) {
+        pagination.append(`
+      <button onclick="loadMessages(1)" ${1 === currentPage ? 'class="active"' : ''}>1</button>
+    `);
+        if (startPage > 2) {
+          pagination.append('<span>...</span>');
+        }
+      }
+
+      // Middle pages
+      for (let i = startPage; i <= endPage; i++) {
+        pagination.append(`
+      <button onclick="loadMessages(${i})" ${i === currentPage ? 'class="active"' : ''}>${i}</button>
+    `);
+      }
+
+      // Always show last page
+      if (endPage < totalPages) {
+        if (endPage < totalPages - 1) {
+          pagination.append('<span>...</span>');
+        }
+        pagination.append(`
+      <button onclick="loadMessages(${totalPages})" ${totalPages === currentPage ? 'class="active"' : ''}>${totalPages}</button>
+    `);
+      }
+
+      // Next button
+      pagination.append(`
+    <button onclick="loadMessages(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  `);
     }
 
     function viewMessage(id) {
