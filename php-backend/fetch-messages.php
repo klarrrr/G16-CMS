@@ -3,7 +3,7 @@ include 'connect.php';
 
 header('Content-Type: application/json');
 
-$query = "SELECT * FROM inbox ORDER BY date_created DESC";
+$query = "SELECT * FROM inbox WHERE replied = 0 ORDER BY date_created DESC";
 $result = mysqli_query($conn, $query);
 
 $messages = [];

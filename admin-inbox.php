@@ -212,6 +212,83 @@
         color: #161616;
       }
     }
+
+
+    .popup-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      /* Safari */
+      background-color: rgba(0, 0, 0, 0.3);
+      z-index: 9999;
+      animation: fadeInBackdrop 0.4s ease-in-out forwards;
+      opacity: 0;
+    }
+
+    .popup-message {
+      background: white;
+      color: black;
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      animation: fadeInPopup 0.4s ease forwards;
+      opacity: 0;
+      transform: scale(0.95);
+    }
+
+    .popup-message p {
+      margin-bottom: 20px;
+      font-size: 18px;
+      color: black;
+    }
+
+    .popup-message button {
+      padding: 10px 20px;
+      background-color: #161616;
+      color: #f4f4f4;
+      border: 1px solid #161616;
+      color: white;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .popup-message button:hover {
+      background-color: #f4f4f4;
+      color: #161616;
+    }
+
+    /* Animations */
+    @keyframes fadeInPopup {
+      0% {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes fadeInBackdrop {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
   </style>
 </head>
 
@@ -261,10 +338,34 @@
 
       <div class="modal-actions">
         <button class="cancel-btn" onclick="closeReplyModal()">Cancel</button>
-        <button class="save-btn" onclick="sendReply()">Send Reply</button>
+        <button class="save-btn" onclick="sendReply()" id='replySendBtn'>Send Reply</button>
       </div>
     </div>
   </div>
+
+  <div id="popup-backdrop" class="popup-backdrop">
+    <div id="popup-message" class="popup-message">
+      <p id="popup-text">Message sent!</p>
+      <button onclick="closePopup()">Close</button>
+    </div>
+  </div>
+
+  <!-- Popup Script -->
+  <script>
+    function closePopup() {
+      document.getElementById('popup-backdrop').style.display = 'none';
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const status = params.get('status');
+      if (status === 'success' || status === 'fail') {
+        const text = status === 'success' ? 'Message sent successfully!' : 'Failed to send message. Try again.';
+        document.getElementById('popup-text').textContent = text;
+        document.getElementById('popup-backdrop').style.display = 'flex';
+      }
+    });
+  </script>
 
   <script>
     $(document).ready(function() {
@@ -273,7 +374,12 @@
     });
 
     function loadMessages() {
+
+      // Refresh Loading Messages
       $('#messageList').html('<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Loading messages...</p></div>');
+
+      // Empty Message Detail
+      $('#messageDetail').html('<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Failed to load message</p></div>');
 
       $.getJSON('php-backend/fetch-messages.php', function(messages) {
         if (!messages.length) {
@@ -341,28 +447,53 @@
       const email = $('#replyToEmail').val();
       const subject = $('#replySubject').val();
       const message = $('#replyMessage').val();
+      const submitButton = document.getElementById('replySendBtn'); // Your reply button's ID
 
       if (!subject || !message) {
         alert('Please complete all fields.');
         return;
       }
 
-      $.post('php-backend/send-reply.php', {
-        message_id: messageId,
-        email: email,
-        subject: subject,
-        message: message
-      }, function(response) {
-        const data = JSON.parse(response);
-        if (data.success) {
-          alert('Reply sent successfully!');
-          closeReplyModal();
-        } else {
-          alert('Failed to send reply: ' + data.error);
+      // Disable the button while sending
+      submitButton.disabled = true;
+      submitButton.textContent = 'Sending...';
+
+      $.ajax({
+        url: 'php-backend/send-reply.php',
+        type: 'post',
+        dataType: 'json',
+        data: {
+          message_id: messageId,
+          email: email,
+          subject: subject,
+          message: message
+        },
+        success: (data) => {
+          if (data.success) {
+            // Show success popup
+            document.getElementById('popup-text').textContent = 'Reply sent successfully!';
+            document.getElementById('popup-backdrop').style.display = 'flex';
+
+            closeReplyModal();
+            loadMessages();
+            $('#messageDetail').html('<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Failed to load message</p></div>');
+          } else {
+            // Show error message
+            document.getElementById('popup-text').textContent = 'Failed to send reply: ' + (data.error || 'Please try again.');
+            document.getElementById('popup-backdrop').style.display = 'flex';
+          }
+        },
+        error: (error) => {
+          console.log(error);
+          document.getElementById('popup-text').textContent = 'Error sending reply. Please try again.';
+          document.getElementById('popup-backdrop').style.display = 'flex';
         }
-      }).fail(function() {
-        alert('Error sending reply. Please try again.');
+      }).always(() => {
+        // Re-enable the button
+        submitButton.disabled = false;
+        submitButton.textContent = 'Send Reply';
       });
+
     }
   </script>
 </body>
