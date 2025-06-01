@@ -14,21 +14,36 @@
     }
 
     main.manager-users {
-      padding: 2rem;
       width: calc(100% - 250px);
     }
 
-    .header {
+    .page-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 2rem;
+      background: white;
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid #e0e0e0;
+      width: 100%;
+    }
+
+    .page-header h1 {
+      font-size: 1.8rem;
+      color: #222;
+      font-weight: 600;
+    }
+
+    .page-header p {
+      color: #666;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
     }
 
     .user-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 1.5rem;
+      padding: 2rem;
 
       * {
         font-family: sub;
@@ -231,8 +246,11 @@
 
   <main class="manager-users">
     <div class="container">
-      <div class="header">
-        <h1>Manage Users</h1>
+      <div class="page-header">
+        <div style='display:flex; flex-direction:column;'>
+          <h1>Manage Users</h1>
+          <p>Manage user configuration or add new users</p>
+        </div>
       </div>
 
       <div class="user-grid" id="userGrid">

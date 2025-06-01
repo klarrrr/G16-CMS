@@ -15,15 +15,29 @@
 
     main.inbox-content {
       flex: 1;
-      padding: 2rem;
       overflow-y: auto;
     }
 
-    .header {
+    .page-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 2rem;
+      background: white;
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid #e0e0e0;
+      width: 100%;
+    }
+
+    .page-header h1 {
+      font-size: 1.8rem;
+      color: #222;
+      font-weight: 600;
+    }
+
+    .page-header p {
+      color: #666;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
     }
 
     .btn {
@@ -47,7 +61,8 @@
     .inbox-container {
       display: flex;
       gap: 1.5rem;
-      height: calc(100vh - 150px);
+      height: calc(100vh - 110px);
+      padding: 2rem;
     }
 
     .message-list {
@@ -204,8 +219,11 @@
   <?php include 'admin-side-bar.php'; ?>
 
   <main class="inbox-content">
-    <div class="header">
-      <h1 style='font-family: main;'>Inbox</h1>
+    <div class="page-header">
+      <div style='display:flex; flex-direction:column;'>
+        <h1 style='font-family: main;'>Inbox</h1>
+        <p>Read your daily emails</p>
+      </div>
       <button class="btn btn-primary" id="refreshBtn">
         <i class="fas fa-sync-alt"></i> Refresh
       </button>
