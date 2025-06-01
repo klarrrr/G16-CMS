@@ -2446,7 +2446,18 @@ tbody td:hover {
     color: #c3c3c3;
 }
 
-#lundayan-pfp {
+#loob-pfp {
+    height: 35px;
+    border-radius: 50%;
+    border: 3px solid #f4f4f4;
+    cursor: pointer;
+
+    &:hover {
+        transform: scale(1.02);
+    }
+}
+
+#labas-pfp {
     height: 35px;
     border-radius: 50%;
     border: 3px solid #f4f4f4;
@@ -2834,6 +2845,12 @@ tbody td:hover {
 
 }
 
+@media(min-width: 768px) {
+    #labas-pfp {
+        display: none;
+    }
+}
+
 @media (max-width: 768px) {
 
     /* REMOVE UPPER TITLE CONTAINER */
@@ -2853,7 +2870,7 @@ tbody td:hover {
         gap: 0.5rem;
     }
 
-    #loob {
+    #loob-pfp {
         display: none;
     }
 
