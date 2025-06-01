@@ -157,6 +157,14 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
       padding: 2rem;
       color: #666;
     }
+
+    /* Add this to your <style> section */
+td {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
   </style>
 </head>
 
@@ -200,11 +208,6 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
           <label for="actionFilter">Action</label>
           <select id="actionFilter">
             <option value="">All Actions</option>
-            <option value="create">Create</option>
-            <option value="update">Update</option>
-            <option value="delete">Delete</option>
-            <option value="login">Login</option>
-            <option value="logout">Logout</option>
           </select>
         </div>
         <div class="filter-group">
@@ -248,180 +251,209 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
   </div>
 
   <script>
-    $(document).ready(function() {
-      // Initialize date filters to last 30 days
-      const today = new Date();
-      const thirtyDaysAgo = new Date();
-      thirtyDaysAgo.setDate(today.getDate() - 30);
+$(document).ready(function() {
+  // Initialize date filters to last 30 days
+  const today = new Date();
+  const thirtyDaysAgo = new Date();
+  thirtyDaysAgo.setDate(today.getDate() - 30);
 
-      $('#dateFrom').val(thirtyDaysAgo.toISOString().split('T')[0]);
-      $('#dateTo').val(today.toISOString().split('T')[0]);
+  $('#dateFrom').val(thirtyDaysAgo.toISOString().split('T')[0]);
+  $('#dateTo').val(today.toISOString().split('T')[0]);
 
-      // Load users for filter dropdown
-      loadUsers();
+  // Load initial data (users and actions)
+  loadInitialData();
 
-      // Load audit logs
-      loadAuditLogs();
+  // Filter button click handler
+  $('#filterBtn').click(function() {
+    loadAuditLogs(1);
+  });
 
-      // Apply filters button
-      $('#applyFilters').click(function() {
-        loadAuditLogs();
-      });
+  // Auto-apply filters when dropdowns change
+  $('#userFilter, #userTypeFilter, #actionFilter, #dateFrom, #dateTo').change(function() {
+    loadAuditLogs(1);
+  });
+});
 
-      // Export button
-      $('#exportBtn').click(function() {
-        exportAuditLogs();
-      });
+function loadInitialData() {
+  // Load users and initial audit logs
+  $.when(
+    loadUsers(),
+    loadAuditLogs()
+  ).then(function(usersResponse, logsResponse) {
+    // Populate action filter from the first response
+    populateActionFilter(logsResponse[0].available_actions);
+  });
+}
+
+function loadUsers() {
+  return $.ajax({
+    url: 'php-backend/admin-populate-users.php',
+    type: 'GET',
+    dataType: 'json'
+  }).done(function(users) {
+    const userFilter = $('#userFilter');
+    userFilter.empty();
+    userFilter.append('<option value="">All Users</option>');
+
+    users.forEach(user => {
+      userFilter.append(`<option value="${user.user_id}">${user.user_first_name} ${user.user_last_name}</option>`);
     });
+  }).fail(function(error) {
+    console.error('Error loading users:', error);
+  });
+}
 
-    function loadUsers() {
-      $.ajax({
-        url: 'php-backend/admin-populate-users.php',
-        type: 'GET',
-        dataType: 'json',
-        success: function(users) {
-          const userFilter = $('#userFilter');
-          userFilter.empty();
-          userFilter.append('<option value="">All Users</option>');
+function populateActionFilter(actions) {
+  const actionFilter = $('#actionFilter');
+  actionFilter.empty();
+  actionFilter.append('<option value="">All Actions</option>');
 
-          users.forEach(user => {
-            userFilter.append(`<option value="${user.user_id}">${user.user_first_name} ${user.user_last_name}</option>`);
-          });
-        },
-        error: function(error) {
-          console.error('Error loading users:', error);
-        }
-      });
-    }
+  // Add only actions from database (no default actions)
+  if (actions && actions.length > 0) {
+    actions.forEach(action => {
+      actionFilter.append(`<option value="${action}">${action.charAt(0).toUpperCase() + action.slice(1)}</option>`);
+    });
+  }
+}
 
-    function loadAuditLogs(page = 1) {
-      const filters = {
-        user_id: $('#userFilter').val(),
-        action: $('#actionFilter').val(),
-        date_from: $('#dateFrom').val(),
-        date_to: $('#dateTo').val(),
-        page: page
-      };
+function loadAuditLogs(page = 1) {
+  const filters = {
+    user_id: $('#userFilter').val(),
+    user_type: $('#userTypeFilter').val(),
+    action: $('#actionFilter').val(),
+    date_from: $('#dateFrom').val(),
+    date_to: $('#dateTo').val(),
+    page: page
+  };
 
-      $.ajax({
-        url: 'php-backend/fetch-audit-logs.php',
-        type: 'GET',
-        data: filters,
-        dataType: 'json',
-        success: function(response) {
-          const tbody = $('#auditTable tbody');
-          tbody.empty();
+  // Show loading state
+  $('#auditTable tbody').html('<tr><td colspan="6">Loading...</td></tr>');
+  $('#noRecords').hide();
 
-          if (response.data.length === 0) {
-            tbody.append('<tr><td colspan="6" class="no-records">No audit logs found</td></tr>');
-            return;
-          }
+  return $.ajax({
+    url: 'php-backend/fetch-audit-logs.php',
+    type: 'GET',
+    data: filters,
+    dataType: 'json',
+    success: function(response) {
+      const tbody = $('#auditTable tbody');
+      tbody.empty();
 
-          response.data.forEach(log => {
-            const actionBadge = getActionBadge(log.action);
+      if (!response.success || response.data.length === 0) {
+        $('#noRecords').show();
+        return response; // Return response for promise chain
+      }
 
-            tbody.append(`
-        <tr>
+      response.data.forEach(log => {
+        const actionBadge = getActionBadge(log.action);
+
+        tbody.append(`
+          <tr>
             <td>${log.log_id}</td>
             <td>${log.user_name || 'System'}</td>
             <td>${getUserTypeBadge(log.user_type)}</td>
             <td>${log.article_title || 'N/A'}</td>
             <td>${actionBadge}</td>
             <td>${formatDateTime(log.log_time)}</td>
-        </tr>
-    `);
-          }); // This closing bracket was missing
-
-          renderPagination(response.total, response.per_page, page);
-        },
-        error: function(error) {
-          console.error('Error loading audit logs:', error);
-          $('#auditLogsTable tbody').html('<tr><td colspan="6" class="no-records">Error loading audit logs</td></tr>');
-        }
+          </tr>
+        `);
       });
+
+      renderPagination(response.total, response.per_page, page);
+      return response; // Return response for promise chain
+    },
+    error: function(xhr, status, error) {
+      console.error('Error loading audit logs:', error);
+      $('#auditTable tbody').html('<tr><td colspan="6">Error loading audit logs</td></tr>');
     }
+  });
+}
 
-    function getUserTypeBadge(userType) {
-      const types = {
-        'admin': 'badge-admin',
-        'editor': 'badge-editor',
-        'user': 'badge-user'
-      };
+function getUserTypeBadge(userType) {
+  const types = {
+    'admin': 'badge-admin',
+    'writer': 'badge-writer',
+    'reviewer': 'badge-reviewer'
+  };
 
-      const badgeClass = types[userType?.toLowerCase()] || 'badge-user';
+  const badgeClass = types[userType?.toLowerCase()] || 'badge-secondary';
+  const displayType = userType ? userType.charAt(0).toUpperCase() + userType.slice(1) : 'N/A';
 
-      return `<span class="badge ${badgeClass}">${userType || 'N/A'}</span>`;
+  return `<span class="badge ${badgeClass}">${displayType}</span>`;
+}
+
+function getActionBadge(action) {
+  const actions = {
+    'create': {
+      class: 'badge-success',
+      icon: 'plus'
+    },
+    'update': {
+      class: 'badge-info',
+      icon: 'edit'
+    },
+    'delete': {
+      class: 'badge-danger',
+      icon: 'trash'
+    },
+    'login': {
+      class: 'badge-success',
+      icon: 'sign-in-alt'
+    },
+    'logout': {
+      class: 'badge-warning',
+      icon: 'sign-out-alt'
     }
+  };
 
-    function getActionBadge(action) {
-      const actions = {
-        'create': {
-          class: 'badge-success',
-          icon: 'plus'
-        },
-        'update': {
-          class: 'badge-info',
-          icon: 'edit'
-        },
-        'delete': {
-          class: 'badge-danger',
-          icon: 'trash'
-        },
-        'login': {
-          class: 'badge-success',
-          icon: 'sign-in-alt'
-        },
-        'logout': {
-          class: 'badge-warning',
-          icon: 'sign-out-alt'
-        }
-      };
+  const config = actions[action.toLowerCase()] || {
+    class: 'badge-info',
+    icon: 'info-circle'
+  };
 
-      const config = actions[action.toLowerCase()] || {
-        class: 'badge-info',
-        icon: 'info-circle'
-      };
+  return `
+    <span class="badge ${config.class}">
+      <i class="fas fa-${config.icon}"></i> ${action}
+    </span>
+  `;
+}
 
-      return `
-                <span class="badge ${config.class}">
-                    <i class="fas fa-${config.icon}"></i> ${action}
-                </span>
-            `;
+function formatDateTime(datetime) {
+  if (!datetime) return 'N/A';
+
+  const date = new Date(datetime);
+  return date.toLocaleString();
+}
+
+function renderPagination(total, perPage, currentPage) {
+  const totalPages = Math.ceil(total / perPage);
+  const pagination = $('#pagination');
+  pagination.empty();
+
+  if (totalPages <= 1) return;
+
+  // Previous button
+  if (currentPage > 1) {
+    pagination.append(`<a href="#" onclick="loadAuditLogs(${currentPage - 1})"><i class="fas fa-chevron-left"></i></a>`);
+  }
+
+  // Show limited page numbers (max 5 around current page)
+  const startPage = Math.max(1, currentPage - 2);
+  const endPage = Math.min(totalPages, currentPage + 2);
+
+  for (let i = startPage; i <= endPage; i++) {
+    if (i === currentPage) {
+      pagination.append(`<a href="#" class="active">${i}</a>`);
+    } else {
+      pagination.append(`<a href="#" onclick="loadAuditLogs(${i})">${i}</a>`);
     }
+  }
 
-    function formatDateTime(datetime) {
-      if (!datetime) return 'N/A';
-
-      const date = new Date(datetime);
-      return date.toLocaleString();
-    }
-
-    function renderPagination(total, perPage, currentPage) {
-      const totalPages = Math.ceil(total / perPage);
-      const pagination = $('#pagination');
-      pagination.empty();
-
-      if (totalPages <= 1) return;
-
-      // Previous button
-      if (currentPage > 1) {
-        pagination.append(`<a href="#" onclick="loadAuditLogs(${currentPage - 1})"><i class="fas fa-chevron-left"></i></a>`);
-      }
-
-      // Page numbers
-      for (let i = 1; i <= totalPages; i++) {
-        if (i === currentPage) {
-          pagination.append(`<a href="#" class="active">${i}</a>`);
-        } else {
-          pagination.append(`<a href="#" onclick="loadAuditLogs(${i})">${i}</a>`);
-        }
-      }
-
-      // Next button
-      if (currentPage < totalPages) {
-        pagination.append(`<a href="#" onclick="loadAuditLogs(${currentPage + 1})"><i class="fas fa-chevron-right"></i></a>`);
-      }
-    }
+  // Next button
+  if (currentPage < totalPages) {
+    pagination.append(`<a href="#" onclick="loadAuditLogs(${currentPage + 1})"><i class="fas fa-chevron-right"></i></a>`);
+  }
+}
 
     function showLogDetails(logId) {
       // In a real implementation, this would show a modal with detailed log information

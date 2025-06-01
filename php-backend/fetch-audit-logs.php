@@ -1,12 +1,21 @@
 <?php
+session_start();
 include 'connect.php';
 
-// Get filter parameters
-$user_id = $_GET['user_id'] ?? '';
-$action = $_GET['action'] ?? '';
-$date_from = $_GET['date_from'] ?? '';
-$date_to = $_GET['date_to'] ?? '';
-$page = intval($_GET['page'] ?? 1);
+// Check if user is admin
+if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admin') {
+    header('Content-Type: application/json');
+    echo json_encode(['error' => 'Unauthorized access']);
+    exit;
+}
+
+// Get filter parameters with sanitization
+$user_id = isset($_GET['user_id']) ? intval($_GET['user_id']) : '';
+$user_type = isset($_GET['user_type']) ? $_GET['user_type'] : '';
+$action = isset($_GET['action']) ? $_GET['action'] : '';
+$date_from = isset($_GET['date_from']) ? $_GET['date_from'] : '';
+$date_to = isset($_GET['date_to']) ? $_GET['date_to'] : '';
+$page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
 $limit = 10; // Items per page
 $offset = ($page - 1) * $limit;
 
@@ -19,6 +28,12 @@ if (!empty($user_id)) {
     $conditions[] = "audit_logs.user_owner = ?";
     $params[] = $user_id;
     $types .= 'i';
+}
+
+if (!empty($user_type)) {
+    $conditions[] = "users.user_type = ?";
+    $params[] = $user_type;
+    $types .= 's';
 }
 
 if (!empty($action)) {
@@ -42,7 +57,10 @@ if (!empty($date_to)) {
 $where = empty($conditions) ? '1=1' : implode(' AND ', $conditions);
 
 // Count total records
-$countQuery = "SELECT COUNT(*) as total FROM audit_logs WHERE $where";
+$countQuery = "SELECT COUNT(*) as total 
+              FROM audit_logs
+              LEFT JOIN users ON audit_logs.user_owner = users.user_id
+              WHERE $where";
 $countStmt = $conn->prepare($countQuery);
 
 if (!empty($params)) {
@@ -59,7 +77,8 @@ $query = "
         audit_logs.*, 
         CONCAT(users.user_first_name, ' ', users.user_last_name) AS user_name,
         users.user_type,
-        articles.article_title
+        articles.article_title,
+        audit_logs.action
     FROM audit_logs
     LEFT JOIN users ON audit_logs.user_owner = users.user_id
     LEFT JOIN articles ON audit_logs.article_owner = articles.article_id
@@ -82,6 +101,14 @@ $result = $stmt->get_result();
 $logs = $result->fetch_all(MYSQLI_ASSOC);
 $stmt->close();
 
+// Get all unique actions for filter population
+$actionsQuery = "SELECT DISTINCT action FROM audit_logs ORDER BY action";
+$actionsResult = $conn->query($actionsQuery);
+$availableActions = [];
+while ($row = $actionsResult->fetch_assoc()) {
+    $availableActions[] = $row['action'];
+}
+
 // Return JSON response
 header('Content-Type: application/json');
 echo json_encode([
@@ -90,5 +117,7 @@ echo json_encode([
     'total' => $total,
     'page' => $page,
     'per_page' => $limit,
-    'total_pages' => ceil($total / $limit)
+    'total_pages' => ceil($total / $limit),
+    'available_actions' => $availableActions
 ]);
+?>
