@@ -357,6 +357,8 @@
         alert('Error sending reply. Please try again.');
       });
     }
+
+    
   </script>
 </body>
 </html>
