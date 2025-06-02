@@ -91,7 +91,8 @@
                     <h2>Upcoming Events</h2>
                 </div>
                 <!-- Upcoming Events -->
-<iframe src="https://localhost/G16-CMS/announcements-widget.php?limit=5&layout=column" width="100%" height="300px" frameborder="0" style="border:none;"></iframe>                    <!-- JS will inject events here -->
+                <div class="events" id="upcoming-events-container" style='border: 1px solid #fcb404; background-color: #fff; border-radius: 0.5rem;' title="Stay tuned!">
+                    <!-- JS will inject events here -->
                 </div>
 
                 <div class="remaining-texts">
