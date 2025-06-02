@@ -24,9 +24,95 @@ $cover_photo = $_SESSION['cover_photo'];
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="pics/lundayan-logo.png">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <style>
+        /* Remove button styles */
+        .remove-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #666;
+            color:rgb(255, 255, 255);
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            display: none;
+            z-index: 1000000;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.2s ease;
+        }
+        
+        .remove-btn:hover {
+            background:#333;
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .profile-pic-account:hover .remove-btn,
+        .cover-pic:hover .remove-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Dark mode toggle button */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #333;
+            color: white;
+            border: none;
+            padding: 0;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 100;
+            width: 50px;
+            height: 50px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        
+        .dark-mode-toggle:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+        }
+        
+        /* Floating animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .dark-mode-toggle {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* Ensure proper z-index stacking */
+        .profile-pic-account,
+        .cover-pic {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .-label,
+        .-label-cover {
+            z-index: 2;
+        }
+    </style>
 </head>
 
 <body class="body">
+    <!-- Floating dark mode button -->
+    <button class="dark-mode-toggle" title="Toggle Dark Mode">🌓</button>
+    
     <div class="float-cards" style='display: none;'></div>
     <!-- ACTUAL NAV OF CMS WEBSITE -->
     <div class="left-editor-container">
@@ -36,7 +122,8 @@ $cover_photo = $_SESSION['cover_photo'];
         <section class="account-settings" id='account-settings'>
 
             <div class="cover-pic">
-
+                <button class="remove-btn" onclick="removeImage('cover')" <?php echo !$cover_photo ? 'style="display:none"' : ''; ?>>×</button>
+                
                 <label class="-label-cover" for="cover-file">
                     <span>Change Cover Photo</span>
                 </label>
@@ -55,18 +142,17 @@ $cover_photo = $_SESSION['cover_photo'];
                 <div class="below-account-title">
                     <div class="pictures-container">
                         <div class="profile-pic-account">
-
+                            <button class="remove-btn" onclick="removeImage('pfp')" <?php echo !$profile_pic ? 'style="display:none"' : ''; ?>>×</button>
+                            
                             <label class="-label" for="pfp-file">
                                 <span>Change Profile Picture</span>
                             </label>
 
                             <input id="pfp-file" type="file" onchange="loadPfp(event)" />
 
-
                             <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : $profile_pic; ?>" id="pfp" />
                         </div>
                     </div>
-
 
                     <div class="input-fields">
                         <div class="first-last">
@@ -86,9 +172,6 @@ $cover_photo = $_SESSION['cover_photo'];
                             <input type="email" placeholder="Email Address" value='<?php echo $email; ?>' id='user-email'>
                         </div>
 
-                        <!-- <input type="text" placeholder="Bio"> -->
-
-                        <!-- Save & Discard Buttons -->
                         <div class="save-buttons">
                             <input type="button" name="saveChanges" value="Save Changes" onclick="saveChanges()">
                         </div>
@@ -98,7 +181,6 @@ $cover_photo = $_SESSION['cover_photo'];
 
         </section>
     </div>
-
 
     <!-- Script for Menu Button on Top Left -->
     <script src="scripts/menu_button.js"></script>
@@ -124,6 +206,8 @@ $cover_photo = $_SESSION['cover_photo'];
                 success: (res) => {
                     console.log(res.status);
                     pfp.src = res.path;
+                    // Show remove button after upload
+                    document.querySelector('.profile-pic-account .remove-btn').style.display = 'flex';
                     updateDateUpdated(user_id);
                 },
                 error: (error) => {
@@ -151,6 +235,8 @@ $cover_photo = $_SESSION['cover_photo'];
                 success: (res) => {
                     console.log(res.status);
                     cover.src = res.path;
+                    // Show remove button after upload
+                    document.querySelector('.cover-pic .remove-btn').style.display = 'flex';
                     updateDateUpdated(user_id);
                 },
                 error: (error) => {
@@ -175,10 +261,41 @@ $cover_photo = $_SESSION['cover_photo'];
                 }
             });
         }
-    </script>
+        
+        function removeImage(type) {
+            if (!confirm(`Are you sure you want to remove your ${type === 'pfp' ? 'profile picture' : 'cover photo'}?`)) {
+                return;
+            }
+            
+            const fallbackImage = type === 'pfp' ? 'pics/no-pic.jpg' : 'pics/plp-outside.jpg';
+            const endpoint = type === 'pfp' ? 'php-backend/account-settings-remove-profile-pic.php' : 'php-backend/account-settings-remove-cover-pic.php';
+            const removeBtn = document.querySelector(`.${type === 'pfp' ? 'profile-pic-account' : 'cover-pic'} .remove-btn`);
+            
+            $.ajax({
+                url: endpoint,
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    user_id: user_id
+                },
+                success: (res) => {
+                    if (res.success) {
+                        document.getElementById(type).src = fallbackImage;
+                        removeBtn.style.display = 'none';
+                        updateDateUpdated(user_id);
+                        
+                        // Show success message
+                        alert(`${type === 'pfp' ? 'Profile picture' : 'Cover photo'} removed successfully!`);
+                    }
+                },
+                error: (error) => {
+                    console.log(error);
+                    alert('Error removing image. Please try again.');
+                }
+            });
+        }
 
-    <!-- Save Changes -->
-    <script>
+        // Save Changes function
         const userFirstName = document.getElementById('user-first-name');
         const userLastName = document.getElementById('user-last-name');
         const userEmail = document.getElementById('user-email');
@@ -206,5 +323,4 @@ $cover_photo = $_SESSION['cover_photo'];
         }
     </script>
 </body>
-
-</html>
+</html> 
