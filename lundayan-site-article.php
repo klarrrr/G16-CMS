@@ -5,7 +5,7 @@
 include 'php-backend/connect.php';
 
 if (!isset($_GET['article_id'])) {
-    header('Location: lundayan-site-home.php');
+    header('Location: index.php');
     exit;
 }
 
@@ -24,7 +24,7 @@ $content = $article['article_content'];
 $datePosted = $article['date_posted'];
 
 if ($article['completion_status'] == 'draft' || $article['approve_status'] == 'no') {
-    header('Location: lundayan-site-home.php');
+    header('Location: index.php');
     exit;
 }
 
@@ -112,9 +112,10 @@ $timeAgo = timeAgoLimited($article['date_posted']);
 
 $reviewersQuery = "
     SELECT DISTINCT u.user_id, u.user_first_name, u.user_last_name, u.profile_picture
-    FROM comments c
-    JOIN users u ON c.user_owner = u.user_id
-    WHERE c.article_owner = $article_id
+    FROM article_review_invites ari
+    JOIN users u ON ari.reviewer_id = u.user_id
+    WHERE ari.article_id = $article_id
+    AND ari.status = 'accepted'
 ";
 $reviewersResult = mysqli_query($conn, $reviewersQuery);
 
@@ -151,8 +152,8 @@ function limitHtmlContent($content, $limit = 600)
     <meta property="og:image" content="<?php echo $image; ?>" />
 
     <title>Lundayan : Article</title>
-    <link rel="stylesheet" href="/G16-CMS/styles-lundayan-site.css">
-    <link rel="icon" href="/G16-CMS/pics/lundayan-logo.png">
+    <link rel="stylesheet" href="styles-lundayan-site.css">
+    <link rel="icon" href="pics/lundayan-logo.png">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
     <!-- Online Quill Css -->
@@ -209,7 +210,7 @@ function limitHtmlContent($content, $limit = 600)
 
                     <div>
                         <?php if ($olderArticle): ?>
-                            <a href="/G16-CMS/lundayan-site-article.php?article_id=<?php echo $olderArticle['article_id']; ?>"
+                            <a href="lundayan-site-article.php?article_id=<?php echo $olderArticle['article_id']; ?>"
                                 title="<?php echo htmlspecialchars_decode($olderArticle['article_title']); ?>">
                                 « <?php echo mb_convert_encoding(shortenTitle($olderArticle['article_title']), 'UTF-8', 'UTF-8') ?>
                             </a>
@@ -228,7 +229,7 @@ function limitHtmlContent($content, $limit = 600)
 
                     <div>
                         <?php if ($newerArticle): ?>
-                            <a style='justify-self: flex-end;' href="/G16-CMS/lundayan-site-article.php?article_id=<?php echo $newerArticle['article_id']; ?>"
+                            <a style='justify-self: flex-end;' href="lundayan-site-article.php?article_id=<?php echo $newerArticle['article_id']; ?>"
                                 title="<?php echo htmlspecialchars_decode($newerArticle['article_title']); ?>">
                                 <?php echo mb_convert_encoding(shortenTitle($newerArticle['article_title']), 'UTF-8', 'UTF-8') ?> »
                             </a>

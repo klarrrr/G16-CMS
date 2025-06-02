@@ -160,6 +160,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         fetchReviewers();
                         loadInvitedReviewers();
                         popup.style.display = 'none';
+
+                        loadStatus();
+                        
                     }
                 }
             });
@@ -173,8 +176,12 @@ document.addEventListener('DOMContentLoaded', function () {
         $.ajax({
             url: 'php-backend/cancel-invitation.php',
             type: 'POST',
-            data: { invite_id: inviteId },
+            data: { 
+                invite_id: inviteId,
+                article_id: article_id
+            },
             success: function () {
+                loadStatus();
                 showAlert('Invitation cancelled', 'success');
                 loadInvitedReviewers();
             },
@@ -195,4 +202,33 @@ document.addEventListener('DOMContentLoaded', function () {
             alert.remove();
         }, 3000);
     }
+
+       // Load current status
+        function loadStatus() {
+            $.ajax({
+                url: 'php-backend/get-article-status.php',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    article_id: article_id
+                },
+                success: function (res) {
+                    console.log(res.status);
+                    if (res.status === 'success') {
+                        const capitalizedStatus = res.approve_status.charAt(0).toUpperCase() + res.approve_status.slice(1);
+                        document.getElementById('status-text').textContent = capitalizedStatus;
+                    } else {
+                        postBtn.disabled = true;
+                        postBtn.innerText = 'Status Error';
+                        console.error(res.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('AJAX error:', error);
+                    postBtn.disabled = true;
+                    postBtn.innerText = 'Error loading status';
+                }
+            });
+        }
+
 });

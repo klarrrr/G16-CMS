@@ -1,48 +1,121 @@
 <?php
-
 include 'connect.php';
 
 $articleId = $_POST['article_id'];
-$user_id = $_POST['user_id'];
+$userId = $_POST['user_id'];
 
-// $articleId = 51;
-// $user_id = 4;
-
-$user_type = null;
-$query = "SELECT user_type FROM users WHERE user_id = $user_id";
-$result = mysqli_query($conn, $query);
-if ($row = mysqli_fetch_assoc($result)) {
-    $user_type = $row['user_type'];
+// Get user type
+$userType = null;
+$query = "SELECT user_type FROM users WHERE user_id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$result = $stmt->get_result();
+if ($row = $result->fetch_assoc()) {
+    $userType = strtolower($row['user_type']);
 }
+$stmt->close();
 
-$status = 'Invalid User Type';
+$response = ['status' => 'error', 'message' => 'Invalid user type'];
 
-// Confirm if user is a reviewer
-// ONly reviewer can approve an article
-if ($user_type == 'reviewer') {
-
-    // Confirm first if approve status of article is not approved yet
-    $flag = false;
-
-    $query = "SELECT approve_status FROM articles WHERE article_id = $articleId";
-    $result = mysqli_query($conn, $query);
-    if ($row = mysqli_fetch_assoc($result)) {
-        if ($row['approve_status'] == 'no') {
-            $flag = true;
+// Only reviewers can approve articles
+if ($userType === 'reviewer') {
+    // Check if user was invited to review this article
+    $inviteQuery = "SELECT invite_id FROM article_review_invites 
+                   WHERE article_id = ? AND reviewer_id = ? AND status = 'accepted'";
+    $stmt = $conn->prepare($inviteQuery);
+    $stmt->bind_param("ii", $articleId, $userId);
+    $stmt->execute();
+    $inviteResult = $stmt->get_result();
+    
+    if ($inviteResult->num_rows > 0) {
+        $invite = $inviteResult->fetch_assoc();
+        $inviteId = $invite['invite_id'];
+        
+        // Check if review already exists
+        $reviewQuery = "SELECT review_id FROM article_reviews WHERE invite_id = ?";
+        $stmt = $conn->prepare($reviewQuery);
+        $stmt->bind_param("i", $inviteId);
+        $stmt->execute();
+        $reviewResult = $stmt->get_result();
+        
+        if ($reviewResult->num_rows > 0) {
+            // Update existing review
+            $updateQuery = "UPDATE article_reviews 
+                           SET decision = IF(decision = 'approved', 'unapproved', 'approved'),
+                               review_date = CURRENT_TIMESTAMP()
+                           WHERE invite_id = ?";
+            $stmt = $conn->prepare($updateQuery);
+            $stmt->bind_param("i", $inviteId);
+            $stmt->execute();
+            
+            $response = [
+                'status' => 'success',
+                'action' => $stmt->affected_rows > 0 ? 'updated' : 'unchanged',
+                'decision' => $stmt->affected_rows > 0 ? 
+                    ($_POST['decision'] ?? 'toggle') : 'no_change'
+            ];
+        } else {
+            // Create new review (default to approved)
+            $insertQuery = "INSERT INTO article_reviews 
+                          (invite_id, decision, comments) 
+                          VALUES (?, 'approved', 'Approved via system')";
+            $stmt = $conn->prepare($insertQuery);
+            $stmt->bind_param("i", $inviteId);
+            $stmt->execute();
+            
+            $response = [
+                'status' => 'success',
+                'action' => 'created',
+                'decision' => 'approved'
+            ];
         }
-    }
-
-    if ($flag) {
-        $query1 = "UPDATE articles SET approve_status = 'yes' WHERE article_id = $articleId";
-        mysqli_query($conn, $query1);
-        $status = "yes";
+        
+        // Check if all reviewers have approved
+        checkAllReviewsApproved($conn, $articleId);
     } else {
-        $query1 = "UPDATE articles SET approve_status = 'no' WHERE article_id = $articleId";
-        mysqli_query($conn, $query1);
-        $status = "no";
+        $response = ['status' => 'error', 'message' => 'Not authorized to review this article'];
     }
 }
 
-echo json_encode([
-    'status' => $status
-]);
+echo json_encode($response);
+
+// Function to check if all reviewers have approved
+function checkAllReviewsApproved($conn, $articleId) {
+    // Get all accepted invitations for this article
+    $query = "
+    SELECT 
+    COUNT(DISTINCT ari.invite_id) AS total_reviewers,
+    SUM(CASE WHEN ar.decision = 'approved' THEN 1 ELSE 0 END) AS approved_reviews
+    FROM 
+    article_review_invites ari
+    LEFT JOIN 
+    article_reviews ar ON ari.invite_id = ar.invite_id
+    WHERE 
+    ari.article_id = ?
+    AND
+    ari.status != 'rejected'
+    ";
+    
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $articleId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $stats = $result->fetch_assoc();
+    
+    // If all reviewers have approved, update article status
+    if ($stats['total_reviewers'] > 0 && $stats['approved_reviews'] == $stats['total_reviewers']) {
+        // If greater than 0 and total reviews and total reviewers are equal, set approve status to yes
+        $updateArticle = "UPDATE articles SET approve_status = 'yes' WHERE article_id = ?";
+        $stmt = $conn->prepare($updateArticle);
+        $stmt->bind_param("i", $articleId);
+        $stmt->execute();
+    }else{
+        // If 0 or less, update approve status to no
+        $updateArticle = "UPDATE articles SET approve_status = 'no' WHERE article_id = ?";
+        $stmt = $conn->prepare($updateArticle);
+        $stmt->bind_param("i", $articleId);
+        $stmt->execute();
+    }
+}
+?>

@@ -863,8 +863,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         livePreview.style.height = height;
 
         // Update embed code with correct localhost path
-        const basePath = window.location.host.includes('localhost') ?
-          'https://localhost/G16-CMS/announcements-widget.php' :
+        const basePath = window.location.host.includes('lundayan-plp.great-site.net') ?
+          'https://lundayan-plp.great-site.net/announcements-widget.php' :
           '<?php echo $_SERVER['HTTP_HOST']; ?>/announcements-widget.php';
 
         const code = `<iframe src="${basePath}?limit=${limit}&layout=${layout}" width="${width}" height="${height}" frameborder="0" style="border:none;"></iframe>`;

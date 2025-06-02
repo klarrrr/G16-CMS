@@ -4,6 +4,8 @@ header('Content-Type: application/json');
 session_start();
 
 $invite_id = $_POST['invite_id'] ?? null;
+$article_id = $_POST['article_id'] ?? null;
+
 if (!$invite_id) {
     http_response_code(400);
     die(json_encode(['error' => 'Invite ID required']));
@@ -30,8 +32,48 @@ $stmt = $conn->prepare($updateQuery);
 $stmt->bind_param("i", $invite_id);
 
 if ($stmt->execute()) {
+    checkAllReviewsApproved($conn, $article_id);
     echo json_encode(['success' => true]);
 } else {
     http_response_code(500);
     echo json_encode(['error' => 'Failed to cancel invitation']);
+}
+
+// Function to check if all reviewers have approved
+function checkAllReviewsApproved($conn, $articleId) {
+    // Get all accepted invitations for this article
+    $query = "
+    SELECT 
+    COUNT(DISTINCT ari.invite_id) AS total_reviewers,
+    SUM(CASE WHEN ar.decision = 'approved' THEN 1 ELSE 0 END) AS approved_reviews
+    FROM 
+    article_review_invites ari
+    LEFT JOIN 
+    article_reviews ar ON ari.invite_id = ar.invite_id
+    WHERE 
+    ari.article_id = ?
+    AND
+    ari.status != 'rejected'
+    ";
+    
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $articleId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $stats = $result->fetch_assoc();
+    
+    // If all reviewers have approved, update article status
+    if ($stats['total_reviewers'] > 0 && $stats['approved_reviews'] == $stats['total_reviewers']) {
+        // If greater than 0 and total reviews and total reviewers are equal, set approve status to yes
+        $updateArticle = "UPDATE articles SET approve_status = 'yes' WHERE article_id = ?";
+        $stmt = $conn->prepare($updateArticle);
+        $stmt->bind_param("i", $articleId);
+        $stmt->execute();
+    }else{
+        // If 0 or less, update approve status to no
+        $updateArticle = "UPDATE articles SET approve_status = 'no' WHERE article_id = ?";
+        $stmt = $conn->prepare($updateArticle);
+        $stmt->bind_param("i", $articleId);
+        $stmt->execute();
+    }
 }

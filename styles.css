@@ -1885,6 +1885,23 @@ nav h1 {
         flex-direction: row;
         gap: 1rem;
 
+        #unsub-btn{
+             padding: 0.5rem;
+            min-width: 9rem;
+            border: none;
+            background-color: #161616;
+            color: #f4f4f4;
+            border-radius: 0.5rem;
+            font-size: 0.8rem;
+            border: 1px solid #161616;
+            cursor: pointer;
+        }
+
+        #unsub-btn:hover{
+            background-color: #ff6666;
+            color: #161616;
+        }
+
         #approve-btn {
             padding: 0.5rem;
             min-width: 9rem;

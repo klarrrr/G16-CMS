@@ -45,6 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ]);
                     exit;
                 }
+            }else{
+                 echo json_encode([
+                        'status' => 'error',
+                        'message' => 'Cannot publish - assign reviewers first to approve your article.'
+                    ]);
+                    exit;
             }
         }
 

@@ -55,5 +55,5 @@ $.ajax({
 
 function reviewArticle(thisButton) {
     const article_id = thisButton.getAttribute('articleid');
-    window.location.href = `/G16-CMS/review-article.php?article_id=${article_id}`;
+    window.location.href = `/review-article.php?article_id=${article_id}`;
 }

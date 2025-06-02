@@ -80,13 +80,13 @@ $.ajax({
 
 function editArticle(thisContainer) {
     const article_id = thisContainer.getAttribute('articleid');
-    window.location.href = `/G16-CMS/edit-article.php?article_id=${article_id}`;
+    window.location.href = `/edit-article.php?article_id=${article_id}`;
 }
 
 
 function reviewArticleDashboard(thisContainer) {
     const article_id = thisContainer.getAttribute('articleid');
-    window.location.href = `/G16-CMS/review-article.php?article_id=${article_id}`;
+    window.location.href = `/review-article.php?article_id=${article_id}`;
 }
 
 

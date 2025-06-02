@@ -110,7 +110,7 @@ if (isset($_SESSION['user_id'])) {
 
 <body>
     <main class='sign-in-main'>
-        <a href="lundayan-site-home.php" id='sign-in-home'>« Go Back</a>
+        <a href="index.php" id='sign-in-home'>« Go Back</a>
         <section class='sign-in-details'>
             <div class="sign-in-title-container">
                 <h1>LUNDAYAN</h1>
