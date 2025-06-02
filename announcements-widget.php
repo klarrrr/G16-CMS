@@ -49,6 +49,9 @@ try {
 } catch (Exception $e) {
     die("Database error: " . $e->getMessage());
 }
+
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+$baseURL = $protocol . '://' . $_SERVER['HTTP_HOST'] . '/article.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -60,14 +63,11 @@ try {
       box-sizing: border-box;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
-    
     .announcements-widget {
       width: 100%;
       padding: 15px;
       background: <?= $isPreview ? 'transparent' : '#f8f9fa' ?>;
     }
-    
-    /* Column Layout */
     .layout-column .event {
       display: flex;
       gap: 15px;
@@ -80,8 +80,6 @@ try {
       transition: transform 0.2s;
       color: white;
     }
-    
-    /* Row Layout */
     .layout-row #upcoming-events-container {
       display: flex;
       flex-wrap: wrap;
@@ -105,8 +103,6 @@ try {
       height: 120px;
       object-fit: cover;
     }
-    
-    /* Common Styles */
     .event:hover {
       transform: translateY(-3px);
       box-shadow: 0 4px 8px rgba(0,0,0,0.15);
@@ -151,12 +147,12 @@ try {
         <div class="no-events-message">No upcoming announcements at the moment 😔</div>
       <?php else: ?>
         <?php foreach ($announcements as $article): ?>
-          <div class="event" articleid="<?= $article['article_id'] ?>">
+          <div class="event" data-articleid="<?= $article['article_id'] ?>">
             <img src="<?= htmlspecialchars($article['widget_img']) ?>" alt="">
             <div class="event-text-container">
-<h3 title="<?= htmlspecialchars($article['article_title']) ?>">
-  <?= htmlspecialchars(mb_strimwidth($article['article_title'], 0, 60, '...')) ?>
-</h3>
+              <h3 title="<?= htmlspecialchars($article['article_title']) ?>">
+                <?= htmlspecialchars(mb_strimwidth($article['article_title'], 0, 60, '...')) ?>
+              </h3>
               <p>Posted on <?= $article['date_posted'] ?></p>
             </div>
           </div>
@@ -164,20 +160,27 @@ try {
       <?php endif; ?>
     </div>
   </div>
-  <script>
-    function goToArticle(element) {
-      const articleId = element.getAttribute('articleid');
-      const basePath = window.location.host.includes('localhost') 
-        ? 'https://localhost/G16-CMS/lundayan-site-article.php'
-        : '<?php echo $_SERVER['HTTP_HOST']; ?>/article.php';
-      window.top.location.href = `${basePath}?id=${articleId}`;
+
+<script>
+  function goToArticle(element) {
+    const articleId = element.dataset.articleid;
+    const isLocal = window.location.hostname === 'localhost';
+
+    const basePath = isLocal
+      ? 'https://localhost/G16-CMS/lundayan-site-article.php'
+      : 'https://<?= $_SERVER['HTTP_HOST'] ?>/lundayan-site-article.php';
+
+    if (articleId) {
+      window.top.location.href = `${basePath}?article_id=${articleId}`;
     }
-    
-    document.querySelectorAll('.event').forEach(event => {
-      event.addEventListener('click', function() {
-        goToArticle(this);
-      });
+  }
+
+  document.querySelectorAll('.event').forEach(event => {
+    event.addEventListener('click', function () {
+      goToArticle(this);
     });
-  </script>
+  });
+</script>
+
 </body>
 </html>
