@@ -489,6 +489,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- Articles will be loaded here via JavaScript -->
             <div class="loading-spinner"></div>
           </div>
+
+          <div class="card-footer">
+            <button type="submit" class="save-btn">Save Highlights</button>
+          </div>
         </form>
 
         <!-- Mail Configuration -->

@@ -27,9 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Return success response
     $_SESSION['success_message'] = 'Article highlights updated successfully!';
-    header('Location: admin-settings.php?section=highlights');
+    header('Location: ../admin-settings.php?section=highlights');
     exit();
 } else {
-    header('Location: admin-settings.php?section=highlights');
+    header('Location: ../admin-settings.php?section=highlights');
     exit();
 }
