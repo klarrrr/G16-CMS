@@ -5,8 +5,11 @@ const cardNewsContainer = document.getElementById('card-news-container');
 const latestNewsContainer = document.getElementById('latest-news-container');
 const paginationContainer = document.getElementById('pagination');
 
+let currentHighlightIndex = 0;
+let currentHighlightWidgets = [];
 let currentPage = 1;
-const itemsPerPage = 6; // Only for cards now
+const itemsPerPage = 6;
+let highlightInterval = null;
 
 // First, load the absolute latest article for the highlight
 function loadLatestHighlight() {
@@ -15,37 +18,156 @@ function loadLatestHighlight() {
         type: 'GET',
         dataType: 'json',
         success: (res) => {
-            if (res.widget) {
-                const widget = res.widget;
-                const picUrl = widget.widget_img
-                    ? `${widget.widget_img}`
-                    : 'pics/plp-outside.jpg';
+            // Clear any existing interval
+            if (highlightInterval) {
+                clearInterval(highlightInterval);
+                highlightInterval = null;
+            }
 
-                latestNewsTitle.innerHTML = widget.widget_title;
-                latestNewsTitle.setAttribute('articleid', widget.article_owner);
-                latestNewsDate.innerHTML = formatDateTime(widget.date_posted);
+            if (res.widgets && res.widgets.length > 0) {
+                currentHighlightWidgets = res.widgets;
+                currentHighlightIndex = 0;
+                updateHighlightDisplay();
 
-                highlightArticle.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.65), rgb(0, 0, 0)), url(${picUrl})`;
-                highlightArticle.style.backgroundRepeat = 'no-repeat';
-                highlightArticle.style.backgroundSize = 'contain';
-                highlightArticle.style.backgroundPosition = 'center';
-                latestNewsContainer.style.backgroundImage = `linear-gradient(rgba(10, 92, 54, 0), rgba(0, 0, 0, 0.65), rgb(0, 0, 0)), url(${picUrl})`;
-                latestNewsTitle.onclick = () => goToArticle(latestNewsTitle);
+                // Add navigation buttons if there are multiple highlights
+                if (res.hasHighlights && currentHighlightWidgets.length > 1) {
+                    addHighlightNavigation();
+                    // Start auto-rotation only if there are multiple highlights
+                    startHighlightRotation();
+                }
             } else {
-                // Fallback if no articles exist
-                highlightArticle.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.65), rgb(0, 0, 0)), url('pics/plp-outside.jpg')";
-                latestNewsTitle.innerHTML = "Stay tuned!";
-                latestNewsDate.innerHTML = "No updates yet.";
+                showFallbackContent();
             }
         },
         error: (error) => {
             console.log(error);
-            // Fallback on error
-            highlightArticle.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.65), rgb(0, 0, 0)), url('pics/plp-outside.jpg')";
-            latestNewsTitle.innerHTML = "Stay tuned!";
-            latestNewsDate.innerHTML = "No updates yet.";
+            showFallbackContent();
         }
     });
+}
+
+// Auto rotation
+function startHighlightRotation() {
+    // Set interval to rotate every 5 seconds
+    highlightInterval = setInterval(() => {
+        navigateHighlight(1); // Go to next highlight
+    }, 5000); // 5000 milliseconds = 5 seconds
+
+    // Pause rotation when user hovers over the highlight
+    highlightArticle.addEventListener('mouseenter', pauseRotation);
+    highlightArticle.addEventListener('mouseleave', resumeRotation);
+}
+
+function pauseRotation() {
+    if (highlightInterval) {
+        clearInterval(highlightInterval);
+        highlightInterval = null;
+    }
+}
+
+function resumeRotation() {
+    if (!highlightInterval && currentHighlightWidgets.length > 1) {
+        startHighlightRotation();
+    }
+}
+
+function updateHighlightDisplay() {
+    const widget = currentHighlightWidgets[currentHighlightIndex];
+    const picUrl = widget.widget_img
+        ? `${widget.widget_img}`
+        : 'pics/plp-outside.jpg';
+
+    latestNewsTitle.innerHTML = widget.widget_title;
+    latestNewsTitle.setAttribute('articleid', widget.article_owner);
+    latestNewsDate.innerHTML = formatDateTime(widget.date_posted);
+
+    highlightArticle.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.65), rgb(0, 0, 0)), url(${picUrl})`;
+    highlightArticle.style.backgroundRepeat = 'no-repeat';
+    highlightArticle.style.backgroundSize = 'contain';
+    highlightArticle.style.backgroundPosition = 'center';
+    latestNewsContainer.style.backgroundImage = `linear-gradient(rgba(10, 92, 54, 0), rgba(0, 0, 0, 0.65), rgb(0, 0, 0)), url(${picUrl})`;
+    latestNewsTitle.onclick = () => goToArticle(latestNewsTitle);
+}
+
+function addHighlightNavigation() {
+    const navContainer = document.createElement('div');
+    navContainer.className = 'highlight-nav';
+    navContainer.style.position = 'absolute';
+    navContainer.style.bottom = '20px';
+    navContainer.style.right = '20px';
+    navContainer.style.display = 'flex';
+    navContainer.style.gap = '10px';
+    navContainer.style.zIndex = '10';
+
+    const prevBtn = document.createElement('button');
+    prevBtn.innerHTML = '&lt;';
+    prevBtn.className = 'highlight-nav-btn';
+    prevBtn.onclick = (e) => {
+        e.stopPropagation();
+        navigateHighlight(-1);
+    };
+
+    const nextBtn = document.createElement('button');
+    nextBtn.innerHTML = '&gt;';
+    nextBtn.className = 'highlight-nav-btn';
+    nextBtn.onclick = (e) => {
+        e.stopPropagation();
+        navigateHighlight(1);
+    };
+
+    navContainer.appendChild(prevBtn);
+    navContainer.appendChild(nextBtn);
+    highlightArticle.appendChild(navContainer);
+
+    // Add some basic styling
+    const style = document.createElement('style');
+    style.textContent = `
+        .highlight-nav-btn {
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: 1px solid #fcb404;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .highlight-nav-btn:hover {
+            background: #fcb404;
+            color: black;
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+function navigateHighlight(direction) {
+    // Pause and restart rotation to reset the 5-second timer
+    pauseRotation();
+
+    currentHighlightIndex += direction;
+
+    // Wrap around if needed
+    if (currentHighlightIndex < 0) {
+        currentHighlightIndex = currentHighlightWidgets.length - 1;
+    } else if (currentHighlightIndex >= currentHighlightWidgets.length) {
+        currentHighlightIndex = 0;
+    }
+
+    updateHighlightDisplay();
+
+    // Only resume if there are multiple highlights
+    if (currentHighlightWidgets.length > 1) {
+        resumeRotation();
+    }
+}
+
+function showFallbackContent() {
+    highlightArticle.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.65), rgb(0, 0, 0)), url('pics/plp-outside.jpg')";
+    latestNewsTitle.innerHTML = "Stay tuned!";
+    latestNewsDate.innerHTML = "No updates yet.";
 }
 
 // Load only card news with pagination
