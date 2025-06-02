@@ -345,7 +345,67 @@ $archiveStatus = $articles['archive_status'];
             }
         }
 
-        .invite-popup {
+        .invite-reviewer-container {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .review-status {
+            margin-top: 15px;
+        }
+
+        #invited-reviewers {
+            margin-bottom: 15px;
+        }
+
+        .invited-reviewer-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .reviewer-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-badge {
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+        }
+
+        .status-badge.pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-badge.accepted {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-badge.rejected {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .reviewer-actions button {
+            padding: 5px 10px;
+            background-color: #f8d7da;
+            color: #721c24;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .popup {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -353,35 +413,87 @@ $archiveStatus = $articles['archive_status'];
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 1000;
-            display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        .invite-popup-content {
-            background: white;
+        .popup-content {
+            background-color: white;
             padding: 20px;
-            border-radius: 8px;
-            width: 400px;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 500px;
             max-height: 80vh;
             overflow-y: auto;
         }
 
+        .close-popup {
+            float: right;
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+
+        #reviewers-list {
+            margin: 15px 0;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
         .reviewer-item {
-            display: flex;
-            align-items: center;
-            padding: 10px;
+            padding: 8px;
             border-bottom: 1px solid #eee;
         }
 
-        .reviewer-item input[type="radio"] {
-            margin-right: 10px;
+        .reviewer-item label {
+            margin-left: 8px;
+            cursor: pointer;
         }
 
-        .close-popup {
-            float: right;
+        #submit-invite {
+            margin-top: 15px;
+            padding: 8px 15px;
+            background-color: #161616;
+            color: #f4f4f4;
+            border: none;
+            border-radius: 4px;
             cursor: pointer;
-            font-size: 20px;
+        }
+
+        #invite-reviewer-btn {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #161616;
+            background-color: #161616;
+            color: #f4f4f4;
+            border-radius: 0.5rem;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #f4f4f4;
+                color: #161616;
+            }
+        }
+
+        .alert {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            border-radius: 4px;
+            color: white;
+            z-index: 1001;
+        }
+
+        .alert.success {
+            background-color: #4CAF50;
+        }
+
+        .alert.error {
+            background-color: #f44336;
+        }
+
+        .alert.warning {
+            background-color: #ff9800;
         }
     </style>
 </head>
@@ -591,11 +703,23 @@ $archiveStatus = $articles['archive_status'];
                         </div>
 
 
-                        <!-- <div class="invite-reviewer-container">
-                            <h3 class='widget-article-h3'>Invite a Reviewer</h3>
-                            <button id="invite-reviewer-btn">Invite Reviewer</button>
-                        </div> -->
+                        <div class="invite-reviewer-container">
+                            <h3 class='widget-article-h3'>Review Management</h3>
 
+                            <div class="review-status">
+                                <div id="invited-reviewers"></div>
+                                <button id="invite-reviewer-btn">Invite Reviewers</button>
+                            </div>
+
+                            <div id="invite-popup" class="popup">
+                                <div class="popup-content">
+                                    <span class="close-popup">&times;</span>
+                                    <h3>Invite Reviewers</h3>
+                                    <div id="reviewers-list"></div>
+                                    <button id="submit-invite">Send Invitation</button>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
 
@@ -792,6 +916,7 @@ $archiveStatus = $articles['archive_status'];
     <script src='scripts/edit-switch-article-type.js'></script>
 
     <!-- Invite Reviwers -->
+    <script src="scripts/edit-invite-reviewer.js"></script>
 
 
     <!-- <script src="scripts/edit-invite-reviewer.js"></script> -->

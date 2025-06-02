@@ -107,7 +107,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             <div class="dashboard-recent-articles">
                 <!-- Recenter Articles posted by the user -->
                 <h2 style='color:#f4f4f4;'>
-                    <?php echo ($user_type == 'Reviewer') ? 'Pending Published Articles' : 'Recent Posts'; ?>
+                    <?php echo ($user_type == 'Reviewer') ? 'Pending Submitted For Review Articles' : 'Recent Posts'; ?>
                 </h2>
 
 
@@ -119,7 +119,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             <div class="dashboard-draft-articles">
                 <!-- All the unposted/unfinished articles of the user -->
                 <h2 style='color:#f4f4f4;'>
-                    <?php echo ($user_type == 'Reviewer') ? 'Pending Draft Articles' : 'Recent Drafts'; ?>
+                    <?php echo ($user_type == 'Reviewer') ? 'Pending Draft For Review Articles' : 'Recent Drafts'; ?>
                 </h2>
 
 
@@ -159,8 +159,6 @@ while ($row = mysqli_fetch_assoc($result)) {
             reviewArticle.remove();
         }
     </script>
-
-
 
 </body>
 

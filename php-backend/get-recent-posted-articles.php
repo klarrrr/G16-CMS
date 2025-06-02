@@ -16,7 +16,6 @@ if ($row = $userTypeResult->fetch_assoc()) {
     $user_type = strtolower($row['user_type']);
 }
 
-// Step 2: Build the article query dynamically
 if ($user_type === 'writer') {
     $query = "
         SELECT a.*, w.*
@@ -29,17 +28,22 @@ if ($user_type === 'writer') {
     ";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $user_id);
-} else {
+} else if ($user_type === 'reviewer') {
     $query = "
         SELECT a.*, w.*
         FROM articles a
         LEFT JOIN widgets w ON a.article_id = w.article_owner
+        INNER JOIN article_review_invites i ON a.article_id = i.article_id
         WHERE a.completion_status = 'published'
+        AND a.archive_status = 'active'
         AND a.approve_status = 'no'
+        AND i.reviewer_id = ?
+        AND i.status = 'accepted'
         ORDER BY a.date_updated DESC
         LIMIT 5
     ";
     $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $user_id);
 }
 
 // Step 3: Execute and fetch results

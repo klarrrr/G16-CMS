@@ -78,9 +78,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updateButtonLabel(status) {
         if (status === 'published') {
-            postBtn.innerText = 'Unpublish Article';
+            postBtn.innerText = 'Unsubmit For Review';
         } else {
-            postBtn.innerText = 'Publish Article';
+            postBtn.innerText = 'Submit For Review';
         }
     }
 

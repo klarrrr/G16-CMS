@@ -2546,3 +2546,28 @@ nav h1 {
     opacity: 0.7;
     pointer-events: none;
 }
+
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #ff4444;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#inbox-icon {
+    position: relative;
+}
+
+#inbox-icon a {
+    position: relative;
+    display: flex;
+    align-items: center;
+}

@@ -48,6 +48,22 @@ $user_type = $_SESSION['user_type'];
                 <p id='review-articles-button-p' style='display: none'>Review Articles</p>
             </a>
         </li>
+        <!-- INBOX FOR REVIEWERS -->
+        <li id='inbox-icon'>
+            <a href="inbox-page.php">
+                <svg fill="#161616" viewBox="0 0 512 512" id="_32_Inbox" data-name="32 Inbox" xmlns="http://www.w3.org/2000/svg">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <path id="Path_42" data-name="Path 42" d="M480,0H32A31.981,31.981,0,0,0,0,32V480a31.981,31.981,0,0,0,32,32H480a31.981,31.981,0,0,0,32-32V32A31.981,31.981,0,0,0,480,0ZM448,352H352v96H160V352H64V64H448Z" fill-rule="evenodd"></path>
+                        <rect id="Rectangle_33" data-name="Rectangle 33" width="256" height="64" transform="translate(128 224)"></rect>
+                        <rect id="Rectangle_34" data-name="Rectangle 34" width="256" height="64" transform="translate(128 128)"></rect>
+                    </g>
+                </svg>
+                <p id='menu-inbox-button' style='display: none'>Inbox</p>
+                <span class="notification-badge" id="inbox-notification" style="display: none">0</span>
+            </a>
+        </li>
         <!-- AUDIT LOG PAGE -->
         <!-- <li>
             <a href="audit-log-page.php">
@@ -105,12 +121,41 @@ $user_type = $_SESSION['user_type'];
     const addArticleIcon = document.getElementById('add-article-icon');
     const reviewArticleIcon = document.getElementById('review-article-icon');
     const articleArchives = document.getElementById('article-archives-hide');
+    const inboxIcon = document.getElementById('inbox-icon');
+
     if (userType == 'writer') {
         reviewArticleIcon.remove();
+        inboxIcon.remove();
     } else if (userType == 'reviewer') {
         addArticleIcon.remove();
         articleArchives.remove();
+        // Show inbox for reviewers
+    } else if (userType == 'admin') {
+        // Show everything for admin
     }
+
+    // Function to check for new notifications
+    function checkNotifications() {
+        $.ajax({
+            url: 'php-backend/check-notifications.php',
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                if (response.count > 0) {
+                    const badge = document.getElementById('inbox-notification');
+                    badge.textContent = response.count;
+                    badge.style.display = 'flex';
+                }
+            },
+            error: function() {
+                console.log('Error checking notifications');
+            }
+        });
+    }
+
+    // Check notifications on page load and every 30 seconds
+    checkNotifications();
+    setInterval(checkNotifications, 30000);
 </script>
 
 <script>
