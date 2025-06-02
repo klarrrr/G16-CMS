@@ -448,6 +448,72 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         transform: rotate(360deg);
       }
     }
+
+    /* Iframe Generator Styles */
+.events-widget-preview {
+  margin-bottom: 1.5rem;
+  border: 1px dashed #ccc;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.events-header {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #222;
+}
+
+.events-container {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  scrollbar-width: thin;
+}
+
+.event-card {
+  flex: 0 0 250px;
+  height: 200px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.event-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.event-overlay {
+  position: absolute;
+  bottom: -100%;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.8);
+  color: white;
+  padding: 1rem;
+  transition: bottom 0.3s ease;
+}
+
+.event-card:hover .event-overlay {
+  bottom: 0;
+}
+
+.event-title {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.event-meta, .event-date {
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+
   </style>
 </head>
 
@@ -708,10 +774,124 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           </div>
         </form>
 
+<!-- Announcements Widget Iframe Generator -->
+<div class="card">
+  <h2>Embeddable Announcements Widget</h2>
+  
+  <div class="form-group">
+    <label>Live Preview:</label>
+    <div id="live-preview-container" style="border: 1px dashed #ccc; padding: 10px; border-radius: 5px; margin-bottom: 15px; background: #f8f9fa; min-height: 300px;">
+      <iframe id="live-preview" src="announcements-widget.php?limit=5&layout=column" width="100%" height="300" frameborder="0" style="border:none;"></iframe>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label>Layout Style:</label>
+    <div class="toggle-container" style="display: flex; align-items: center; margin-bottom: 15px;">
+      <span style="margin-right: 10px;">Column</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="layout-toggle">
+        <span class="slider"></span>
+      </label>
+      <span style="margin-left: 10px;">Row</span>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="iframe-width">Width:</label>
+    <select id="iframe-width" class="form-control">
+      <option value="100%">100% (Full width)</option>
+      <option value="800px">800px</option>
+      <option value="600px">600px</option>
+      <option value="400px">400px</option>
+      <option value="custom">Custom</option>
+    </select>
+    <input type="text" id="custom-width" style="display:none; margin-top:5px;" placeholder="e.g. 750px">
+  </div>
+  
+  <div class="form-group">
+    <label for="iframe-height">Height:</label>
+    <input type="text" id="iframe-height" class="form-control" value="300px">
+  </div>
+  
+  <div class="form-group">
+    <label for="iframe-limit">Number of Announcements:</label>
+    <input type="number" id="iframe-limit" class="form-control" value="5" min="1" max="10">
+  </div>
+  
+  <div class="form-group">
+    <label>Embed Code:</label>
+    <textarea id="iframe-code" rows="4" class="form-control" readonly></textarea>
+  </div>
+  
+  <div class="card-footer">
+    <button type="button" id="generate-iframe" class="save-btn">Generate Code</button>
+    <button type="button" id="copy-iframe" class="save-btn">Copy Code</button>
+  </div>
+</div>
       </div>
     </div>
   </div>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const widthSelect = document.getElementById('iframe-width');
+  const customWidth = document.getElementById('custom-width');
+  const heightInput = document.getElementById('iframe-height');
+  const limitInput = document.getElementById('iframe-limit');
+  const layoutToggle = document.getElementById('layout-toggle');
+  const iframeCode = document.getElementById('iframe-code');
+  const livePreview = document.getElementById('live-preview');
+  
+  // Toggle custom width field
+  widthSelect.addEventListener('change', function() {
+    customWidth.style.display = this.value === 'custom' ? 'block' : 'none';
+    updateIframe();
+  });
+  
+  // Update both preview and code
+  function updateIframe() {
+    let width = widthSelect.value;
+    if (width === 'custom') width = customWidth.value || '100%';
+    const height = heightInput.value || '300px';
+    const limit = limitInput.value || '5';
+    const layout = layoutToggle.checked ? 'row' : 'column';
+    
+    // Update live preview
+    livePreview.src = `announcements-widget.php?limit=${limit}&layout=${layout}`;
+    livePreview.style.width = width;
+    livePreview.style.height = height;
+    
+    // Update embed code with correct localhost path
+    const basePath = window.location.host.includes('localhost') 
+      ? 'https://localhost/G16-CMS/announcements-widget.php'
+      : '<?php echo $_SERVER['HTTP_HOST']; ?>/announcements-widget.php';
+    
+    const code = `<iframe src="${basePath}?limit=${limit}&layout=${layout}" width="${width}" height="${height}" frameborder="0" style="border:none;"></iframe>`;
+    iframeCode.value = code;
+    
+    // Adjust preview container height
+    document.getElementById('live-preview-container').style.minHeight = height;
+  }
+  
+  // Copy to clipboard
+  document.getElementById('copy-iframe').addEventListener('click', function() {
+    iframeCode.select();
+    document.execCommand('copy');
+    this.textContent = 'Copied!';
+    setTimeout(() => this.textContent = 'Copy Code', 2000);
+  });
+  
+  // Generate on any change
+  [widthSelect, customWidth, heightInput, limitInput, layoutToggle].forEach(el => {
+    el.addEventListener('change', updateIframe);
+    el.addEventListener('input', updateIframe);
+  });
+  
+  // Initial update
+  updateIframe();
+});
+</script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       // Get all image URL inputs
