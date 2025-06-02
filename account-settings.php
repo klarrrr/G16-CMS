@@ -57,43 +57,6 @@ $cover_photo = $_SESSION['cover_photo'];
             justify-content: center;
         }
         
-        /* Dark mode toggle button */
-        .dark-mode-toggle {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #333;
-            color: white;
-            border: none;
-            padding: 0;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 100;
-            width: 50px;
-            height: 50px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-        }
-        
-        .dark-mode-toggle:hover {
-            transform: scale(1.1) translateY(-5px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
-        }
-        
-        /* Floating animation */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-            100% { transform: translateY(0px); }
-        }
-        
-        .dark-mode-toggle {
-            animation: float 3s ease-in-out infinite;
-        }
         
         /* Ensure proper z-index stacking */
         .profile-pic-account,
@@ -111,8 +74,7 @@ $cover_photo = $_SESSION['cover_photo'];
 
 <body class="body">
     <!-- Floating dark mode button -->
-    <button class="dark-mode-toggle" title="Toggle Dark Mode">🌓</button>
-    
+
     <div class="float-cards" style='display: none;'></div>
     <!-- ACTUAL NAV OF CMS WEBSITE -->
     <div class="left-editor-container">
