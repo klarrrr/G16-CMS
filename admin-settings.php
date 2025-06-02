@@ -341,6 +341,113 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         padding: 1.25rem;
       }
     }
+
+    /* Article Highlight Setting */
+
+    .articles-list {
+      max-height: 500px;
+      overflow-y: auto;
+      margin: 15px 0;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    .article-item {
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .article-item:last-child {
+      border-bottom: none;
+    }
+
+    .article-info {
+      flex: 1;
+    }
+
+    .article-title {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .article-date {
+      color: #666;
+      font-size: 0.9em;
+    }
+
+    .highlight-toggle {
+      display: flex;
+      align-items: center;
+    }
+
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+      margin-left: 10px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 24px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked+.slider {
+      background-color: #161616;
+    }
+
+    input:checked+.slider:before {
+      transform: translateX(26px);
+    }
+
+    .loading-spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #161616;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
   </style>
 </head>
 
@@ -367,6 +474,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <?php endif; ?>
 
       <div class="form-columns">
+
+        <!-- Change Article Highlights -->
+        <!-- Manage Article Highlights -->
+        <form class="card" method="POST" action="php-backend/admin-update-highlight.php">
+          <h3>Manage Highlighted Articles</h3>
+
+          <div class="form-group">
+            <label for="article-search">Search Articles:</label>
+            <input type="text" id="article-search" placeholder="Search by title..." class="search-input">
+          </div>
+
+          <div class="articles-list" id="articles-container">
+            <!-- Articles will be loaded here via JavaScript -->
+            <div class="loading-spinner"></div>
+          </div>
+        </form>
+
         <!-- Mail Configuration -->
         <form class="card" method="POST" action="admin-settings.php?group=mail">
           <h2>Mail Configuration</h2>
@@ -579,6 +703,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button type="submit" class="save-btn">Save Role</button>
           </div>
         </form>
+
       </div>
     </div>
   </div>
@@ -657,6 +782,69 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     document.addEventListener('DOMContentLoaded', attachSanitizerToInputs);
+  </script>
+
+  <!-- Article Highlight script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Load all articles
+      fetchArticles();
+
+      // Search functionality
+      document.getElementById('article-search').addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        const articles = document.querySelectorAll('.article-item');
+
+        articles.forEach(article => {
+          const title = article.querySelector('.article-title').textContent.toLowerCase();
+          if (title.includes(searchTerm)) {
+            article.style.display = 'flex';
+          } else {
+            article.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    function fetchArticles() {
+      const container = document.getElementById('articles-container');
+      container.innerHTML = '<div class="loading-spinner"></div>';
+
+      fetch('php-backend/get-all-articles.php')
+        .then(response => response.json())
+        .then(articles => {
+          container.innerHTML = '';
+
+          if (articles.length === 0) {
+            container.innerHTML = '<p class="no-articles">No published articles found</p>';
+            return;
+          }
+
+          articles.forEach(article => {
+            const articleEl = document.createElement('div');
+            articleEl.className = 'article-item';
+            articleEl.innerHTML = `
+          <div class="article-info">
+            <div class="article-title">${article.widget_title || article.article_title}</div>
+            <div class="article-date">Posted: ${new Date(article.date_posted).toLocaleDateString()}</div>
+          </div>
+          <div class="highlight-toggle">
+            <span>Highlight:</span>
+            <label class="toggle-switch">
+              <input type="checkbox" name="highlight[${article.article_id}]" 
+                ${article.highlight == 1 ? 'checked' : ''}>
+              <span class="slider"></span>
+            </label>
+          </div>
+        `;
+            container.appendChild(articleEl);
+          });
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          container.innerHTML = '<p class="error-message">Failed to load articles. Please try again.</p>';
+        });
+    }
   </script>
 
   <!-- <script src="scripts/menu_button-admin.js"></script> -->

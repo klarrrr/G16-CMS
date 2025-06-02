@@ -14,6 +14,15 @@
     <!-- Fb -->
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v22.0"></script>
     <style>
+        #highlight-articles {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        #highlight-articles:hover {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
         .pagination {
             display: flex;
             justify-content: center;

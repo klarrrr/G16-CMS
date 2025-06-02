@@ -414,7 +414,7 @@ $archiveStatus = $articles['archive_status'];
                         <h2 id='top-article-title'>Article Document Title</h2>
                         <p id='last-updated'></p>
                         <div id="article-status">
-                            <p class='widget-article-h3'>Article Status: <span id="status-text"></span></p>
+                            <p class='widget-article-h3'>Approve Status: <span id="status-text"></span></p>
                         </div>
                     </div>
                     <div class="nav-one-buttons">
@@ -792,6 +792,8 @@ $archiveStatus = $articles['archive_status'];
     <script src='scripts/edit-switch-article-type.js'></script>
 
     <!-- Invite Reviwers -->
+
+
     <!-- <script src="scripts/edit-invite-reviewer.js"></script> -->
     <script src='scripts/edit-tag-autocomplete.js'></script>
 

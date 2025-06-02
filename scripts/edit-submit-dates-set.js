@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
             success: function (res) {
                 if (res.status === 'success') {
                     updateButtonLabel(res.completion_status);
-                    const capitalizedStatus = res.archive_status.charAt(0).toUpperCase() + res.archive_status.slice(1);
+                    const capitalizedStatus = res.approve_status.charAt(0).toUpperCase() + res.approve_status.slice(1);
                     document.getElementById('status-text').textContent = capitalizedStatus;
 
                 } else {
