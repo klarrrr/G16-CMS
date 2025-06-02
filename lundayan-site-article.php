@@ -163,6 +163,36 @@ function limitHtmlContent($content, $limit = 600)
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
     <!-- Offline Quill JS -->
     <!-- <script src="scripts/quill.js"></script> -->
+    <style>
+        /* Share button styles */
+        .article-share-container {
+            margin: 20px 0;
+            display: flex;
+        }
+
+        .share-button {
+            background-color: #fcb404;
+            color: #161616;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .share-button:hover {
+            background-color: rgb(185, 134, 4);
+        }
+
+        .share-button svg {
+            width: 20px;
+            height: 20px;
+        }
+    </style>
 </head>
 
 <body>
@@ -216,6 +246,24 @@ function limitHtmlContent($content, $limit = 600)
 
             <!-- WRITERS AND READERS -->
             <div class="writers-readers-container">
+                <!-- OPTIONS -->
+                <div class="article-options">
+                    <h3>Options</h3>
+                    <!-- Add this inside the article-image-container section, after the title -->
+                    <div class="article-share-container">
+                        <button id="share-button" class="share-button">
+                            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path d="M11 6C12.6569 6 14 4.65685 14 3C14 1.34315 12.6569 0 11 0C9.34315 0 8 1.34315 8 3C8 3.22371 8.02449 3.44169 8.07092 3.65143L4.86861 5.65287C4.35599 5.24423 3.70652 5 3 5C1.34315 5 0 6.34315 0 8C0 9.65685 1.34315 11 3 11C3.70652 11 4.35599 10.7558 4.86861 10.3471L8.07092 12.3486C8.02449 12.5583 8 12.7763 8 13C8 14.6569 9.34315 16 11 16C12.6569 16 14 14.6569 14 13C14 11.3431 12.6569 10 11 10C10.2935 10 9.644 10.2442 9.13139 10.6529L5.92908 8.65143C5.97551 8.44169 6 8.22371 6 8C6 7.77629 5.97551 7.55831 5.92908 7.34857L9.13139 5.34713C9.644 5.75577 10.2935 6 11 6Z" fill="#161616"></path>
+                                </g>
+                            </svg>
+                            <span>Share</span>
+                        </button>
+                    </div>
+                </div>
+
                 <!-- WRITERS -->
                 <div class="article-meta writer">
                     <h3><?php echo $writerType; ?></h3>
@@ -293,6 +341,47 @@ function limitHtmlContent($content, $limit = 600)
     <script src="scripts/lundayan-load-article.js"></script>
     <!-- Limit Article -->
     <script src="scripts/article-limiter.js"></script>
+
+    <!-- Share Button -->
+    <script>
+        document.getElementById('share-button').addEventListener('click', function() {
+            // Get the current article URL
+            const articleUrl = window.location.href;
+            const articleTitle = "<?php echo addslashes($title); ?>";
+
+            // Check if Web Share API is available (mobile devices)
+            if (navigator.share) {
+                navigator.share({
+                    title: articleTitle,
+                    text: 'Check out this article from Lundayan:',
+                    url: articleUrl
+                }).catch(err => {
+                    console.log('Error sharing:', err);
+                    fallbackShare(articleUrl, articleTitle);
+                });
+            } else {
+                // Fallback for desktop browsers
+                fallbackShare(articleUrl, articleTitle);
+            }
+        });
+
+        function fallbackShare(url, title) {
+            // Create a temporary input element
+            const tempInput = document.createElement('input');
+            tempInput.value = url;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            // Show a message to the user
+            alert('Article link copied to clipboard!\n\nShare this URL: ' + url);
+
+            // Alternatively, open a popup with social sharing options
+            // window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url), '_blank');
+            // window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(title + ' ' + url), '_blank');
+        }
+    </script>
 
 </body>
 
