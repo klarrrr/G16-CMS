@@ -66,8 +66,6 @@ If you guys want to view the actual website you can go and visit it here:
 
 ---
 
----
-
 ## 🚀 Quick Start
 
 ```bash
