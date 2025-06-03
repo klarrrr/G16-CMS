@@ -116,7 +116,7 @@ pie
 </div>
 
 **Core Technologies:**
-- Frontend: Vanilla JS
+- Frontend: JQuery, JS
 - Backend: Custom PHP MVC
 - Database: MySQL
 - Security: Prepared Statements, CSRF Tokens
