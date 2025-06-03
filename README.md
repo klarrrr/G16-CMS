@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/657f553c-0164-41f3-a15b-f03ce15829dc)<div align="center">
+<div align="center">
   <img src="pics/banner.png" alt="G16-CMS Banner" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"/>
 </div>
 
