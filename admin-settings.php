@@ -829,9 +829,189 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button type="button" id="copy-iframe" class="save-btn">Copy Code</button>
           </div>
         </div>
+<div class="card">
+  <h2>Upcoming Events Widget</h2>
+  
+  <div class="form-group">
+    <label>Live Preview:</label>
+    <div id="events-preview-container" style="border: 1px dashed #ccc; padding: 10px; border-radius: 5px; margin-bottom: 15px; background: white;">
+      <iframe id="events-preview" src="events-widget.php?view=list&limit=5&startdate=<?php echo date('Y-m-d'); ?>" width="100%" height="500" frameborder="0" style="border:none;"></iframe>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Default View:</label>
+    <select id="view-select" class="form-control" style="margin-bottom: 15px;">
+      <option value="list">List View (Upcoming Events)</option>
+      <option value="calendar">Calendar View</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Number of Events:</label>
+    <select id="limit-select" class="form-control" style="margin-bottom: 15px;">
+      <option value="5">Show 5</option>
+      <option value="10">Show 10</option>
+      <option value="20">Show 20</option>
+      <option value="all">Show All</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Start Date:</label>
+    <input type="date" id="start-date" class="form-control" style="margin-bottom: 15px;" value="<?php echo date('Y-m-d'); ?>">
+  </div>
+
+  <div class="form-group">
+    <label>Width:</label>
+    <select id="width-select" class="form-control" style="margin-bottom: 15px;">
+      <option value="100%">100% (Full width)</option>
+      <option value="800px">800px</option>
+      <option value="600px">600px</option>
+      <option value="400px">400px</option>
+      <option value="custom">Custom</option>
+    </select>
+    <input type="text" id="custom-width" style="display:none; margin-top:5px;" placeholder="e.g. 750px or 80%">
+  </div>
+
+  <div class="form-group">
+    <label>Height:</label>
+    <input type="text" id="height-input" class="form-control" style="margin-bottom: 15px;" value="500px">
+    <p class="path-hint">Use "auto" for list view to expand with content, or specific height like "500px"</p>
+  </div>
+
+  <div class="form-group">
+    <label>Embed Code:</label>
+    <textarea id="embed-code" class="form-control" rows="4" readonly style="font-family: monospace; margin-bottom: 15px;"></textarea>
+    <button id="copy-embed" class="save-btn">Copy Code</button>
+  </div>
+</div>
+
+
+
+
+
       </div>
     </div>
   </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const viewSelect = document.getElementById('view-select');
+  const limitSelect = document.getElementById('limit-select');
+  const startDate = document.getElementById('start-date');
+  const widthSelect = document.getElementById('width-select');
+  const customWidth = document.getElementById('custom-width');
+  const heightInput = document.getElementById('height-input');
+  const previewIframe = document.getElementById('events-preview');
+  const embedCode = document.getElementById('embed-code');
+  const copyButton = document.getElementById('copy-embed');
+  
+  // Toggle custom width field
+  widthSelect.addEventListener('change', function() {
+    customWidth.style.display = this.value === 'custom' ? 'block' : 'none';
+    updateWidget();
+  });
+  
+  function updateWidget() {
+    const view = viewSelect.value;
+    const limit = limitSelect.value;
+    const date = startDate.value;
+    let width = widthSelect.value;
+    if (width === 'custom') width = customWidth.value || '100%';
+    const height = heightInput.value || (view === 'list' ? 'auto' : '500px');
+    
+    // Update iframe preview
+    previewIframe.src = `events-widget.php?view=${view}&limit=${limit}&startdate=${date}&width=${width}&height=${height}`;
+    
+    // Update preview container size
+    document.getElementById('events-preview-container').style.height = height === 'auto' ? 'auto' : height;
+    
+    // Update embed code
+    const code = `<iframe src="events-widget.php?view=${view}&limit=${limit}&startdate=${date}&width=${width}&height=${height}" width="${width}" height="${height}" frameborder="0" style="border:none;"></iframe>`;
+    embedCode.value = code;
+  }
+  
+  viewSelect.addEventListener('change', updateWidget);
+  limitSelect.addEventListener('change', updateWidget);
+  startDate.addEventListener('change', updateWidget);
+  widthSelect.addEventListener('change', updateWidget);
+  customWidth.addEventListener('input', updateWidget);
+  heightInput.addEventListener('input', updateWidget);
+  
+  copyButton.addEventListener('click', function() {
+    embedCode.select();
+    document.execCommand('copy');
+    copyButton.textContent = 'Copied!';
+    setTimeout(() => {
+      copyButton.textContent = 'Copy Code';
+    }, 2000);
+  });
+  
+  // Initialize
+  updateWidget();
+});
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const themeSelect = document.getElementById('theme-select');
+  const sizeRadios = document.querySelectorAll('input[name="size"]');
+  const previewIframe = document.getElementById('calendar-preview');
+  const embedCode = document.getElementById('embed-code');
+  const copyButton = document.getElementById('copy-embed');
+  
+  // Update preview and embed code when options change
+  function updateWidget() {
+    const theme = themeSelect.value;
+    const size = document.querySelector('input[name="size"]:checked').value;
+    
+    // Update iframe preview
+    previewIframe.src = `calendar-widget.php?theme=${theme}&size=${size}`;
+    
+    // Update embed code
+    const code = `<iframe src="calendar-widget.php?theme=${theme}&size=${size}" width="${getWidth(size)}" height="${getHeight(size)}" frameborder="0" style="border:none;"></iframe>`;
+    embedCode.value = code;
+  }
+  
+  // Helper functions for size dimensions
+  function getWidth(size) {
+    switch(size) {
+      case 'small': return '300';
+      case 'medium': return '500';
+      case 'large': return '700';
+      default: return '500';
+    }
+  }
+  
+  function getHeight(size) {
+    switch(size) {
+      case 'small': return '300';
+      case 'medium': return '400';
+      case 'large': return '500';
+      default: return '400';
+    }
+  }
+  
+  // Event listeners
+  themeSelect.addEventListener('change', updateWidget);
+  sizeRadios.forEach(radio => {
+    radio.addEventListener('change', updateWidget);
+  });
+  
+  copyButton.addEventListener('click', function() {
+    embedCode.select();
+    document.execCommand('copy');
+    copyButton.textContent = 'Copied!';
+    setTimeout(() => {
+      copyButton.textContent = 'Copy Code';
+    }, 2000);
+  });
+  
+  // Initialize
+  updateWidget();
+});
+</script>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
