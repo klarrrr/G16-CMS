@@ -663,7 +663,7 @@ nav h1 {
 }
 
 .dashboard-recent-articles {
-    padding: 2rem;
+    padding: 4rem 2rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -682,7 +682,7 @@ nav h1 {
 }
 
 .dashboard-draft-articles {
-    padding: 2rem;
+    padding: 4rem 2rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -713,14 +713,14 @@ nav h1 {
     overflow: hidden;
     position: relative;
     font-family: sub;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     -webkit-backdrop-filter: blur(15px);
     backdrop-filter: blur(15px);
 }
 
 .recent-box:hover {
     transform: translateY(-4px) scale(1.02);
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-shadow: rgba(169, 177, 185, 0.1) 0px 8px 24px;
 }
 
 .recent-box img {
@@ -756,8 +756,8 @@ nav h1 {
     button {
         font-weight: bold;
         padding: 0.7rem;
-        background-color: #f4f4f4;
-        color: #161616;
+        background-color: #161616;
+        color: #f4f4f4;
         border-radius: 0.5rem;
         font-size: 0.8rem;
         border: 1px solid #f4f4f4;
@@ -771,22 +771,22 @@ nav h1 {
             height: 15px;
 
             path {
-                fill: #161616;
+                fill: #f4f4f4;
             }
         }
 
         &:hover {
             svg {
                 path {
-                    fill: #f4f4f4;
+                    fill: #161616;
                 }
             }
         }
     }
 
     button:hover {
-        background-color: #161616;
-        color: #f4f4f4;
+        background-color: #f4f4f4;
+        color: #161616;
     }
 }
 
@@ -1552,6 +1552,9 @@ nav h1 {
     bottom: 0;
     padding: 8vh 12vw;
     width: 100%;
+    background-color: white;
+    border-bottom: 1px solid lightgray;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 .perso-info {
@@ -1882,8 +1885,8 @@ nav h1 {
         flex-direction: row;
         gap: 1rem;
 
-        #unsub-btn{
-             padding: 0.5rem;
+        #unsub-btn {
+            padding: 0.5rem;
             min-width: 9rem;
             border: none;
             background-color: #161616;
@@ -1894,7 +1897,7 @@ nav h1 {
             cursor: pointer;
         }
 
-        #unsub-btn:hover{
+        #unsub-btn:hover {
             background-color: #ff6666;
             color: #161616;
         }

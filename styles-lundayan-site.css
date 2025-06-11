@@ -8,6 +8,10 @@
     transition: 0.2s ease-in-out;
 }
 
+html {
+    overscroll-behavior: none;
+}
+
 @font-face {
     font-family: "boldonse";
     src: url(font/Boldonse-Regular.ttf);
@@ -211,17 +215,6 @@ nav {
     height: 50vh;
 }
 
-#latest-news-title {
-    cursor: pointer;
-    color: #fcb404;
-    font-size: 3vw;
-}
-
-#latest-news-title:hover {
-    color: #ffcc4b;
-    transform: scale(1.01);
-}
-
 .news-banner {
     overflow: hidden;
     background-color: #0F5132;
@@ -289,15 +282,22 @@ nav {
 }
 
 .latest-news .text-container h1 {
-    font-size: 2.8em;
+    font-size: 2.5vw;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
     overflow: hidden;
     width: 40%;
     line-height: normal;
+    cursor: pointer;
+    color: #fcb404;
+
+    &:hover {
+        color: #ffcc4b;
+        transform: scale(1.01);
+    }
 }
 
 .latest-paragraph {
@@ -552,7 +552,8 @@ nav {
     line-height: 1.3;
     color: #f4f4f4;
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* Limit to 2 lines */
+    -webkit-line-clamp: 2;
+    /* Limit to 2 lines */
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -573,8 +574,8 @@ nav {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-                filter 0.4s ease-in;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        filter 0.4s ease-in;
     filter: brightness(0.3);
 }
 
@@ -926,7 +927,7 @@ footer {
 }
 
 .calendar-btns button {
-    border-radius: 3px;
+    border-radius: 0.5rem;
     border: none;
     background-color: transparent;
     cursor: pointer;
@@ -952,8 +953,8 @@ footer {
 }
 
 .calendar-vertical-layout {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 30% 70%;
     gap: 2rem;
 }
 
@@ -1006,7 +1007,7 @@ select::-ms-expand {
     position: relative;
     display: flex;
     height: 3em;
-    width: 20em;
+    width: 18vw;
     border-radius: 3px;
     overflow: hidden;
 }
@@ -1122,7 +1123,7 @@ thead th {
     /* background: #0F5132; */
     color: #f4f4f4;
     text-transform: uppercase;
-    font-size: 1.5rem;
+    font-size: 2vw;
 }
 
 tbody td {
@@ -1131,7 +1132,7 @@ tbody td {
     cursor: pointer;
     -webkit-user-select: none;
     user-select: none;
-    font-size: 2rem;
+    font-size: 2vw;
     border-radius: 0.5rem;
     outline: 1px solid #fcb404;
 
@@ -1239,11 +1240,10 @@ tbody td:hover {
 
 .send-container-title h2 {
     font-family: robinson;
-    font-size: 10rem;
+    font-size: 10vw;
     font-weight: lighter;
-    line-height: normal;
     color: #f4f4f4;
-    line-height: 9rem;
+    line-height: 10vw;
     text-align: center;
 }
 
@@ -1404,6 +1404,7 @@ tbody td:hover {
     display: flex;
     flex-direction: column;
     padding: 4rem 8rem;
+    overflow-x: hidden;
 }
 
 .map-container-title p {
@@ -1517,12 +1518,27 @@ tbody td:hover {
     /* Adds a little more spacing between images */
     padding-top: 2rem;
     /* Padding on top to ensure images are well spaced */
+    max-height: 1200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    align-self: center;
+    padding: 1rem;
 }
 
-.gallery-images img {
+.gallery-image-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
+    aspect-ratio: 1/1;
+}
+
+.gallery-image-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     /* Ensures images fill the grid space without distortion */
     border-radius: 3px;
     border: 2px solid #fcb404;
@@ -1533,31 +1549,31 @@ tbody td:hover {
     /* Position images below their final spot */
     transition: opacity 0.8s ease, transform 0.8s ease;
     /* Smooth transition for opacity and transform */
+    overflow: hidden;
 }
 
-.gallery-images img:hover {
-    transform: scale(1.05);
+.gallery-image-container img:hover {
+    transform: scale(1.03);
     /* Slight zoom effect on hover */
 }
 
 /* Staggered effect (delay based on image index) */
-.gallery-images img:nth-child(odd) {
+.gallery-images .gallery-image-container:nth-child(odd) {
     transition-delay: 0.2s;
     /* Delay for odd images */
 }
 
-.gallery-images img:nth-child(even) {
+.gallery-images .gallery-image-container:nth-child(even) {
     transition-delay: 0.4s;
     /* Delay for even images */
 }
 
 /* When images are loaded, they will transition to visible and slide into place */
-.gallery-images img.show {
+.gallery-images .gallery-image-container.show {
     opacity: 1;
     transform: translateY(0);
     /* Move to their final position */
 }
-
 
 /* Sign in Page */
 .sign-in-main {
@@ -2000,7 +2016,7 @@ tbody td:hover {
     h1 {
         position: absolute;
         font-family: 'robinson';
-        font-size: 30vw;
+        font-size: 10vw;
         font-weight: 100;
         line-height: normal;
     }
@@ -2847,6 +2863,40 @@ tbody td:hover {
 
 }
 
+@media (max-width: 1019px) {
+
+    /* CALENDAR LUNDAYAN */
+
+    .calendar {
+        padding: 4vh 8vw;
+    }
+
+    .calendar-vertical-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .adjust-calendar-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .select {
+        width: 100%;
+    }
+
+    .calendar-btns {
+        align-self: flex-end;
+    }
+
+    .th,
+    td {
+        padding: 0.5rem;
+        line-height: 10vh;
+    }
+}
+
 @media (min-width: 768px) {
     #labas-pfp {
         display: none;
@@ -2938,10 +2988,6 @@ tbody td:hover {
         width: 100%;
     }
 
-    #latest-news-title {
-        font-size: 5vw;
-    }
-
     .latest-news {
         height: 40vh;
     }
@@ -2980,8 +3026,8 @@ tbody td:hover {
         padding: unset;
     }
 
-    .article-time-title-tags-container h1{
-        font-size: 3vw !important; 
+    .article-time-title-tags-container h1 {
+        font-size: 3vw !important;
         line-height: normal !important;
     }
 
@@ -2991,6 +3037,35 @@ tbody td:hover {
 
     .mobile-nav-buttons {
         display: flex !important;
+    }
+
+    /* CONTACT LUNDAYAN */
+
+    .contact {
+        padding: 2rem 1rem;
+        gap: 1rem;
+    }
+
+    .contact-container {
+        gap: 1rem;
+    }
+
+    .send-container-title p {
+        width: 100%;
+    }
+
+    .own-info {
+        padding: 1rem;
+    }
+
+    .map-container-title {
+        width: 100vw;
+        padding: 1rem;
+        font-size: 2vw;
+    }
+
+    .two-input {
+        flex-direction: column;
     }
 
 }
@@ -3013,7 +3088,7 @@ tbody td:hover {
     }
 
     /* ARTICLE LUNDAYAN PAGE */
-    .tag{
+    .tag {
         font-size: 2vw !important;
     }
 
@@ -3025,16 +3100,17 @@ tbody td:hover {
         font-size: 0.7rem;
     }
 
-    .article-time-title-tags-container h1{
-        font-size: 5vw !important; 
+    .article-time-title-tags-container h1 {
+        font-size: 5vw !important;
         line-height: normal !important;
         -webkit-line-clamp: 3 !important;
         line-clamp: 3 !important;
     }
 
-    .article-gallery{
+    .article-gallery {
         padding: 2vh 8vw;
     }
+
 }
 
 @media (max-width: 320px) {
@@ -3042,7 +3118,7 @@ tbody td:hover {
         height: 20vh;
     }
 
-    .filter-tags{
+    .filter-tags {
         display: none;
     }
 }

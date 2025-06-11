@@ -259,7 +259,7 @@ $reviewersResult = mysqli_query($conn, $reviewersQuery);
                                 &lt;
                             </button>
                         <?php endif; ?>
-                        
+
                         <?php if ($newerArticle): ?>
                             <button class="highlight-nav-btn" onclick="window.location.href='lundayan-site-article.php?article_id=<?php echo $newerArticle['article_id']; ?>'">
                                 &gt;
@@ -324,35 +324,35 @@ $reviewersResult = mysqli_query($conn, $reviewersQuery);
             <div class="ql-snow" id='article-information'>
                 <div class="ql-editor" style="padding: 0;">
                     <div class="limited-content">
-                       <?php 
-                            $decodedContent = htmlspecialchars_decode($content);
-                            
-                            // Check if content contains any images
-                            if (preg_match('/<img[^>]+>/i', $decodedContent)) {
-                                echo '<div class="image-notice"><p>This article contains image(s). Click "Read More" to view the full content.</p></div>';
-                                
-                                // Strip all images from limited content
-                                $limitedContent = preg_replace('/<img[^>]+>/i', '', $decodedContent);
-                                // Limit the text content
-                                $limitedContent = substr(strip_tags($limitedContent), 0, 600);
-                                $lastSpace = strrpos($limitedContent, ' ');
-                                if ($lastSpace !== false) {
-                                    $limitedContent = substr($limitedContent, 0, $lastSpace);
-                                }
-                                echo htmlspecialchars($limitedContent);
-                            } else {
-                                // Original text limiting logic for text-only content
-                                if (strlen($content) > 1200) {
-                                    $truncated = substr($content, 0, 1200);
-                                    $lastSpace = strrpos($truncated, ' ');
-                                    if ($lastSpace !== false) {
-                                        $truncated = substr($truncated, 0, $lastSpace);
-                                    }
-                                    echo htmlspecialchars_decode($truncated) . '...';
-                                } else {
-                                    echo $decodedContent;
-                                }
+                        <?php
+                        $decodedContent = htmlspecialchars_decode($content);
+
+                        // Check if content contains any images
+                        if (preg_match('/<img[^>]+>/i', $decodedContent)) {
+                            echo '<div class="image-notice"><p>This article contains image(s). Click "Read More" to view the full content.</p></div>';
+
+                            // Strip all images from limited content
+                            $limitedContent = preg_replace('/<img[^>]+>/i', '', $decodedContent);
+                            // Limit the text content
+                            $limitedContent = substr(strip_tags($limitedContent), 0, 600);
+                            $lastSpace = strrpos($limitedContent, ' ');
+                            if ($lastSpace !== false) {
+                                $limitedContent = substr($limitedContent, 0, $lastSpace);
                             }
+                            echo htmlspecialchars($limitedContent);
+                        } else {
+                            // Original text limiting logic for text-only content
+                            if (strlen($content) > 1200) {
+                                $truncated = substr($content, 0, 1200);
+                                $lastSpace = strrpos($truncated, ' ');
+                                if ($lastSpace !== false) {
+                                    $truncated = substr($truncated, 0, $lastSpace);
+                                }
+                                echo htmlspecialchars_decode($truncated) . '...';
+                            } else {
+                                echo $decodedContent;
+                            }
+                        }
                         ?>
                     </div>
                     <div class="full-content">
@@ -395,8 +395,7 @@ $reviewersResult = mysqli_query($conn, $reviewersQuery);
         const galleryContainer = document.querySelector('.gallery-images');
     </script>
     <script src="scripts/lundayan-load-article.js"></script>
-    <!-- Load Galllery -->
-    <script src="scripts/lundayan-load-article.js"></script>
+
     <!-- Limit Article -->
     <script src="scripts/article-limiter.js"></script>
 
