@@ -2285,13 +2285,15 @@ tbody td:hover {
 }
 
 .article-meta {
-    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .user-card {
     display: flex;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .user-card .pfp {
@@ -2317,19 +2319,6 @@ tbody td:hover {
     color: gray;
 }
 
-@media (max-width: 768px) {
-    .writers-readers-article-content-container {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .writers-readers-container {
-        position: static;
-        max-height: none;
-        overflow: visible;
-    }
-}
-
 .no-events-message {
     padding: 1rem;
     text-align: center;
@@ -2343,6 +2332,9 @@ tbody td:hover {
     position: relative;
     z-index: 2;
     padding-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #article-information .read-more {
@@ -2855,7 +2847,7 @@ tbody td:hover {
 
 }
 
-@media(min-width: 768px) {
+@media (min-width: 768px) {
     #labas-pfp {
         display: none;
     }
@@ -2974,6 +2966,33 @@ tbody td:hover {
         padding: 4vh 8vw;
     }
 
+    /* ARTICLE LUNDAYAN PAGE */
+
+    .writers-readers-article-content-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .writers-readers-container {
+        position: static;
+        max-height: none;
+        overflow: visible;
+        padding: unset;
+    }
+
+    .article-time-title-tags-container h1{
+        font-size: 3vw !important; 
+        line-height: normal !important;
+    }
+
+    .text-container-article a {
+        display: none !important;
+    }
+
+    .mobile-nav-buttons {
+        display: flex !important;
+    }
+
 }
 
 @media (max-width: 576px) {
@@ -2992,10 +3011,38 @@ tbody td:hover {
     .bulletin-news-card.minimalist {
         min-height: unset;
     }
+
+    /* ARTICLE LUNDAYAN PAGE */
+    .tag{
+        font-size: 2vw !important;
+    }
+
+    .writers-readers-article-content-container {
+        padding: 2vh 8vw;
+    }
+
+    .article-image-container .time-posted {
+        font-size: 0.7rem;
+    }
+
+    .article-time-title-tags-container h1{
+        font-size: 5vw !important; 
+        line-height: normal !important;
+        -webkit-line-clamp: 3 !important;
+        line-clamp: 3 !important;
+    }
+
+    .article-gallery{
+        padding: 2vh 8vw;
+    }
 }
 
 @media (max-width: 320px) {
     .latest-news {
         height: 20vh;
+    }
+
+    .filter-tags{
+        display: none;
     }
 }

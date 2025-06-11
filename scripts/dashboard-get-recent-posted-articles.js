@@ -12,7 +12,22 @@ $.ajax({
         const widgets = res.widgets;
         const userType = res.user_type;
 
-        const fragment = document.createDocumentFragment();
+        // Clear container first if needed
+        recentDraftsContainer.innerHTML = '';
+
+        // Fallback message
+        if (!articles || articles.length === 0) {
+            const emptyMsgPosted = document.createElement('p');
+            emptyMsgPosted.textContent = "No recent submitted articles found.";
+            emptyMsgPosted.style.color = '#999';
+            emptyMsgPosted.style.textAlign = 'center';
+            emptyMsgPosted.style.padding = '1rem';
+            emptyMsgPosted.style.fontStyle = 'italic';
+            recentPostContainer.appendChild(emptyMsgPosted);
+            return; // Stop further execution
+        }
+
+        const postedFragment = document.createDocumentFragment();
 
         for (let i = 0; i < articles.length; i++) {
             const articleId = articles[i].article_id;
@@ -25,17 +40,17 @@ $.ajax({
             const img = document.createElement('img');
             img.src = pic ? pic : 'pics/plp-outside.jpg';
             img.alt = title;
+            img.loading = 'lazy';
 
             const p = document.createElement('p');
             p.textContent = htmlEntityDecode(title);
-            p.style.color = '#f4f4f4';
+            p.style.color = '#161616';
             p.title = title;
 
             // Date
             const date = document.createElement('span');
             date.textContent = formatDateOnly(articles[i].date_updated); // Format accordingly
             date.style.fontSize = '0.7rem';
-            date.style.opacity = '0.7';
             recentArticleLayout.appendChild(date);
 
             recentArticleLayout.appendChild(img);
@@ -52,10 +67,10 @@ $.ajax({
                 });
             }
 
-            fragment.appendChild(recentArticleLayout);
+            postedFragment.appendChild(recentArticleLayout);
         }
 
-        recentPostContainer.appendChild(fragment);
+        recentPostContainer.appendChild(postedFragment);
     },
     error: (error) => {
         console.log(error);

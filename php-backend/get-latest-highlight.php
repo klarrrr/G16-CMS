@@ -27,6 +27,9 @@ if ($highlightedWidgets) {
     }
 }
 
+// date_default_timezone_set('Asia/Manila');
+$now = date('Y-m-d H:i:s', time());
+
 // If no highlighted articles, get the latest regular article
 if (empty($highlightedWidgets)) {
     $latestQuery = "
@@ -37,7 +40,7 @@ if (empty($highlightedWidgets)) {
           AND a.completion_status = 'published'
           AND a.date_posted IS NOT NULL
           AND a.article_type = 'regular'
-          AND NOW() >= a.date_posted
+          AND '$now' >= a.date_posted
           AND NOW() <= a.date_expired
         ORDER BY a.date_posted DESC
         LIMIT 1

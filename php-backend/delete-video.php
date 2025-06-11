@@ -1,6 +1,6 @@
 <?php
 if (isset($_POST['url'])) {
-    $publicDir = "/G16-CMS/video/";
+    $publicDir = "/video/";
     $storageDir = "../video/";
 
     $url = $_POST['url'];

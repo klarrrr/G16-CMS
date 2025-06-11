@@ -294,5 +294,5 @@ loadCardNews(currentPage); // Load first page of cards
 
 function goToArticle(thisContainer) {
     const article_id = thisContainer.getAttribute('articleid');
-    window.location.href = `/G16-CMS/lundayan-site-article.php?article_id=${article_id}`;
+    window.location.href = `/lundayan-site-article.php?article_id=${article_id}`;
 }

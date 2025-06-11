@@ -27,7 +27,7 @@ $pfp = ($pic) ? ($pic) : 'pics/no-pic.jpg';
 
         <nav class="nav-container" id="nav-container">
             <ul class="nav-links">
-                <li><a href="lundayan-site-home.php">Home</a></li>
+                <li><a href="index.php">Home</a></li>
                 <li><a href="lundayan-site-archive.php">Archive</a></li>
                 <li><a href="lundayan-site-calendar.php">Calendar</a></li>
 

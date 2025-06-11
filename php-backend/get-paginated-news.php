@@ -7,6 +7,9 @@ $offset = ($page - 1) * $limit;
 
 $widgetArray = [];
 
+// date_default_timezone_set('Asia/Manila');
+$now = date('Y-m-d H:i:s', time());
+
 // First get total count (excluding the latest which is shown as highlight)
 $countQuery = "
     SELECT COUNT(*) as total 
@@ -16,8 +19,8 @@ $countQuery = "
       AND a.completion_status = 'published'
       AND a.date_posted IS NOT NULL
       AND a.article_type = 'regular'
-      AND NOW() >= a.date_posted
-      AND NOW() <= a.date_expired
+      AND '$now' >= a.date_posted
+      AND '$now' <= a.date_expired
 ";
 $countResult = mysqli_query($conn, $countQuery);
 $totalRecords = mysqli_fetch_assoc($countResult)['total'];
@@ -32,8 +35,8 @@ $query = "
       AND a.completion_status = 'published'
       AND a.date_posted IS NOT NULL
       AND a.article_type = 'regular'
-      AND NOW() >= a.date_posted
-      AND NOW() <= a.date_expired
+      AND '$now' >= a.date_posted
+      AND '$now' <= a.date_expired
     ORDER BY a.date_posted DESC
     LIMIT $limit OFFSET $offset
 ";

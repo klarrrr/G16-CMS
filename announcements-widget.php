@@ -164,10 +164,10 @@ $baseURL = $protocol . '://' . $_SERVER['HTTP_HOST'] . '/article.php';
 <script>
   function goToArticle(element) {
     const articleId = element.dataset.articleid;
-    const isLocal = window.location.hostname === 'localhost';
+    const isLocal = window.location.hostname === 'lundayan-plp.great-site.net';
 
     const basePath = isLocal
-      ? 'https://localhost/G16-CMS/lundayan-site-article.php'
+      ? 'https://lundayan-plp.great-site.net/lundayan-site-article.php'
       : 'https://<?= $_SERVER['HTTP_HOST'] ?>/lundayan-site-article.php';
 
     if (articleId) {

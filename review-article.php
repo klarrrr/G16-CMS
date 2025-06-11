@@ -99,7 +99,8 @@ $fallbackImage = 'pics/plp-outside.jpg';
                 <p id='last-updated-for-review'></p>
             </div>
             <div class="right-side-review-nav">
-                <button id='approve-btn'>Approve Post</button>
+                <button id='unsub-btn'>Unsubscribe</button>
+                <button id='approve-btn'>Loading...</button>
                 <button id='add-comment' disabled>Add a Comment</button>
                 <!-- Keep this at the bottom here -->
                 <div class="pfp-container" title="Account Settings">
@@ -181,6 +182,43 @@ $fallbackImage = 'pics/plp-outside.jpg';
         lastUpdated.innerHTML = `Last updated on ${formatDateTime(dateUpdated)} - ${author}`;
     </script>
 
+    <!-- Unsub Button -->
+    <script>
+    
+    const unsubBtn = document.getElementById('unsub-btn');
+
+    unsubBtn.addEventListener('click', ()=>{
+        showModal({
+            title: 'Confirm Unsubscription',
+            message: 'Are you sure on <strong>unsubscribing</strong> as a reviewer of this article?',
+            onConfirm: () =>{
+                $.ajax({
+                    url: 'php-backend/unsubscribe-article.php',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        article_id: article_id,
+                        user_id: user_id
+                    },
+                    success: (res) => {
+                        if (res.status === 'success') {
+                            // Redirect or show success message
+                            window.location.href = '../for-review-article-page.php';
+                        } else {
+                            // Show error message
+                            alert(res.message);
+                        }
+                    },
+                    error: (error) => {
+                        console.log(error);
+                    }
+                }); 
+            }
+        });
+    });
+
+    </script>
+
     <!-- Approve Btn -->
     <script>
         const approveBtn = document.getElementById('approve-btn');
@@ -203,7 +241,7 @@ $fallbackImage = 'pics/plp-outside.jpg';
                         },
                         success: (res) => {
                             if (res.status != "Invalid User Type") {
-                                changeApprovalBtn(res.status);
+                                checkReviewStatus();
                             }
                         },
                         error: (error) => {
@@ -228,21 +266,53 @@ $fallbackImage = 'pics/plp-outside.jpg';
     </script>
     <!-- Populate the comments -->
     <script src="scripts/get-comments.js"></script>
-    <!-- Handle Approval Status -->
-    <script>
-        // Change the button to approve when approval status is no
-        // Change the button to Remove Approval When approval Status is yes
-        const approvalStatus = `<?php echo $approval; ?>`;
 
-        function changeApprovalBtn(approvalStatus) {
-            if (approvalStatus == 'no') {
-                approveBtn.innerHTML = 'Approve This Post';
-            } else {
-                approveBtn.innerHTML = 'Remove Approval';
-            }
+    <!-- Handle Approval Status -->
+   <script>
+        const reviewerId = <?php echo $_SESSION['user_id']; ?>;
+
+        // Function to check review status and update button
+        function checkReviewStatus() {
+            fetch(`php-backend/check-review-status.php?article_id=${articleId}&reviewer_id=${reviewerId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        updateButton(data.decision);
+                    } else {
+                        console.error('Error checking review status:', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                });
         }
 
-        changeApprovalBtn(approvalStatus);
+        // Function to update button based on decision
+        function updateButton(decision) {
+            if (decision === 'approved') {
+                approveBtn.innerHTML = 'Remove Approval';
+                approveBtn.classList.remove('btn-primary');
+                approveBtn.classList.add('btn-danger');
+            } else {
+                approveBtn.innerHTML = 'Approve This Post';
+                approveBtn.classList.remove('btn-danger');
+                approveBtn.classList.add('btn-primary');
+            }
+            
+            // Store current state for click handler
+            approveBtn.dataset.currentState = decision;
+        }
+
+        // Initial check when page loads
+        checkReviewStatus();
+
+        // Add click handler for the button
+        approveBtn.addEventListener('click', () => {
+            const newState = approveBtn.dataset.currentState === 'approved' ? 'unapproved' : 'approved';
+            
+            // Call your existing approval API here
+            // On success, call checkReviewStatus() again to refresh the button state
+        });
     </script>
 
     <!-- Add Comment -->

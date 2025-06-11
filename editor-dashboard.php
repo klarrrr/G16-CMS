@@ -50,9 +50,9 @@ while ($row = mysqli_fetch_assoc($result)) {
         <?php include 'editor-nav.php'; ?>
     </div>
     <!-- echo (!$cover_photo) ? 'pics/plp-outside.jpg' : 'data:image/png;base64,' . $cover_photo;  -->
-    <div class="right-editor-container" id='dashboard-right-container' style="background-image: url('pics/plp-outside.jpg');">
+    <div class="right-editor-container" id='dashboard-right-container'>
         <!-- To Blur Background -->
-        <div class='dashboard-bg-filter'></div>
+        <!-- <div class='dashboard-bg-filter'></div> -->
 
         <!-- Profile Picture -->
         <div class="profile-info">
@@ -88,11 +88,27 @@ while ($row = mysqli_fetch_assoc($result)) {
                         <path d="M2 5V13H7.17157L8.70711 14.5355L7.29289 15.9497L6.34315 15H0V5H2Z" fill="#f4f4f4" />
                     </svg>Review Article</button>
 
-                <!-- Audit Log Button -->
-                <button id='shortcut-audit-log'><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M16 2H0V5H16V2Z" fill="#f4f4f4" />
-                        <path d="M1 7H5V9H11V7H15V15H1V7Z" fill="#f4f4f4" />
-                    </svg>Audit Log</button>
+                <!-- More Articles Button -->
+                <button id='shortcut-more-articles'>
+                    <svg fill="#000000" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2,9H9V2H2Zm9-7V9h7V2ZM2,18H9V11H2Zm9,0h7V11H11Z" />
+                    </svg>
+                    More Articles
+                </button>
+
+                <!-- Inbox Button -->
+                <button id='shortcut-inbox'>
+                    <svg fill="#161616" viewBox="0 0 512 512" id="_32_Inbox" data-name="32 Inbox" xmlns="http://www.w3.org/2000/svg">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path id="Path_42" data-name="Path 42" d="M480,0H32A31.981,31.981,0,0,0,0,32V480a31.981,31.981,0,0,0,32,32H480a31.981,31.981,0,0,0,32-32V32A31.981,31.981,0,0,0,480,0ZM448,352H352v96H160V352H64V64H448Z" fill-rule="evenodd"></path>
+                            <rect id="Rectangle_33" data-name="Rectangle 33" width="256" height="64" transform="translate(128 224)"></rect>
+                            <rect id="Rectangle_34" data-name="Rectangle 34" width="256" height="64" transform="translate(128 128)"></rect>
+                        </g>
+                    </svg>
+                    Inbox
+                </button>
 
                 <!-- Account Settings button -->
                 <button id='shortcut-account-settings'><svg fill="#f4f4f4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -106,7 +122,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         <div class="dashboard-main-page" id='dashboard-main-page'>
             <div class="dashboard-recent-articles">
                 <!-- Recenter Articles posted by the user -->
-                <h2 style='color:#f4f4f4;'>
+                <h2 style='color:#161616;'>
                     <?php echo ($user_type == 'Reviewer') ? 'Pending Submitted For Review Articles' : 'Recent Posts'; ?>
                 </h2>
 
@@ -118,7 +134,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             </div>
             <div class="dashboard-draft-articles">
                 <!-- All the unposted/unfinished articles of the user -->
-                <h2 style='color:#f4f4f4;'>
+                <h2 style='color:#161616;'>
                     <?php echo ($user_type == 'Reviewer') ? 'Pending Draft For Review Articles' : 'Recent Drafts'; ?>
                 </h2>
 
@@ -149,14 +165,19 @@ while ($row = mysqli_fetch_assoc($result)) {
     <!-- Populate recent drafts -->
     <script src='scripts/dashboard-get-recent-draft-articles.js'></script>
 
+    <!-- Get Recent Articles both Submitted and Drafts -->
+    <!-- <script src="scripts/loadRecentArticles.js"></script> -->
+
     <!-- Remove Create Article is Reviewer -->
     <script>
         const dashboardUserType = '<?php echo $user_type; ?>';
 
         if (dashboardUserType == 'Reviewer') {
             addArticleBtn.remove();
+            moreArticle.remove();
         } else {
             reviewArticle.remove();
+            inviteInbox.remove();
         }
     </script>
 

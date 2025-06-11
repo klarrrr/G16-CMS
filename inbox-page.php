@@ -5,6 +5,11 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
+if (strtolower($_SESSION['user_type']) == 'writer') {
+    header('Location: editor-dashboard.php');
+    exit;
+}
+
 include 'php-backend/connect.php';
 
 $user_id = $_SESSION['user_id'];

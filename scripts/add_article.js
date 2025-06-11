@@ -55,5 +55,5 @@ $.ajax({
 
 function editArticle(thisButton) {
     const article_id = thisButton.getAttribute('articleid');
-    window.location.href = `/G16-CMS/edit-article.php?article_id=${article_id}`;
+    window.location.href = `edit-article.php?article_id=${article_id}`;
 }

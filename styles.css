@@ -704,7 +704,7 @@ nav h1 {
     border: 1px solid #e0e0e0;
     border-radius: 0.75rem;
     padding: 0.75rem;
-    color: #f4f4f4;
+    color: #161616;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -1538,9 +1538,6 @@ nav h1 {
     }
 }
 
-
-@media screen and (max-width: 767px) {}
-
 .my-profile {
     display: flex;
     flex-direction: column;
@@ -1566,14 +1563,14 @@ nav h1 {
     h5 {
         font-size: 1.5rem;
         font-family: 'main';
-        color: #f4f4f4;
+        color: #161616;
         font-weight: bold;
     }
 
     p {
         font-size: 1rem;
         font-family: 'sub';
-        color: #f4f4f4;
+        color: #161616;
     }
 }
 
@@ -1884,6 +1881,23 @@ nav h1 {
         display: flex;
         flex-direction: row;
         gap: 1rem;
+
+        #unsub-btn{
+             padding: 0.5rem;
+            min-width: 9rem;
+            border: none;
+            background-color: #161616;
+            color: #f4f4f4;
+            border-radius: 0.5rem;
+            font-size: 0.8rem;
+            border: 1px solid #161616;
+            cursor: pointer;
+        }
+
+        #unsub-btn:hover{
+            background-color: #ff6666;
+            color: #161616;
+        }
 
         #approve-btn {
             padding: 0.5rem;
