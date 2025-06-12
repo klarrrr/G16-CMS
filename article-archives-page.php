@@ -26,6 +26,9 @@ $profile_pic = $_SESSION['profile_picture'];
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="pics/lundayan-logo.png">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script>
+        const openPage = 'archives';
+    </script>
 </head>
 
 <body class="body">
@@ -47,7 +50,7 @@ $profile_pic = $_SESSION['profile_picture'];
                         <option value="asc">Date Posted Ascending</option>
                     </select>
                     <input type="text" placeholder="Search for you articles" id='search-your-archived-articles' class='search-your-articles'>
-                    <div class="pfp-container" title="Account Settings">
+                    <div class="pfp-container" title="Account Settings" id='archive-article-pfp-container'>
                         <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : $profile_pic; ?>" alt="" id='pfp-circle'>
                     </div>
                 </div>

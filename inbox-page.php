@@ -46,6 +46,9 @@ while ($row = mysqli_fetch_assoc($result)) {
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="pics/lundayan-logo.png">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script>
+        const openPage = 'inbox';
+    </script>
     <style>
         .invitation-container {
             background-color: white;
@@ -212,7 +215,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     </div>
     <div class="right-editor-container">
         <div class="main-page" id='main-page'>
-            <div class="add-article-title-container">
+            <div class="add-article-title-container" id='inbox-header-container'>
                 <div class="article-page-title">
                     <h1>Inbox</h1>
                     <p>Invitations</p>

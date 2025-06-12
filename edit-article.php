@@ -58,6 +58,9 @@ $archiveStatus = $articles['archive_status'];
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
     <!-- Offline Quill JS -->
     <!-- <script src="scripts/quill.js"></script> -->
+    <script>
+        const openPage = 'edit-article';
+    </script>
     <style>
         @font-face {
             font-family: boldonse;
@@ -498,7 +501,7 @@ $archiveStatus = $articles['archive_status'];
     </style>
 </head>
 
-<body class="body">
+<body class="body" id='edit-article-body'>
 
 
     <div class="sure-delete-container" style="display: none;" id="sure-delete-container">

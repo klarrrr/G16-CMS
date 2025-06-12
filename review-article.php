@@ -68,10 +68,14 @@ $fallbackImage = 'pics/plp-outside.jpg';
     <link rel="stylesheet" href="styles.css">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+    <link rel="icon" href="pics/lundayan-logo.png">
     <link href="quill.css" rel="stylesheet" />
     <!-- Online Quill Library -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script> -->
     <script src="scripts/quill.js"></script>
+    <script>
+        const openPage = 'review-article';
+    </script>
 </head>
 
 <body class="body">
@@ -103,7 +107,7 @@ $fallbackImage = 'pics/plp-outside.jpg';
                 <button id='approve-btn'>Loading...</button>
                 <button id='add-comment' disabled>Add a Comment</button>
                 <!-- Keep this at the bottom here -->
-                <div class="pfp-container" title="Account Settings">
+                <div class="pfp-container" title="Account Settings" id='review-article-pfp-circle'>
                     <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : $profile_pic; ?>" alt="" id='pfp-circle'>
                 </div>
             </div>
@@ -184,39 +188,37 @@ $fallbackImage = 'pics/plp-outside.jpg';
 
     <!-- Unsub Button -->
     <script>
-    
-    const unsubBtn = document.getElementById('unsub-btn');
+        const unsubBtn = document.getElementById('unsub-btn');
 
-    unsubBtn.addEventListener('click', ()=>{
-        showModal({
-            title: 'Confirm Unsubscription',
-            message: 'Are you sure on <strong>unsubscribing</strong> as a reviewer of this article?',
-            onConfirm: () =>{
-                $.ajax({
-                    url: 'php-backend/unsubscribe-article.php',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {
-                        article_id: article_id,
-                        user_id: user_id
-                    },
-                    success: (res) => {
-                        if (res.status === 'success') {
-                            // Redirect or show success message
-                            window.location.href = '../for-review-article-page.php';
-                        } else {
-                            // Show error message
-                            alert(res.message);
+        unsubBtn.addEventListener('click', () => {
+            showModal({
+                title: 'Confirm Unsubscription',
+                message: 'Are you sure on <strong>unsubscribing</strong> as a reviewer of this article?',
+                onConfirm: () => {
+                    $.ajax({
+                        url: 'php-backend/unsubscribe-article.php',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            article_id: article_id,
+                            user_id: user_id
+                        },
+                        success: (res) => {
+                            if (res.status === 'success') {
+                                // Redirect or show success message
+                                window.location.href = '../for-review-article-page.php';
+                            } else {
+                                // Show error message
+                                alert(res.message);
+                            }
+                        },
+                        error: (error) => {
+                            console.log(error);
                         }
-                    },
-                    error: (error) => {
-                        console.log(error);
-                    }
-                }); 
-            }
+                    });
+                }
+            });
         });
-    });
-
     </script>
 
     <!-- Approve Btn -->
@@ -268,7 +270,7 @@ $fallbackImage = 'pics/plp-outside.jpg';
     <script src="scripts/get-comments.js"></script>
 
     <!-- Handle Approval Status -->
-   <script>
+    <script>
         const reviewerId = <?php echo $_SESSION['user_id']; ?>;
 
         // Function to check review status and update button
@@ -298,7 +300,7 @@ $fallbackImage = 'pics/plp-outside.jpg';
                 approveBtn.classList.remove('btn-danger');
                 approveBtn.classList.add('btn-primary');
             }
-            
+
             // Store current state for click handler
             approveBtn.dataset.currentState = decision;
         }
@@ -309,7 +311,7 @@ $fallbackImage = 'pics/plp-outside.jpg';
         // Add click handler for the button
         approveBtn.addEventListener('click', () => {
             const newState = approveBtn.dataset.currentState === 'approved' ? 'unapproved' : 'approved';
-            
+
             // Call your existing approval API here
             // On success, call checkReviewStatus() again to refresh the button state
         });

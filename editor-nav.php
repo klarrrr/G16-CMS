@@ -1,6 +1,8 @@
 <?php
 
 $user_type = $_SESSION['user_type'];
+$profile_pic = $_SESSION['profile_picture'];
+
 ?>
 
 <div class="sure-delete-container" style="display: none;" id="sure-sign-out">
@@ -10,6 +12,21 @@ $user_type = $_SESSION['user_type'];
             <button id="so_yes">Confirm</button>
             <button id="so_no">Cancel</button>
         </div>
+    </div>
+</div>
+
+<div class="top-screen-menu">
+    <div class="burger" id="burger">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <div class="nav-page-title">
+        <h1 id='h1-title'>Articles</h1>
+        <p id='p-title'>Recent Articles</p>
+    </div>
+    <div class="pfp-container">
+        <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : $profile_pic; ?>" alt="" id='pfp-circle'>
     </div>
 </div>
 
@@ -144,4 +161,40 @@ $user_type = $_SESSION['user_type'];
     soNo.addEventListener('click', () => {
         sureContainer.style.display = 'none';
     });
+
+    // Burger menu toggle
+    const burger = document.getElementById('burger');
+    const navContainer = document.getElementById('off-screen-menu');
+
+    burger.addEventListener('click', () => {
+        navContainer.classList.toggle('show');
+    });
+
+    const pfpCircle = document.getElementById('pfp-circle');
+    pfpCircle.addEventListener('click', () => {
+        window.location.href = 'account-settings.php';
+    });
+
+    const h1Title = document.getElementById('h1-title');
+    const pTitle = document.getElementById('p-title');
+
+    if (openPage == 'add-article') {
+        h1Title.innerHTML = "Articles";
+        pTitle.innerHTML = "Owned Articles";
+    } else if (openPage == 'archives') {
+        h1Title.innerHTML = "Article Archives";
+        pTitle.innerHTML = "Old Articles";
+    } else if (openPage == 'for-review-articles') {
+        h1Title.innerHTML = "Articles";
+        pTitle.innerHTML = "Review Articles";
+    } else if (openPage == 'inbox') {
+        h1Title.innerHTML = "Inbox";
+        pTitle.innerHTML = "Invitations";
+    } else if (openPage == 'review-article') {
+        h1Title.innerHTML = "Review Article";
+        pTitle.innerHTML = "Leave Comments";
+    } else if (openPage == 'edit-article') {
+        h1Title.innerHTML = "Edit Article";
+        pTitle.innerHTML = "Modify your Posts";
+    }
 </script>
