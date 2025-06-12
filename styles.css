@@ -2588,3 +2588,40 @@ nav h1 {
     display: flex;
     align-items: center;
 }
+
+/* Tag counter style */
+#tag-counter {
+    margin-top: 5px;
+    padding: 2px 5px;
+    background: #f5f5f5;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+/* Warning message style */
+#tag-limit-warning {
+    background: #ffeeee;
+    border-left: 3px solid #ff4444;
+    margin-top: 5px;
+    padding: 5px;
+    border-radius: 0 3px 3px 0;
+}
+
+/* Tag styles */
+.added-tag {
+    display: inline-block;
+    background: #e0e0e0;
+    padding: 3px 8px;
+    border-radius: 3px;
+    margin: 2px;
+}
+
+.remove-tag {
+    cursor: pointer;
+    margin-left: 5px;
+    color: #888;
+}
+
+.remove-tag:hover {
+    color: #ff4444;
+}
