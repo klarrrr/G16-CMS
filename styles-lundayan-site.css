@@ -2166,7 +2166,7 @@ tbody td:hover {
 
     .roles-container {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 3rem;
 
         .role {
@@ -2861,6 +2861,49 @@ tbody td:hover {
         width: 100%;
     }
 
+    /* TEAM LUNDAYAN */
+
+    .team-main-content {
+        display: flex;
+        flex-direction: column;
+        height: unset !important;
+    }
+
+    .team-profile {
+        padding-bottom: unset !important;
+    }
+
+    .profile-container {
+        margin-bottom: 0 !important;
+    }
+
+    .team-main {
+        padding-top: 4vh !important;
+        padding-left: 8vw !important;
+        padding-right: 8vw !important;
+        padding-bottom: 0 !important;
+    }
+
+    .team-carousel {
+        position: unset !important;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        overflow-x: auto;
+
+        gap: 1rem;
+        padding: 2vh 12vw;
+        border-top: 1px solid #eee;
+        -webkit-backdrop-filter: blur(15px);
+        backdrop-filter: blur(15px);
+        background: rgba(24, 58, 44, 0.55);
+        z-index: 10;
+        justify-content: center;
+    }
+
 }
 
 @media (max-width: 1019px) {
@@ -2895,6 +2938,47 @@ tbody td:hover {
         padding: 0.5rem;
         line-height: 10vh;
     }
+
+    /* ABOUT LUNDAYAN */
+
+    .what-is-lundayan,
+    .our-mission,
+    .who-are-we,
+    .what-we-do {
+        flex-direction: column;
+
+        img {
+            width: 70vw;
+        }
+    }
+
+    .our-mission {
+        flex-direction: column-reverse;
+    }
+
+    .info-container-right * {
+        text-align: start !important;
+        align-self: flex-start !important;
+    }
+
+    /* TEAM LUNDAYAN */
+
+    .team-profile {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    #normal-left-arrow,
+    #normal-right-arrow {
+        display: none;
+    }
+
+    .responsive-arrows {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 1rem !important;
+    }
+
 }
 
 @media (min-width: 768px) {
@@ -3068,6 +3152,63 @@ tbody td:hover {
         flex-direction: column;
     }
 
+    /* LUNDAYAN LOGIN */
+
+    .sign-in-details {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .sign-in-title-container {
+        display: none;
+    }
+
+    #sign-in-home {
+        z-index: 4;
+    }
+
+    .sign-in-user-input {
+        z-index: 3;
+        width: 100% !important;
+
+        input {
+            font-size: 1rem;
+        }
+
+        hr {
+            margin-bottom: 5vh;
+        }
+    }
+
+    #sign-in-title-inside {
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 5vh;
+
+        h1 {
+            font-size: 10vw;
+        }
+
+        p {
+            text-align: center;
+            font-size: 3.5vw;
+        }
+    }
+
+    #sign-in-footer-inside {
+        display: flex !important;
+
+        p {
+            text-align: center;
+            font-size: 3.5vw !important;
+        }
+    }
+
+    #sign-in-footer-outside {
+        display: none;
+    }
+
 }
 
 @media (max-width: 576px) {
@@ -3109,6 +3250,20 @@ tbody td:hover {
 
     .article-gallery {
         padding: 2vh 8vw;
+    }
+
+    /* TEAM LUNDAYAN */
+
+    .profile-info {
+        margin-bottom: unset !important;
+    }
+
+    .profile-container {
+        flex-direction: column !important;
+    }
+
+    .profile-photo img {
+        height: 50vh !important;
     }
 
 }

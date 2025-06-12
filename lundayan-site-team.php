@@ -89,14 +89,20 @@
             border: none;
             cursor: pointer;
             color: #f4f4f4;
+
+            &:hover {
+                transform: scale(1.03);
+            }
         }
 
         .arrow-left {
-            margin-left: 2rem;
+            width: 100%;
+            padding-left: 2rem;
         }
 
         .arrow-right {
-            margin-right: 2rem;
+            width: 100%;
+            padding-right: 2rem;
         }
 
         .profile-photo {
@@ -124,7 +130,6 @@
             overflow-x: auto;
 
             gap: 1rem;
-            overflow-x: visible;
             padding: 2vh 12vw;
             border-top: 1px solid #eee;
             -webkit-backdrop-filter: blur(15px);
@@ -165,7 +170,11 @@
 
     <main class="team-main-content">
         <section class="team-profile">
-            <button class="arrow-left">&larr;</button>
+            <div class="responsive-arrows" style="display: none;">
+                <button class="arrow-left">&larr;</button>
+                <button class="arrow-right">&rarr;</button>
+            </div>
+            <button class="arrow-left" id='normal-left-arrow'>&larr;</button>
             <div class="team-main">
                 <div class="breadcrumb">
                     <p>G-16</p>
@@ -185,7 +194,7 @@
                     </div>
                 </div>
             </div>
-            <button class="arrow-right">&rarr;</button>
+            <button class="arrow-right" id='normal-right-arrow'>&rarr;</button>
         </section>
 
         <div class="team-carousel">
