@@ -1267,11 +1267,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
 
-  <div class="left-editor-container">
-
-    <?php include 'admin-side-bar.php'; ?>
-
-  </div>
 
 
   <!-- Mobile menu toggle button -->
@@ -1293,13 +1288,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <p>Manage site configuration and content</p>
 
       </div>
-
-
-      <div class="right-editor-container" id="mainContent">
-        <div class="page-header">
-          <h1>Settings</h1>
-          <p>Manage site configuration and content</p>
-        </div>
 
         <div class="main-content">
 
