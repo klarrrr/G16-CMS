@@ -1,5 +1,6 @@
 <?php
 if (isset($_POST['url'])) {
+
     $publicDir = "/video/";
     $storageDir = "../video/";
 
@@ -8,6 +9,9 @@ if (isset($_POST['url'])) {
     $filePath = $storageDir . $filename;
 
     if (file_exists($filePath)) {
+
+        // Delete in server storage
+
         if (unlink($filePath)) {
             echo json_encode(["success" => true]);
         } else {

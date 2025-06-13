@@ -7,10 +7,6 @@ include 'connect.php';
 $user_id = $_SESSION['user_id'];
 $user_type = strtolower($_SESSION['user_type']);
 
-$articles = [];
-$widgets = [];
-$widget_ids = [];
-
 if ($user_type === 'writer') {
     $query = "
         SELECT 
@@ -48,6 +44,10 @@ $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
+
+$articles = [];
+$widgets = [];
+$widget_ids = [];
 
 while ($row = $result->fetch_assoc()) {
     $articles[] = [

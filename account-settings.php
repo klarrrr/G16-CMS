@@ -25,7 +25,6 @@ $cover_photo = $_SESSION['cover_photo'];
     <link rel="icon" href="pics/lundayan-logo.png">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <style>
-        /* Remove button styles */
         .remove-btn {
             position: absolute;
             top: 10px;
@@ -57,8 +56,6 @@ $cover_photo = $_SESSION['cover_photo'];
             justify-content: center;
         }
 
-
-        /* Ensure proper z-index stacking */
         .profile-pic-account,
         .cover-pic {
             position: relative;
@@ -73,8 +70,6 @@ $cover_photo = $_SESSION['cover_photo'];
 </head>
 
 <body class="body">
-    <!-- Floating dark mode button -->
-
     <div class="float-cards" style='display: none;'></div>
     <!-- ACTUAL NAV OF CMS WEBSITE -->
     <div class="left-editor-container">

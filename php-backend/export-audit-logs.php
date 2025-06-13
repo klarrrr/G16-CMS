@@ -1,4 +1,7 @@
 <?php
+
+// Unused
+
 include 'connect.php';
 
 // Get filter parameters

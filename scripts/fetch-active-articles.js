@@ -2,7 +2,7 @@ const sortDropdown = document.getElementById('sort-articles-dropdown');
 let debounceTimer;
 
 let currentPage = 1;
-const articlesPerPage = 6; // Adjust this as needed
+const articlesPerPage = 6;
 
 function fetchArticles(query = '', sortOrder = 'desc', page = 1) {
     $.ajax({

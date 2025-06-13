@@ -1,10 +1,10 @@
 <?php
-// Include your database connection
+
 include('connect.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $article_id = $_POST['article_id'];
-    $uploadedFiles = $_FILES['image_files'];  // Array of uploaded files
+    $uploadedFiles = $_FILES['image_files'];  // Array of the uploaded files
     $user_owner = $_POST['user_owner'];
 
     // Set the directory path for saving images

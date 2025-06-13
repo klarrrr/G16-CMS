@@ -1,5 +1,5 @@
 <?php
-// Include your database connection
+
 include('connect.php');
 
 $pic_id = $_POST['pic_id'];
@@ -12,13 +12,16 @@ $stmt->execute();
 $result = $stmt->get_result();
 $row = $result->fetch_assoc();
 
-// Get the file path (ensure it's the full path relative to your server's root)
-$filePath = $row['pic_path'];  // Assuming files are stored in 'gallery/' directory
+// Get the file path 
+$filePath = $row['pic_path'];  // stored in 'gallery/' directory
 
 // Check if the file exists before deleting
+
 if (file_exists($filePath)) {
-    // Delete the image file from the server
+
+    // Delete the image file from the server storage
     if (unlink($filePath)) {
+
         // Delete the record from the database
         $sql = "DELETE FROM article_gallery WHERE pic_id = ?";
         $stmt = $conn->prepare($sql);

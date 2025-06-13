@@ -1,4 +1,4 @@
-// Delete imAgee
+// Delete Image
 function deleteImage(pic_id) {
     $.ajax({
         url: 'php-backend/delete-article-gallery.php',

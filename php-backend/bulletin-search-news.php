@@ -9,10 +9,10 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $limit = 9; // Number of records per page
 $offset = ($page - 1) * $limit;
 
-// Prepare the search term for SQL (use LIKE for partial matching)
+// Prepare the search term for SQL
 $searchTerm = '%' . $search . '%';
 
-// Step 1: Get the total number of matching records with article filters
+// Get the total number of matching records with article filters
 $stmt = $conn->prepare("
     SELECT COUNT(*) 
     FROM widgets w
@@ -25,7 +25,7 @@ $stmt->bind_param("ss", $searchTerm, $searchTerm);
 $stmt->execute();
 $totalRecords = $stmt->get_result()->fetch_row()[0];
 
-// Step 2: Fetch the paginated records with filtering
+// Fetch the paginated records with filtering
 $stmt = $conn->prepare("
     SELECT w.* 
     FROM widgets w
@@ -40,19 +40,19 @@ $stmt->bind_param("ssii", $searchTerm, $searchTerm, $offset, $limit);
 $stmt->execute();
 $results = $stmt->get_result();
 
-// Step 3: Populate the results array with the fetched rows
+// Populate the results array with the fetched rows
 while ($row = $results->fetch_assoc()) {
     $widgetArray[] = $row;
 }
 
-// Step 4: Ensure all values are UTF-8 encoded
+// Ensure all values are UTF-8 encoded
 foreach ($widgetArray as &$widget) {
     foreach ($widget as &$value) {
         $value = mb_convert_encoding($value, 'UTF-8', 'UTF-8');
     }
 }
 
-// Step 5: Prepare the response as a JSON object
+// Prepare the response as a JSON object
 $jsonOutput = json_encode([
     'widget' => $widgetArray,
     'totalRecords' => $totalRecords,

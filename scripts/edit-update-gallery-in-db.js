@@ -12,7 +12,7 @@ galleryInput.addEventListener('change', (event) => {
 
 function updateGallery(event, article_id) {
     const files = event.target.files; // Get selected files
-    const galleryContainer = document.getElementById('image-gallery'); // Ensure this container is defined
+    const galleryContainer = document.getElementById('image-gallery');
     const warningLbl = document.getElementById('img-size-warning');
 
 

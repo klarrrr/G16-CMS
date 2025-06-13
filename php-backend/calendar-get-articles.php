@@ -2,6 +2,7 @@
 include 'connect.php';
 
 try {
+    // Select all article with widgets
     $query = "
         SELECT 
             a.article_id, 
@@ -30,13 +31,14 @@ try {
     $result = mysqli_query($conn, $query);
     $articles = [];
 
+    // Used for getting least and max year of articles
     $minYear = PHP_INT_MAX;
     $maxYear = PHP_INT_MIN;
 
     $fallbackImage = 'pics/plp-outside.jpg';
 
     while ($row = mysqli_fetch_assoc($result)) {
-        // Apply image fallback logic here:
+        // Image Fallback
         $row['widget_img'] = !empty($row['widget_img']) ? $row['widget_img'] : $fallbackImage;
 
         $articles[] = $row;

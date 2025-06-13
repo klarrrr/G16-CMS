@@ -196,5 +196,8 @@ $profile_pic = $_SESSION['profile_picture'];
     } else if (openPage == 'edit-article') {
         h1Title.innerHTML = "Edit Article";
         pTitle.innerHTML = "Modify your Posts";
+    } else if (openPage == 'dashboard') {
+        h1Title.innerHTML = "Dashboard";
+        pTitle.innerHTML = "Your Home Page";
     }
 </script>

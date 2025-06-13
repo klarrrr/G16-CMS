@@ -2,6 +2,7 @@
 include 'connect.php';
 session_start();
 
+// All articles for admin
 $query = "
     SELECT a.article_id, a.article_title, a.date_posted, a.highlight, 
            w.widget_title, w.widget_img

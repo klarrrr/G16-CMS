@@ -71,8 +71,8 @@ $fallbackImage = 'pics/plp-outside.jpg';
     <link rel="icon" href="pics/lundayan-logo.png">
     <link href="quill.css" rel="stylesheet" />
     <!-- Online Quill Library -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script> -->
-    <script src="scripts/quill.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+    <!-- <script src="scripts/quill.js"></script> -->
     <script>
         const openPage = 'review-article';
     </script>

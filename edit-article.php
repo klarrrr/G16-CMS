@@ -784,7 +784,7 @@ $archiveStatus = $articles['archive_status'];
 
             <!-- Details Toolbox -->
             <div class="widget-toolbar" id='edit-article-comments-container'>
-
+                <h2 style='font-family: main; font-size: 24px; text-align: center;'>Comment Section</h2>
             </div>
         </div>
     </div>

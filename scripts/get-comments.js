@@ -9,7 +9,7 @@ $.ajax({
     },
     success: (res) => {
         const comments = res;
-        const currentUserId = user_id; // Already declared in global scope
+        const currentUserId = user_id; // 
         const commentFragment = document.createDocumentFragment();
 
         for (let i = 0; i < comments.length; i++) {

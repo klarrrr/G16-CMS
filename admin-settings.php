@@ -1,4 +1,3 @@
-
 <?php
 
 session_start();
@@ -22,7 +21,6 @@ $settingsQuery = $conn->query("SELECT setting_group, setting_name, setting_value
 while ($row = $settingsQuery->fetch_assoc()) {
 
   $siteSettings[$row['setting_group']][$row['setting_name']] = $row['setting_value'];
-
 }
 
 
@@ -34,7 +32,6 @@ $aboutQuery = $conn->query("SELECT section_type, title, content, image_url, vide
 while ($row = $aboutQuery->fetch_assoc()) {
 
   $aboutSettings[$row['section_type']] = $row;
-
 }
 
 
@@ -126,7 +123,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         default:
 
           throw new Exception("Invalid settings group");
-
       }
 
 
@@ -136,7 +132,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("sss", $setting[0], $setting[1], $setting[2]);
 
         $stmt->execute();
-
       }
 
 
@@ -148,7 +143,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       header("Location: admin-settings.php");
 
       exit;
-
     } catch (Exception $e) {
 
       $conn->rollback();
@@ -158,9 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       header("Location: admin-settings.php");
 
       exit;
-
     }
-
   }
 
 
@@ -216,9 +208,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           // Remove any potentially dangerous characters
 
           $imageUrl = preg_replace('/[^a-zA-Z0-9\-_\.\/]/', '', $imageUrl);
-
         }
-
       }
 
 
@@ -246,7 +236,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       header("Location: admin-settings.php");
 
       exit;
-
     } catch (Exception $e) {
 
       $_SESSION['error'] = 'Error updating about section: ' . $e->getMessage();
@@ -254,11 +243,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       header("Location: admin-settings.php");
 
       exit;
-
     }
-
   }
-
 }
 
 ?>
@@ -288,7 +274,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
   <style>
-
     * {
 
       box-sizing: border-box;
@@ -304,7 +289,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       --transition-speed: 0.3s;
     }
 
-    html, body {
+    html,
+    body {
       height: 100%;
     }
 
@@ -343,7 +329,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     .main-container {
       display: flex;
       flex: 1;
-      min-height: 0; /* Fix for flexbox scrolling */
+      min-height: 0;
+      /* Fix for flexbox scrolling */
     }
 
     /* Sidebar styling */
@@ -386,17 +373,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
 
-  .right-editor-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    margin-left: var(--sidebar-width);
-    transition: margin-left var(--transition-speed) ease;
-    width: 100%;
-    max-width: 100vw;
-    overflow-x: hidden;
-  }
+    .right-editor-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      margin-left: var(--sidebar-width);
+      transition: margin-left var(--transition-speed) ease;
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
 
 
     .page-header {
@@ -1131,146 +1118,147 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     /* Tablet adjustments (≤ 992px) */
-@media (max-width: 992px) {
-  .mobile-menu-toggle {
-    display: block;
-  }
+    @media (max-width: 992px) {
+      .mobile-menu-toggle {
+        display: block;
+      }
 
-  .left-editor-container {
-    transform: translateX(-100%);
-    width: 250px;
-    position: fixed;
-    z-index: 1001;
-  }
+      .left-editor-container {
+        transform: translateX(-100%);
+        width: 250px;
+        position: fixed;
+        z-index: 1001;
+      }
 
-  .left-editor-container.active {
-    transform: translateX(0);
-  }
+      .left-editor-container.active {
+        transform: translateX(0);
+      }
 
-  .right-editor-container {
-    margin-left: 0;
-  }
+      .right-editor-container {
+        margin-left: 0;
+      }
 
-  body.sidebar-open {
-    overflow: hidden;
-  }
+      body.sidebar-open {
+        overflow: hidden;
+      }
 
-  .card,
-  .main-content {
-    padding: 1rem;
-  }
+      .card,
+      .main-content {
+        padding: 1rem;
+      }
 
-  .form-columns {
-    flex-direction: column;
-  }
-}
+      .form-columns {
+        flex-direction: column;
+      }
+    }
 
-/* Phone adjustments (≤ 768px) */
-@media (max-width: 768px) {
-  .page-header {
-    padding: 1rem 1.25rem;
-  }
+    /* Phone adjustments (≤ 768px) */
+    @media (max-width: 768px) {
+      .page-header {
+        padding: 1rem 1.25rem;
+      }
 
-  .page-header h1 {
-    font-size: 1.4rem;
-  }
+      .page-header h1 {
+        font-size: 1.4rem;
+      }
 
-  .main-content {
-    padding: 1rem;
-  }
+      .main-content {
+        padding: 1rem;
+      }
 
-  .card {
-    padding: 1rem;
-  }
+      .card {
+        padding: 1rem;
+      }
 
-  .card h2 {
-    font-size: 1.2rem;
-  }
+      .card h2 {
+        font-size: 1.2rem;
+      }
 
-  .card input,
-  .card select,
-  .card textarea {
-    font-size: 0.9rem;
-    padding: 0.65rem;
-  }
+      .card input,
+      .card select,
+      .card textarea {
+        font-size: 0.9rem;
+        padding: 0.65rem;
+      }
 
-  .save-btn {
-    width: 100%;
-    text-align: center;
-  }
+      .save-btn {
+        width: 100%;
+        text-align: center;
+      }
 
-  .card-footer {
-    flex-direction: column;
-    align-items: stretch;
-  }
+      .card-footer {
+        flex-direction: column;
+        align-items: stretch;
+      }
 
-  .events-container {
-    flex-direction: column;
-  }
+      .events-container {
+        flex-direction: column;
+      }
 
-  .event-card {
-    width: 100%;
-    height: 180px;
-  }
-}
+      .event-card {
+        width: 100%;
+        height: 180px;
+      }
+    }
 
-/* Small devices (≤ 480px) */
-@media (max-width: 480px) {
-  .mobile-menu-toggle {
-    font-size: 0.95rem;
-    padding: 0.75rem 1rem;
-  }
+    /* Small devices (≤ 480px) */
+    @media (max-width: 480px) {
+      .mobile-menu-toggle {
+        font-size: 0.95rem;
+        padding: 0.75rem 1rem;
+      }
 
-  .card h2,
-  .card h3 {
-    font-size: 1rem;
-  }
+      .card h2,
+      .card h3 {
+        font-size: 1rem;
+      }
 
-  .card label {
-    font-size: 0.85rem;
-  }
+      .card label {
+        font-size: 0.85rem;
+      }
 
-  .event-title,
-  .event-meta,
-  .event-date {
-    font-size: 0.8rem;
-  }
+      .event-title,
+      .event-meta,
+      .event-date {
+        font-size: 0.8rem;
+      }
 
-  .events-header {
-    font-size: 1.1rem;
-  }
-}
+      .events-header {
+        font-size: 1.1rem;
+      }
+    }
 
-@media (max-width: 992px) {
-  .right-editor-container {
-    margin-left: 0;
-    width: 100%;
-  }
-}
+    @media (max-width: 992px) {
+      .right-editor-container {
+        margin-left: 0;
+        width: 100%;
+      }
+    }
 
-/* Overlay background when sidebar is open */
-.sidebar-overlay {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5); /* dim effect */
-  z-index: 999;
-  display: none;
-}
+    /* Overlay background when sidebar is open */
+    .sidebar-overlay {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      /* dim effect */
+      z-index: 999;
+      display: none;
+    }
 
-body.sidebar-open .sidebar-overlay {
-  display: block;
-}
-.left-editor-container {
-  top: 0;
-  position: fixed;
-  height: 100vh;
-  overflow-y: auto;
-}
+    body.sidebar-open .sidebar-overlay {
+      display: block;
+    }
 
+    .left-editor-container {
+      top: 0;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+    }
   </style>
 
 </head>
@@ -1296,1407 +1284,1399 @@ body.sidebar-open .sidebar-overlay {
       <?php include 'admin-side-bar.php'; ?>
     </div>
 
-  <div class="right-editor-container">
+    <div class="right-editor-container">
 
-    <div class="page-header">
-
-      <h1>Settings</h1>
-
-      <p>Manage site configuration and content</p>
-
-    </div>
-
-
-    <div class="right-editor-container" id="mainContent">
       <div class="page-header">
+
         <h1>Settings</h1>
+
         <p>Manage site configuration and content</p>
+
       </div>
 
-    <div class="main-content">
 
-      <?php if (isset($_SESSION['success'])): ?>
+      <div class="right-editor-container" id="mainContent">
+        <div class="page-header">
+          <h1>Settings</h1>
+          <p>Manage site configuration and content</p>
+        </div>
 
-        <div class="success"><?= htmlspecialchars($_SESSION['success']);
+        <div class="main-content">
 
-                              unset($_SESSION['success']); ?></div>
+          <?php if (isset($_SESSION['success'])): ?>
 
-      <?php endif; ?>
+            <div class="success"><?= htmlspecialchars($_SESSION['success']);
 
+                                  unset($_SESSION['success']); ?></div>
 
+          <?php endif; ?>
 
-      <?php if (isset($_SESSION['error'])): ?>
 
-        <div class="error"><?= htmlspecialchars($_SESSION['error']);
 
-                            unset($_SESSION['error']); ?></div>
+          <?php if (isset($_SESSION['error'])): ?>
 
-      <?php endif; ?>
+            <div class="error"><?= htmlspecialchars($_SESSION['error']);
 
+                                unset($_SESSION['error']); ?></div>
 
+          <?php endif; ?>
 
-      <div class="form-columns">
 
 
+          <div class="form-columns">
 
-        <!-- Change Article Highlights -->
 
-        <!-- Manage Article Highlights -->
 
-        <form class="card" method="POST" action="php-backend/admin-update-highlight.php">
+            <!-- Change Article Highlights -->
 
-          <h3>Manage Highlighted Articles</h3>
+            <!-- Manage Article Highlights -->
 
+            <form class="card" method="POST" action="php-backend/admin-update-highlight.php">
 
+              <h3>Manage Highlighted Articles</h3>
 
-          <div class="form-group">
 
-            <label for="article-search">Search Articles:</label>
 
-            <input type="text" id="article-search" placeholder="Search by title..." class="search-input">
+              <div class="form-group">
 
-          </div>
+                <label for="article-search">Search Articles:</label>
 
+                <input type="text" id="article-search" placeholder="Search by title..." class="search-input">
 
+              </div>
 
-          <div class="articles-list" id="articles-container">
 
-            <!-- Articles will be loaded here via JavaScript -->
 
-            <div class="loading-spinner"></div>
+              <div class="articles-list" id="articles-container">
 
-          </div>
+                <!-- Articles will be loaded here via JavaScript -->
 
+                <div class="loading-spinner"></div>
 
+              </div>
 
-          <div class="card-footer">
 
-            <button type="submit" class="save-btn">Save Highlights</button>
 
-          </div>
+              <div class="card-footer">
 
-        </form>
+                <button type="submit" class="save-btn">Save Highlights</button>
 
+              </div>
 
+            </form>
 
-        <!-- Mail Configuration -->
 
-        <form class="card" method="POST" action="admin-settings.php?group=mail">
 
-          <h2>Mail Configuration</h2>
+            <!-- Mail Configuration -->
 
-          <label for="mail-email">Email Address</label>
+            <form class="card" method="POST" action="admin-settings.php?group=mail">
 
-          <input type="email" id="mail-email" name="mail-email" value="<?= htmlspecialchars($siteSettings['mail']['email'] ?? '') ?>" required>
+              <h2>Mail Configuration</h2>
 
+              <label for="mail-email">Email Address</label>
 
+              <input type="email" id="mail-email" name="mail-email" value="<?= htmlspecialchars($siteSettings['mail']['email'] ?? '') ?>" required>
 
-          <label for="mail-password">App Password</label>
 
-          <input type="password" id="mail-password" name="mail-password" value="<?= htmlspecialchars($siteSettings['mail']['password'] ?? '') ?>" required>
 
+              <label for="mail-password">App Password</label>
 
+              <input type="password" id="mail-password" name="mail-password" value="<?= htmlspecialchars($siteSettings['mail']['password'] ?? '') ?>" required>
 
-          <label for="mail-name">Sender Name</label>
 
-          <input type="text" id="mail-name" name="mail-name" value="<?= htmlspecialchars($siteSettings['mail']['sender_name'] ?? '') ?>" required>
 
+              <label for="mail-name">Sender Name</label>
 
+              <input type="text" id="mail-name" name="mail-name" value="<?= htmlspecialchars($siteSettings['mail']['sender_name'] ?? '') ?>" required>
 
-          <div class="card-footer">
 
-            <button type="submit" class="save-btn">Save Mail Settings</button>
 
-          </div>
+              <div class="card-footer">
 
-        </form>
+                <button type="submit" class="save-btn">Save Mail Settings</button>
 
+              </div>
 
+            </form>
 
-        <!-- Social Media -->
 
-        <form class="card" method="POST" action="admin-settings.php?group=social">
 
-          <h2>Social Media</h2>
+            <!-- Social Media -->
 
-          <label for="facebook">Facebook URL</label>
+            <form class="card" method="POST" action="admin-settings.php?group=social">
 
-          <input type="url" id="facebook" name="facebook" value="<?= htmlspecialchars($siteSettings['social']['facebook_url'] ?? '') ?>">
+              <h2>Social Media</h2>
 
+              <label for="facebook">Facebook URL</label>
 
+              <input type="url" id="facebook" name="facebook" value="<?= htmlspecialchars($siteSettings['social']['facebook_url'] ?? '') ?>">
 
-          <label for="instagram">Instagram URL</label>
 
-          <input type="url" id="instagram" name="instagram" value="<?= htmlspecialchars($siteSettings['social']['instagram_url'] ?? '') ?>">
 
+              <label for="instagram">Instagram URL</label>
 
+              <input type="url" id="instagram" name="instagram" value="<?= htmlspecialchars($siteSettings['social']['instagram_url'] ?? '') ?>">
 
-          <label for="pinterest">Pinterest URL</label>
 
-          <input type="url" id="pinterest" name="pinterest" value="<?= htmlspecialchars($siteSettings['social']['pinterest_url'] ?? '') ?>">
 
+              <label for="pinterest">Pinterest URL</label>
 
+              <input type="url" id="pinterest" name="pinterest" value="<?= htmlspecialchars($siteSettings['social']['pinterest_url'] ?? '') ?>">
 
-          <div class="card-footer">
 
-            <button type="submit" class="save-btn">Save Social Media</button>
 
-          </div>
+              <div class="card-footer">
 
-        </form>
+                <button type="submit" class="save-btn">Save Social Media</button>
 
+              </div>
 
+            </form>
 
-        <!-- Site Information -->
 
-        <form class="card" method="POST" action="admin-settings.php?group=contact">
 
-          <h2>Site Information</h2>
+            <!-- Site Information -->
 
-          <label for="address">Address</label>
+            <form class="card" method="POST" action="admin-settings.php?group=contact">
 
-          <input type="text" id="address" name="address" value="<?= htmlspecialchars($siteSettings['contact']['address'] ?? '') ?>">
+              <h2>Site Information</h2>
 
+              <label for="address">Address</label>
 
+              <input type="text" id="address" name="address" value="<?= htmlspecialchars($siteSettings['contact']['address'] ?? '') ?>">
 
-          <label for="open_time_start">School Opens At</label>
 
-          <input type="time" id="open_time_start" name="open_time_start"
 
-            value="<?= isset($siteSettings['contact']['open_time_start']) ? htmlspecialchars(substr($siteSettings['contact']['open_time_start'], 0, 5)) : '' ?>">
+              <label for="open_time_start">School Opens At</label>
 
+              <input type="time" id="open_time_start" name="open_time_start"
 
+                value="<?= isset($siteSettings['contact']['open_time_start']) ? htmlspecialchars(substr($siteSettings['contact']['open_time_start'], 0, 5)) : '' ?>">
 
-          <label for="open_time_end">School Closes At</label>
 
-          <input type="time" id="open_time_end" name="open_time_end"
 
-            value="<?= isset($siteSettings['contact']['open_time_end']) ? htmlspecialchars(substr($siteSettings['contact']['open_time_end'], 0, 5)) : '' ?>">
+              <label for="open_time_end">School Closes At</label>
 
+              <input type="time" id="open_time_end" name="open_time_end"
 
+                value="<?= isset($siteSettings['contact']['open_time_end']) ? htmlspecialchars(substr($siteSettings['contact']['open_time_end'], 0, 5)) : '' ?>">
 
-          <label for="phone">Phone</label>
 
-          <input type="text" id="phone" name="phone" value="<?= htmlspecialchars($siteSettings['contact']['phone'] ?? '') ?>">
 
+              <label for="phone">Phone</label>
 
+              <input type="text" id="phone" name="phone" value="<?= htmlspecialchars($siteSettings['contact']['phone'] ?? '') ?>">
 
-          <div class="card-footer">
 
-            <button type="submit" class="save-btn">Save Site Info</button>
 
-          </div>
+              <div class="card-footer">
 
-        </form>
+                <button type="submit" class="save-btn">Save Site Info</button>
 
+              </div>
 
+            </form>
 
-        <!-- About Page Content -->
 
-        <form class="card" method="POST" action="admin-settings.php?section=banner">
 
-          <h2>About Page Banner</h2>
+            <!-- About Page Content -->
 
-          <label for="banner-video">Banner Video URL</label>
+            <form class="card" method="POST" action="admin-settings.php?section=banner">
 
-          <input type="url" id="banner-video" name="video_url"
+              <h2>About Page Banner</h2>
 
-            value="<?= htmlspecialchars($aboutSettings['banner']['video_url'] ?? '') ?>">
+              <label for="banner-video">Banner Video URL</label>
 
-          <p class="path-hint">Must be a full URL (https://...)</p>
+              <input type="url" id="banner-video" name="video_url"
 
+                value="<?= htmlspecialchars($aboutSettings['banner']['video_url'] ?? '') ?>">
 
+              <p class="path-hint">Must be a full URL (https://...)</p>
 
-          <div class="card-footer">
 
-            <button type="submit" class="save-btn">Save Banner</button>
 
-          </div>
+              <div class="card-footer">
 
-        </form>
+                <button type="submit" class="save-btn">Save Banner</button>
 
+              </div>
 
+            </form>
 
-        <!-- [Rest of your form cards continue in the same single column layout] -->
 
-        <!-- What is Lundayan -->
 
-        <form class="card" method="POST" action="admin-settings.php?section=what_is">
+            <!-- [Rest of your form cards continue in the same single column layout] -->
 
-          <h2>What is Lundayan</h2>
+            <!-- What is Lundayan -->
 
-          <label for="what-is-title">Title</label>
+            <form class="card" method="POST" action="admin-settings.php?section=what_is">
 
-          <input type="text" id="what-is-title" name="title"
+              <h2>What is Lundayan</h2>
 
-            value="<?= htmlspecialchars($aboutSettings['what_is']['title'] ?? 'What even is the Lundayan website?') ?>">
+              <label for="what-is-title">Title</label>
 
+              <input type="text" id="what-is-title" name="title"
 
+                value="<?= htmlspecialchars($aboutSettings['what_is']['title'] ?? 'What even is the Lundayan website?') ?>">
 
-          <label for="what-is-content">Content</label>
 
-          <textarea id="what-is-content" name="content" rows="6"><?=
 
-                                                                  htmlspecialchars($aboutSettings['what_is']['content'] ?? 'Lundayan is an article publication platform...') ?></textarea>
+              <label for="what-is-content">Content</label>
 
+              <textarea id="what-is-content" name="content" rows="6"><?=
 
+                                                                      htmlspecialchars($aboutSettings['what_is']['content'] ?? 'Lundayan is an article publication platform...') ?></textarea>
 
-          <label for="what-is-image">Image URL or Path</label>
 
-          <input type="text" id="what-is-image" name="image_url"
 
-            value="<?= htmlspecialchars($aboutSettings['what_is']['image_url'] ?? 'pics/lundayan-logo.png') ?>">
+              <label for="what-is-image">Image URL or Path</label>
 
-          <p class="path-hint">Accept both full URLs (https://...) and local paths (pics/image.jpg or images/photo.png)</p>
+              <input type="text" id="what-is-image" name="image_url"
 
+                value="<?= htmlspecialchars($aboutSettings['what_is']['image_url'] ?? 'pics/lundayan-logo.png') ?>">
 
+              <p class="path-hint">Accept both full URLs (https://...) and local paths (pics/image.jpg or images/photo.png)</p>
 
-          <div class="card-footer">
 
-            <button type="submit" class="save-btn">Save Section</button>
 
-          </div>
+              <div class="card-footer">
 
-        </form>
+                <button type="submit" class="save-btn">Save Section</button>
 
+              </div>
 
+            </form>
 
-        <!-- [Continue with all other form sections in the same single column format] -->
 
-        <!-- Mission Section -->
 
-        <form class="card" method="POST" action="admin-settings.php?section=mission">
+            <!-- [Continue with all other form sections in the same single column format] -->
 
-          <h2>Our Mission</h2>
+            <!-- Mission Section -->
 
-          <label for="mission-title">Title</label>
+            <form class="card" method="POST" action="admin-settings.php?section=mission">
 
-          <input type="text" id="mission-title" name="title"
+              <h2>Our Mission</h2>
 
-            value="<?= htmlspecialchars($aboutSettings['mission']['title'] ?? 'What is our mission?') ?>">
+              <label for="mission-title">Title</label>
 
+              <input type="text" id="mission-title" name="title"
 
+                value="<?= htmlspecialchars($aboutSettings['mission']['title'] ?? 'What is our mission?') ?>">
 
-          <label for="mission-content">Content</label>
 
-          <textarea id="mission-content" name="content" rows="6"><?=
 
-                                                                  htmlspecialchars($aboutSettings['mission']['content'] ?? 'Our mission is to promote thoughtful discourse...') ?></textarea>
+              <label for="mission-content">Content</label>
 
+              <textarea id="mission-content" name="content" rows="6"><?=
 
+                                                                      htmlspecialchars($aboutSettings['mission']['content'] ?? 'Our mission is to promote thoughtful discourse...') ?></textarea>
 
-          <label for="mission-image">Image URL or Path</label>
 
-          <input type="text" id="mission-image" name="image_url"
 
-            value="<?= htmlspecialchars($aboutSettings['mission']['image_url'] ?? 'pics/thinker.jpg') ?>">
+              <label for="mission-image">Image URL or Path</label>
 
-          <p class="path-hint">Accept both full URLs (https://...) and local paths (pics/image.jpg or images/photo.png)</p>
+              <input type="text" id="mission-image" name="image_url"
 
+                value="<?= htmlspecialchars($aboutSettings['mission']['image_url'] ?? 'pics/thinker.jpg') ?>">
 
+              <p class="path-hint">Accept both full URLs (https://...) and local paths (pics/image.jpg or images/photo.png)</p>
 
-          <div class="card-footer">
 
-            <button type="submit" class="save-btn">Save Section</button>
 
-          </div>
+              <div class="card-footer">
 
-        </form>
+                <button type="submit" class="save-btn">Save Section</button>
 
+              </div>
 
+            </form>
 
-        <!-- Who We Are -->
 
-        <form class="card" method="POST" action="admin-settings.php?section=who_we_are">
 
-          <h2>Who We Are</h2>
+            <!-- Who We Are -->
 
-          <label for="who-we-are-title">Title</label>
+            <form class="card" method="POST" action="admin-settings.php?section=who_we_are">
 
-          <input type="text" id="who-we-are-title" name="title"
+              <h2>Who We Are</h2>
 
-            value="<?= htmlspecialchars($aboutSettings['who_we_are']['title'] ?? 'Who are we?') ?>">
+              <label for="who-we-are-title">Title</label>
 
+              <input type="text" id="who-we-are-title" name="title"
 
+                value="<?= htmlspecialchars($aboutSettings['who_we_are']['title'] ?? 'Who are we?') ?>">
 
-          <label for="who-we-are-content">Content</label>
 
-          <textarea id="who-we-are-content" name="content" rows="6"><?=
 
-                                                                    htmlspecialchars($aboutSettings['who_we_are']['content'] ?? 'We are student storytellers from...') ?></textarea>
+              <label for="who-we-are-content">Content</label>
 
+              <textarea id="who-we-are-content" name="content" rows="6"><?=
 
+                                                                        htmlspecialchars($aboutSettings['who_we_are']['content'] ?? 'We are student storytellers from...') ?></textarea>
 
-          <label for="who-we-are-image">Image URL or Path</label>
 
-          <input type="text" id="who-we-are-image" name="image_url"
 
-            value="<?= htmlspecialchars($aboutSettings['who_we_are']['image_url'] ?? 'pics/study-anime.gif') ?>">
+              <label for="who-we-are-image">Image URL or Path</label>
 
-          <p class="path-hint">Accept both full URLs (https://...) and local paths (pics/image.jpg or images/photo.png)</p>
+              <input type="text" id="who-we-are-image" name="image_url"
 
+                value="<?= htmlspecialchars($aboutSettings['who_we_are']['image_url'] ?? 'pics/study-anime.gif') ?>">
 
+              <p class="path-hint">Accept both full URLs (https://...) and local paths (pics/image.jpg or images/photo.png)</p>
 
-          <div class="card-footer">
 
-            <button type="submit" class="save-btn">Save Section</button>
 
-          </div>
+              <div class="card-footer">
 
-        </form>
+                <button type="submit" class="save-btn">Save Section</button>
 
+              </div>
 
+            </form>
 
-        <!-- Roles Section -->
 
-        <form class="card" method="POST" action="admin-settings.php?section=roles">
 
-          <h2>Roles Section</h2>
+            <!-- Roles Section -->
 
-          <label for="roles-title">Title</label>
+            <form class="card" method="POST" action="admin-settings.php?section=roles">
 
-          <input type="text" id="roles-title" name="title"
+              <h2>Roles Section</h2>
 
-            value="<?= htmlspecialchars($aboutSettings['roles']['title'] ?? 'What do we do?') ?>">
+              <label for="roles-title">Title</label>
 
+              <input type="text" id="roles-title" name="title"
 
+                value="<?= htmlspecialchars($aboutSettings['roles']['title'] ?? 'What do we do?') ?>">
 
-          <label for="roles-content">Intro Content</label>
 
-          <textarea id="roles-content" name="content" rows="3"><?=
 
-                                                                htmlspecialchars($aboutSettings['roles']['content'] ?? '') ?></textarea>
+              <label for="roles-content">Intro Content</label>
 
+              <textarea id="roles-content" name="content" rows="3"><?=
 
+                                                                    htmlspecialchars($aboutSettings['roles']['content'] ?? '') ?></textarea>
 
-          <div class="card-footer">
 
-            <button type="submit" class="save-btn">Save Section</button>
 
-          </div>
+              <div class="card-footer">
 
-        </form>
+                <button type="submit" class="save-btn">Save Section</button>
 
+              </div>
 
+            </form>
 
-        <!-- Writer Role -->
 
-        <form class="card" method="POST" action="admin-settings.php?section=role_writer">
 
-          <h3>Writer Role</h3>
+            <!-- Writer Role -->
 
-          <label for="writer-title">Title</label>
+            <form class="card" method="POST" action="admin-settings.php?section=role_writer">
 
-          <input type="text" id="writer-title" name="title"
+              <h3>Writer Role</h3>
 
-            value="<?= htmlspecialchars($aboutSettings['role_writer']['title'] ?? 'Writer') ?>">
+              <label for="writer-title">Title</label>
 
+              <input type="text" id="writer-title" name="title"
 
+                value="<?= htmlspecialchars($aboutSettings['role_writer']['title'] ?? 'Writer') ?>">
 
-          <label for="writer-content">Description</label>
 
-          <textarea id="writer-content" name="content" rows="3"><?=
 
-                                                                htmlspecialchars($aboutSettings['role_writer']['content'] ?? 'Writers contribute original articles...') ?></textarea>
+              <label for="writer-content">Description</label>
 
+              <textarea id="writer-content" name="content" rows="3"><?=
 
+                                                                    htmlspecialchars($aboutSettings['role_writer']['content'] ?? 'Writers contribute original articles...') ?></textarea>
 
-          <label for="writer-image">Image URL or Path</label>
 
-          <input type="text" id="writer-image" name="image_url"
 
-            value="<?= htmlspecialchars($aboutSettings['role_writer']['image_url'] ?? 'pics/typewriter.jpg') ?>">
+              <label for="writer-image">Image URL or Path</label>
 
-          <p class="path-hint">Accept both full URLs (https://...) and local paths (pics/image.jpg or images/photo.png)</p>
+              <input type="text" id="writer-image" name="image_url"
 
+                value="<?= htmlspecialchars($aboutSettings['role_writer']['image_url'] ?? 'pics/typewriter.jpg') ?>">
 
+              <p class="path-hint">Accept both full URLs (https://...) and local paths (pics/image.jpg or images/photo.png)</p>
 
-          <div class="card-footer">
 
-            <button type="submit" class="save-btn">Save Role</button>
 
-          </div>
+              <div class="card-footer">
 
-        </form>
+                <button type="submit" class="save-btn">Save Role</button>
 
+              </div>
 
+            </form>
 
-        <!-- Reviewer Role -->
 
-        <form class="card" method="POST" action="admin-settings.php?section=role_reviewer">
 
-          <h3>Reviewer Role</h3>
+            <!-- Reviewer Role -->
 
-          <label for="reviewer-title">Title</label>
+            <form class="card" method="POST" action="admin-settings.php?section=role_reviewer">
 
-          <input type="text" id="reviewer-title" name="title"
+              <h3>Reviewer Role</h3>
 
-            value="<?= htmlspecialchars($aboutSettings['role_reviewer']['title'] ?? 'Reviewer') ?>">
+              <label for="reviewer-title">Title</label>
 
+              <input type="text" id="reviewer-title" name="title"
 
+                value="<?= htmlspecialchars($aboutSettings['role_reviewer']['title'] ?? 'Reviewer') ?>">
 
-          <label for="reviewer-content">Description</label>
 
-          <textarea id="reviewer-content" name="content" rows="3"><?=
 
-                                                                  htmlspecialchars($aboutSettings['role_reviewer']['content'] ?? 'Reviewers ensure each piece meets...') ?></textarea>
+              <label for="reviewer-content">Description</label>
 
+              <textarea id="reviewer-content" name="content" rows="3"><?=
 
+                                                                      htmlspecialchars($aboutSettings['role_reviewer']['content'] ?? 'Reviewers ensure each piece meets...') ?></textarea>
 
-          <label for="reviewer-image">Image URL or Path</label>
 
-          <input type="text" id="reviewer-image" name="image_url"
 
-            value="<?= htmlspecialchars($aboutSettings['role_reviewer']['image_url'] ?? 'pics/reviewer.jpg') ?>">
+              <label for="reviewer-image">Image URL or Path</label>
 
-          <p class="path-hint">Accept both full URLs (https://...) and local paths (pics/image.jpg or images/photo.png)</p>
+              <input type="text" id="reviewer-image" name="image_url"
 
+                value="<?= htmlspecialchars($aboutSettings['role_reviewer']['image_url'] ?? 'pics/reviewer.jpg') ?>">
 
+              <p class="path-hint">Accept both full URLs (https://...) and local paths (pics/image.jpg or images/photo.png)</p>
 
-          <div class="card-footer">
 
-            <button type="submit" class="save-btn">Save Role</button>
 
-          </div>
+              <div class="card-footer">
 
-        </form>
+                <button type="submit" class="save-btn">Save Role</button>
 
+              </div>
 
+            </form>
 
-        <!-- Reader Role -->
 
-        <form class="card" method="POST" action="admin-settings.php?section=role_reader">
 
-          <h3>Reader Role</h3>
+            <!-- Reader Role -->
 
-          <label for="reader-title">Title</label>
+            <form class="card" method="POST" action="admin-settings.php?section=role_reader">
 
-          <input type="text" id="reader-title" name="title"
+              <h3>Reader Role</h3>
 
-            value="<?= htmlspecialchars($aboutSettings['role_reader']['title'] ?? 'Reader') ?>">
+              <label for="reader-title">Title</label>
 
+              <input type="text" id="reader-title" name="title"
 
+                value="<?= htmlspecialchars($aboutSettings['role_reader']['title'] ?? 'Reader') ?>">
 
-          <label for="reader-content">Description</label>
 
-          <textarea id="reader-content" name="content" rows="3"><?=
 
-                                                                htmlspecialchars($aboutSettings['role_reader']['content'] ?? 'Readers enjoy fresh, meaningful...') ?></textarea>
+              <label for="reader-content">Description</label>
 
+              <textarea id="reader-content" name="content" rows="3"><?=
 
+                                                                    htmlspecialchars($aboutSettings['role_reader']['content'] ?? 'Readers enjoy fresh, meaningful...') ?></textarea>
 
-          <label for="reader-image">Image URL or Path</label>
 
-          <input type="text" id="reader-image" name="image_url"
 
-            value="<?= htmlspecialchars($aboutSettings['role_reader']['image_url'] ?? 'pics/reader.jpg') ?>">
+              <label for="reader-image">Image URL or Path</label>
 
-          <p class="path-hint">Accept both full URLs (https://...) and local paths (pics/image.jpg or images/photo.png)</p>
+              <input type="text" id="reader-image" name="image_url"
 
+                value="<?= htmlspecialchars($aboutSettings['role_reader']['image_url'] ?? 'pics/reader.jpg') ?>">
 
+              <p class="path-hint">Accept both full URLs (https://...) and local paths (pics/image.jpg or images/photo.png)</p>
 
-          <div class="card-footer">
 
-            <button type="submit" class="save-btn">Save Role</button>
 
-          </div>
+              <div class="card-footer">
 
-        </form>
+                <button type="submit" class="save-btn">Save Role</button>
 
+              </div>
 
+            </form>
 
-        <!-- Announcements Widget Iframe Generator -->
 
-        <div class="card">
 
-          <h2>Embeddable Announcements Widget</h2>
+            <!-- Announcements Widget Iframe Generator -->
 
+            <div class="card">
 
+              <h2>Embeddable Announcements Widget</h2>
 
-          <div class="form-group">
 
-            <label>Live Preview:</label>
 
-            <div id="live-preview-container" style="border: 1px dashed #ccc; padding: 10px; border-radius: 5px; margin-bottom: 15px; background: #f8f9fa; min-height: 300px;">
+              <div class="form-group">
 
-              <iframe id="live-preview" src="announcements-widget.php?limit=5&layout=column" width="100%" height="300" frameborder="0" style="border:none;"></iframe>
+                <label>Live Preview:</label>
+
+                <div id="live-preview-container" style="border: 1px dashed #ccc; padding: 10px; border-radius: 5px; margin-bottom: 15px; background: #f8f9fa; min-height: 300px;">
+
+                  <iframe id="live-preview" src="announcements-widget.php?limit=5&layout=column" width="100%" height="300" frameborder="0" style="border:none;"></iframe>
+
+                </div>
+
+              </div>
+
+
+
+              <div class="form-group">
+
+                <label>Layout Style:</label>
+
+                <div class="toggle-container" style="display: flex; align-items: center; margin-bottom: 15px;">
+
+                  <span style="margin-right: 10px;">Column</span>
+
+                  <label class="toggle-switch">
+
+                    <input type="checkbox" id="layout-toggle">
+
+                    <span class="slider"></span>
+
+                  </label>
+
+                  <span style="margin-left: 10px;">Row</span>
+
+                </div>
+
+              </div>
+
+
+
+              <div class="form-group">
+
+                <label for="iframe-width">Width:</label>
+
+                <select id="iframe-width" class="form-control">
+
+                  <option value="100%">100% (Full width)</option>
+
+                  <option value="800px">800px</option>
+
+                  <option value="600px">600px</option>
+
+                  <option value="400px">400px</option>
+
+                  <option value="custom">Custom</option>
+
+                </select>
+
+                <input type="text" id="custom-width" style="display:none; margin-top:5px;" placeholder="e.g. 750px">
+
+              </div>
+
+
+
+              <div class="form-group">
+
+                <label for="iframe-height">Height:</label>
+
+                <input type="text" id="iframe-height" class="form-control" value="300px">
+
+              </div>
+
+
+
+              <div class="form-group">
+
+                <label for="iframe-limit">Number of Announcements:</label>
+
+                <input type="number" id="iframe-limit" class="form-control" value="5" min="1" max="10">
+
+              </div>
+
+
+
+              <div class="form-group">
+
+                <label>Embed Code:</label>
+
+                <textarea id="iframe-code" rows="4" class="form-control" readonly></textarea>
+
+              </div>
+
+
+
+              <div class="card-footer">
+
+                <button type="button" id="generate-iframe" class="save-btn">Generate Code</button>
+
+                <button type="button" id="copy-iframe" class="save-btn">Copy Code</button>
+
+              </div>
 
             </div>
 
-          </div>
+            <div class="card">
+
+              <h2>Upcoming Events Widget</h2>
 
 
 
-          <div class="form-group">
+              <div class="form-group">
 
-            <label>Layout Style:</label>
+                <label>Live Preview:</label>
 
-            <div class="toggle-container" style="display: flex; align-items: center; margin-bottom: 15px;">
+                <div id="events-preview-container" style="border: 1px dashed #ccc; padding: 10px; border-radius: 5px; margin-bottom: 15px; background: white;">
 
-              <span style="margin-right: 10px;">Column</span>
+                  <iframe id="events-preview" src="events-widget.php?view=list&limit=5&startdate=<?php echo date('Y-m-d'); ?>" width="100%" height="500" frameborder="0" style="border:none;"></iframe>
 
-              <label class="toggle-switch">
+                </div>
 
-                <input type="checkbox" id="layout-toggle">
+              </div>
 
-                <span class="slider"></span>
 
-              </label>
 
-              <span style="margin-left: 10px;">Row</span>
+              <div class="form-group">
+
+                <label>Default View:</label>
+
+                <select id="view-select" class="form-control" style="margin-bottom: 15px;">
+
+                  <option value="list">List View (Upcoming Events)</option>
+
+                  <option value="calendar">Calendar View</option>
+
+                </select>
+
+              </div>
+
+
+
+              <div class="form-group">
+
+                <label>Number of Events:</label>
+
+                <select id="limit-select" class="form-control" style="margin-bottom: 15px;">
+
+                  <option value="5">Show 5</option>
+
+                  <option value="10">Show 10</option>
+
+                  <option value="20">Show 20</option>
+
+                  <option value="all">Show All</option>
+
+                </select>
+
+              </div>
+
+
+
+              <div class="form-group">
+
+                <label>Start Date:</label>
+
+                <input type="date" id="start-date" class="form-control" style="margin-bottom: 15px;" value="<?php echo date('Y-m-d'); ?>">
+
+              </div>
+
+
+
+              <div class="form-group">
+
+                <label>Width:</label>
+
+                <select id="width-select" class="form-control" style="margin-bottom: 15px;">
+
+                  <option value="100%">100% (Full width)</option>
+
+                  <option value="800px">800px</option>
+
+                  <option value="600px">600px</option>
+
+                  <option value="400px">400px</option>
+
+                  <option value="custom">Custom</option>
+
+                </select>
+
+                <input type="text" id="custom-width" style="display:none; margin-top:5px;" placeholder="e.g. 750px or 80%">
+
+              </div>
+
+
+
+              <div class="form-group">
+
+                <label>Height:</label>
+
+                <input type="text" id="height-input" class="form-control" style="margin-bottom: 15px;" value="500px">
+
+                <p class="path-hint">Use "auto" for list view to expand with content, or specific height like "500px"</p>
+
+              </div>
+
+
+
+              <div class="form-group">
+
+                <label>Embed Code:</label>
+
+                <textarea id="embed-code" class="form-control" rows="4" readonly style="font-family: monospace; margin-bottom: 15px;"></textarea>
+
+                <button id="copy-embed" class="save-btn">Copy Code</button>
+
+              </div>
 
             </div>
 
-          </div>
 
 
 
-          <div class="form-group">
-
-            <label for="iframe-width">Width:</label>
-
-            <select id="iframe-width" class="form-control">
-
-              <option value="100%">100% (Full width)</option>
-
-              <option value="800px">800px</option>
-
-              <option value="600px">600px</option>
-
-              <option value="400px">400px</option>
-
-              <option value="custom">Custom</option>
-
-            </select>
-
-            <input type="text" id="custom-width" style="display:none; margin-top:5px;" placeholder="e.g. 750px">
-
-          </div>
 
 
 
-          <div class="form-group">
-
-            <label for="iframe-height">Height:</label>
-
-            <input type="text" id="iframe-height" class="form-control" value="300px">
-
-          </div>
 
 
 
-          <div class="form-group">
-
-            <label for="iframe-limit">Number of Announcements:</label>
-
-            <input type="number" id="iframe-limit" class="form-control" value="5" min="1" max="10">
-
-          </div>
-
-
-
-          <div class="form-group">
-
-            <label>Embed Code:</label>
-
-            <textarea id="iframe-code" rows="4" class="form-control" readonly></textarea>
-
-          </div>
-
-
-
-          <div class="card-footer">
-
-            <button type="button" id="generate-iframe" class="save-btn">Generate Code</button>
-
-            <button type="button" id="copy-iframe" class="save-btn">Copy Code</button>
 
           </div>
 
         </div>
 
-<div class="card">
-
-  <h2>Upcoming Events Widget</h2>
-
-  
-
-  <div class="form-group">
-
-    <label>Live Preview:</label>
-
-    <div id="events-preview-container" style="border: 1px dashed #ccc; padding: 10px; border-radius: 5px; margin-bottom: 15px; background: white;">
-
-      <iframe id="events-preview" src="events-widget.php?view=list&limit=5&startdate=<?php echo date('Y-m-d'); ?>" width="100%" height="500" frameborder="0" style="border:none;"></iframe>
-
-    </div>
-
-  </div>
-
-
-
-  <div class="form-group">
-
-    <label>Default View:</label>
-
-    <select id="view-select" class="form-control" style="margin-bottom: 15px;">
-
-      <option value="list">List View (Upcoming Events)</option>
-
-      <option value="calendar">Calendar View</option>
-
-    </select>
-
-  </div>
-
-
-
-  <div class="form-group">
-
-    <label>Number of Events:</label>
-
-    <select id="limit-select" class="form-control" style="margin-bottom: 15px;">
-
-      <option value="5">Show 5</option>
-
-      <option value="10">Show 10</option>
-
-      <option value="20">Show 20</option>
-
-      <option value="all">Show All</option>
-
-    </select>
-
-  </div>
-
-
-
-  <div class="form-group">
-
-    <label>Start Date:</label>
-
-    <input type="date" id="start-date" class="form-control" style="margin-bottom: 15px;" value="<?php echo date('Y-m-d'); ?>">
-
-  </div>
-
-
-
-  <div class="form-group">
-
-    <label>Width:</label>
-
-    <select id="width-select" class="form-control" style="margin-bottom: 15px;">
-
-      <option value="100%">100% (Full width)</option>
-
-      <option value="800px">800px</option>
-
-      <option value="600px">600px</option>
-
-      <option value="400px">400px</option>
-
-      <option value="custom">Custom</option>
-
-    </select>
-
-    <input type="text" id="custom-width" style="display:none; margin-top:5px;" placeholder="e.g. 750px or 80%">
-
-  </div>
-
-
-
-  <div class="form-group">
-
-    <label>Height:</label>
-
-    <input type="text" id="height-input" class="form-control" style="margin-bottom: 15px;" value="500px">
-
-    <p class="path-hint">Use "auto" for list view to expand with content, or specific height like "500px"</p>
-
-  </div>
-
-
-
-  <div class="form-group">
-
-    <label>Embed Code:</label>
-
-    <textarea id="embed-code" class="form-control" rows="4" readonly style="font-family: monospace; margin-bottom: 15px;"></textarea>
-
-    <button id="copy-embed" class="save-btn">Copy Code</button>
-
-  </div>
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
       </div>
-
     </div>
-
-  </div>
-  </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const mobileToggle = document.getElementById('mobileMenuToggle');
-      const sidebar = document.getElementById('sidebar');
-      const mainContent = document.getElementById('mainContent');
-      const body = document.body;
-      
-      // Initialize sidebar state
-      function initSidebar() {
-        if (window.innerWidth > 992) {
-          sidebar.classList.add('active');
-          mainContent.classList.add('shifted');
+      document.addEventListener('DOMContentLoaded', function() {
+        const mobileToggle = document.getElementById('mobileMenuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        const body = document.body;
+
+        // Initialize sidebar state
+        function initSidebar() {
+          if (window.innerWidth > 992) {
+            sidebar.classList.add('active');
+            mainContent.classList.add('shifted');
+          }
         }
-      }
-      
-      // Toggle sidebar
-      mobileToggle.addEventListener('click', function(e) {
-        e.stopPropagation();
-        sidebar.classList.toggle('active');
-        body.classList.toggle('sidebar-open');
-        
-        // Change icon
-        const icon = this.querySelector('i');
-        if (sidebar.classList.contains('active')) {
-          icon.classList.remove('fa-bars');
-          icon.classList.add('fa-times');
-        } else {
+
+        // Toggle sidebar
+        mobileToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          sidebar.classList.toggle('active');
+          body.classList.toggle('sidebar-open');
+
+          // Change icon
+          const icon = this.querySelector('i');
+          if (sidebar.classList.contains('active')) {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-times');
+          } else {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+          }
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(e) {
+          if (window.innerWidth <= 992 &&
+            !sidebar.contains(e.target) &&
+            e.target !== mobileToggle &&
+            sidebar.classList.contains('active')) {
+            closeSidebar();
+          }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+          if (window.innerWidth > 992) {
+            sidebar.classList.add('active');
+            mainContent.classList.add('shifted');
+          } else {
+            if (sidebar.classList.contains('active')) {
+              mainContent.classList.remove('shifted');
+            }
+          }
+        });
+
+        function closeSidebar() {
+          sidebar.classList.remove('active');
+          body.classList.remove('sidebar-open');
+          const icon = mobileToggle.querySelector('i');
           icon.classList.remove('fa-times');
           icon.classList.add('fa-bars');
         }
+
+        // Initialize
+        initSidebar();
       });
-      
-      // Close sidebar when clicking outside on mobile
-      document.addEventListener('click', function(e) {
-        if (window.innerWidth <= 992 && 
-            !sidebar.contains(e.target) && 
-            e.target !== mobileToggle && 
-            sidebar.classList.contains('active')) {
-          closeSidebar();
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const viewSelect = document.getElementById('view-select');
+
+        const limitSelect = document.getElementById('limit-select');
+
+        const startDate = document.getElementById('start-date');
+
+        const widthSelect = document.getElementById('width-select');
+
+        const customWidth = document.getElementById('custom-width');
+
+        const heightInput = document.getElementById('height-input');
+
+        const previewIframe = document.getElementById('events-preview');
+
+        const embedCode = document.getElementById('embed-code');
+
+        const copyButton = document.getElementById('copy-embed');
+
+
+
+        // Toggle custom width field
+
+        widthSelect.addEventListener('change', function() {
+
+          customWidth.style.display = this.value === 'custom' ? 'block' : 'none';
+
+          updateWidget();
+
+        });
+
+
+
+        function updateWidget() {
+
+          const view = viewSelect.value;
+
+          const limit = limitSelect.value;
+
+          const date = startDate.value;
+
+          let width = widthSelect.value;
+
+          if (width === 'custom') width = customWidth.value || '100%';
+
+          const height = heightInput.value || (view === 'list' ? 'auto' : '500px');
+
+
+
+          // Update iframe preview
+
+          previewIframe.src = `events-widget.php?view=${view}&limit=${limit}&startdate=${date}&width=${width}&height=${height}`;
+
+
+
+          // Update preview container size
+
+          document.getElementById('events-preview-container').style.height = height === 'auto' ? 'auto' : height;
+
+
+
+          // Update embed code
+
+          const code = `<iframe src="events-widget.php?view=${view}&limit=${limit}&startdate=${date}&width=${width}&height=${height}" width="${width}" height="${height}" frameborder="0" style="border:none;"></iframe>`;
+
+          embedCode.value = code;
+
         }
+
+
+
+        viewSelect.addEventListener('change', updateWidget);
+
+        limitSelect.addEventListener('change', updateWidget);
+
+        startDate.addEventListener('change', updateWidget);
+
+        widthSelect.addEventListener('change', updateWidget);
+
+        customWidth.addEventListener('input', updateWidget);
+
+        heightInput.addEventListener('input', updateWidget);
+
+
+
+        copyButton.addEventListener('click', function() {
+
+          embedCode.select();
+
+          document.execCommand('copy');
+
+          copyButton.textContent = 'Copied!';
+
+          setTimeout(() => {
+
+            copyButton.textContent = 'Copy Code';
+
+          }, 2000);
+
+        });
+
+
+
+        // Initialize
+
+        updateWidget();
+
       });
-      
-      // Handle window resize
-      window.addEventListener('resize', function() {
-        if (window.innerWidth > 992) {
-          sidebar.classList.add('active');
-          mainContent.classList.add('shifted');
-        } else {
-          if (sidebar.classList.contains('active')) {
-            mainContent.classList.remove('shifted');
+    </script>
+
+
+
+
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+
+        const themeSelect = document.getElementById('theme-select');
+
+        const sizeRadios = document.querySelectorAll('input[name="size"]');
+
+        const previewIframe = document.getElementById('calendar-preview');
+
+        const embedCode = document.getElementById('embed-code');
+
+        const copyButton = document.getElementById('copy-embed');
+
+
+
+        // Update preview and embed code when options change
+
+        function updateWidget() {
+
+          const theme = themeSelect.value;
+
+          const size = document.querySelector('input[name="size"]:checked').value;
+
+
+
+          // Update iframe preview
+
+          previewIframe.src = `calendar-widget.php?theme=${theme}&size=${size}`;
+
+
+
+          // Update embed code
+
+          const code = `<iframe src="calendar-widget.php?theme=${theme}&size=${size}" width="${getWidth(size)}" height="${getHeight(size)}" frameborder="0" style="border:none;"></iframe>`;
+
+          embedCode.value = code;
+
+        }
+
+
+
+        // Helper functions for size dimensions
+
+        function getWidth(size) {
+
+          switch (size) {
+
+            case 'small':
+              return '300';
+
+            case 'medium':
+              return '500';
+
+            case 'large':
+              return '700';
+
+            default:
+              return '500';
+
           }
+
         }
+
+
+
+        function getHeight(size) {
+
+          switch (size) {
+
+            case 'small':
+              return '300';
+
+            case 'medium':
+              return '400';
+
+            case 'large':
+              return '500';
+
+            default:
+              return '400';
+
+          }
+
+        }
+
+
+
+        // Event listeners
+
+        themeSelect.addEventListener('change', updateWidget);
+
+        sizeRadios.forEach(radio => {
+
+          radio.addEventListener('change', updateWidget);
+
+        });
+
+
+
+        copyButton.addEventListener('click', function() {
+
+          embedCode.select();
+
+          document.execCommand('copy');
+
+          copyButton.textContent = 'Copied!';
+
+          setTimeout(() => {
+
+            copyButton.textContent = 'Copy Code';
+
+          }, 2000);
+
+        });
+
+
+
+        // Initialize
+
+        updateWidget();
+
       });
-      
-      function closeSidebar() {
-        sidebar.classList.remove('active');
-        body.classList.remove('sidebar-open');
-        const icon = mobileToggle.querySelector('i');
-        icon.classList.remove('fa-times');
-        icon.classList.add('fa-bars');
-      }
-      
-      // Initialize
-      initSidebar();
-    });
-  </script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const viewSelect = document.getElementById('view-select');
+    </script>
 
-  const limitSelect = document.getElementById('limit-select');
 
-  const startDate = document.getElementById('start-date');
 
-  const widthSelect = document.getElementById('width-select');
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
 
-  const customWidth = document.getElementById('custom-width');
+        const widthSelect = document.getElementById('iframe-width');
 
-  const heightInput = document.getElementById('height-input');
+        const customWidth = document.getElementById('custom-width');
 
-  const previewIframe = document.getElementById('events-preview');
+        const heightInput = document.getElementById('iframe-height');
 
-  const embedCode = document.getElementById('embed-code');
+        const limitInput = document.getElementById('iframe-limit');
 
-  const copyButton = document.getElementById('copy-embed');
+        const layoutToggle = document.getElementById('layout-toggle');
 
-  
+        const iframeCode = document.getElementById('iframe-code');
 
-  // Toggle custom width field
+        const livePreview = document.getElementById('live-preview');
 
-  widthSelect.addEventListener('change', function() {
 
-    customWidth.style.display = this.value === 'custom' ? 'block' : 'none';
 
-    updateWidget();
+        // Toggle custom width field
 
-  });
+        widthSelect.addEventListener('change', function() {
 
-  
+          customWidth.style.display = this.value === 'custom' ? 'block' : 'none';
 
-  function updateWidget() {
+          updateIframe();
 
-    const view = viewSelect.value;
+        });
 
-    const limit = limitSelect.value;
 
-    const date = startDate.value;
 
-    let width = widthSelect.value;
+        // Update both preview and code
 
-    if (width === 'custom') width = customWidth.value || '100%';
+        function updateIframe() {
 
-    const height = heightInput.value || (view === 'list' ? 'auto' : '500px');
+          let width = widthSelect.value;
 
-    
+          if (width === 'custom') width = customWidth.value || '100%';
 
-    // Update iframe preview
+          const height = heightInput.value || '300px';
 
-    previewIframe.src = `events-widget.php?view=${view}&limit=${limit}&startdate=${date}&width=${width}&height=${height}`;
+          const limit = limitInput.value || '5';
 
-    
+          const layout = layoutToggle.checked ? 'row' : 'column';
 
-    // Update preview container size
 
-    document.getElementById('events-preview-container').style.height = height === 'auto' ? 'auto' : height;
 
-    
+          // Update live preview
 
-    // Update embed code
+          livePreview.src = `announcements-widget.php?limit=${limit}&layout=${layout}`;
 
-    const code = `<iframe src="events-widget.php?view=${view}&limit=${limit}&startdate=${date}&width=${width}&height=${height}" width="${width}" height="${height}" frameborder="0" style="border:none;"></iframe>`;
+          livePreview.style.width = width;
 
-    embedCode.value = code;
+          livePreview.style.height = height;
 
-  }
 
-  
 
-  viewSelect.addEventListener('change', updateWidget);
+          // Update embed code with correct localhost path
 
-  limitSelect.addEventListener('change', updateWidget);
+          const basePath = 'announcements-widget.php';
 
-  startDate.addEventListener('change', updateWidget);
+          const code = `<iframe src="${basePath}?limit=${limit}&layout=${layout}" width="${width}" height="${height}" frameborder="0" style="border:none;"></iframe>`;
 
-  widthSelect.addEventListener('change', updateWidget);
+          iframeCode.value = code;
 
-  customWidth.addEventListener('input', updateWidget);
 
-  heightInput.addEventListener('input', updateWidget);
 
-  
+          // Adjust preview container height
 
-  copyButton.addEventListener('click', function() {
+          document.getElementById('live-preview-container').style.minHeight = height;
 
-    embedCode.select();
+        }
 
-    document.execCommand('copy');
 
-    copyButton.textContent = 'Copied!';
 
-    setTimeout(() => {
+        // Copy to clipboard
 
-      copyButton.textContent = 'Copy Code';
+        document.getElementById('copy-iframe').addEventListener('click', function() {
 
-    }, 2000);
+          iframeCode.select();
 
-  });
+          document.execCommand('copy');
 
-  
+          this.textContent = 'Copied!';
 
-  // Initialize
+          setTimeout(() => this.textContent = 'Copy Code', 2000);
 
-  updateWidget();
+        });
 
-});
 
-</script>
 
+        // Generate on any change
 
+        [widthSelect, customWidth, heightInput, limitInput, layoutToggle].forEach(el => {
 
+          el.addEventListener('change', updateIframe);
 
+          el.addEventListener('input', updateIframe);
 
-<script>
+        });
 
-document.addEventListener('DOMContentLoaded', function() {
 
-  const themeSelect = document.getElementById('theme-select');
 
-  const sizeRadios = document.querySelectorAll('input[name="size"]');
-
-  const previewIframe = document.getElementById('calendar-preview');
-
-  const embedCode = document.getElementById('embed-code');
-
-  const copyButton = document.getElementById('copy-embed');
-
-  
-
-  // Update preview and embed code when options change
-
-  function updateWidget() {
-
-    const theme = themeSelect.value;
-
-    const size = document.querySelector('input[name="size"]:checked').value;
-
-    
-
-    // Update iframe preview
-
-    previewIframe.src = `calendar-widget.php?theme=${theme}&size=${size}`;
-
-    
-
-    // Update embed code
-
-    const code = `<iframe src="calendar-widget.php?theme=${theme}&size=${size}" width="${getWidth(size)}" height="${getHeight(size)}" frameborder="0" style="border:none;"></iframe>`;
-
-    embedCode.value = code;
-
-  }
-
-  
-
-  // Helper functions for size dimensions
-
-  function getWidth(size) {
-
-    switch(size) {
-
-      case 'small': return '300';
-
-      case 'medium': return '500';
-
-      case 'large': return '700';
-
-      default: return '500';
-
-    }
-
-  }
-
-  
-
-  function getHeight(size) {
-
-    switch(size) {
-
-      case 'small': return '300';
-
-      case 'medium': return '400';
-
-      case 'large': return '500';
-
-      default: return '400';
-
-    }
-
-  }
-
-  
-
-  // Event listeners
-
-  themeSelect.addEventListener('change', updateWidget);
-
-  sizeRadios.forEach(radio => {
-
-    radio.addEventListener('change', updateWidget);
-
-  });
-
-  
-
-  copyButton.addEventListener('click', function() {
-
-    embedCode.select();
-
-    document.execCommand('copy');
-
-    copyButton.textContent = 'Copied!';
-
-    setTimeout(() => {
-
-      copyButton.textContent = 'Copy Code';
-
-    }, 2000);
-
-  });
-
-  
-
-  // Initialize
-
-  updateWidget();
-
-});
-
-</script>
-
-
-
-  <script>
-
-    document.addEventListener('DOMContentLoaded', function() {
-
-      const widthSelect = document.getElementById('iframe-width');
-
-      const customWidth = document.getElementById('custom-width');
-
-      const heightInput = document.getElementById('iframe-height');
-
-      const limitInput = document.getElementById('iframe-limit');
-
-      const layoutToggle = document.getElementById('layout-toggle');
-
-      const iframeCode = document.getElementById('iframe-code');
-
-      const livePreview = document.getElementById('live-preview');
-
-
-
-      // Toggle custom width field
-
-      widthSelect.addEventListener('change', function() {
-
-        customWidth.style.display = this.value === 'custom' ? 'block' : 'none';
+        // Initial update
 
         updateIframe();
 
       });
+    </script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+
+        // Get all image URL inputs
+
+        const imageInputs = document.querySelectorAll('input[name="image_url"]');
 
 
 
-      // Update both preview and code
+        imageInputs.forEach(input => {
 
-      function updateIframe() {
+          input.addEventListener('change', function() {
 
-        let width = widthSelect.value;
+            const value = this.value.trim();
 
-        if (width === 'custom') width = customWidth.value || '100%';
+            if (value && !value.match(/^(https?:\/\/|\/|pics\/|images\/)/i)) {
 
-        const height = heightInput.value || '300px';
+              alert('Please enter either:\n- A full URL starting with http:// or https://\n- A local path starting with pics/ or images/');
 
-        const limit = limitInput.value || '5';
+            }
 
-        const layout = layoutToggle.checked ? 'row' : 'column';
+          });
 
-
-
-        // Update live preview
-
-        livePreview.src = `announcements-widget.php?limit=${limit}&layout=${layout}`;
-
-        livePreview.style.width = width;
-
-        livePreview.style.height = height;
+        });
 
 
 
-        // Update embed code with correct localhost path
+        // For video URLs, ensure they're full URLs
 
-        const basePath = window.location.host.includes('localhost') ?
+        const videoInputs = document.querySelectorAll('input[name="video_url"]');
 
-          'https://localhost/G16-CMS/announcements-widget.php' :
+        videoInputs.forEach(input => {
 
-          '<?php echo $_SERVER['HTTP_HOST']; ?>/announcements-widget.php';
+          input.addEventListener('change', function() {
+
+            const value = this.value.trim();
+
+            if (value && !value.match(/^https?:\/\//i)) {
+
+              alert('Video URL must be a full URL starting with http:// or https://');
+
+              this.value = '';
+
+            }
+
+          });
+
+        });
+
+      });
+    </script>
 
 
 
-        const code = `<iframe src="${basePath}?limit=${limit}&layout=${layout}" width="${width}" height="${height}" frameborder="0" style="border:none;"></iframe>`;
+    <!-- Sanitize Input Boxes -->
 
-        iframeCode.value = code;
+    <script>
+      function sanitizeInputText(text) {
+
+        // Normalize to remove full-width/bold/special formatting
+
+        text = text.normalize("NFKC");
 
 
 
-        // Adjust preview container height
+        // Remove invisible/control characters EXCEPT:
 
-        document.getElementById('live-preview-container').style.minHeight = height;
+        // - Tab (\u0009)
+
+        // - Newline (\u000A)
+
+        // - Carriage return (\u000D)
+
+        text = text.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]+/g, "");
+
+
+
+        // Remove private-use Unicode characters
+
+        text = text.replace(/[\u{E000}-\u{F8FF}\u{F0000}-\u{FFFFD}\u{100000}-\u{10FFFD}]/gu, "");
+
+
+
+        // Allow only one space
+
+        text = text.replace(/\s+/g, ' ');
+
+
+
+        // DO NOT trim here if you want to allow intentional leading/trailing spaces
+
+        return text;
 
       }
 
 
 
-      // Copy to clipboard
 
-      document.getElementById('copy-iframe').addEventListener('click', function() {
 
-        iframeCode.select();
+      // Attach the sanitizer to inputs and textareas
 
-        document.execCommand('copy');
+      function attachSanitizerToInputs() {
 
-        this.textContent = 'Copied!';
-
-        setTimeout(() => this.textContent = 'Copy Code', 2000);
-
-      });
+        const inputs = document.querySelectorAll("input[type='text'], textarea, input[type='url']");
 
 
 
-      // Generate on any change
+        inputs.forEach(input => {
 
-      [widthSelect, customWidth, heightInput, limitInput, layoutToggle].forEach(el => {
+          input.addEventListener('input', () => {
 
-        el.addEventListener('change', updateIframe);
+            const original = input.value;
 
-        el.addEventListener('input', updateIframe);
+            const cleaned = sanitizeInputText(original);
 
-      });
+            if (original !== cleaned) {
 
+              input.value = cleaned;
 
+            }
 
-      // Initial update
-
-      updateIframe();
-
-    });
-
-  </script>
-
-  <script>
-
-    document.addEventListener('DOMContentLoaded', function() {
-
-      // Get all image URL inputs
-
-      const imageInputs = document.querySelectorAll('input[name="image_url"]');
+          });
 
 
 
-      imageInputs.forEach(input => {
+          input.addEventListener('paste', (e) => {
 
-        input.addEventListener('change', function() {
+            e.preventDefault();
 
-          const value = this.value.trim();
+            const pastedText = (e.clipboardData || window.clipboardData).getData('text');
 
-          if (value && !value.match(/^(https?:\/\/|\/|pics\/|images\/)/i)) {
+            const cleaned = sanitizeInputText(pastedText);
 
-            alert('Please enter either:\n- A full URL starting with http:// or https://\n- A local path starting with pics/ or images/');
+            document.execCommand("insertText", false, cleaned);
 
-          }
+          });
 
         });
 
-      });
+      }
 
 
 
-      // For video URLs, ensure they're full URLs
+      document.addEventListener('DOMContentLoaded', attachSanitizerToInputs);
+    </script>
 
-      const videoInputs = document.querySelectorAll('input[name="video_url"]');
 
-      videoInputs.forEach(input => {
 
-        input.addEventListener('change', function() {
+    <!-- Article Highlight script -->
 
-          const value = this.value.trim();
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
 
-          if (value && !value.match(/^https?:\/\//i)) {
+        // Load all articles
 
-            alert('Video URL must be a full URL starting with http:// or https://');
+        fetchArticles();
 
-            this.value = '';
 
-          }
 
-        });
+        // Search functionality
 
-      });
+        document.getElementById('article-search').addEventListener('input', function(e) {
 
-    });
+          const searchTerm = e.target.value.toLowerCase();
 
-  </script>
-
-
-
-  <!-- Sanitize Input Boxes -->
-
-  <script>
-
-    function sanitizeInputText(text) {
-
-      // Normalize to remove full-width/bold/special formatting
-
-      text = text.normalize("NFKC");
-
-
-
-      // Remove invisible/control characters EXCEPT:
-
-      // - Tab (\u0009)
-
-      // - Newline (\u000A)
-
-      // - Carriage return (\u000D)
-
-      text = text.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]+/g, "");
-
-
-
-      // Remove private-use Unicode characters
-
-      text = text.replace(/[\u{E000}-\u{F8FF}\u{F0000}-\u{FFFFD}\u{100000}-\u{10FFFD}]/gu, "");
-
-
-
-      // Allow only one space
-
-      text = text.replace(/\s+/g, ' ');
-
-
-
-      // DO NOT trim here if you want to allow intentional leading/trailing spaces
-
-      return text;
-
-    }
-
-
-
-
-
-    // Attach the sanitizer to inputs and textareas
-
-    function attachSanitizerToInputs() {
-
-      const inputs = document.querySelectorAll("input[type='text'], textarea, input[type='url']");
-
-
-
-      inputs.forEach(input => {
-
-        input.addEventListener('input', () => {
-
-          const original = input.value;
-
-          const cleaned = sanitizeInputText(original);
-
-          if (original !== cleaned) {
-
-            input.value = cleaned;
-
-          }
-
-        });
-
-
-
-        input.addEventListener('paste', (e) => {
-
-          e.preventDefault();
-
-          const pastedText = (e.clipboardData || window.clipboardData).getData('text');
-
-          const cleaned = sanitizeInputText(pastedText);
-
-          document.execCommand("insertText", false, cleaned);
-
-        });
-
-      });
-
-    }
-
-
-
-    document.addEventListener('DOMContentLoaded', attachSanitizerToInputs);
-
-  </script>
-
-
-
-  <!-- Article Highlight script -->
-
-  <script>
-
-    document.addEventListener('DOMContentLoaded', function() {
-
-      // Load all articles
-
-      fetchArticles();
-
-
-
-      // Search functionality
-
-      document.getElementById('article-search').addEventListener('input', function(e) {
-
-        const searchTerm = e.target.value.toLowerCase();
-
-        const articles = document.querySelectorAll('.article-item');
-
-
-
-        articles.forEach(article => {
-
-          const title = article.querySelector('.article-title').textContent.toLowerCase();
-
-          if (title.includes(searchTerm)) {
-
-            article.style.display = 'flex';
-
-          } else {
-
-            article.style.display = 'none';
-
-          }
-
-        });
-
-      });
-
-    });
-
-
-
-    function fetchArticles() {
-
-      const container = document.getElementById('articles-container');
-
-      container.innerHTML = '<div class="loading-spinner"></div>';
-
-
-
-      fetch('php-backend/get-all-articles.php')
-
-        .then(response => response.json())
-
-        .then(articles => {
-
-          container.innerHTML = '';
-
-
-
-          if (articles.length === 0) {
-
-            container.innerHTML = '<p class="no-articles">No published articles found</p>';
-
-            return;
-
-          }
+          const articles = document.querySelectorAll('.article-item');
 
 
 
           articles.forEach(article => {
 
-            const articleEl = document.createElement('div');
+            const title = article.querySelector('.article-title').textContent.toLowerCase();
 
-            articleEl.className = 'article-item';
+            if (title.includes(searchTerm)) {
 
-            articleEl.innerHTML = `
+              article.style.display = 'flex';
+
+            } else {
+
+              article.style.display = 'none';
+
+            }
+
+          });
+
+        });
+
+      });
+
+
+
+      function fetchArticles() {
+
+        const container = document.getElementById('articles-container');
+
+        container.innerHTML = '<div class="loading-spinner"></div>';
+
+
+
+        fetch('php-backend/get-all-articles.php')
+
+          .then(response => response.json())
+
+          .then(articles => {
+
+            container.innerHTML = '';
+
+
+
+            if (articles.length === 0) {
+
+              container.innerHTML = '<p class="no-articles">No published articles found</p>';
+
+              return;
+
+            }
+
+
+
+            articles.forEach(article => {
+
+              const articleEl = document.createElement('div');
+
+              articleEl.className = 'article-item';
+
+              articleEl.innerHTML = `
 
           <div class="article-info">
 
@@ -2724,27 +2704,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
         `;
 
-            container.appendChild(articleEl);
+              container.appendChild(articleEl);
+
+            });
+
+          })
+
+          .catch(error => {
+
+            console.error('Error:', error);
+
+            container.innerHTML = '<p class="error-message">Failed to load articles. Please try again.</p>';
 
           });
 
-        })
-
-        .catch(error => {
-
-          console.error('Error:', error);
-
-          container.innerHTML = '<p class="error-message">Failed to load articles. Please try again.</p>';
-
-        });
-
-    }
-
-  </script>
+      }
+    </script>
 
 
 
-  <!-- <script src="scripts/menu_button-admin.js"></script> -->
+    <!-- <script src="scripts/menu_button-admin.js"></script> -->
 
 </body>
 

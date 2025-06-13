@@ -49,7 +49,7 @@ $profile_pic = $_SESSION['profile_picture'];
                     </select>
                     <input type="text" placeholder="Search for you articles" id='search-your-active-articles' class='search-your-articles'>
                     <div class="pfp-container" id='add-article-pfp-container'>
-                        <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : $profile_pic; ?>" alt="" id='pfp-circle'>
+                        <img src="<?php echo (!$profile_pic) ? 'pics/no-pic.jpg' : $profile_pic; ?>" alt="" id='pfp-circle-in-page' style="cursor: pointer;">
                     </div>
                 </div>
             </div>
@@ -112,6 +112,13 @@ $profile_pic = $_SESSION['profile_picture'];
     <!-- \Go to account settings -->
     <script src="scripts/pfp-go-to-account-settings.js"></script>
 
+    <!-- PFP In page -->
+    <script>
+        const pfpCircleInPage = document.getElementById('pfp-circle-in-page');
+        pfpCircleInPage.addEventListener('click', () => {
+            window.location.href = 'account-settings.php';
+        });
+    </script>
 </body>
 
 </html>

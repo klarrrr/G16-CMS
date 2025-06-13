@@ -1,9 +1,9 @@
 const tagsInput = document.getElementById('widget-tags-input');
 const tagsContainer = document.querySelector('.tags-container');
-let currentTags = []; // This will store our tags in memory
+let currentTags = [];
 const MAX_TAGS = 15;
 
-// ========== Load Tags from Server ========== //
+// Load Tags From Server
 function loadAssignedTags(article_id) {
     $.ajax({
         url: 'php-backend/get-assigned-tags.php',
@@ -11,17 +11,17 @@ function loadAssignedTags(article_id) {
         dataType: 'json',
         data: { article_id: article_id },
         success: (res) => {
-            // 1. Clear existing tags from DOM and memory
+            // Clear existing tags from DOM and memory
             clearAllTags();
 
-            // 2. If new tags exist, add them
+            // If new tags exist, add them
             if (res.success && res.tags.length > 0) {
                 res.tags.forEach(tag => {
                     addTagElement(tag.tag_name); // Adds to DOM
                     currentTags.push(tag.tag_name); // Adds to memory
                 });
-            } 
-            // 3. If no tags, show message
+            }
+            // If no tags, show message
             else {
                 showNoTagsMessage();
             }
@@ -32,7 +32,7 @@ function loadAssignedTags(article_id) {
     });
 }
 
-// ========== Helper Functions ========== //
+// Helper Functions
 function clearAllTags() {
     // Remove from DOM
     document.querySelectorAll('.added-tag').forEach(tag => tag.remove());
@@ -55,13 +55,13 @@ function showNoTagsMessage() {
     tagsContainer.appendChild(msg);
 }
 
-// ========== Tag Management ========== //
+// Tag Management
 // Add tag on Enter key
 tagsInput.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
         e.preventDefault();
         const tagName = tagsInput.value.trim();
-        
+
         if (tagName && !currentTags.includes(tagName)) {
             if (currentTags.length >= MAX_TAGS) {
                 showTagLimitWarning();
@@ -90,7 +90,7 @@ function addTagElement(tagName) {
         tagDiv.remove();
         currentTags = currentTags.filter(tag => tag !== tagName);
         updateTagCounter();
-        
+
         // Show "no tags" message if all are removed
         if (currentTags.length === 0) {
             showNoTagsMessage();
@@ -98,11 +98,11 @@ function addTagElement(tagName) {
     });
 }
 
-// ========== UI Helpers ========== //
+// UI Helpers
 function showTagLimitWarning() {
     const existingWarning = document.getElementById('tag-limit-warning');
     if (existingWarning) existingWarning.remove();
-    
+
     const warning = document.createElement('div');
     warning.id = 'tag-limit-warning';
     warning.textContent = `Maximum ${MAX_TAGS} tags allowed`;
@@ -110,7 +110,7 @@ function showTagLimitWarning() {
     warning.style.padding = '0.5rem';
     warning.style.fontSize = '0.8rem';
     warning.style.fontWeight = 'bold';
-    
+
     tagsContainer.appendChild(warning);
     setTimeout(() => warning.remove(), 3000);
 }
@@ -118,7 +118,7 @@ function showTagLimitWarning() {
 function updateTagCounter() {
     const existingCounter = document.getElementById('tag-counter');
     if (existingCounter) existingCounter.remove();
-    
+
     const counter = document.createElement('div');
     counter.id = 'tag-counter';
     counter.textContent = `${currentTags.length}/${MAX_TAGS} tags`;
@@ -126,14 +126,14 @@ function updateTagCounter() {
     counter.style.padding = '0.5rem';
     counter.style.fontSize = '0.8rem';
     counter.style.fontStyle = 'italic';
-    
+
     tagsContainer.appendChild(counter);
 }
 
-// ========== Save Tags ========== //
+// Save Tags
 function saveTags(article_id) {
     if (currentTags.length === 0 && !confirm('Continue without tags?')) return;
-    
+
     $.ajax({
         url: 'php-backend/save-tags.php',
         type: 'POST',
@@ -150,7 +150,7 @@ function saveTags(article_id) {
     });
 }
 
-// ========== Initialize ========== //
+// Initialize
 document.getElementById('save-tags-button').addEventListener('click', () => {
     saveTags(article_id);
 });

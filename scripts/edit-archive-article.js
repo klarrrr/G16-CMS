@@ -11,7 +11,6 @@ archiveBtn.addEventListener('click', () => {
     delBox.style.display = 'flex';
 });
 
-// edit-article-delete-article.php
 
 delBoxYes.addEventListener('click', () => {
     $.ajax({

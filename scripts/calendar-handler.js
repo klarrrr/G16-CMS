@@ -108,6 +108,7 @@ function updateDropdowns() {
     yearSelect.value = currentYear;
 }
 
+// Function to show modal where events are stored in particular day
 function showEventBox(cell, day, month, year) {
     const box = document.getElementById("event-box");
     const backdrop = document.getElementById("event-backdrop");
@@ -120,10 +121,10 @@ function showEventBox(cell, day, month, year) {
         return;
     }
 
-const cards = events.map(event => {
-    const imageUrl = event.widget_img && event.widget_img.trim() !== "" ? event.widget_img : "pics/plp-outside.jpg";
+    const cards = events.map(event => {
+        const imageUrl = event.widget_img && event.widget_img.trim() !== "" ? event.widget_img : "pics/plp-outside.jpg";
 
-    return `
+        return `
     <div class="event-card" articleid="${event.article_id}">
         <div class="event-image">
             <img src="${imageUrl}" alt="${event.article_title}" onerror="this.onerror=null;this.src='pics/plp-outside.jpg';" />
@@ -138,9 +139,7 @@ const cards = events.map(event => {
         </div>
     </div>
     `;
-}).join("");
-
-
+    }).join("");
 
     box.innerHTML = `
         <div class='close-event-box-container'>

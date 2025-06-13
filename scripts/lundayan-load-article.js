@@ -1,13 +1,13 @@
-// AJAX request to fetch images for the given article_id
 $.ajax({
     url: 'php-backend/get-article-site-gallery.php',
     type: 'GET',
     dataType: 'json',
     data: {
-        article_id: articleId // Pass article_id to the server
+        article_id: articleId
     },
     success: function (res) {
         if (res.status === 'success') {
+
             // Clear the gallery container to prevent duplicates
             galleryContainer.innerHTML = '';
 

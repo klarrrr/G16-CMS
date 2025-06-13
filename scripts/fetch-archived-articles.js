@@ -5,7 +5,7 @@ document.getElementById('main-page').appendChild(paginationContainer);
 let debounceTimer;
 
 let currentPage = 1;
-const limit = 6; // Items per page
+const limit = 6;
 
 function fetchArchivedArticles(query = '', sortOrder = 'desc', page = 1) {
     $.ajax({

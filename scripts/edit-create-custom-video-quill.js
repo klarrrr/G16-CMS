@@ -1,5 +1,6 @@
 const BlockEmbed = Quill.import('blots/block/embed');
 
+// Custom Video Class
 class CustomVideo extends BlockEmbed {
     static create(value) {
         const node = document.createElement('video');

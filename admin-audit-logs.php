@@ -31,7 +31,8 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
       --transition-speed: 0.3s;
     }
 
-    html, body {
+    html,
+    body {
       height: 100%;
     }
 
@@ -66,7 +67,7 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
     .main-container {
       display: flex;
       flex: 1;
-      min-height: 0; /* Fix for flexbox scrolling */
+      min-height: 0;
     }
 
     /* Sidebar styling */
@@ -122,7 +123,6 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
       overflow-y: auto;
     }
 
-    /* Modern Black & White Card Styles */
     .card {
       background: white;
       border-radius: 8px;
@@ -214,7 +214,8 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
       margin-bottom: 1.5rem;
     }
 
-    th, td {
+    th,
+    td {
       padding: 12px 15px;
       text-align: left;
       border-bottom: 1px solid #eee;
@@ -280,7 +281,6 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
       color: #666;
     }
 
-    /* Status Messages */
     .success,
     .error {
       border-radius: 4px;
@@ -300,7 +300,6 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
       border-left-color: #dc3545;
     }
 
-    /* Responsive adjustments */
     @media (max-width: 992px) {
       .mobile-menu-toggle {
         display: block;
@@ -335,7 +334,6 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
       }
     }
 
-    /* Phone adjustments (≤ 768px) */
     @media (max-width: 768px) {
       .page-header {
         padding: 1rem 1.25rem;
@@ -372,7 +370,6 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
       }
     }
 
-    /* Small devices (≤ 480px) */
     @media (max-width: 480px) {
       .mobile-menu-toggle {
         font-size: 0.95rem;
@@ -388,13 +385,13 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
         font-size: 0.85rem;
       }
 
-      th, td {
+      th,
+      td {
         padding: 8px 10px;
         font-size: 0.85rem;
       }
     }
 
-    /* Overlay background when sidebar is open */
     .sidebar-overlay {
       content: '';
       position: fixed;
@@ -503,7 +500,9 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
               </thead>
               <tbody>
                 <!-- Rows populated dynamically -->
-                <tr><td colspan="6">Loading...</td></tr>
+                <tr>
+                  <td colspan="6">Loading...</td>
+                </tr>
               </tbody>
             </table>
             <div id="noRecords" class="no-records" style="display:none;">
@@ -526,20 +525,20 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
       const sidebar = document.getElementById('sidebar');
       const mainContent = document.getElementById('mainContent');
       const body = document.body;
-      
+
       function initSidebar() {
         if (window.innerWidth > 992) {
           sidebar.classList.add('active');
           mainContent.classList.add('shifted');
         }
       }
-      
+
       // Toggle sidebar
       mobileToggle.addEventListener('click', function(e) {
         e.stopPropagation();
         sidebar.classList.toggle('active');
         body.classList.toggle('sidebar-open');
-        
+
         // Change icon
         const icon = this.querySelector('i');
         if (sidebar.classList.contains('active')) {
@@ -550,17 +549,17 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
           icon.classList.add('fa-bars');
         }
       });
-      
+
       // Close sidebar when clicking outside on mobile
       document.addEventListener('click', function(e) {
-        if (window.innerWidth <= 992 && 
-            !sidebar.contains(e.target) && 
-            e.target !== mobileToggle && 
-            sidebar.classList.contains('active')) {
+        if (window.innerWidth <= 992 &&
+          !sidebar.contains(e.target) &&
+          e.target !== mobileToggle &&
+          sidebar.classList.contains('active')) {
           closeSidebar();
         }
       });
-      
+
       // Handle window resize
       window.addEventListener('resize', function() {
         if (window.innerWidth > 992) {
@@ -572,7 +571,7 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
           }
         }
       });
-      
+
       function closeSidebar() {
         sidebar.classList.remove('active');
         body.classList.remove('sidebar-open');
@@ -580,7 +579,7 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
         icon.classList.remove('fa-times');
         icon.classList.add('fa-bars');
       }
-      
+
       // Initialize
       initSidebar();
 
@@ -783,4 +782,5 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
     }
   </script>
 </body>
+
 </html>

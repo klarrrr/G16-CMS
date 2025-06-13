@@ -1,6 +1,6 @@
 <?php
 $targetDir = "../video/";
-$publicDir = "/video/"; // Public URL path (relative to your localhost)
+$publicDir = "/video/"; // Public URL path
 
 if (!file_exists($targetDir)) {
     mkdir($targetDir, 0777, true);
@@ -16,7 +16,7 @@ if (isset($_FILES['video'])) {
         if (move_uploaded_file($file["tmp_name"], $targetFile)) {
             echo json_encode([
                 "success" => true,
-                "url" => $publicDir . $fileName // ✅ Use public URL
+                "url" => $publicDir . $fileName //  public URL
             ]);
         } else {
             echo json_encode(["success" => false, "error" => "Failed to move uploaded file."]);

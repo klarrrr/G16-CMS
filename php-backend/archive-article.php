@@ -16,7 +16,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Toggle status
     $newStatus = ($currentStatus === 'archived') ? 'active' : 'archived';
 
+    // Update archive status
     $updateSQL = "UPDATE articles SET archive_status = ? WHERE article_id = ?";
+
     $stmt = $conn->prepare($updateSQL);
     if ($stmt) {
         $stmt->bind_param("si", $newStatus, $article_id);

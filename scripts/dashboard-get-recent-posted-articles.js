@@ -14,60 +14,59 @@ $.ajax({
 
         // Clear container first if needed
         recentDraftsContainer.innerHTML = '';
+        const postedFragment = document.createDocumentFragment();
 
         // Fallback message
         if (!articles || articles.length === 0) {
             const emptyMsgPosted = document.createElement('p');
             emptyMsgPosted.textContent = "No recent submitted articles found.";
             emptyMsgPosted.style.color = '#999';
+            emptyMsgPosted.className = "posted-nothing";
             emptyMsgPosted.style.textAlign = 'center';
             emptyMsgPosted.style.padding = '1rem';
             emptyMsgPosted.style.fontStyle = 'italic';
             recentPostContainer.appendChild(emptyMsgPosted);
-            return; // Stop further execution
-        }
+        } else {
+            for (let i = 0; i < articles.length; i++) {
+                const articleId = articles[i].article_id;
+                const title = articles[i].article_title;
+                const pic = widgets[i] ? widgets[i].widget_img : 'pics/plp-outside.jpg';
 
-        const postedFragment = document.createDocumentFragment();
+                const recentArticleLayout = document.createElement('div');
+                recentArticleLayout.classList.add('recent-box');
 
-        for (let i = 0; i < articles.length; i++) {
-            const articleId = articles[i].article_id;
-            const title = articles[i].article_title;
-            const pic = widgets[i] ? widgets[i].widget_img : 'pics/plp-outside.jpg';
+                const img = document.createElement('img');
+                img.src = pic ? pic : 'pics/plp-outside.jpg';
+                img.alt = title;
+                img.loading = 'lazy';
 
-            const recentArticleLayout = document.createElement('div');
-            recentArticleLayout.classList.add('recent-box');
+                const p = document.createElement('p');
+                p.textContent = htmlEntityDecode(title);
+                p.style.color = '#161616';
+                p.title = title;
 
-            const img = document.createElement('img');
-            img.src = pic ? pic : 'pics/plp-outside.jpg';
-            img.alt = title;
-            img.loading = 'lazy';
+                // Date
+                const date = document.createElement('span');
+                date.textContent = formatDateOnly(articles[i].date_updated);
+                date.style.fontSize = '0.7rem';
+                recentArticleLayout.appendChild(date);
 
-            const p = document.createElement('p');
-            p.textContent = htmlEntityDecode(title);
-            p.style.color = '#161616';
-            p.title = title;
+                recentArticleLayout.appendChild(img);
+                recentArticleLayout.appendChild(p);
+                recentArticleLayout.setAttribute('articleid', articleId);
 
-            // Date
-            const date = document.createElement('span');
-            date.textContent = formatDateOnly(articles[i].date_updated); // Format accordingly
-            date.style.fontSize = '0.7rem';
-            recentArticleLayout.appendChild(date);
+                if (userType === 'writer') {
+                    recentArticleLayout.addEventListener('click', (event) => {
+                        editArticle(event.currentTarget);
+                    });
+                } else if (userType === 'reviewer') {
+                    recentArticleLayout.addEventListener('click', (event) => {
+                        reviewArticleDashboard(event.currentTarget);
+                    });
+                }
 
-            recentArticleLayout.appendChild(img);
-            recentArticleLayout.appendChild(p);
-            recentArticleLayout.setAttribute('articleid', articleId);
-
-            if (userType === 'writer') {
-                recentArticleLayout.addEventListener('click', (event) => {
-                    editArticle(event.currentTarget);
-                });
-            } else if (userType === 'reviewer') {
-                recentArticleLayout.addEventListener('click', (event) => {
-                    reviewArticleDashboard(event.currentTarget);
-                });
+                postedFragment.appendChild(recentArticleLayout);
             }
-
-            postedFragment.appendChild(recentArticleLayout);
         }
 
         recentPostContainer.appendChild(postedFragment);
@@ -79,12 +78,12 @@ $.ajax({
 
 function editArticle(thisContainer) {
     const article_id = thisContainer.getAttribute('articleid');
-    window.location.href = `/G16-CMS/edit-article.php?article_id=${article_id}`;
+    window.location.href = `/edit-article.php?article_id=${article_id}`;
 }
 
 function reviewArticleDashboard(thisContainer) {
     const article_id = thisContainer.getAttribute('articleid');
-    window.location.href = `/G16-CMS/review-article.php?article_id=${article_id}`;
+    window.location.href = `/review-article.php?article_id=${article_id}`;
 }
 
 function htmlEntityDecode(str) {

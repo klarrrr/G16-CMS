@@ -61,7 +61,7 @@
             color: #b1b1b1;
         }
 
-        .calendar-container{
+        .calendar-container {
             padding: 0.5rem;
             border-radius: 0.5rem;
             background: white;
@@ -97,8 +97,8 @@
                     <h2>Upcoming Events</h2>
                 </div>
                 <!-- Upcoming Events -->
-                <div class="events" id="upcoming-events-container" style='border: 1px solid #fcb404; background-color: #fff; border-radius: 0.5rem;' title="Stay tuned!">
-                    <!-- JS will inject events here -->
+                <div class="events" id="upcoming-events-container" style='background-color: #fff; border-radius: 0.5rem;' title="Stay tuned!">
+                    <iframe src="announcements-widget.php?limit=5&layout=row" width="100%" height="300px" frameborder="0" style="border:none;"></iframe>
                 </div>
 
                 <div class="remaining-texts">
@@ -137,8 +137,6 @@
     </main>
 
     <?php include 'lundayan-site-footer.php' ?>
-    <!-- populate announcements -->
-    <script src="scripts/get-announcements.js"></script>
     <!-- Date formatter function -->
     <script src="scripts/date-formatter.js"></script>
     <!-- Gets the Latest News -->

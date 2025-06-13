@@ -2,6 +2,7 @@
 
 include 'connect.php';
 
+// Get all available tags
 $query = "SELECT * FROM tags";
 
 $tagsArray = [];

@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    // Announcement or Regular
     $stmt = $conn->prepare("UPDATE articles SET article_type = ? WHERE article_id = ?");
     $stmt->bind_param("si", $article_type, $article_id);
 

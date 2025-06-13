@@ -5,7 +5,7 @@ session_start();
 
 $article_id = intval($_POST['article_id']);
 $action = mysqli_real_escape_string($conn, $_POST['action']);
-$user_id = $_SESSION['user_id']; // Ensure user_id is set
+$user_id = $_SESSION['user_id'];
 
 $now = date('Y-m-d H:i:s', time());
 

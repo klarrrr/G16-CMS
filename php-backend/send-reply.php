@@ -15,11 +15,11 @@ $email = $_POST['email'] ?? '';
 $subject = $_POST['subject'] ?? '';
 $message = $_POST['message'] ?? '';
 
-// Basic validation
+// Validate Details
 if ($messageId <= 0 || !filter_var($email, FILTER_VALIDATE_EMAIL) || empty($subject) || empty($message)) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'error' => 'Invalid input']);
-    exit;
+  http_response_code(400);
+  echo json_encode(['success' => false, 'error' => 'Invalid input']);
+  exit;
 }
 
 // Dynamically get the Website's Admin Email and App Pass first
@@ -60,16 +60,16 @@ $mail->Subject = "{$subject}";
 $mail->Body = "{$message}";
 
 if ($mail->send()) {
-    // Mark message as replied in database
-    $query = "UPDATE inbox SET replied = 1 WHERE inbox_id = ?";
-    $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, 'i', $messageId);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
+  // Mark message as replied in database
+  $query = "UPDATE inbox SET replied = 1 WHERE inbox_id = ?";
+  $stmt = mysqli_prepare($conn, $query);
+  mysqli_stmt_bind_param($stmt, 'i', $messageId);
+  mysqli_stmt_execute($stmt);
+  mysqli_stmt_close($stmt);
 
-    echo json_encode(['success' => true]);
+  echo json_encode(['success' => true]);
 } else {
-    echo json_encode(['success' => false, 'error' => 'Failed to send email']);
+  echo json_encode(['success' => false, 'error' => 'Failed to send email']);
 }
 
 mysqli_close($conn);

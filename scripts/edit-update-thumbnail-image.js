@@ -34,7 +34,6 @@ function updateThumbnailImg(article_id, event) {
                     const filePath = res.filePath;
                     const container = document.getElementById('thumbnail-image-container');
 
-                    // Remove fallback emoji if present
                     container.innerHTML = '';
 
                     // Recreate <img> tag

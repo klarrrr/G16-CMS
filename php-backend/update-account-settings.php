@@ -9,7 +9,7 @@ $userFirstName = $_POST['userFirstName'];
 $userLastName = $_POST['userLastName'];
 $userEmail = $_POST['userEmail'];
 
-// Use prepared statements to prevent SQL injection
+// Prepare user query update
 $query = "UPDATE users SET user_first_name = ?, user_last_name = ?, user_email = ? WHERE user_id = ?";
 $stmt = $conn->prepare($query);
 

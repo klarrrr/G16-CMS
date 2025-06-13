@@ -45,12 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ]);
                     exit;
                 }
-            }else{
-                 echo json_encode([
-                        'status' => 'error',
-                        'message' => 'Cannot publish - assign reviewers first to approve your article.'
-                    ]);
-                    exit;
+            } else {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Cannot publish - assign reviewers first to approve your article.'
+                ]);
+                exit;
             }
         }
 
@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt1->execute();
         $stmt1->close();
 
-        // Update widgets (optional)
+        // Update widgets
         $stmt2 = $conn->prepare("UPDATE widgets SET date_posted = ?, date_expired = ? WHERE article_owner = ?");
         $stmt2->bind_param("ssi", $date_posted, $date_expired, $article_id);
         $stmt2->execute();
@@ -82,9 +82,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo json_encode(['status' => 'error', 'message' => 'Invalid request']);
 }
 
-/**
- * Check if article has any reviewers assigned
- */
+
+// Check if article has any reviewers assigned
+
 function hasReviewers($article_id, $conn)
 {
     $query = "SELECT COUNT(*) as total FROM article_review_invites WHERE article_id = ?";
@@ -96,9 +96,9 @@ function hasReviewers($article_id, $conn)
     return $stats['total'] > 0;
 }
 
-/**
- * Check if article can be published (all reviewers approved)
- */
+
+// Check if article can be published (all reviewers approved)
+
 function canPublishArticle($article_id, $conn)
 {
     $query = "SELECT COUNT(*) as total, 

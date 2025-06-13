@@ -43,7 +43,7 @@ $formattedMessage .= "Phone: " . ($phone ? $phone : 'Not provided') . "\n";
 $formattedMessage .= "Subject: $subject\n\n";
 $formattedMessage .= "Message:\n$message";
 
-// Insert into inbox table
+// Insert into inbox table of admin
 $stmt = $conn->prepare("
     INSERT INTO inbox 
     (sender_first_name, sender_last_name, sender_email, sender_phone, subject, message) 
@@ -86,7 +86,7 @@ try {
     // If something is changed in the gmail account
     // App Password needs to be regenerated
     $mail->Password = (string) $mailPassword;
-    // $mail->SMTPDebug = 3; // Enable verbose debug output
+    // $mail->SMTPDebug = 3; // Enable verbose for DEBUG 
     $mail->SMTPSecure = 'ssl';
     $mail->Port = 465;
 
