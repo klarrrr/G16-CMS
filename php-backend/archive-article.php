@@ -4,7 +4,6 @@ include 'connect.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $article_id = $_POST['article_id'];
 
-    // Get current archive status
     $getStatusSQL = "SELECT archive_status FROM articles WHERE article_id = ?";
     $stmt = $conn->prepare($getStatusSQL);
     $stmt->bind_param("i", $article_id);
@@ -13,10 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->fetch();
     $stmt->close();
 
-    // Toggle status
     $newStatus = ($currentStatus === 'archived') ? 'active' : 'archived';
 
-    // Update archive status
     $updateSQL = "UPDATE articles SET archive_status = ? WHERE article_id = ?";
 
     $stmt = $conn->prepare($updateSQL);

@@ -17,16 +17,15 @@ function loadAssignedTags(article_id) {
             // If new tags exist, add them
             if (res.success && res.tags.length > 0) {
                 res.tags.forEach(tag => {
-                    addTagElement(tag.tag_name); // Adds to DOM
-                    currentTags.push(tag.tag_name); // Adds to memory
+                    addTagElement(tag.tag_name); 
+                    currentTags.push(tag.tag_name); 
                 });
             }
-            // If no tags, show message
             else {
                 showNoTagsMessage();
             }
 
-            updateTagCounter(); // Refresh counter
+            updateTagCounter(); 
         },
         error: (err) => console.error(err)
     });
@@ -150,9 +149,8 @@ function saveTags(article_id) {
     });
 }
 
-// Initialize
 document.getElementById('save-tags-button').addEventListener('click', () => {
     saveTags(article_id);
 });
 
-loadAssignedTags(article_id); // Load tags on page load
+loadAssignedTags(article_id); 

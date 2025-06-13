@@ -175,10 +175,7 @@ if (isset($_SESSION['user_id'])) {
             $('#sign-in-email-error').text('').removeClass('error-visible');
             $('#sign-in-pass-error').text('').removeClass('error-visible');
 
-            // if (!isValidPasigEmail(email)) {
-            //     $('#sign-in-email-error').text('* Incorrect Format - Pasig Email Only').addClass('error-visible');
-            //     valid = false;
-            // }
+
             if (!pass) {
                 $('#sign-in-pass-error').text('* Password cannot be empty').addClass('error-visible');
                 valid = false;
@@ -237,10 +234,7 @@ if (isset($_SESSION['user_id'])) {
                 return;
             }
 
-            // if (!isValidPasigEmail(email)) {
-            //     $('#forgotEmailError').text('* Must be a valid Pasig email').addClass('error-visible');
-            //     return;
-            // }
+-
 
             // Show loading state
             $('#submitForgotPassword').prop('disabled', true).text('Sending...');
@@ -296,10 +290,8 @@ if (isset($_SESSION['user_id'])) {
         }
     </script>
 
-    <!-- Some events -->
-
+-
     <script>
-        // Global Enter key listener
         $(document).on('keydown', function(e) {
             if (e.key === 'Enter') {
                 const isSignInVisible = $('#sign-in-form').is(':visible');

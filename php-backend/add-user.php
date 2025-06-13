@@ -36,7 +36,6 @@ if ($checkStmt->num_rows > 0) {
 }
 $checkStmt->close();
 
-// Handle password - if not provided, generate a random one
 if (empty($password)) {
     $password = bin2hex(random_bytes(8)); // Generate random password
     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
@@ -50,7 +49,6 @@ $stmt->bind_param("sssss", $firstName, $lastName, $email, $passwordHash, $userTy
 if ($stmt->execute()) {
     $newUserId = $stmt->insert_id;
 
-    // Set default profile picture and cover photo paths
     $defaultProfile = 'default-profile.png';
     $defaultCover = 'default-cover.png';
 

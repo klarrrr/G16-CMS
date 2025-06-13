@@ -234,7 +234,6 @@ while ($row = mysqli_fetch_assoc($result)) {
                 </div>
 
                 <div class="invitations-list" id="invitations-list">
-                    <!-- Invitations will be loaded here via JavaScript -->
                     <div class="loading-spinner"></div>
                 </div>
             </div>
@@ -247,7 +246,6 @@ while ($row = mysqli_fetch_assoc($result)) {
     <!-- Date Formatter -->
     <script src="scripts/date-formatter.js"></script>
 
-    <!-- Assign user id to js var -->
     <script>
         const userId = '<?php echo $user_id ?>';
     </script>

@@ -61,8 +61,7 @@ $params[] = $userId;
 
 $stmt = $conn->prepare($query);
 
-// Dynamically bind parameters
-$stmt->bind_param($types, ...$params);
+ $stmt->bind_param($types, ...$params);
 
 if ($stmt->execute()) {
     echo json_encode([

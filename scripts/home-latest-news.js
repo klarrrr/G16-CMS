@@ -11,14 +11,12 @@ let currentPage = 1;
 const itemsPerPage = 6;
 let highlightInterval = null;
 
-// First, load the absolute latest article for the highlight
 function loadLatestHighlight() {
     $.ajax({
         url: 'php-backend/get-latest-highlight.php',
         type: 'GET',
         dataType: 'json',
         success: (res) => {
-            // Clear any existing interval
             if (highlightInterval) {
                 clearInterval(highlightInterval);
                 highlightInterval = null;
@@ -29,10 +27,8 @@ function loadLatestHighlight() {
                 currentHighlightIndex = 0;
                 updateHighlightDisplay();
 
-                // Add navigation buttons if there are multiple highlights
                 if (res.hasHighlights && currentHighlightWidgets.length > 1) {
                     addHighlightNavigation();
-                    // Start auto-rotation only if there are multiple highlights
                     startHighlightRotation();
                 }
             } else {
@@ -50,10 +46,9 @@ function loadLatestHighlight() {
 function startHighlightRotation() {
     // Set interval to rotate every 5 seconds
     highlightInterval = setInterval(() => {
-        navigateHighlight(1); // Go to next highlight
+        navigateHighlight(1);
     }, 5000); // 5 secs
 
-    // Pause rotation when user hovers over the highlight
     highlightArticle.addEventListener('mouseenter', pauseRotation);
     highlightArticle.addEventListener('mouseleave', resumeRotation);
 }
@@ -119,7 +114,6 @@ function addHighlightNavigation() {
     navContainer.appendChild(nextBtn);
     highlightArticle.appendChild(navContainer);
 
-    // Add some basic styling
     const style = document.createElement('style');
     style.textContent = `
         .highlight-nav-btn {
@@ -144,12 +138,10 @@ function addHighlightNavigation() {
 }
 
 function navigateHighlight(direction) {
-    // Pause and restart rotation to reset the 5-second timer
     pauseRotation();
 
     currentHighlightIndex += direction;
 
-    // Wrap around if needed
     if (currentHighlightIndex < 0) {
         currentHighlightIndex = currentHighlightWidgets.length - 1;
     } else if (currentHighlightIndex >= currentHighlightWidgets.length) {
@@ -158,7 +150,6 @@ function navigateHighlight(direction) {
 
     updateHighlightDisplay();
 
-    // Only resume if there are multiple highlights
     if (currentHighlightWidgets.length > 1) {
         resumeRotation();
     }

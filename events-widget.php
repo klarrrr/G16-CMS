@@ -420,7 +420,6 @@ include 'php-backend/connect.php';
                 <button onclick="applyDateFilter()">Apply</button>
             </div>
             <div id="events-list">
-                <!-- Events will be loaded here -->
             </div>
         <?php else: ?>
             <div class="view-toggle">
@@ -529,7 +528,6 @@ include 'php-backend/connect.php';
 
     // List View Functions
     function renderEventsList() {
-        // Filter events based on start date
         const filteredEvents = articles.filter(event => {
             const eventDate = new Date(event.date_posted.split(' ')[0]);
             return eventDate >= startDate;

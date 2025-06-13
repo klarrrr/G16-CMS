@@ -17,10 +17,9 @@ class ContactModel {
         $this->setSubject($data['subject'] ?? '');
         $this->setMessage($data['message'] ?? '');
         $this->created_at = date('Y-m-d H:i:s');
-        $this->status = 'pending'; // pending, read, replied, etc.
+        $this->status = 'pending';
     }
 
-    // Getters
     public function getFirstName(): string {
         return $this->first_name;
     }
@@ -57,7 +56,6 @@ class ContactModel {
         return $this->status;
     }
 
-    // Setters with validation
     public function setFirstName(string $name): void {
         $this->first_name = $this->sanitizeInput($name);
     }
@@ -74,7 +72,6 @@ class ContactModel {
     }
 
     public function setPhone(string $phone): void {
-        // Basic phone number validation
         $cleaned = preg_replace('/[^0-9+]/', '', $phone);
         if (strlen($cleaned) < 8) {
             throw new InvalidArgumentException("Phone number too short");
@@ -104,11 +101,9 @@ class ContactModel {
         $this->status = $status;
     }
 
-    // Helper method for sanitization
     private function sanitizeInput(string $input): string {
         return htmlspecialchars(strip_tags(trim($input)), ENT_QUOTES, 'UTF-8');
     }
-    // Convert to array for database insertion
     public function toArray(): array {
         return [
             'first_name' => $this->first_name,

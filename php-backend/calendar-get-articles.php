@@ -2,7 +2,6 @@
 include 'connect.php';
 
 try {
-    // Select all article with widgets
     $query = "
         SELECT 
             a.article_id, 
@@ -31,7 +30,6 @@ try {
     $result = mysqli_query($conn, $query);
     $articles = [];
 
-    // Used for getting least and max year of articles
     $minYear = PHP_INT_MAX;
     $maxYear = PHP_INT_MIN;
 

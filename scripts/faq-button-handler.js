@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
         e.stopPropagation();
     });
 
-    // Prevent closing when clicking inside the container
     faqFloatContainer.addEventListener('click', function (e) {
         e.stopPropagation();
     });
@@ -36,14 +35,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const isActive = card.classList.contains('active');
 
-            // Close all cards first
             faqCards.forEach(c => {
                 c.classList.remove('active');
                 const toggleIcon = c.querySelector('.faq-card-toggle');
                 if (toggleIcon) toggleIcon.textContent = '+';
             });
 
-            // Open current card if it was not already open
             if (!isActive) {
                 card.classList.add('active');
                 const toggleIcon = card.querySelector('.faq-card-toggle');

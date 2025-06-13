@@ -5,7 +5,7 @@ $.ajax({
     type: 'get',
     dataType: 'json',
     data: {
-        article_id: articleId // use the variable passed from PHP in the HTML
+        article_id: articleId 
     },
     success: (res) => {
         const tags = res.tags;

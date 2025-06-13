@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const datePostedInput = document.getElementById('schedule-choose-date');
     const dateExpiredInput = document.getElementById('expire-choose-date');
 
-    // Load current status
     function loadStatus() {
         $.ajax({
             url: 'php-backend/get-article-status.php',

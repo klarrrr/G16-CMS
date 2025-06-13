@@ -5,7 +5,6 @@ include 'connect.php';
 $user_id = $_SESSION['user_id'];
 $user_type = strtolower($_SESSION['user_type']);
 
-// Select all article for review
 $query = "
     SELECT 
         w.*,

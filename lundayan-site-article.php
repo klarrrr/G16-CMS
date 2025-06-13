@@ -134,16 +134,11 @@ $reviewersResult = mysqli_query($conn, $reviewersQuery);
     <link rel="icon" href="pics/lundayan-logo.png">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
-    <!-- Online Quill Css -->
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
-    <!-- Offline Quill css -->
-    <!-- <link href="quill.css" rel="stylesheet" /> -->
-    <!-- Online Quill JS -->
+
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
-    <!-- Offline Quill JS -->
-    <!-- <script src="scripts/quill.js"></script> -->
+
     <style>
-        /* Share button styles */
         .article-share-container {
             margin: 20px 0;
             display: flex;
@@ -278,7 +273,6 @@ $reviewersResult = mysqli_query($conn, $reviewersQuery);
                 <!-- OPTIONS -->
                 <div class="article-options">
                     <h3>Options</h3>
-                    <!-- Add this inside the article-image-container section, after the title -->
                     <div class="article-share-container">
                         <button id="share-button" class="share-button">
                             <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="">
@@ -327,11 +321,9 @@ $reviewersResult = mysqli_query($conn, $reviewersQuery);
                         <?php
                         $decodedContent = htmlspecialchars_decode($content);
 
-                        // Check if content contains any images
                         if (preg_match('/<img[^>]+>/i', $decodedContent)) {
                             echo '<div class="image-notice"><p>This article contains image(s). Click "Read More" to view the full content.</p></div>';
 
-                            // Strip all images from limited content
                             $limitedContent = preg_replace('/<img[^>]+>/i', '', $decodedContent);
                             // Limit the text content
                             $limitedContent = substr(strip_tags($limitedContent), 0, 600);
@@ -370,7 +362,6 @@ $reviewersResult = mysqli_query($conn, $reviewersQuery);
                 <h2>Gallery</h2>
             </div>
             <div class="gallery-images">
-                <!-- Images will be placed here -->
             </div>
         </section>
     </main>
@@ -402,11 +393,9 @@ $reviewersResult = mysqli_query($conn, $reviewersQuery);
     <!-- Share Button -->
     <script>
         document.getElementById('share-button').addEventListener('click', function() {
-            // Get the current article URL
             const articleUrl = window.location.href;
             const articleTitle = "<?php echo addslashes($title); ?>";
 
-            // Check if Web Share API is available (mobile devices)
             if (navigator.share) {
                 navigator.share({
                     title: articleTitle,
@@ -433,10 +422,9 @@ $reviewersResult = mysqli_query($conn, $reviewersQuery);
 
             // Show a message to the user
             alert('Article link copied to clipboard!\n\nShare this URL: ' + url);
-
-            // Alternatively, open a popup with social sharing options
-            // window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url), '_blank');
-            // window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(title + ' ' + url), '_blank');
+            //redirect
+            //window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url), '_blank');
+            //window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(title + ' ' + url), '_blank');
         }
     </script>
 

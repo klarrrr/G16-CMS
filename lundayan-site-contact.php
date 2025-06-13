@@ -300,7 +300,6 @@ $openHours = "Monday - Friday : $openTime-$closeTime";
             const formData = new FormData(form);
             const submitButton = form.querySelector('button[type="submit"]');
 
-            // Disable button during submission
             submitButton.disabled = true;
             submitButton.textContent = 'Sending...';
 
@@ -312,14 +311,11 @@ $openHours = "Monday - Friday : $openTime-$closeTime";
                     success: (data) => {
                         console.log(data.status);
                         if (data.status === 'success') {
-                            // Show success popup
                             document.getElementById('popup-text').textContent = 'Message sent successfully!';
                             document.getElementById('popup-backdrop').style.display = 'flex';
 
-                            // Reset form
                             form.reset();
                         } else {
-                            // Show error message
                             document.getElementById('popup-text').textContent = data.message || 'Failed to send message. Please try again.';
                             document.getElementById('popup-backdrop').style.display = 'flex';
                         }

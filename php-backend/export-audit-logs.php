@@ -1,16 +1,12 @@
 <?php
 
-// Unused
-
 include 'connect.php';
 
-// Get filter parameters
 $user_id = $_GET['user_id'] ?? '';
 $action = $_GET['action'] ?? '';
 $date_from = $_GET['date_from'] ?? '';
 $date_to = $_GET['date_to'] ?? '';
 
-// Build WHERE conditions
 $conditions = [];
 $params = [];
 $types = '';
@@ -41,7 +37,6 @@ if (!empty($date_to)) {
 
 $where = empty($conditions) ? '1=1' : implode(' AND ', $conditions);
 
-// Prepare query
 $query = "
     SELECT 
         audit_logs.log_id,
@@ -65,14 +60,11 @@ if (!empty($params)) {
 $stmt->execute();
 $result = $stmt->get_result();
 
-// Set headers for CSV download
 header('Content-Type: text/csv; charset=utf-8');
 header('Content-Disposition: attachment; filename=audit_logs_export_' . date('Y-m-d') . '.csv');
 
-// Create output stream
 $output = fopen('php://output', 'w');
 
-// Write CSV headers
 fputcsv($output, [
     'Log ID',
     'User',
@@ -81,7 +73,6 @@ fputcsv($output, [
     'Timestamp'
 ]);
 
-// Write data rows
 while ($row = $result->fetch_assoc()) {
     fputcsv($output, [
         $row['log_id'],
@@ -92,7 +83,6 @@ while ($row = $result->fetch_assoc()) {
     ]);
 }
 
-// Close connections
 fclose($output);
 $stmt->close();
 $conn->close();

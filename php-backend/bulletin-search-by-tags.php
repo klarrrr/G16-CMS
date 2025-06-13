@@ -14,7 +14,6 @@ if (empty($tag_ids)) {
 $tag_ids = array_map('intval', $tag_ids);
 $tag_ids_string = implode(",", $tag_ids);
 
-// Step 1: Get all article IDs that match ALL selected tags
 $query = "
     SELECT ta.assigned_article 
     FROM tag_assign ta
@@ -37,13 +36,11 @@ while ($row = $result->fetch_assoc()) {
     $matchedArticleIds[] = intval($row['assigned_article']);
 }
 
-// If none matched
 if (empty($matchedArticleIds)) {
     echo json_encode([]);
     exit();
 }
 
-// Step 2: Paginate article IDs
 $total = count($matchedArticleIds);
 $limit = 9;
 $totalPages = ceil($total / $limit);
@@ -52,7 +49,6 @@ $offset = ($page - 1) * $limit;
 $paginatedArticleIds = array_slice($matchedArticleIds, $offset, $limit);
 $articles_string = implode(",", $paginatedArticleIds);
 
-// Step 3: Fetch widget data for those article IDs
 $widgets = [];
 
 $query = "SELECT * FROM widgets WHERE article_owner IN ($articles_string)";

@@ -104,20 +104,17 @@ function htmlEntityDecode(str) {
     return txt.value;
 }
 
-// Initial fetch
 fetchArchivedArticles();
 
-// On input search
 document.getElementById('search-your-archived-articles').addEventListener('input', function () {
     const query = this.value.trim();
     const sort = sortArchivedDropdown.value;
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => {
-        fetchArchivedArticles(query, sort, 1); // Reset to page 1
+        fetchArchivedArticles(query, sort, 1); 
     }, 500);
 });
 
-// On sort change
 sortArchivedDropdown.addEventListener('change', () => {
     const query = document.getElementById('search-your-archived-articles').value.trim();
     fetchArchivedArticles(query, sortArchivedDropdown.value, 1);

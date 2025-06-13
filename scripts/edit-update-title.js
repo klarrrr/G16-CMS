@@ -1,10 +1,8 @@
 titleBox.addEventListener('input', () => {
-    // Debounce avoid flooding the server
     if (window.updateTimeout) clearTimeout(window.updateTimeout);
 
     window.updateTimeout = setTimeout(() => {
         updateTitle(article_id);
-        // console.log(updatedContent);
     }, 500);
 });
 

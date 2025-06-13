@@ -3,7 +3,7 @@ include 'php-backend/connect.php';
 
 $user_id = $_SESSION['user_id'] ?? null;
 $pic = $_SESSION['profile_picture'] ?? null;
-$user_type = $_SESSION['user_type'] ?? null; // Get user type from session
+$user_type = $_SESSION['user_type'] ?? null; 
 
 $pfp = ($pic) ? ($pic) : 'pics/no-pic.jpg';
 ?>

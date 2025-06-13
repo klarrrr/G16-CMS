@@ -9,7 +9,6 @@ $page = isset($_POST['page']) ? (int) $_POST['page'] : 1;
 $limit = isset($_POST['limit']) ? (int) $_POST['limit'] : 6;
 $offset = ($page - 1) * $limit;
 
-// Base SQL for filtering
 $baseSql = "FROM articles AS a
             LEFT JOIN widgets AS w 
                 ON w.article_owner = a.article_id 

@@ -931,10 +931,7 @@ $archiveStatus = $articles['archive_status'];
             // Normalize to remove full-width/bold/special formatting
             text = text.normalize("NFKC");
 
-            // Remove invisible/control characters EXCEPT:
-            // - Tab (\u0009)
-            // - Newline (\u000A)
-            // - Carriage return (\u000D)
+        
             text = text.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]+/g, "");
 
             // Remove private-use Unicode characters

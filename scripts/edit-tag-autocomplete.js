@@ -4,7 +4,6 @@ $(document).ready(function() {
     let allTags = [];
     let selectedSuggestionIndex = -1;
 
-    // Fetch all tags from server
     function fetchAllTags() {
         $.ajax({
             url: 'php-backend/fetch-all-tags.php',
@@ -20,7 +19,6 @@ $(document).ready(function() {
         });
     }
 
-    // Show suggestions
     function showSuggestions(input) {
         clearSuggestions();
         
@@ -33,7 +31,7 @@ $(document).ready(function() {
 
         if (matches.length === 0) return;
 
-        // Inline suggestion (best prefix match)
+        // Inline suggestion
         const prefixMatches = matches.filter(tag => 
             tag.toLowerCase().startsWith(input.toLowerCase())
         );
@@ -42,7 +40,6 @@ $(document).ready(function() {
             const bestMatch = prefixMatches[0];
             const remaining = bestMatch.substring(input.length);
             
-            // Create a measurement element with the exact same styles
             const measurement = $('<span>').css({
                 'position': 'absolute',
                 'visibility': 'hidden',

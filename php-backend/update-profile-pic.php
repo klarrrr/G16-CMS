@@ -13,8 +13,7 @@ $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 $stmt->close();
 
-// Only proceed if there's an image to remove
-if (!empty($user['profile_picture']) && $user['profile_picture'] !== 'pics/no-pic.jpg') {
+ if (!empty($user['profile_picture']) && $user['profile_picture'] !== 'pics/no-pic.jpg') {
     // Delete the file from server if it exists
     if (file_exists($user['profile_picture'])) {
         unlink($user['profile_picture']);

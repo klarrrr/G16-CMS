@@ -6,11 +6,10 @@ if (isset($_FILES['image'])) {
     $fileName = basename($_FILES['image']['name']);
     $targetFile = $uploadDir . $fileName;
 
-    // Optionally validate file type
-    $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+     $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
     if (in_array($_FILES['image']['type'], $allowedTypes)) {
         if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) {
-            // Success! You can save just $fileName to DB
+           
             $response = ['success' => true, 'filename' => $fileName];
         } else {
             $response = ['error' => 'Upload failed'];

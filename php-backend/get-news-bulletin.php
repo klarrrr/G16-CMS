@@ -5,7 +5,7 @@ include 'connect.php';
 $widgetArray = [];
 
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$limit = 10; // N cards per page
+$limit = 10;
 $offset = ($page - 1) * $limit;
 
 $stmt = $conn->prepare("SELECT COUNT(*) FROM widgets");

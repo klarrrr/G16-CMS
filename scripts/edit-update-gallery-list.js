@@ -5,11 +5,10 @@ function updateGalleryList(article_id) {
         dataType: 'json',
         data: { article_id: article_id },
         success: (res) => {
-            galleryContainer.innerHTML = ''; // Always clear gallery first
+            galleryContainer.innerHTML = ''; 
 
             if (res.status === 'success' && Array.isArray(res.data)) {
                 if (res.data.length === 0) {
-                    // No images: show fallback message
                     const fallback = document.createElement('div');
                     fallback.className = 'fallback-emoji';
                     fallback.style.cssText = `
@@ -24,7 +23,7 @@ function updateGalleryList(article_id) {
                     return;
                 }
 
-                // Images exist: render them
+                // Images exist
                 res.data.forEach(image => {
                     const imgContainer = document.createElement('div');
                     imgContainer.classList.add('image-container');

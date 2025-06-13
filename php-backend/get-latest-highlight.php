@@ -1,7 +1,6 @@
 <?php
 include 'connect.php';
 
-// First, try to get highlighted articles (they take priority)
 $highlightQuery = "
     SELECT a.highlight, w.* 
     FROM widgets w
@@ -18,7 +17,6 @@ $stmt->execute();
 $highlightResult = $stmt->get_result();
 $highlightedWidgets = $highlightResult->fetch_all(MYSQLI_ASSOC);
 
-// Convert to UTF-8 if needed
 if ($highlightedWidgets) {
     foreach ($highlightedWidgets as &$widget) {
         foreach ($widget as &$value) {
@@ -30,7 +28,6 @@ if ($highlightedWidgets) {
 // date_default_timezone_set('Asia/Manila');
 $now = date('Y-m-d H:i:s', time());
 
-// If no highlighted articles, get the latest regular article
 if (empty($highlightedWidgets)) {
     $latestQuery = "
         SELECT w.* 

@@ -24,7 +24,6 @@ if (!$userOwner) {
 $conn->begin_transaction();
 
 try {
-    // Insert article using prepared statement
     $articleStmt = $conn->prepare("INSERT INTO articles (article_title, article_content, user_owner, edit_status, completion_status) VALUES (?, ?, ?, 'available', 'draft')");
     $articleStmt->bind_param("ssi", $title, $content, $userOwner);
     $articleStmt->execute();

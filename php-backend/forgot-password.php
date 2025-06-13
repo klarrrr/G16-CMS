@@ -9,7 +9,6 @@ if (empty($email)) {
     exit;
 }
 
-// Check if email exists in the system
 $stmt = $conn->prepare("SELECT user_id, user_first_name, user_last_name FROM users WHERE user_email = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();

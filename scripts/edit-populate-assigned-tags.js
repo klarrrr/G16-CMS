@@ -1,4 +1,3 @@
-// Function to load all assigned tags for an article
 function loadAssignedTags(article_id) {
     $.ajax({
         url: 'php-backend/get-assigned-tags.php',
@@ -10,7 +9,6 @@ function loadAssignedTags(article_id) {
         success: (res) => {
             const tagsContainer = document.querySelector('.tags-container');
 
-            // Remove the message if it exists
             const existingMsg = tagsContainer.querySelector('.no-tags-msg');
             if (existingMsg) {
                 existingMsg.remove();

@@ -4,7 +4,7 @@ $.ajax({
     dataType: 'json',
     success: function (data) {
         const container = document.getElementById('upcoming-events-container');
-        container.innerHTML = ''; // Clear previous items
+        container.innerHTML = ''; 
 
         if (data.length === 0) {
             container.innerHTML = `<div class="no-events-message" id='calendar-no-event'>No upcoming events at the moment 😔</div>`;
