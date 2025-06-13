@@ -1289,717 +1289,513 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       </div>
 
-        <div class="main-content">
+      <div class="main-content">
 
-          <?php if (isset($_SESSION['success'])): ?>
+        <?php if (isset($_SESSION['success'])): ?>
 
-            <div class="success"><?= htmlspecialchars($_SESSION['success']);
+          <div class="success"><?= htmlspecialchars($_SESSION['success']);
 
-                                  unset($_SESSION['success']); ?></div>
+                                unset($_SESSION['success']); ?></div>
 
-          <?php endif; ?>
+        <?php endif; ?>
 
 
 
-          <?php if (isset($_SESSION['error'])): ?>
+        <?php if (isset($_SESSION['error'])): ?>
 
-            <div class="error"><?= htmlspecialchars($_SESSION['error']);
+          <div class="error"><?= htmlspecialchars($_SESSION['error']);
 
-                                unset($_SESSION['error']); ?></div>
+                              unset($_SESSION['error']); ?></div>
 
-          <?php endif; ?>
+        <?php endif; ?>
 
 
 
-          <div class="form-columns">
+        <div class="form-columns">
 
 
 
-            <!-- Change Article Highlights -->
+          <!-- Change Article Highlights -->
 
-            <!-- Manage Article Highlights -->
+          <!-- Manage Article Highlights -->
 
-            <form class="card" method="POST" action="php-backend/admin-update-highlight.php">
+          <form class="card" method="POST" action="php-backend/admin-update-highlight.php">
 
-              <h3>Manage Highlighted Articles</h3>
+            <h3>Manage Highlighted Articles</h3>
 
 
 
-              <div class="form-group">
+            <div class="form-group">
 
-                <label for="article-search">Search Articles:</label>
+              <label for="article-search">Search Articles:</label>
 
-                <input type="text" id="article-search" placeholder="Search by title..." class="search-input">
-
-              </div>
-
-
-
-              <div class="articles-list" id="articles-container">
-
-                <!-- Articles will be loaded here via JavaScript -->
-
-                <div class="loading-spinner"></div>
-
-              </div>
-
-
-
-              <div class="card-footer">
-
-                <button type="submit" class="save-btn">Save Highlights</button>
-
-              </div>
-
-            </form>
-
-
-
-            <!-- Mail Configuration -->
-
-            <form class="card" method="POST" action="admin-settings.php?group=mail">
-
-              <h2>Mail Configuration</h2>
-
-              <label for="mail-email">Email Address</label>
-
-              <input type="email" id="mail-email" name="mail-email" value="<?= htmlspecialchars($siteSettings['mail']['email'] ?? '') ?>" required>
-
-
-
-              <label for="mail-password">App Password</label>
-
-              <input type="password" id="mail-password" name="mail-password" value="<?= htmlspecialchars($siteSettings['mail']['password'] ?? '') ?>" required>
-
-
-
-              <label for="mail-name">Sender Name</label>
-
-              <input type="text" id="mail-name" name="mail-name" value="<?= htmlspecialchars($siteSettings['mail']['sender_name'] ?? '') ?>" required>
-
-
-
-              <div class="card-footer">
-
-                <button type="submit" class="save-btn">Save Mail Settings</button>
-
-              </div>
-
-            </form>
-
-
-
-            <!-- Social Media -->
-
-            <form class="card" method="POST" action="admin-settings.php?group=social">
-
-              <h2>Social Media</h2>
-
-              <label for="facebook">Facebook URL</label>
-
-              <input type="url" id="facebook" name="facebook" value="<?= htmlspecialchars($siteSettings['social']['facebook_url'] ?? '') ?>">
-
-
-
-              <label for="instagram">Instagram URL</label>
-
-              <input type="url" id="instagram" name="instagram" value="<?= htmlspecialchars($siteSettings['social']['instagram_url'] ?? '') ?>">
-
-
-
-              <label for="pinterest">Pinterest URL</label>
-
-              <input type="url" id="pinterest" name="pinterest" value="<?= htmlspecialchars($siteSettings['social']['pinterest_url'] ?? '') ?>">
-
-
-
-              <div class="card-footer">
-
-                <button type="submit" class="save-btn">Save Social Media</button>
-
-              </div>
-
-            </form>
-
-
-
-            <!-- Site Information -->
-
-            <form class="card" method="POST" action="admin-settings.php?group=contact">
-
-              <h2>Site Information</h2>
-
-              <label for="address">Address</label>
-
-              <input type="text" id="address" name="address" value="<?= htmlspecialchars($siteSettings['contact']['address'] ?? '') ?>">
-
-
-
-              <label for="open_time_start">School Opens At</label>
-
-              <input type="time" id="open_time_start" name="open_time_start"
-
-                value="<?= isset($siteSettings['contact']['open_time_start']) ? htmlspecialchars(substr($siteSettings['contact']['open_time_start'], 0, 5)) : '' ?>">
-
-
-
-              <label for="open_time_end">School Closes At</label>
-
-              <input type="time" id="open_time_end" name="open_time_end"
-
-                value="<?= isset($siteSettings['contact']['open_time_end']) ? htmlspecialchars(substr($siteSettings['contact']['open_time_end'], 0, 5)) : '' ?>">
-
-
-
-              <label for="phone">Phone</label>
-
-              <input type="text" id="phone" name="phone" value="<?= htmlspecialchars($siteSettings['contact']['phone'] ?? '') ?>">
-
-
-
-              <div class="card-footer">
-
-                <button type="submit" class="save-btn">Save Site Info</button>
-
-              </div>
-
-            </form>
-
-
-
-            <!-- About Page Content -->
-
-            <form class="card" method="POST" action="admin-settings.php?section=banner">
-
-              <h2>About Page Banner</h2>
-
-              <label for="banner-video">Banner Video URL</label>
-
-              <input type="url" id="banner-video" name="video_url"
-
-                value="<?= htmlspecialchars($aboutSettings['banner']['video_url'] ?? '') ?>">
-
-              <p class="path-hint">Must be a full URL (https://...)</p>
-
-
-
-              <div class="card-footer">
-
-                <button type="submit" class="save-btn">Save Banner</button>
-
-              </div>
-
-            </form>
-
-
-
-            <!-- [Rest of your form cards continue in the same single column layout] -->
-
-            <!-- What is Lundayan -->
-
-            <form class="card" method="POST" action="admin-settings.php?section=what_is">
-
-              <h2>What is Lundayan</h2>
-
-              <label for="what-is-title">Title</label>
-
-              <input type="text" id="what-is-title" name="title"
-
-                value="<?= htmlspecialchars($aboutSettings['what_is']['title'] ?? 'What even is the Lundayan website?') ?>">
-
-
-
-              <label for="what-is-content">Content</label>
-
-              <textarea id="what-is-content" name="content" rows="6"><?=
-
-                                                                      htmlspecialchars($aboutSettings['what_is']['content'] ?? 'Lundayan is an article publication platform...') ?></textarea>
-
-
-
-              <label for="what-is-image">Image URL or Path</label>
-
-              <input type="text" id="what-is-image" name="image_url"
-
-                value="<?= htmlspecialchars($aboutSettings['what_is']['image_url'] ?? 'pics/lundayan-logo.png') ?>">
-
-              <p class="path-hint">Accept both full URLs (https://...) and local paths (pics/image.jpg or images/photo.png)</p>
-
-
-
-              <div class="card-footer">
-
-                <button type="submit" class="save-btn">Save Section</button>
-
-              </div>
-
-            </form>
-
-
-
-            <!-- [Continue with all other form sections in the same single column format] -->
-
-            <!-- Mission Section -->
-
-            <form class="card" method="POST" action="admin-settings.php?section=mission">
-
-              <h2>Our Mission</h2>
-
-              <label for="mission-title">Title</label>
-
-              <input type="text" id="mission-title" name="title"
-
-                value="<?= htmlspecialchars($aboutSettings['mission']['title'] ?? 'What is our mission?') ?>">
-
-
-
-              <label for="mission-content">Content</label>
-
-              <textarea id="mission-content" name="content" rows="6"><?=
-
-                                                                      htmlspecialchars($aboutSettings['mission']['content'] ?? 'Our mission is to promote thoughtful discourse...') ?></textarea>
-
-
-
-              <label for="mission-image">Image URL or Path</label>
-
-              <input type="text" id="mission-image" name="image_url"
-
-                value="<?= htmlspecialchars($aboutSettings['mission']['image_url'] ?? 'pics/thinker.jpg') ?>">
-
-              <p class="path-hint">Accept both full URLs (https://...) and local paths (pics/image.jpg or images/photo.png)</p>
-
-
-
-              <div class="card-footer">
-
-                <button type="submit" class="save-btn">Save Section</button>
-
-              </div>
-
-            </form>
-
-
-
-            <!-- Who We Are -->
-
-            <form class="card" method="POST" action="admin-settings.php?section=who_we_are">
-
-              <h2>Who We Are</h2>
-
-              <label for="who-we-are-title">Title</label>
-
-              <input type="text" id="who-we-are-title" name="title"
-
-                value="<?= htmlspecialchars($aboutSettings['who_we_are']['title'] ?? 'Who are we?') ?>">
-
-
-
-              <label for="who-we-are-content">Content</label>
-
-              <textarea id="who-we-are-content" name="content" rows="6"><?=
-
-                                                                        htmlspecialchars($aboutSettings['who_we_are']['content'] ?? 'We are student storytellers from...') ?></textarea>
-
-
-
-              <label for="who-we-are-image">Image URL or Path</label>
-
-              <input type="text" id="who-we-are-image" name="image_url"
-
-                value="<?= htmlspecialchars($aboutSettings['who_we_are']['image_url'] ?? 'pics/study-anime.gif') ?>">
-
-              <p class="path-hint">Accept both full URLs (https://...) and local paths (pics/image.jpg or images/photo.png)</p>
-
-
-
-              <div class="card-footer">
-
-                <button type="submit" class="save-btn">Save Section</button>
-
-              </div>
-
-            </form>
-
-
-
-            <!-- Roles Section -->
-
-            <form class="card" method="POST" action="admin-settings.php?section=roles">
-
-              <h2>Roles Section</h2>
-
-              <label for="roles-title">Title</label>
-
-              <input type="text" id="roles-title" name="title"
-
-                value="<?= htmlspecialchars($aboutSettings['roles']['title'] ?? 'What do we do?') ?>">
-
-
-
-              <label for="roles-content">Intro Content</label>
-
-              <textarea id="roles-content" name="content" rows="3"><?=
-
-                                                                    htmlspecialchars($aboutSettings['roles']['content'] ?? '') ?></textarea>
-
-
-
-              <div class="card-footer">
-
-                <button type="submit" class="save-btn">Save Section</button>
-
-              </div>
-
-            </form>
-
-
-
-            <!-- Writer Role -->
-
-            <form class="card" method="POST" action="admin-settings.php?section=role_writer">
-
-              <h3>Writer Role</h3>
-
-              <label for="writer-title">Title</label>
-
-              <input type="text" id="writer-title" name="title"
-
-                value="<?= htmlspecialchars($aboutSettings['role_writer']['title'] ?? 'Writer') ?>">
-
-
-
-              <label for="writer-content">Description</label>
-
-              <textarea id="writer-content" name="content" rows="3"><?=
-
-                                                                    htmlspecialchars($aboutSettings['role_writer']['content'] ?? 'Writers contribute original articles...') ?></textarea>
-
-
-
-              <label for="writer-image">Image URL or Path</label>
-
-              <input type="text" id="writer-image" name="image_url"
-
-                value="<?= htmlspecialchars($aboutSettings['role_writer']['image_url'] ?? 'pics/typewriter.jpg') ?>">
-
-              <p class="path-hint">Accept both full URLs (https://...) and local paths (pics/image.jpg or images/photo.png)</p>
-
-
-
-              <div class="card-footer">
-
-                <button type="submit" class="save-btn">Save Role</button>
-
-              </div>
-
-            </form>
-
-
-
-            <!-- Reviewer Role -->
-
-            <form class="card" method="POST" action="admin-settings.php?section=role_reviewer">
-
-              <h3>Reviewer Role</h3>
-
-              <label for="reviewer-title">Title</label>
-
-              <input type="text" id="reviewer-title" name="title"
-
-                value="<?= htmlspecialchars($aboutSettings['role_reviewer']['title'] ?? 'Reviewer') ?>">
-
-
-
-              <label for="reviewer-content">Description</label>
-
-              <textarea id="reviewer-content" name="content" rows="3"><?=
-
-                                                                      htmlspecialchars($aboutSettings['role_reviewer']['content'] ?? 'Reviewers ensure each piece meets...') ?></textarea>
-
-
-
-              <label for="reviewer-image">Image URL or Path</label>
-
-              <input type="text" id="reviewer-image" name="image_url"
-
-                value="<?= htmlspecialchars($aboutSettings['role_reviewer']['image_url'] ?? 'pics/reviewer.jpg') ?>">
-
-              <p class="path-hint">Accept both full URLs (https://...) and local paths (pics/image.jpg or images/photo.png)</p>
-
-
-
-              <div class="card-footer">
-
-                <button type="submit" class="save-btn">Save Role</button>
-
-              </div>
-
-            </form>
-
-
-
-            <!-- Reader Role -->
-
-            <form class="card" method="POST" action="admin-settings.php?section=role_reader">
-
-              <h3>Reader Role</h3>
-
-              <label for="reader-title">Title</label>
-
-              <input type="text" id="reader-title" name="title"
-
-                value="<?= htmlspecialchars($aboutSettings['role_reader']['title'] ?? 'Reader') ?>">
-
-
-
-              <label for="reader-content">Description</label>
-
-              <textarea id="reader-content" name="content" rows="3"><?=
-
-                                                                    htmlspecialchars($aboutSettings['role_reader']['content'] ?? 'Readers enjoy fresh, meaningful...') ?></textarea>
-
-
-
-              <label for="reader-image">Image URL or Path</label>
-
-              <input type="text" id="reader-image" name="image_url"
-
-                value="<?= htmlspecialchars($aboutSettings['role_reader']['image_url'] ?? 'pics/reader.jpg') ?>">
-
-              <p class="path-hint">Accept both full URLs (https://...) and local paths (pics/image.jpg or images/photo.png)</p>
-
-
-
-              <div class="card-footer">
-
-                <button type="submit" class="save-btn">Save Role</button>
-
-              </div>
-
-            </form>
-
-
-
-            <!-- Announcements Widget Iframe Generator -->
-
-            <div class="card">
-
-              <h2>Embeddable Announcements Widget</h2>
-
-
-
-              <div class="form-group">
-
-                <label>Live Preview:</label>
-
-                <div id="live-preview-container" style="border: 1px dashed #ccc; padding: 10px; border-radius: 5px; margin-bottom: 15px; background: #f8f9fa; min-height: 300px;">
-
-                  <iframe id="live-preview" src="announcements-widget.php?limit=5&layout=column" width="100%" height="300" frameborder="0" style="border:none;"></iframe>
-
-                </div>
-
-              </div>
-
-
-
-              <div class="form-group">
-
-                <label>Layout Style:</label>
-
-                <div class="toggle-container" style="display: flex; align-items: center; margin-bottom: 15px;">
-
-                  <span style="margin-right: 10px;">Column</span>
-
-                  <label class="toggle-switch">
-
-                    <input type="checkbox" id="layout-toggle">
-
-                    <span class="slider"></span>
-
-                  </label>
-
-                  <span style="margin-left: 10px;">Row</span>
-
-                </div>
-
-              </div>
-
-
-
-              <div class="form-group">
-
-                <label for="iframe-width">Width:</label>
-
-                <select id="iframe-width" class="form-control">
-
-                  <option value="100%">100% (Full width)</option>
-
-                  <option value="800px">800px</option>
-
-                  <option value="600px">600px</option>
-
-                  <option value="400px">400px</option>
-
-                  <option value="custom">Custom</option>
-
-                </select>
-
-                <input type="text" id="custom-width" style="display:none; margin-top:5px;" placeholder="e.g. 750px">
-
-              </div>
-
-
-
-              <div class="form-group">
-
-                <label for="iframe-height">Height:</label>
-
-                <input type="text" id="iframe-height" class="form-control" value="300px">
-
-              </div>
-
-
-
-              <div class="form-group">
-
-                <label for="iframe-limit">Number of Announcements:</label>
-
-                <input type="number" id="iframe-limit" class="form-control" value="5" min="1" max="10">
-
-              </div>
-
-
-
-              <div class="form-group">
-
-                <label>Embed Code:</label>
-
-                <textarea id="iframe-code" rows="4" class="form-control" readonly></textarea>
-
-              </div>
-
-
-
-              <div class="card-footer">
-
-                <button type="button" id="generate-iframe" class="save-btn">Generate Code</button>
-
-                <button type="button" id="copy-iframe" class="save-btn">Copy Code</button>
-
-              </div>
+              <input type="text" id="article-search" placeholder="Search by title..." class="search-input">
 
             </div>
 
-            <div class="card">
-
-              <h2>Upcoming Events Widget</h2>
 
 
+            <div class="articles-list" id="articles-container">
 
-              <div class="form-group">
+              <!-- Articles will be loaded here via JavaScript -->
 
-                <label>Live Preview:</label>
+              <div class="loading-spinner"></div>
 
-                <div id="events-preview-container" style="border: 1px dashed #ccc; padding: 10px; border-radius: 5px; margin-bottom: 15px; background: white;">
-
-                  <iframe id="events-preview" src="events-widget.php?view=list&limit=5&startdate=<?php echo date('Y-m-d'); ?>" width="100%" height="500" frameborder="0" style="border:none;"></iframe>
-
-                </div>
-
-              </div>
+            </div>
 
 
 
-              <div class="form-group">
+            <div class="card-footer">
 
-                <label>Default View:</label>
+              <button type="submit" class="save-btn">Save Highlights</button>
 
-                <select id="view-select" class="form-control" style="margin-bottom: 15px;">
+            </div>
 
-                  <option value="list">List View (Upcoming Events)</option>
-
-                  <option value="calendar">Calendar View</option>
-
-                </select>
-
-              </div>
+          </form>
 
 
 
-              <div class="form-group">
+          <!-- Mail Configuration -->
 
-                <label>Number of Events:</label>
+          <form class="card" method="POST" action="admin-settings.php?group=mail">
 
-                <select id="limit-select" class="form-control" style="margin-bottom: 15px;">
+            <h2>Mail Configuration</h2>
 
-                  <option value="5">Show 5</option>
+            <label for="mail-email">Email Address</label>
 
-                  <option value="10">Show 10</option>
-
-                  <option value="20">Show 20</option>
-
-                  <option value="all">Show All</option>
-
-                </select>
-
-              </div>
+            <input type="email" id="mail-email" name="mail-email" value="<?= htmlspecialchars($siteSettings['mail']['email'] ?? '') ?>" required>
 
 
 
-              <div class="form-group">
+            <label for="mail-password">App Password</label>
 
-                <label>Start Date:</label>
-
-                <input type="date" id="start-date" class="form-control" style="margin-bottom: 15px;" value="<?php echo date('Y-m-d'); ?>">
-
-              </div>
+            <input type="password" id="mail-password" name="mail-password" value="<?= htmlspecialchars($siteSettings['mail']['password'] ?? '') ?>" required>
 
 
 
-              <div class="form-group">
+            <label for="mail-name">Sender Name</label>
 
-                <label>Width:</label>
-
-                <select id="width-select" class="form-control" style="margin-bottom: 15px;">
-
-                  <option value="100%">100% (Full width)</option>
-
-                  <option value="800px">800px</option>
-
-                  <option value="600px">600px</option>
-
-                  <option value="400px">400px</option>
-
-                  <option value="custom">Custom</option>
-
-                </select>
-
-                <input type="text" id="custom-width" style="display:none; margin-top:5px;" placeholder="e.g. 750px or 80%">
-
-              </div>
+            <input type="text" id="mail-name" name="mail-name" value="<?= htmlspecialchars($siteSettings['mail']['sender_name'] ?? '') ?>" required>
 
 
 
-              <div class="form-group">
+            <div class="card-footer">
 
-                <label>Height:</label>
+              <button type="submit" class="save-btn">Save Mail Settings</button>
 
-                <input type="text" id="height-input" class="form-control" style="margin-bottom: 15px;" value="500px">
+            </div>
 
-                <p class="path-hint">Use "auto" for list view to expand with content, or specific height like "500px"</p>
-
-              </div>
+          </form>
 
 
 
-              <div class="form-group">
+          <!-- Social Media -->
 
-                <label>Embed Code:</label>
+          <form class="card" method="POST" action="admin-settings.php?group=social">
 
-                <textarea id="embed-code" class="form-control" rows="4" readonly style="font-family: monospace; margin-bottom: 15px;"></textarea>
+            <h2>Social Media</h2>
 
-                <button id="copy-embed" class="save-btn">Copy Code</button>
+            <label for="facebook">Facebook URL</label>
+
+            <input type="url" id="facebook" name="facebook" value="<?= htmlspecialchars($siteSettings['social']['facebook_url'] ?? '') ?>">
+
+
+
+            <label for="instagram">Instagram URL</label>
+
+            <input type="url" id="instagram" name="instagram" value="<?= htmlspecialchars($siteSettings['social']['instagram_url'] ?? '') ?>">
+
+
+
+            <label for="pinterest">Pinterest URL</label>
+
+            <input type="url" id="pinterest" name="pinterest" value="<?= htmlspecialchars($siteSettings['social']['pinterest_url'] ?? '') ?>">
+
+
+
+            <div class="card-footer">
+
+              <button type="submit" class="save-btn">Save Social Media</button>
+
+            </div>
+
+          </form>
+
+
+
+          <!-- Site Information -->
+
+          <form class="card" method="POST" action="admin-settings.php?group=contact">
+
+            <h2>Site Information</h2>
+
+            <label for="address">Address</label>
+
+            <input type="text" id="address" name="address" value="<?= htmlspecialchars($siteSettings['contact']['address'] ?? '') ?>">
+
+
+
+            <label for="open_time_start">School Opens At</label>
+
+            <input type="time" id="open_time_start" name="open_time_start"
+
+              value="<?= isset($siteSettings['contact']['open_time_start']) ? htmlspecialchars(substr($siteSettings['contact']['open_time_start'], 0, 5)) : '' ?>">
+
+
+
+            <label for="open_time_end">School Closes At</label>
+
+            <input type="time" id="open_time_end" name="open_time_end"
+
+              value="<?= isset($siteSettings['contact']['open_time_end']) ? htmlspecialchars(substr($siteSettings['contact']['open_time_end'], 0, 5)) : '' ?>">
+
+
+
+            <label for="phone">Phone</label>
+
+            <input type="text" id="phone" name="phone" value="<?= htmlspecialchars($siteSettings['contact']['phone'] ?? '') ?>">
+
+
+
+            <div class="card-footer">
+
+              <button type="submit" class="save-btn">Save Site Info</button>
+
+            </div>
+
+          </form>
+
+
+
+          <!-- About Page Content -->
+
+          <form class="card" method="POST" action="admin-settings.php?section=banner">
+
+            <h2>About Page Banner</h2>
+
+            <label for="banner-video">Banner Video URL</label>
+
+            <input type="url" id="banner-video" name="video_url"
+
+              value="<?= htmlspecialchars($aboutSettings['banner']['video_url'] ?? '') ?>">
+
+            <p class="path-hint">Must be a full URL (https://...)</p>
+
+
+
+            <div class="card-footer">
+
+              <button type="submit" class="save-btn">Save Banner</button>
+
+            </div>
+
+          </form>
+
+
+
+          <!-- [Rest of your form cards continue in the same single column layout] -->
+
+          <!-- What is Lundayan -->
+
+          <form class="card" method="POST" action="admin-settings.php?section=what_is">
+
+            <h2>What is Lundayan</h2>
+
+            <label for="what-is-title">Title</label>
+
+            <input type="text" id="what-is-title" name="title"
+
+              value="<?= htmlspecialchars($aboutSettings['what_is']['title'] ?? 'What even is the Lundayan website?') ?>">
+
+
+
+            <label for="what-is-content">Content</label>
+
+            <textarea id="what-is-content" name="content" rows="6"><?=
+
+                                                                    htmlspecialchars($aboutSettings['what_is']['content'] ?? 'Lundayan is an article publication platform...') ?></textarea>
+
+
+
+            <label for="what-is-image">Image URL or Path</label>
+
+            <input type="text" id="what-is-image" name="image_url"
+
+              value="<?= htmlspecialchars($aboutSettings['what_is']['image_url'] ?? 'pics/lundayan-logo.png') ?>">
+
+            <p class="path-hint">Accept both full URLs (https://...) and local paths (pics/image.jpg or images/photo.png)</p>
+
+
+
+            <div class="card-footer">
+
+              <button type="submit" class="save-btn">Save Section</button>
+
+            </div>
+
+          </form>
+
+
+
+          <!-- [Continue with all other form sections in the same single column format] -->
+
+          <!-- Mission Section -->
+
+          <form class="card" method="POST" action="admin-settings.php?section=mission">
+
+            <h2>Our Mission</h2>
+
+            <label for="mission-title">Title</label>
+
+            <input type="text" id="mission-title" name="title"
+
+              value="<?= htmlspecialchars($aboutSettings['mission']['title'] ?? 'What is our mission?') ?>">
+
+
+
+            <label for="mission-content">Content</label>
+
+            <textarea id="mission-content" name="content" rows="6"><?=
+
+                                                                    htmlspecialchars($aboutSettings['mission']['content'] ?? 'Our mission is to promote thoughtful discourse...') ?></textarea>
+
+
+
+            <label for="mission-image">Image URL or Path</label>
+
+            <input type="text" id="mission-image" name="image_url"
+
+              value="<?= htmlspecialchars($aboutSettings['mission']['image_url'] ?? 'pics/thinker.jpg') ?>">
+
+            <p class="path-hint">Accept both full URLs (https://...) and local paths (pics/image.jpg or images/photo.png)</p>
+
+
+
+            <div class="card-footer">
+
+              <button type="submit" class="save-btn">Save Section</button>
+
+            </div>
+
+          </form>
+
+
+
+          <!-- Who We Are -->
+
+          <form class="card" method="POST" action="admin-settings.php?section=who_we_are">
+
+            <h2>Who We Are</h2>
+
+            <label for="who-we-are-title">Title</label>
+
+            <input type="text" id="who-we-are-title" name="title"
+
+              value="<?= htmlspecialchars($aboutSettings['who_we_are']['title'] ?? 'Who are we?') ?>">
+
+
+
+            <label for="who-we-are-content">Content</label>
+
+            <textarea id="who-we-are-content" name="content" rows="6"><?=
+
+                                                                      htmlspecialchars($aboutSettings['who_we_are']['content'] ?? 'We are student storytellers from...') ?></textarea>
+
+
+
+            <label for="who-we-are-image">Image URL or Path</label>
+
+            <input type="text" id="who-we-are-image" name="image_url"
+
+              value="<?= htmlspecialchars($aboutSettings['who_we_are']['image_url'] ?? 'pics/study-anime.gif') ?>">
+
+            <p class="path-hint">Accept both full URLs (https://...) and local paths (pics/image.jpg or images/photo.png)</p>
+
+
+
+            <div class="card-footer">
+
+              <button type="submit" class="save-btn">Save Section</button>
+
+            </div>
+
+          </form>
+
+
+
+          <!-- Roles Section -->
+
+          <form class="card" method="POST" action="admin-settings.php?section=roles">
+
+            <h2>Roles Section</h2>
+
+            <label for="roles-title">Title</label>
+
+            <input type="text" id="roles-title" name="title"
+
+              value="<?= htmlspecialchars($aboutSettings['roles']['title'] ?? 'What do we do?') ?>">
+
+
+
+            <label for="roles-content">Intro Content</label>
+
+            <textarea id="roles-content" name="content" rows="3"><?=
+
+                                                                  htmlspecialchars($aboutSettings['roles']['content'] ?? '') ?></textarea>
+
+
+
+            <div class="card-footer">
+
+              <button type="submit" class="save-btn">Save Section</button>
+
+            </div>
+
+          </form>
+
+
+
+          <!-- Writer Role -->
+
+          <form class="card" method="POST" action="admin-settings.php?section=role_writer">
+
+            <h3>Writer Role</h3>
+
+            <label for="writer-title">Title</label>
+
+            <input type="text" id="writer-title" name="title"
+
+              value="<?= htmlspecialchars($aboutSettings['role_writer']['title'] ?? 'Writer') ?>">
+
+
+
+            <label for="writer-content">Description</label>
+
+            <textarea id="writer-content" name="content" rows="3"><?=
+
+                                                                  htmlspecialchars($aboutSettings['role_writer']['content'] ?? 'Writers contribute original articles...') ?></textarea>
+
+
+
+            <label for="writer-image">Image URL or Path</label>
+
+            <input type="text" id="writer-image" name="image_url"
+
+              value="<?= htmlspecialchars($aboutSettings['role_writer']['image_url'] ?? 'pics/typewriter.jpg') ?>">
+
+            <p class="path-hint">Accept both full URLs (https://...) and local paths (pics/image.jpg or images/photo.png)</p>
+
+
+
+            <div class="card-footer">
+
+              <button type="submit" class="save-btn">Save Role</button>
+
+            </div>
+
+          </form>
+
+
+
+          <!-- Reviewer Role -->
+
+          <form class="card" method="POST" action="admin-settings.php?section=role_reviewer">
+
+            <h3>Reviewer Role</h3>
+
+            <label for="reviewer-title">Title</label>
+
+            <input type="text" id="reviewer-title" name="title"
+
+              value="<?= htmlspecialchars($aboutSettings['role_reviewer']['title'] ?? 'Reviewer') ?>">
+
+
+
+            <label for="reviewer-content">Description</label>
+
+            <textarea id="reviewer-content" name="content" rows="3"><?=
+
+                                                                    htmlspecialchars($aboutSettings['role_reviewer']['content'] ?? 'Reviewers ensure each piece meets...') ?></textarea>
+
+
+
+            <label for="reviewer-image">Image URL or Path</label>
+
+            <input type="text" id="reviewer-image" name="image_url"
+
+              value="<?= htmlspecialchars($aboutSettings['role_reviewer']['image_url'] ?? 'pics/reviewer.jpg') ?>">
+
+            <p class="path-hint">Accept both full URLs (https://...) and local paths (pics/image.jpg or images/photo.png)</p>
+
+
+
+            <div class="card-footer">
+
+              <button type="submit" class="save-btn">Save Role</button>
+
+            </div>
+
+          </form>
+
+
+
+          <!-- Reader Role -->
+
+          <form class="card" method="POST" action="admin-settings.php?section=role_reader">
+
+            <h3>Reader Role</h3>
+
+            <label for="reader-title">Title</label>
+
+            <input type="text" id="reader-title" name="title"
+
+              value="<?= htmlspecialchars($aboutSettings['role_reader']['title'] ?? 'Reader') ?>">
+
+
+
+            <label for="reader-content">Description</label>
+
+            <textarea id="reader-content" name="content" rows="3"><?=
+
+                                                                  htmlspecialchars($aboutSettings['role_reader']['content'] ?? 'Readers enjoy fresh, meaningful...') ?></textarea>
+
+
+
+            <label for="reader-image">Image URL or Path</label>
+
+            <input type="text" id="reader-image" name="image_url"
+
+              value="<?= htmlspecialchars($aboutSettings['role_reader']['image_url'] ?? 'pics/reader.jpg') ?>">
+
+            <p class="path-hint">Accept both full URLs (https://...) and local paths (pics/image.jpg or images/photo.png)</p>
+
+
+
+            <div class="card-footer">
+
+              <button type="submit" class="save-btn">Save Role</button>
+
+            </div>
+
+          </form>
+
+
+
+          <!-- Announcements Widget Iframe Generator -->
+
+          <div class="card">
+
+            <h2>Embeddable Announcements Widget</h2>
+
+
+
+            <div class="form-group">
+
+              <label>Live Preview:</label>
+
+              <div id="live-preview-container" style="border: 1px dashed #ccc; padding: 10px; border-radius: 5px; margin-bottom: 15px; background: #f8f9fa; min-height: 300px;">
+
+                <iframe id="live-preview" src="announcements-widget.php?limit=5&layout=column" width="100%" height="300" frameborder="0" style="border:none;"></iframe>
 
               </div>
 
@@ -2007,664 +1803,868 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 
+            <div class="form-group">
+
+              <label>Layout Style:</label>
+
+              <div class="toggle-container" style="display: flex; align-items: center; margin-bottom: 15px;">
+
+                <span style="margin-right: 10px;">Column</span>
+
+                <label class="toggle-switch">
+
+                  <input type="checkbox" id="layout-toggle">
+
+                  <span class="slider"></span>
+
+                </label>
+
+                <span style="margin-left: 10px;">Row</span>
+
+              </div>
+
+            </div>
 
 
 
+            <div class="form-group">
+
+              <label for="iframe-width">Width:</label>
+
+              <select id="iframe-width" class="form-control">
+
+                <option value="100%">100% (Full width)</option>
+
+                <option value="800px">800px</option>
+
+                <option value="600px">600px</option>
+
+                <option value="400px">400px</option>
+
+                <option value="custom">Custom</option>
+
+              </select>
+
+              <input type="text" id="custom-width" style="display:none; margin-top:5px;" placeholder="e.g. 750px">
+
+            </div>
 
 
 
+            <div class="form-group">
 
+              <label for="iframe-height">Height:</label>
+
+              <input type="text" id="iframe-height" class="form-control" value="300px">
+
+            </div>
+
+
+
+            <div class="form-group">
+
+              <label for="iframe-limit">Number of Announcements:</label>
+
+              <input type="number" id="iframe-limit" class="form-control" value="5" min="1" max="10">
+
+            </div>
+
+
+
+            <div class="form-group">
+
+              <label>Embed Code:</label>
+
+              <textarea id="iframe-code" rows="4" class="form-control" readonly></textarea>
+
+            </div>
+
+
+
+            <div class="card-footer">
+
+              <button type="button" id="generate-iframe" class="save-btn">Generate Code</button>
+
+              <button type="button" id="copy-iframe" class="save-btn">Copy Code</button>
+
+            </div>
 
           </div>
+
+          <div class="card">
+
+            <h2>Upcoming Events Widget</h2>
+
+
+
+            <div class="form-group">
+
+              <label>Live Preview:</label>
+
+              <div id="events-preview-container" style="border: 1px dashed #ccc; padding: 10px; border-radius: 5px; margin-bottom: 15px; background: white;">
+
+                <iframe id="events-preview" src="events-widget.php?view=list&limit=5&startdate=<?php echo date('Y-m-d'); ?>" width="100%" height="500" frameborder="0" style="border:none;"></iframe>
+
+              </div>
+
+            </div>
+
+
+
+            <div class="form-group">
+
+              <label>Default View:</label>
+
+              <select id="view-select" class="form-control" style="margin-bottom: 15px;">
+
+                <option value="list">List View (Upcoming Events)</option>
+
+                <option value="calendar">Calendar View</option>
+
+              </select>
+
+            </div>
+
+
+
+            <div class="form-group">
+
+              <label>Number of Events:</label>
+
+              <select id="limit-select" class="form-control" style="margin-bottom: 15px;">
+
+                <option value="5">Show 5</option>
+
+                <option value="10">Show 10</option>
+
+                <option value="20">Show 20</option>
+
+                <option value="all">Show All</option>
+
+              </select>
+
+            </div>
+
+
+
+            <div class="form-group">
+
+              <label>Start Date:</label>
+
+              <input type="date" id="start-date" class="form-control" style="margin-bottom: 15px;" value="<?php echo date('Y-m-d'); ?>">
+
+            </div>
+
+
+
+            <div class="form-group">
+
+              <label>Width:</label>
+
+              <select id="width-select" class="form-control" style="margin-bottom: 15px;">
+
+                <option value="100%">100% (Full width)</option>
+
+                <option value="800px">800px</option>
+
+                <option value="600px">600px</option>
+
+                <option value="400px">400px</option>
+
+                <option value="custom">Custom</option>
+
+              </select>
+
+              <input type="text" id="custom-width" style="display:none; margin-top:5px;" placeholder="e.g. 750px or 80%">
+
+            </div>
+
+
+
+            <div class="form-group">
+
+              <label>Height:</label>
+
+              <input type="text" id="height-input" class="form-control" style="margin-bottom: 15px;" value="500px">
+
+              <p class="path-hint">Use "auto" for list view to expand with content, or specific height like "500px"</p>
+
+            </div>
+
+
+
+            <div class="form-group">
+
+              <label>Embed Code:</label>
+
+              <textarea id="embed-code" class="form-control" rows="4" readonly style="font-family: monospace; margin-bottom: 15px;"></textarea>
+
+              <button id="copy-embed" class="save-btn">Copy Code</button>
+
+            </div>
+
+          </div>
+
+
+
+
+
+
+
+
+
+
 
         </div>
 
       </div>
+
     </div>
+  </div>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const mobileToggle = document.getElementById('mobileMenuToggle');
-        const sidebar = document.getElementById('sidebar');
-        const mainContent = document.getElementById('mainContent');
-        const body = document.body;
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileToggle = document.getElementById('mobileMenuToggle');
+      const sidebar = document.getElementById('sidebar');
+      const mainContent = document.getElementById('mainContent');
+      const body = document.body;
 
-        // Initialize sidebar state
-        function initSidebar() {
-          if (window.innerWidth > 992) {
-            sidebar.classList.add('active');
-            mainContent.classList.add('shifted');
-          }
+      // Initialize sidebar state
+      function initSidebar() {
+        if (window.innerWidth > 992) {
+          sidebar.classList.add('active');
+          mainContent.classList.add('shifted');
         }
+      }
 
-        // Toggle sidebar
-        mobileToggle.addEventListener('click', function(e) {
-          e.stopPropagation();
-          sidebar.classList.toggle('active');
-          body.classList.toggle('sidebar-open');
+      // Toggle sidebar
+      mobileToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        sidebar.classList.toggle('active');
+        body.classList.toggle('sidebar-open');
 
-          // Change icon
-          const icon = this.querySelector('i');
-          if (sidebar.classList.contains('active')) {
-            icon.classList.remove('fa-bars');
-            icon.classList.add('fa-times');
-          } else {
-            icon.classList.remove('fa-times');
-            icon.classList.add('fa-bars');
-          }
-        });
-
-        // Close sidebar when clicking outside on mobile
-        document.addEventListener('click', function(e) {
-          if (window.innerWidth <= 992 &&
-            !sidebar.contains(e.target) &&
-            e.target !== mobileToggle &&
-            sidebar.classList.contains('active')) {
-            closeSidebar();
-          }
-        });
-
-        // Handle window resize
-        window.addEventListener('resize', function() {
-          if (window.innerWidth > 992) {
-            sidebar.classList.add('active');
-            mainContent.classList.add('shifted');
-          } else {
-            if (sidebar.classList.contains('active')) {
-              mainContent.classList.remove('shifted');
-            }
-          }
-        });
-
-        function closeSidebar() {
-          sidebar.classList.remove('active');
-          body.classList.remove('sidebar-open');
-          const icon = mobileToggle.querySelector('i');
+        // Change icon
+        const icon = this.querySelector('i');
+        if (sidebar.classList.contains('active')) {
+          icon.classList.remove('fa-bars');
+          icon.classList.add('fa-times');
+        } else {
           icon.classList.remove('fa-times');
           icon.classList.add('fa-bars');
         }
-
-        // Initialize
-        initSidebar();
       });
-    </script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const viewSelect = document.getElementById('view-select');
 
-        const limitSelect = document.getElementById('limit-select');
-
-        const startDate = document.getElementById('start-date');
-
-        const widthSelect = document.getElementById('width-select');
-
-        const customWidth = document.getElementById('custom-width');
-
-        const heightInput = document.getElementById('height-input');
-
-        const previewIframe = document.getElementById('events-preview');
-
-        const embedCode = document.getElementById('embed-code');
-
-        const copyButton = document.getElementById('copy-embed');
-
-
-
-        // Toggle custom width field
-
-        widthSelect.addEventListener('change', function() {
-
-          customWidth.style.display = this.value === 'custom' ? 'block' : 'none';
-
-          updateWidget();
-
-        });
-
-
-
-        function updateWidget() {
-
-          const view = viewSelect.value;
-
-          const limit = limitSelect.value;
-
-          const date = startDate.value;
-
-          let width = widthSelect.value;
-
-          if (width === 'custom') width = customWidth.value || '100%';
-
-          const height = heightInput.value || (view === 'list' ? 'auto' : '500px');
-
-
-
-          // Update iframe preview
-
-          previewIframe.src = `events-widget.php?view=${view}&limit=${limit}&startdate=${date}&width=${width}&height=${height}`;
-
-
-
-          // Update preview container size
-
-          document.getElementById('events-preview-container').style.height = height === 'auto' ? 'auto' : height;
-
-
-
-          // Update embed code
-
-          const code = `<iframe src="events-widget.php?view=${view}&limit=${limit}&startdate=${date}&width=${width}&height=${height}" width="${width}" height="${height}" frameborder="0" style="border:none;"></iframe>`;
-
-          embedCode.value = code;
-
+      // Close sidebar when clicking outside on mobile
+      document.addEventListener('click', function(e) {
+        if (window.innerWidth <= 992 &&
+          !sidebar.contains(e.target) &&
+          e.target !== mobileToggle &&
+          sidebar.classList.contains('active')) {
+          closeSidebar();
         }
+      });
+
+      // Handle window resize
+      window.addEventListener('resize', function() {
+        if (window.innerWidth > 992) {
+          sidebar.classList.add('active');
+          mainContent.classList.add('shifted');
+        } else {
+          if (sidebar.classList.contains('active')) {
+            mainContent.classList.remove('shifted');
+          }
+        }
+      });
+
+      function closeSidebar() {
+        sidebar.classList.remove('active');
+        body.classList.remove('sidebar-open');
+        const icon = mobileToggle.querySelector('i');
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+
+      // Initialize
+      initSidebar();
+    });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const viewSelect = document.getElementById('view-select');
+
+      const limitSelect = document.getElementById('limit-select');
+
+      const startDate = document.getElementById('start-date');
+
+      const widthSelect = document.getElementById('width-select');
+
+      const customWidth = document.getElementById('custom-width');
+
+      const heightInput = document.getElementById('height-input');
+
+      const previewIframe = document.getElementById('events-preview');
+
+      const embedCode = document.getElementById('embed-code');
+
+      const copyButton = document.getElementById('copy-embed');
 
 
 
-        viewSelect.addEventListener('change', updateWidget);
+      // Toggle custom width field
 
-        limitSelect.addEventListener('change', updateWidget);
+      widthSelect.addEventListener('change', function() {
 
-        startDate.addEventListener('change', updateWidget);
-
-        widthSelect.addEventListener('change', updateWidget);
-
-        customWidth.addEventListener('input', updateWidget);
-
-        heightInput.addEventListener('input', updateWidget);
-
-
-
-        copyButton.addEventListener('click', function() {
-
-          embedCode.select();
-
-          document.execCommand('copy');
-
-          copyButton.textContent = 'Copied!';
-
-          setTimeout(() => {
-
-            copyButton.textContent = 'Copy Code';
-
-          }, 2000);
-
-        });
-
-
-
-        // Initialize
+        customWidth.style.display = this.value === 'custom' ? 'block' : 'none';
 
         updateWidget();
 
       });
-    </script>
 
 
 
+      function updateWidget() {
 
+        const view = viewSelect.value;
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
+        const limit = limitSelect.value;
 
-        const themeSelect = document.getElementById('theme-select');
+        const date = startDate.value;
 
-        const sizeRadios = document.querySelectorAll('input[name="size"]');
+        let width = widthSelect.value;
 
-        const previewIframe = document.getElementById('calendar-preview');
+        if (width === 'custom') width = customWidth.value || '100%';
 
-        const embedCode = document.getElementById('embed-code');
+        const height = heightInput.value || (view === 'list' ? 'auto' : '500px');
 
-        const copyButton = document.getElementById('copy-embed');
 
 
+        // Update iframe preview
 
-        // Update preview and embed code when options change
+        previewIframe.src = `events-widget.php?view=${view}&limit=${limit}&startdate=${date}&width=${width}&height=${height}`;
 
-        function updateWidget() {
 
-          const theme = themeSelect.value;
 
-          const size = document.querySelector('input[name="size"]:checked').value;
+        // Update preview container size
 
+        document.getElementById('events-preview-container').style.height = height === 'auto' ? 'auto' : height;
 
 
-          // Update iframe preview
 
-          previewIframe.src = `calendar-widget.php?theme=${theme}&size=${size}`;
+        // Update embed code
 
+        const code = `<iframe src="events-widget.php?view=${view}&limit=${limit}&startdate=${date}&width=${width}&height=${height}" width="${width}" height="${height}" frameborder="0" style="border:none;"></iframe>`;
 
+        embedCode.value = code;
 
-          // Update embed code
+      }
 
-          const code = `<iframe src="calendar-widget.php?theme=${theme}&size=${size}" width="${getWidth(size)}" height="${getHeight(size)}" frameborder="0" style="border:none;"></iframe>`;
 
-          embedCode.value = code;
 
-        }
+      viewSelect.addEventListener('change', updateWidget);
 
+      limitSelect.addEventListener('change', updateWidget);
 
+      startDate.addEventListener('change', updateWidget);
 
-        // Helper functions for size dimensions
+      widthSelect.addEventListener('change', updateWidget);
 
-        function getWidth(size) {
+      customWidth.addEventListener('input', updateWidget);
 
-          switch (size) {
+      heightInput.addEventListener('input', updateWidget);
 
-            case 'small':
-              return '300';
 
-            case 'medium':
-              return '500';
 
-            case 'large':
-              return '700';
+      copyButton.addEventListener('click', function() {
 
-            default:
-              return '500';
+        embedCode.select();
 
-          }
+        document.execCommand('copy');
 
-        }
+        copyButton.textContent = 'Copied!';
 
+        setTimeout(() => {
 
+          copyButton.textContent = 'Copy Code';
 
-        function getHeight(size) {
-
-          switch (size) {
-
-            case 'small':
-              return '300';
-
-            case 'medium':
-              return '400';
-
-            case 'large':
-              return '500';
-
-            default:
-              return '400';
-
-          }
-
-        }
-
-
-
-        // Event listeners
-
-        themeSelect.addEventListener('change', updateWidget);
-
-        sizeRadios.forEach(radio => {
-
-          radio.addEventListener('change', updateWidget);
-
-        });
-
-
-
-        copyButton.addEventListener('click', function() {
-
-          embedCode.select();
-
-          document.execCommand('copy');
-
-          copyButton.textContent = 'Copied!';
-
-          setTimeout(() => {
-
-            copyButton.textContent = 'Copy Code';
-
-          }, 2000);
-
-        });
-
-
-
-        // Initialize
-
-        updateWidget();
+        }, 2000);
 
       });
-    </script>
 
 
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
+      // Initialize
 
-        const widthSelect = document.getElementById('iframe-width');
+      updateWidget();
 
-        const customWidth = document.getElementById('custom-width');
-
-        const heightInput = document.getElementById('iframe-height');
-
-        const limitInput = document.getElementById('iframe-limit');
-
-        const layoutToggle = document.getElementById('layout-toggle');
-
-        const iframeCode = document.getElementById('iframe-code');
-
-        const livePreview = document.getElementById('live-preview');
+    });
+  </script>
 
 
 
-        // Toggle custom width field
-
-        widthSelect.addEventListener('change', function() {
-
-          customWidth.style.display = this.value === 'custom' ? 'block' : 'none';
-
-          updateIframe();
-
-        });
 
 
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
 
-        // Update both preview and code
+      const themeSelect = document.getElementById('theme-select');
 
-        function updateIframe() {
+      const sizeRadios = document.querySelectorAll('input[name="size"]');
 
-          let width = widthSelect.value;
+      const previewIframe = document.getElementById('calendar-preview');
 
-          if (width === 'custom') width = customWidth.value || '100%';
+      const embedCode = document.getElementById('embed-code');
 
-          const height = heightInput.value || '300px';
-
-          const limit = limitInput.value || '5';
-
-          const layout = layoutToggle.checked ? 'row' : 'column';
+      const copyButton = document.getElementById('copy-embed');
 
 
 
-          // Update live preview
+      // Update preview and embed code when options change
 
-          livePreview.src = `announcements-widget.php?limit=${limit}&layout=${layout}`;
+      function updateWidget() {
 
-          livePreview.style.width = width;
+        const theme = themeSelect.value;
 
-          livePreview.style.height = height;
-
-
-
-          // Update embed code with correct localhost path
-
-          const basePath = 'announcements-widget.php';
-
-          const code = `<iframe src="${basePath}?limit=${limit}&layout=${layout}" width="${width}" height="${height}" frameborder="0" style="border:none;"></iframe>`;
-
-          iframeCode.value = code;
+        const size = document.querySelector('input[name="size"]:checked').value;
 
 
 
-          // Adjust preview container height
+        // Update iframe preview
 
-          document.getElementById('live-preview-container').style.minHeight = height;
+        previewIframe.src = `calendar-widget.php?theme=${theme}&size=${size}`;
+
+
+
+        // Update embed code
+
+        const code = `<iframe src="calendar-widget.php?theme=${theme}&size=${size}" width="${getWidth(size)}" height="${getHeight(size)}" frameborder="0" style="border:none;"></iframe>`;
+
+        embedCode.value = code;
+
+      }
+
+
+
+      // Helper functions for size dimensions
+
+      function getWidth(size) {
+
+        switch (size) {
+
+          case 'small':
+            return '300';
+
+          case 'medium':
+            return '500';
+
+          case 'large':
+            return '700';
+
+          default:
+            return '500';
 
         }
 
-
-
-        // Copy to clipboard
-
-        document.getElementById('copy-iframe').addEventListener('click', function() {
-
-          iframeCode.select();
-
-          document.execCommand('copy');
-
-          this.textContent = 'Copied!';
-
-          setTimeout(() => this.textContent = 'Copy Code', 2000);
-
-        });
+      }
 
 
 
-        // Generate on any change
+      function getHeight(size) {
 
-        [widthSelect, customWidth, heightInput, limitInput, layoutToggle].forEach(el => {
+        switch (size) {
 
-          el.addEventListener('change', updateIframe);
+          case 'small':
+            return '300';
 
-          el.addEventListener('input', updateIframe);
+          case 'medium':
+            return '400';
 
-        });
+          case 'large':
+            return '500';
+
+          default:
+            return '400';
+
+        }
+
+      }
 
 
 
-        // Initial update
+      // Event listeners
+
+      themeSelect.addEventListener('change', updateWidget);
+
+      sizeRadios.forEach(radio => {
+
+        radio.addEventListener('change', updateWidget);
+
+      });
+
+
+
+      copyButton.addEventListener('click', function() {
+
+        embedCode.select();
+
+        document.execCommand('copy');
+
+        copyButton.textContent = 'Copied!';
+
+        setTimeout(() => {
+
+          copyButton.textContent = 'Copy Code';
+
+        }, 2000);
+
+      });
+
+
+
+      // Initialize
+
+      updateWidget();
+
+    });
+  </script>
+
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+      const widthSelect = document.getElementById('iframe-width');
+
+      const customWidth = document.getElementById('custom-width');
+
+      const heightInput = document.getElementById('iframe-height');
+
+      const limitInput = document.getElementById('iframe-limit');
+
+      const layoutToggle = document.getElementById('layout-toggle');
+
+      const iframeCode = document.getElementById('iframe-code');
+
+      const livePreview = document.getElementById('live-preview');
+
+
+
+      // Toggle custom width field
+
+      widthSelect.addEventListener('change', function() {
+
+        customWidth.style.display = this.value === 'custom' ? 'block' : 'none';
 
         updateIframe();
 
       });
-    </script>
-
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-
-        // Get all image URL inputs
-
-        const imageInputs = document.querySelectorAll('input[name="image_url"]');
 
 
 
-        imageInputs.forEach(input => {
+      // Update both preview and code
 
-          input.addEventListener('change', function() {
+      function updateIframe() {
 
-            const value = this.value.trim();
+        let width = widthSelect.value;
 
-            if (value && !value.match(/^(https?:\/\/|\/|pics\/|images\/)/i)) {
+        if (width === 'custom') width = customWidth.value || '100%';
 
-              alert('Please enter either:\n- A full URL starting with http:// or https://\n- A local path starting with pics/ or images/');
+        const height = heightInput.value || '300px';
 
-            }
+        const limit = limitInput.value || '5';
 
-          });
-
-        });
+        const layout = layoutToggle.checked ? 'row' : 'column';
 
 
 
-        // For video URLs, ensure they're full URLs
+        // Update live preview
 
-        const videoInputs = document.querySelectorAll('input[name="video_url"]');
+        livePreview.src = `announcements-widget.php?limit=${limit}&layout=${layout}`;
 
-        videoInputs.forEach(input => {
+        livePreview.style.width = width;
 
-          input.addEventListener('change', function() {
+        livePreview.style.height = height;
 
-            const value = this.value.trim();
 
-            if (value && !value.match(/^https?:\/\//i)) {
 
-              alert('Video URL must be a full URL starting with http:// or https://');
+        // Update embed code with correct localhost path
 
-              this.value = '';
+        const basePath = 'announcements-widget.php';
 
-            }
+        const code = `<iframe src="${basePath}?limit=${limit}&layout=${layout}" width="${width}" height="${height}" frameborder="0" style="border:none; background-color: white; border-radius: 0.5rem"></iframe>`;
 
-          });
+        iframeCode.value = code;
+
+
+
+        // Adjust preview container height
+
+        document.getElementById('live-preview-container').style.minHeight = height;
+
+      }
+
+
+
+      // Copy to clipboard
+
+      document.getElementById('copy-iframe').addEventListener('click', function() {
+
+        iframeCode.select();
+
+        document.execCommand('copy');
+
+        this.textContent = 'Copied!';
+
+        setTimeout(() => this.textContent = 'Copy Code', 2000);
+
+      });
+
+
+
+      // Generate on any change
+
+      [widthSelect, customWidth, heightInput, limitInput, layoutToggle].forEach(el => {
+
+        el.addEventListener('change', updateIframe);
+
+        el.addEventListener('input', updateIframe);
+
+      });
+
+
+
+      // Initial update
+
+      updateIframe();
+
+    });
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+      // Get all image URL inputs
+
+      const imageInputs = document.querySelectorAll('input[name="image_url"]');
+
+
+
+      imageInputs.forEach(input => {
+
+        input.addEventListener('change', function() {
+
+          const value = this.value.trim();
+
+          if (value && !value.match(/^(https?:\/\/|\/|pics\/|images\/)/i)) {
+
+            alert('Please enter either:\n- A full URL starting with http:// or https://\n- A local path starting with pics/ or images/');
+
+          }
 
         });
 
       });
-    </script>
 
 
 
-    <!-- Sanitize Input Boxes -->
+      // For video URLs, ensure they're full URLs
 
-    <script>
-      function sanitizeInputText(text) {
+      const videoInputs = document.querySelectorAll('input[name="video_url"]');
 
-        // Normalize to remove full-width/bold/special formatting
+      videoInputs.forEach(input => {
 
-        text = text.normalize("NFKC");
+        input.addEventListener('change', function() {
 
+          const value = this.value.trim();
 
+          if (value && !value.match(/^https?:\/\//i)) {
 
-        // Remove invisible/control characters EXCEPT:
+            alert('Video URL must be a full URL starting with http:// or https://');
 
-        // - Tab (\u0009)
+            this.value = '';
 
-        // - Newline (\u000A)
-
-        // - Carriage return (\u000D)
-
-        text = text.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]+/g, "");
-
-
-
-        // Remove private-use Unicode characters
-
-        text = text.replace(/[\u{E000}-\u{F8FF}\u{F0000}-\u{FFFFD}\u{100000}-\u{10FFFD}]/gu, "");
-
-
-
-        // Allow only one space
-
-        text = text.replace(/\s+/g, ' ');
-
-
-
-        // DO NOT trim here if you want to allow intentional leading/trailing spaces
-
-        return text;
-
-      }
-
-
-
-
-
-      // Attach the sanitizer to inputs and textareas
-
-      function attachSanitizerToInputs() {
-
-        const inputs = document.querySelectorAll("input[type='text'], textarea, input[type='url']");
-
-
-
-        inputs.forEach(input => {
-
-          input.addEventListener('input', () => {
-
-            const original = input.value;
-
-            const cleaned = sanitizeInputText(original);
-
-            if (original !== cleaned) {
-
-              input.value = cleaned;
-
-            }
-
-          });
-
-
-
-          input.addEventListener('paste', (e) => {
-
-            e.preventDefault();
-
-            const pastedText = (e.clipboardData || window.clipboardData).getData('text');
-
-            const cleaned = sanitizeInputText(pastedText);
-
-            document.execCommand("insertText", false, cleaned);
-
-          });
+          }
 
         });
 
-      }
+      });
+
+    });
+  </script>
 
 
 
-      document.addEventListener('DOMContentLoaded', attachSanitizerToInputs);
-    </script>
+  <!-- Sanitize Input Boxes -->
+
+  <script>
+    function sanitizeInputText(text) {
+
+      // Normalize to remove full-width/bold/special formatting
+
+      text = text.normalize("NFKC");
 
 
 
-    <!-- Article Highlight script -->
+      // Remove invisible/control characters EXCEPT:
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
+      // - Tab (\u0009)
 
-        // Load all articles
+      // - Newline (\u000A)
 
-        fetchArticles();
+      // - Carriage return (\u000D)
+
+      text = text.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]+/g, "");
 
 
 
-        // Search functionality
+      // Remove private-use Unicode characters
 
-        document.getElementById('article-search').addEventListener('input', function(e) {
+      text = text.replace(/[\u{E000}-\u{F8FF}\u{F0000}-\u{FFFFD}\u{100000}-\u{10FFFD}]/gu, "");
 
-          const searchTerm = e.target.value.toLowerCase();
 
-          const articles = document.querySelectorAll('.article-item');
+
+      // Allow only one space
+
+      text = text.replace(/\s+/g, ' ');
+
+
+
+      // DO NOT trim here if you want to allow intentional leading/trailing spaces
+
+      return text;
+
+    }
+
+
+
+
+
+    // Attach the sanitizer to inputs and textareas
+
+    function attachSanitizerToInputs() {
+
+      const inputs = document.querySelectorAll("input[type='text'], textarea, input[type='url']");
+
+
+
+      inputs.forEach(input => {
+
+        input.addEventListener('input', () => {
+
+          const original = input.value;
+
+          const cleaned = sanitizeInputText(original);
+
+          if (original !== cleaned) {
+
+            input.value = cleaned;
+
+          }
+
+        });
+
+
+
+        input.addEventListener('paste', (e) => {
+
+          e.preventDefault();
+
+          const pastedText = (e.clipboardData || window.clipboardData).getData('text');
+
+          const cleaned = sanitizeInputText(pastedText);
+
+          document.execCommand("insertText", false, cleaned);
+
+        });
+
+      });
+
+    }
+
+
+
+    document.addEventListener('DOMContentLoaded', attachSanitizerToInputs);
+  </script>
+
+
+
+  <!-- Article Highlight script -->
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+      // Load all articles
+
+      fetchArticles();
+
+
+
+      // Search functionality
+
+      document.getElementById('article-search').addEventListener('input', function(e) {
+
+        const searchTerm = e.target.value.toLowerCase();
+
+        const articles = document.querySelectorAll('.article-item');
+
+
+
+        articles.forEach(article => {
+
+          const title = article.querySelector('.article-title').textContent.toLowerCase();
+
+          if (title.includes(searchTerm)) {
+
+            article.style.display = 'flex';
+
+          } else {
+
+            article.style.display = 'none';
+
+          }
+
+        });
+
+      });
+
+    });
+
+
+
+    function fetchArticles() {
+
+      const container = document.getElementById('articles-container');
+
+      container.innerHTML = '<div class="loading-spinner"></div>';
+
+
+
+      fetch('php-backend/get-all-articles.php')
+
+        .then(response => response.json())
+
+        .then(articles => {
+
+          container.innerHTML = '';
+
+
+
+          if (articles.length === 0) {
+
+            container.innerHTML = '<p class="no-articles">No published articles found</p>';
+
+            return;
+
+          }
 
 
 
           articles.forEach(article => {
 
-            const title = article.querySelector('.article-title').textContent.toLowerCase();
+            const articleEl = document.createElement('div');
 
-            if (title.includes(searchTerm)) {
+            articleEl.className = 'article-item';
 
-              article.style.display = 'flex';
-
-            } else {
-
-              article.style.display = 'none';
-
-            }
-
-          });
-
-        });
-
-      });
-
-
-
-      function fetchArticles() {
-
-        const container = document.getElementById('articles-container');
-
-        container.innerHTML = '<div class="loading-spinner"></div>';
-
-
-
-        fetch('php-backend/get-all-articles.php')
-
-          .then(response => response.json())
-
-          .then(articles => {
-
-            container.innerHTML = '';
-
-
-
-            if (articles.length === 0) {
-
-              container.innerHTML = '<p class="no-articles">No published articles found</p>';
-
-              return;
-
-            }
-
-
-
-            articles.forEach(article => {
-
-              const articleEl = document.createElement('div');
-
-              articleEl.className = 'article-item';
-
-              articleEl.innerHTML = `
+            articleEl.innerHTML = `
 
           <div class="article-info">
 
@@ -2692,26 +2692,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         `;
 
-              container.appendChild(articleEl);
-
-            });
-
-          })
-
-          .catch(error => {
-
-            console.error('Error:', error);
-
-            container.innerHTML = '<p class="error-message">Failed to load articles. Please try again.</p>';
+            container.appendChild(articleEl);
 
           });
 
-      }
-    </script>
+        })
+
+        .catch(error => {
+
+          console.error('Error:', error);
+
+          container.innerHTML = '<p class="error-message">Failed to load articles. Please try again.</p>';
+
+        });
+
+    }
+  </script>
 
 
 
-    <!-- <script src="scripts/menu_button-admin.js"></script> -->
+  <!-- <script src="scripts/menu_button-admin.js"></script> -->
 
 </body>
 

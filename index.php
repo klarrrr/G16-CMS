@@ -91,9 +91,7 @@
                     <h2>Upcoming Events</h2>
                 </div>
                 <!-- Upcoming Events -->
-                <div class="events" id="upcoming-events-container" style='background-color: #fff; border-radius: 0.5rem;' title="Stay tuned!">
-                    <iframe src="announcements-widget.php?limit=5&layout=row" width="100%" height="300px" frameborder="0" style="border:none;"></iframe>
-                </div>
+                <iframe src="announcements-widget.php?limit=5&layout=column" width="100%" height="300px" frameborder="0" style="border:none; background-color: white; border-radius: 0.5rem"></iframe>
 
                 <div class="remaining-texts">
                     <p>Lundayan on Facebook</p>
