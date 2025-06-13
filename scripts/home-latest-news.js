@@ -51,7 +51,7 @@ function startHighlightRotation() {
     // Set interval to rotate every 5 seconds
     highlightInterval = setInterval(() => {
         navigateHighlight(1); // Go to next highlight
-    }, 5000); // 5000 milliseconds = 5 seconds
+    }, 5000); // 5 secs
 
     // Pause rotation when user hovers over the highlight
     highlightArticle.addEventListener('mouseenter', pauseRotation);
@@ -79,7 +79,7 @@ function updateHighlightDisplay() {
 
     latestNewsTitle.innerHTML = widget.widget_title;
     latestNewsTitle.setAttribute('articleid', widget.article_owner);
-    latestNewsDate.innerHTML = formatDateTime(widget.date_posted);
+    latestNewsDate.innerHTML = (widget.highlight == 1) ? widget.widget_paragraph.substring(0, 40) + "..." : formatDateTime(widget.date_posted);
 
     highlightArticle.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.30), rgba(0, 0, 0, 0.65), rgb(0, 0, 0)), url(${picUrl})`;
     highlightArticle.style.backgroundRepeat = 'no-repeat';

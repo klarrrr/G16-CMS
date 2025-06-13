@@ -364,6 +364,16 @@
             currentIndex = (currentIndex + 1) % profiles.length;
             updateProfile(currentIndex);
         });
+
+        document.getElementById("normal-left-arrow").addEventListener("click", () => {
+            currentIndex = (currentIndex - 1 + profiles.length) % profiles.length;
+            updateProfile(currentIndex);
+        });
+
+        document.getElementById("normal-right-arrow").addEventListener("click", () => {
+            currentIndex = (currentIndex + 1) % profiles.length;
+            updateProfile(currentIndex);
+        });
     </script>
 
 </body>
