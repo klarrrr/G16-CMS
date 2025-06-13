@@ -24,6 +24,7 @@ $contactInfo = getContactInfo();
         <div class="footer-links">
             <h3>Quick Links</h3>
             <ul>
+                <li><a href="index.php">Home</a></li>
                 <li><a href="lundayan-site-archive.php">Archive</a></li>
                 <li><a href="lundayan-site-calendar.php">Calendar</a></li>
                 <li><a href="lundayan-site-contact.php">Contact</a></li>

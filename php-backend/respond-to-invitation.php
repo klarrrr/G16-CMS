@@ -24,6 +24,13 @@ if ($result->num_rows === 0) {
     die(json_encode(['error' => 'Not authorized to respond to this invitation']));
 }
 
+if($response == 'rejected'){
+    $deleteQuery = "DELETE FROM article_reviews WHERE invite_id = ?";
+    $stmt = $conn->prepare($deleteQuery);
+    $stmt->bind_param("i", $invite_id);
+    $stmt->execute();
+}
+
 // Update the invitation status
 $updateQuery = "UPDATE article_review_invites SET status = ? WHERE invite_id = ?";
 $stmt = $conn->prepare($updateQuery);

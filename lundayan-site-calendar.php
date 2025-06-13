@@ -16,7 +16,6 @@
     <?php include 'lundayan-site-nav.php'; ?>
     <main>
         <section class="calendar">
-            <br>
             <div class="calendar-vertical-layout">
                 <!-- LEFT COLUMN -->
                 <div class="calendar-left">
@@ -89,7 +88,7 @@
 
                     <div class="calendar-body">
                         <div class="calendar-numbers">
-                            <table bgcolor="lightgrey" align="center" cellspacing="21" cellpadding="21">
+                            <table bgcolor="lightgrey" align="center" cellspacing="5" cellpadding="">
                                 <thead>
                                     <tr>
                                         <th>Sun</th>

@@ -7,14 +7,16 @@ $article_id = intval($_POST['article_id']);
 $action = mysqli_real_escape_string($conn, $_POST['action']);
 $user_id = $_SESSION['user_id']; // Ensure user_id is set
 
+$now = date('Y-m-d H:i:s', time());
+
 // Update timestamps
-mysqli_query($conn, "UPDATE articles SET date_updated = NOW() WHERE article_id = $article_id");
-mysqli_query($conn, "UPDATE widgets SET date_updated = NOW() WHERE article_owner = $article_id");
+mysqli_query($conn, "UPDATE articles SET date_updated = '$now' WHERE article_id = $article_id");
+mysqli_query($conn, "UPDATE widgets SET date_updated = '$now' WHERE article_owner = $article_id");
 
 // Insert into audit_logs
 $insertLogQuery = "
     INSERT INTO audit_logs (user_owner, article_owner, action, log_time)
-    VALUES ($user_id, $article_id, '$action', NOW())
+    VALUES ($user_id, $article_id, '$action', '$now')
 ";
 mysqli_query($conn, $insertLogQuery);
 

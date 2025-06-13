@@ -1,24 +1,21 @@
 <?php
 
+session_start();
+
 include 'connect.php';
 
-$user_id = $_GET['user_id'];
+$user_id = $_SESSION['user_id'];
+$user_type = strtolower($_SESSION['user_type']);
 
-// Step 1: Get user type
-$userTypeQuery = "SELECT user_type FROM users WHERE user_id = ?";
-$userTypeStmt = $conn->prepare($userTypeQuery);
-$userTypeStmt->bind_param("i", $user_id);
-$userTypeStmt->execute();
-$userTypeResult = $userTypeStmt->get_result();
-
-$user_type = null;
-if ($row = $userTypeResult->fetch_assoc()) {
-    $user_type = strtolower($row['user_type']);
-}
+$articles = [];
+$widgets = [];
+$widget_ids = [];
 
 if ($user_type === 'writer') {
     $query = "
-        SELECT a.*, w.*
+        SELECT 
+        a.article_id, a.article_title, a.article_content, a.date_updated,
+        w.widget_id, w.widget_img
         FROM articles a
         LEFT JOIN widgets w ON a.article_id = w.article_owner
         WHERE a.completion_status = 'published'
@@ -26,11 +23,11 @@ if ($user_type === 'writer') {
         ORDER BY a.date_updated DESC
         LIMIT 5
     ";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", $user_id);
-} else if ($user_type === 'reviewer') {
+} elseif ($user_type === 'reviewer') {
     $query = "
-        SELECT a.*, w.*
+        SELECT 
+        a.article_id, a.article_title, a.article_content, a.date_updated,
+        w.widget_id, w.widget_img
         FROM articles a
         LEFT JOIN widgets w ON a.article_id = w.article_owner
         INNER JOIN article_review_invites i ON a.article_id = i.article_id
@@ -42,38 +39,36 @@ if ($user_type === 'writer') {
         ORDER BY a.date_updated DESC
         LIMIT 5
     ";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", $user_id);
+} else {
+    echo json_encode(['error' => 'Invalid user type']);
+    exit;
 }
 
-// Step 3: Execute and fetch results
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 
-$articles = [];
-$widgets = [];
-
 while ($row = $result->fetch_assoc()) {
-    $article = [
+    $articles[] = [
         'article_id' => $row['article_id'],
         'article_title' => $row['article_title'],
         'article_content' => $row['article_content'],
         'date_updated' => $row['date_updated'],
-        // You can add more article fields here
     ];
 
-    if ($row['widget_id']) {
+    if (!empty($row['widget_id']) && !in_array($row['widget_id'], $widget_ids)) {
         $widgets[] = [
             'widget_id' => $row['widget_id'],
             'widget_img' => $row['widget_img'],
-            // Add more widget fields if needed
         ];
+        $widget_ids[] = $row['widget_id'];
     }
-
-    $articles[] = $article;
 }
 
-// Step 4: Return the response
+$stmt->close();
+$conn->close();
+
 echo json_encode([
     'articles' => $articles,
     'widgets' => $widgets,

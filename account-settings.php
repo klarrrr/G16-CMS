@@ -31,7 +31,7 @@ $cover_photo = $_SESSION['cover_photo'];
             top: 10px;
             right: 10px;
             background: #666;
-            color:rgb(255, 255, 255);
+            color: rgb(255, 255, 255);
             border: none;
             border-radius: 50%;
             width: 30px;
@@ -40,31 +40,31 @@ $cover_photo = $_SESSION['cover_photo'];
             display: none;
             z-index: 1000000;
             font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             transition: all 0.2s ease;
         }
-        
+
         .remove-btn:hover {
-            background:#333;
+            background: #333;
             color: white;
             transform: scale(1.1);
         }
-        
+
         .profile-pic-account:hover .remove-btn,
         .cover-pic:hover .remove-btn {
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        
-        
+
+
         /* Ensure proper z-index stacking */
         .profile-pic-account,
         .cover-pic {
             position: relative;
             z-index: 1;
         }
-        
+
         .-label,
         .-label-cover {
             z-index: 2;
@@ -85,7 +85,7 @@ $cover_photo = $_SESSION['cover_photo'];
 
             <div class="cover-pic">
                 <button class="remove-btn" onclick="removeImage('cover')" <?php echo !$cover_photo ? 'style="display:none"' : ''; ?>>×</button>
-                
+
                 <label class="-label-cover" for="cover-file">
                     <span>Change Cover Photo</span>
                 </label>
@@ -97,7 +97,7 @@ $cover_photo = $_SESSION['cover_photo'];
 
             <div class="person-info-container">
 
-                <div>
+                <div id='account-setting-title'>
                     <h1 style='font-family: "main"; font-size: 2rem;'>Account Settings</h1>
                 </div>
 
@@ -105,7 +105,7 @@ $cover_photo = $_SESSION['cover_photo'];
                     <div class="pictures-container">
                         <div class="profile-pic-account">
                             <button class="remove-btn" onclick="removeImage('pfp')" <?php echo !$profile_pic ? 'style="display:none"' : ''; ?>>×</button>
-                            
+
                             <label class="-label" for="pfp-file">
                                 <span>Change Profile Picture</span>
                             </label>
@@ -223,16 +223,16 @@ $cover_photo = $_SESSION['cover_photo'];
                 }
             });
         }
-        
+
         function removeImage(type) {
             if (!confirm(`Are you sure you want to remove your ${type === 'pfp' ? 'profile picture' : 'cover photo'}?`)) {
                 return;
             }
-            
+
             const fallbackImage = type === 'pfp' ? 'pics/no-pic.jpg' : 'pics/plp-outside.jpg';
             const endpoint = type === 'pfp' ? 'php-backend/account-settings-remove-profile-pic.php' : 'php-backend/account-settings-remove-cover-pic.php';
             const removeBtn = document.querySelector(`.${type === 'pfp' ? 'profile-pic-account' : 'cover-pic'} .remove-btn`);
-            
+
             $.ajax({
                 url: endpoint,
                 type: 'post',
@@ -245,7 +245,7 @@ $cover_photo = $_SESSION['cover_photo'];
                         document.getElementById(type).src = fallbackImage;
                         removeBtn.style.display = 'none';
                         updateDateUpdated(user_id);
-                        
+
                         // Show success message
                         alert(`${type === 'pfp' ? 'Profile picture' : 'Cover photo'} removed successfully!`);
                     }
@@ -285,4 +285,5 @@ $cover_photo = $_SESSION['cover_photo'];
         }
     </script>
 </body>
-</html> 
+
+</html>

@@ -572,6 +572,7 @@ include 'php-backend/connect.php';
                 const card = document.createElement('div');
                 card.className = 'event-card';
                 card.setAttribute('articleid', event.article_id);
+                card.style.cursor = 'pointer';
                 card.innerHTML = `
                     <div class="event-image">
                         <img src="${imageUrl}" alt="${event.article_title}" onerror="this.onerror=null;this.src='pics/plp-outside.jpg';" />
@@ -588,9 +589,8 @@ include 'php-backend/connect.php';
                 
                 card.addEventListener('click', function() {
                     const articleId = this.getAttribute('articleid');
-                    // Handle localhost vs production paths
-                    const basePath = window.location.href.includes('localhost') ? '/G16-CMS' : '';
-                    window.location.href = `${basePath}/lundayan-site-article.php?article_id=${articleId}`;
+                    
+                    window.open(`/lundayan-site-article.php?article_id=${articleId}`, '_blank');
                 });
                 
                 container.appendChild(card);
@@ -743,11 +743,11 @@ include 'php-backend/connect.php';
 
         // Add click handlers for event cards
         eventPopup.querySelectorAll('.event-card').forEach(card => {
+            card.style.cursor = 'pointer';
             card.addEventListener('click', function() {
                 const articleId = this.getAttribute('articleid');
-                // Handle localhost vs production paths
-                const basePath = window.location.href.includes('localhost') ? '/G16-CMS' : '';
-                window.location.href = `${basePath}/lundayan-site-article.php?article_id=${articleId}`;
+                
+                window.open(`/lundayan-site-article.php?article_id=${articleId}`, '_blank');
             });
         });
     }

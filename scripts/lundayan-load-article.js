@@ -14,16 +14,21 @@ $.ajax({
             // Loop through the fetched images and display them
             res.data.forEach(function (image, index) {
                 const imgElement = document.createElement('img');
-                imgElement.src = 'gallery/' + image.pic_path; // Assuming the image is stored in the 'gallery' folder
+                imgElement.src = 'gallery/' + image.pic_path; // the image is stored in the 'gallery' folder
                 imgElement.alt = 'Gallery Image';
                 imgElement.setAttribute('data-pic-id', image.pic_id); // Set pic_id as a data attribute
 
+                const container = document.createElement('div');
+
+                container.appendChild(imgElement);
+                container.className = "gallery-image-container";
+
                 // Append the image element to the gallery
-                galleryContainer.appendChild(imgElement);
+                galleryContainer.appendChild(container);
 
                 // Add the 'show' class with a slight delay for staggered effect
                 setTimeout(() => {
-                    imgElement.classList.add('show');
+                    container.classList.add('show');
                 }, index * 100); // Delay each image slightly (100ms for each image)
             });
         } else {

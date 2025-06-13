@@ -8,6 +8,10 @@
     transition: 0.2s ease-in-out;
 }
 
+html {
+    overscroll-behavior: none;
+}
+
 @font-face {
     font-family: "boldonse";
     src: url(font/Boldonse-Regular.ttf);
@@ -66,7 +70,6 @@ header {
     top: 0;
     border-top: 2px solid #fcb404;
     border-bottom: 2px solid #fcb404;
-
 }
 
 nav {
@@ -211,17 +214,6 @@ nav {
     height: 50vh;
 }
 
-#latest-news-title {
-    cursor: pointer;
-    color: #fcb404;
-    font-size: 3vw;
-}
-
-#latest-news-title:hover {
-    color: #ffcc4b;
-    transform: scale(1.01);
-}
-
 .news-banner {
     overflow: hidden;
     background-color: #0F5132;
@@ -289,15 +281,22 @@ nav {
 }
 
 .latest-news .text-container h1 {
-    font-size: 2.8em;
+    font-size: 2.5vw;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
     overflow: hidden;
     width: 40%;
     line-height: normal;
+    cursor: pointer;
+    color: #fcb404;
+
+    &:hover {
+        color: #ffcc4b;
+        transform: scale(1.01);
+    }
 }
 
 .latest-paragraph {
@@ -552,7 +551,8 @@ nav {
     line-height: 1.3;
     color: #f4f4f4;
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* Limit to 2 lines */
+    -webkit-line-clamp: 2;
+    /* Limit to 2 lines */
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -573,8 +573,8 @@ nav {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-                filter 0.4s ease-in;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        filter 0.4s ease-in;
     filter: brightness(0.3);
 }
 
@@ -814,6 +814,7 @@ footer {
 .footer-links h3 {
     margin-bottom: 0.5rem;
     color: #FBC404;
+    word-wrap: break-word;
 }
 
 .footer-links ul {
@@ -842,10 +843,12 @@ footer {
 .footer-contact h3 {
     color: #FBC404;
     margin-bottom: 0.25rem;
+    word-wrap: break-word;
 }
 
 .footer-contact p {
     margin: 0 0 0.5rem;
+    word-wrap: break-word;
 }
 
 .footer-socials {
@@ -926,7 +929,7 @@ footer {
 }
 
 .calendar-btns button {
-    border-radius: 3px;
+    border-radius: 0.5rem;
     border: none;
     background-color: transparent;
     cursor: pointer;
@@ -952,8 +955,8 @@ footer {
 }
 
 .calendar-vertical-layout {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 30% 70%;
     gap: 2rem;
 }
 
@@ -1006,7 +1009,7 @@ select::-ms-expand {
     position: relative;
     display: flex;
     height: 3em;
-    width: 20em;
+    width: 18vw;
     border-radius: 3px;
     overflow: hidden;
 }
@@ -1122,7 +1125,7 @@ thead th {
     /* background: #0F5132; */
     color: #f4f4f4;
     text-transform: uppercase;
-    font-size: 1.5rem;
+    font-size: 2vw;
 }
 
 tbody td {
@@ -1131,7 +1134,7 @@ tbody td {
     cursor: pointer;
     -webkit-user-select: none;
     user-select: none;
-    font-size: 2rem;
+    font-size: 2vw;
     border-radius: 0.5rem;
     outline: 1px solid #fcb404;
 
@@ -1239,11 +1242,10 @@ tbody td:hover {
 
 .send-container-title h2 {
     font-family: robinson;
-    font-size: 10rem;
+    font-size: 10vw;
     font-weight: lighter;
-    line-height: normal;
     color: #f4f4f4;
-    line-height: 9rem;
+    line-height: 10vw;
     text-align: center;
 }
 
@@ -1404,6 +1406,7 @@ tbody td:hover {
     display: flex;
     flex-direction: column;
     padding: 4rem 8rem;
+    overflow-x: hidden;
 }
 
 .map-container-title p {
@@ -1517,12 +1520,27 @@ tbody td:hover {
     /* Adds a little more spacing between images */
     padding-top: 2rem;
     /* Padding on top to ensure images are well spaced */
+    max-height: 1200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    align-self: center;
+    padding: 1rem;
 }
 
-.gallery-images img {
+.gallery-image-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
+    aspect-ratio: 1/1;
+}
+
+.gallery-image-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     /* Ensures images fill the grid space without distortion */
     border-radius: 3px;
     border: 2px solid #fcb404;
@@ -1533,31 +1551,31 @@ tbody td:hover {
     /* Position images below their final spot */
     transition: opacity 0.8s ease, transform 0.8s ease;
     /* Smooth transition for opacity and transform */
+    overflow: hidden;
 }
 
-.gallery-images img:hover {
-    transform: scale(1.05);
+.gallery-image-container img:hover {
+    transform: scale(1.03);
     /* Slight zoom effect on hover */
 }
 
 /* Staggered effect (delay based on image index) */
-.gallery-images img:nth-child(odd) {
+.gallery-images .gallery-image-container:nth-child(odd) {
     transition-delay: 0.2s;
     /* Delay for odd images */
 }
 
-.gallery-images img:nth-child(even) {
+.gallery-images .gallery-image-container:nth-child(even) {
     transition-delay: 0.4s;
     /* Delay for even images */
 }
 
 /* When images are loaded, they will transition to visible and slide into place */
-.gallery-images img.show {
+.gallery-images .gallery-image-container.show {
     opacity: 1;
     transform: translateY(0);
     /* Move to their final position */
 }
-
 
 /* Sign in Page */
 .sign-in-main {
@@ -2000,7 +2018,7 @@ tbody td:hover {
     h1 {
         position: absolute;
         font-family: 'robinson';
-        font-size: 30vw;
+        font-size: 10vw;
         font-weight: 100;
         line-height: normal;
     }
@@ -2150,7 +2168,7 @@ tbody td:hover {
 
     .roles-container {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 3rem;
 
         .role {
@@ -2285,13 +2303,15 @@ tbody td:hover {
 }
 
 .article-meta {
-    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .user-card {
     display: flex;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .user-card .pfp {
@@ -2317,19 +2337,6 @@ tbody td:hover {
     color: gray;
 }
 
-@media (max-width: 768px) {
-    .writers-readers-article-content-container {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .writers-readers-container {
-        position: static;
-        max-height: none;
-        overflow: visible;
-    }
-}
-
 .no-events-message {
     padding: 1rem;
     text-align: center;
@@ -2343,6 +2350,9 @@ tbody td:hover {
     position: relative;
     z-index: 2;
     padding-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #article-information .read-more {
@@ -2853,9 +2863,127 @@ tbody td:hover {
         width: 100%;
     }
 
+    /* TEAM LUNDAYAN */
+
+    .team-main-content {
+        display: flex;
+        flex-direction: column;
+        height: unset !important;
+    }
+
+    .team-profile {
+        padding-bottom: unset !important;
+    }
+
+    .profile-container {
+        margin-bottom: 0 !important;
+    }
+
+    .team-main {
+        padding-top: 4vh !important;
+        padding-left: 8vw !important;
+        padding-right: 8vw !important;
+        padding-bottom: 0 !important;
+    }
+
+    .team-carousel {
+        position: unset !important;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        overflow-x: auto;
+
+        gap: 1rem;
+        padding: 2vh 12vw;
+        border-top: 1px solid #eee;
+        -webkit-backdrop-filter: blur(15px);
+        backdrop-filter: blur(15px);
+        background: rgba(24, 58, 44, 0.55);
+        z-index: 10;
+        justify-content: center;
+    }
+
 }
 
-@media(min-width: 768px) {
+@media (max-width: 1019px) {
+
+    /* CALENDAR LUNDAYAN */
+
+    .calendar {
+        padding: 4vh 8vw;
+    }
+
+    .calendar-vertical-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .adjust-calendar-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .select {
+        width: 100%;
+    }
+
+    .calendar-btns {
+        align-self: flex-end;
+    }
+
+    .th,
+    td {
+        padding: 0.5rem;
+        line-height: 10vh;
+    }
+
+    /* ABOUT LUNDAYAN */
+
+    .what-is-lundayan,
+    .our-mission,
+    .who-are-we,
+    .what-we-do {
+        flex-direction: column;
+
+        img {
+            width: 70vw;
+        }
+    }
+
+    .our-mission {
+        flex-direction: column-reverse;
+    }
+
+    .info-container-right * {
+        text-align: start !important;
+        align-self: flex-start !important;
+    }
+
+    /* TEAM LUNDAYAN */
+
+    .team-profile {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    #normal-left-arrow,
+    #normal-right-arrow {
+        display: none;
+    }
+
+    .responsive-arrows {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 1rem !important;
+    }
+
+}
+
+@media (min-width: 768px) {
     #labas-pfp {
         display: none;
     }
@@ -2946,10 +3074,6 @@ tbody td:hover {
         width: 100%;
     }
 
-    #latest-news-title {
-        font-size: 5vw;
-    }
-
     .latest-news {
         height: 40vh;
     }
@@ -2974,6 +3098,119 @@ tbody td:hover {
         padding: 4vh 8vw;
     }
 
+    /* ARTICLE LUNDAYAN PAGE */
+
+    .writers-readers-article-content-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .writers-readers-container {
+        position: static;
+        max-height: none;
+        overflow: visible;
+        padding: unset;
+    }
+
+    .article-time-title-tags-container h1 {
+        font-size: 3vw !important;
+        line-height: normal !important;
+    }
+
+    .text-container-article a {
+        display: none !important;
+    }
+
+    .mobile-nav-buttons {
+        display: flex !important;
+    }
+
+    /* CONTACT LUNDAYAN */
+
+    .contact {
+        padding: 2rem 1rem;
+        gap: 1rem;
+    }
+
+    .contact-container {
+        gap: 1rem;
+    }
+
+    .send-container-title p {
+        width: 100%;
+    }
+
+    .own-info {
+        padding: 1rem;
+    }
+
+    .map-container-title {
+        width: 100vw;
+        padding: 1rem;
+        font-size: 2vw;
+    }
+
+    .two-input {
+        flex-direction: column;
+    }
+
+    /* LUNDAYAN LOGIN */
+
+    .sign-in-details {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .sign-in-title-container {
+        display: none;
+    }
+
+    #sign-in-home {
+        z-index: 4;
+    }
+
+    .sign-in-user-input {
+        z-index: 3;
+        width: 100% !important;
+
+        input {
+            font-size: 1rem;
+        }
+
+        hr {
+            margin-bottom: 5vh;
+        }
+    }
+
+    #sign-in-title-inside {
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 5vh;
+
+        h1 {
+            font-size: 10vw;
+        }
+
+        p {
+            text-align: center;
+            font-size: 3.5vw;
+        }
+    }
+
+    #sign-in-footer-inside {
+        display: flex !important;
+
+        p {
+            text-align: center;
+            font-size: 3.5vw !important;
+        }
+    }
+
+    #sign-in-footer-outside {
+        display: none;
+    }
+
 }
 
 @media (max-width: 576px) {
@@ -2992,10 +3229,53 @@ tbody td:hover {
     .bulletin-news-card.minimalist {
         min-height: unset;
     }
+
+    /* ARTICLE LUNDAYAN PAGE */
+    .tag {
+        font-size: 2vw !important;
+    }
+
+    .writers-readers-article-content-container {
+        padding: 2vh 8vw;
+    }
+
+    .article-image-container .time-posted {
+        font-size: 0.7rem;
+    }
+
+    .article-time-title-tags-container h1 {
+        font-size: 5vw !important;
+        line-height: normal !important;
+        -webkit-line-clamp: 3 !important;
+        line-clamp: 3 !important;
+    }
+
+    .article-gallery {
+        padding: 2vh 8vw;
+    }
+
+    /* TEAM LUNDAYAN */
+
+    .profile-info {
+        margin-bottom: unset !important;
+    }
+
+    .profile-container {
+        flex-direction: column !important;
+    }
+
+    .profile-photo img {
+        height: 50vh !important;
+    }
+
 }
 
 @media (max-width: 320px) {
     .latest-news {
         height: 20vh;
+    }
+
+    .filter-tags {
+        display: none;
     }
 }

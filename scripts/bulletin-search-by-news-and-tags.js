@@ -12,7 +12,7 @@ function renderWidgets(widgets) {
                 <img src="${picUrl}" loading="lazy" alt="${widget.widget_title}">
                 <div class="card-overlay"></div>
                 <div class="card-content">
-                    <span class="card-date">${formatDateTime(widget.date_created)}</span>
+                    <span class="card-date">${formatDateTime(widget.date_posted)}</span>
                     <h3 class="card-title">${widget.widget_title}</h3>
                     <p class="card-excerpt">${widget.widget_paragraph.substring(0, 150)}${widget.widget_paragraph.length > 150 ? '...' : ''}</p>
                 </div>
@@ -42,7 +42,7 @@ function renderPagination(totalPages, currentPage) {
 // Handle article redirection
 function goToArticle(articleElem) {
     const article_id = articleElem.getAttribute('articleid');
-    window.location.href = `/G16-CMS/lundayan-site-article.php?article_id=${article_id}`;
+    window.location.href = `/lundayan-site-article.php?article_id=${article_id}`;
 }
 
 // Attach "Read More" event listeners

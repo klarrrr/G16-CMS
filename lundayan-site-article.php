@@ -5,7 +5,7 @@
 include 'php-backend/connect.php';
 
 if (!isset($_GET['article_id'])) {
-    header('Location: lundayan-site-home.php');
+    header('Location: index.php');
     exit;
 }
 
@@ -24,7 +24,7 @@ $content = $article['article_content'];
 $datePosted = $article['date_posted'];
 
 if ($article['completion_status'] == 'draft' || $article['approve_status'] == 'no') {
-    header('Location: lundayan-site-home.php');
+    header('Location: index.php');
     exit;
 }
 
@@ -97,7 +97,6 @@ function timeAgoLimited($datetime)
     }
 }
 
-
 // Get writer info
 $writerId = $article['user_owner'];
 $writerQuery = "SELECT user_first_name, user_last_name, user_type, profile_picture FROM users WHERE user_id = $writerId";
@@ -108,34 +107,14 @@ $writerType = ucfirst($writer['user_type']); // "Writer"
 $writerPfp = $writer['profile_picture'];
 $timeAgo = timeAgoLimited($article['date_posted']);
 
-
-
 $reviewersQuery = "
     SELECT DISTINCT u.user_id, u.user_first_name, u.user_last_name, u.profile_picture
-    FROM comments c
-    JOIN users u ON c.user_owner = u.user_id
-    WHERE c.article_owner = $article_id
+    FROM article_review_invites ari
+    JOIN users u ON ari.reviewer_id = u.user_id
+    WHERE ari.article_id = $article_id
+    AND ari.status = 'accepted'
 ";
 $reviewersResult = mysqli_query($conn, $reviewersQuery);
-
-// Function to safely limit HTML content
-function limitHtmlContent($content, $limit = 600)
-{
-    $decoded = html_entity_decode($content);
-    $plainText = strip_tags($decoded);
-
-    if (strlen($plainText) <= $limit) {
-        return $content;
-    }
-
-    $truncated = substr($plainText, 0, $limit);
-    $lastSpace = strrpos($truncated, ' ');
-    if ($lastSpace !== false) {
-        $truncated = substr($truncated, 0, $lastSpace);
-    }
-
-    return htmlspecialchars($truncated) . '... <a href="#" class="read-more">Read More</a>';
-}
 ?>
 
 <!DOCTYPE html>
@@ -151,8 +130,8 @@ function limitHtmlContent($content, $limit = 600)
     <meta property="og:image" content="<?php echo $image; ?>" />
 
     <title>Lundayan : Article</title>
-    <link rel="stylesheet" href="/G16-CMS/styles-lundayan-site.css">
-    <link rel="icon" href="/G16-CMS/pics/lundayan-logo.png">
+    <link rel="stylesheet" href="styles-lundayan-site.css">
+    <link rel="icon" href="pics/lundayan-logo.png">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
     <!-- Online Quill Css -->
@@ -185,12 +164,54 @@ function limitHtmlContent($content, $limit = 600)
         }
 
         .share-button:hover {
-            background-color: rgb(185, 134, 4);
+            background-color: #A7FF83;
         }
 
         .share-button svg {
             width: 20px;
             height: 20px;
+        }
+
+        .image-notice {
+            border-left: 4px solid #fcb404;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .image-notice p {
+            margin: 0;
+            color: #f4f4f4;
+            font-style: italic;
+        }
+
+        /* Navigation buttons for mobile */
+        .highlight-nav-btn {
+            background-color: rgba(252, 180, 4, 0.7);
+            color: #161616;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 5px;
+        }
+
+        .highlight-nav-btn:hover {
+            background-color: #fcb404;
+        }
+
+        .mobile-nav-buttons {
+            display: none;
+            justify-content: space-between;
+            padding: 1rem;
+            width: 100%;
+            position: absolute;
         }
     </style>
 </head>
@@ -206,14 +227,12 @@ function limitHtmlContent($content, $limit = 600)
                 </div>
 
                 <div class="text-container-article">
-
                     <div>
                         <?php if ($olderArticle): ?>
-                            <a href="/G16-CMS/lundayan-site-article.php?article_id=<?php echo $olderArticle['article_id']; ?>"
+                            <a href="lundayan-site-article.php?article_id=<?php echo $olderArticle['article_id']; ?>"
                                 title="<?php echo htmlspecialchars_decode($olderArticle['article_title']); ?>">
                                 « <?php echo mb_convert_encoding(shortenTitle($olderArticle['article_title']), 'UTF-8', 'UTF-8') ?>
                             </a>
-
                         <?php endif; ?>
                     </div>
 
@@ -221,22 +240,32 @@ function limitHtmlContent($content, $limit = 600)
                         <p class="time-posted"><span id="latest-news-day-posted"></span></p>
                         <h1><?php echo $title ?></h1>
                         <!-- Tags Here -->
-                        <div class="filter-tags tags-article" id='filter-tags'>
-
-                        </div>
+                        <div class="filter-tags tags-article" id='filter-tags'></div>
                     </div>
 
                     <div>
                         <?php if ($newerArticle): ?>
-                            <a style='justify-self: flex-end;' href="/G16-CMS/lundayan-site-article.php?article_id=<?php echo $newerArticle['article_id']; ?>"
+                            <a style='justify-self: flex-end;' href="lundayan-site-article.php?article_id=<?php echo $newerArticle['article_id']; ?>"
                                 title="<?php echo htmlspecialchars_decode($newerArticle['article_title']); ?>">
                                 <?php echo mb_convert_encoding(shortenTitle($newerArticle['article_title']), 'UTF-8', 'UTF-8') ?> »
                             </a>
-
                         <?php endif; ?>
                     </div>
 
+                    <!-- Add mobile navigation buttons -->
+                    <div class="mobile-nav-buttons">
+                        <?php if ($olderArticle): ?>
+                            <button class="highlight-nav-btn" onclick="window.location.href='lundayan-site-article.php?article_id=<?php echo $olderArticle['article_id']; ?>'">
+                                &lt;
+                            </button>
+                        <?php endif; ?>
 
+                        <?php if ($newerArticle): ?>
+                            <button class="highlight-nav-btn" onclick="window.location.href='lundayan-site-article.php?article_id=<?php echo $newerArticle['article_id']; ?>'">
+                                &gt;
+                            </button>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </div>
         </section>
@@ -295,7 +324,36 @@ function limitHtmlContent($content, $limit = 600)
             <div class="ql-snow" id='article-information'>
                 <div class="ql-editor" style="padding: 0;">
                     <div class="limited-content">
-                        <?php echo htmlspecialchars_decode($content, 600); ?>
+                        <?php
+                        $decodedContent = htmlspecialchars_decode($content);
+
+                        // Check if content contains any images
+                        if (preg_match('/<img[^>]+>/i', $decodedContent)) {
+                            echo '<div class="image-notice"><p>This article contains image(s). Click "Read More" to view the full content.</p></div>';
+
+                            // Strip all images from limited content
+                            $limitedContent = preg_replace('/<img[^>]+>/i', '', $decodedContent);
+                            // Limit the text content
+                            $limitedContent = substr(strip_tags($limitedContent), 0, 600);
+                            $lastSpace = strrpos($limitedContent, ' ');
+                            if ($lastSpace !== false) {
+                                $limitedContent = substr($limitedContent, 0, $lastSpace);
+                            }
+                            echo htmlspecialchars($limitedContent);
+                        } else {
+                            // Original text limiting logic for text-only content
+                            if (strlen($content) > 1200) {
+                                $truncated = substr($content, 0, 1200);
+                                $lastSpace = strrpos($truncated, ' ');
+                                if ($lastSpace !== false) {
+                                    $truncated = substr($truncated, 0, $lastSpace);
+                                }
+                                echo htmlspecialchars_decode($truncated) . '...';
+                            } else {
+                                echo $decodedContent;
+                            }
+                        }
+                        ?>
                     </div>
                     <div class="full-content">
                         <?php echo htmlspecialchars_decode($content); ?>
@@ -337,8 +395,7 @@ function limitHtmlContent($content, $limit = 600)
         const galleryContainer = document.querySelector('.gallery-images');
     </script>
     <script src="scripts/lundayan-load-article.js"></script>
-    <!-- Load Galllery -->
-    <script src="scripts/lundayan-load-article.js"></script>
+
     <!-- Limit Article -->
     <script src="scripts/article-limiter.js"></script>
 

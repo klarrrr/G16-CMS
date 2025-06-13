@@ -1,78 +1,76 @@
 <?php
 
+session_start();
+
 include 'connect.php';
 
-$user_id = $_GET['user_id'];
-
-// Step 1: Get user type
-$userTypeQuery = "SELECT user_type FROM users WHERE user_id = ?";
-$userTypeStmt = $conn->prepare($userTypeQuery);
-$userTypeStmt->bind_param("i", $user_id);
-$userTypeStmt->execute();
-$userTypeResult = $userTypeStmt->get_result();
-
-$user_type = null;
-if ($row = $userTypeResult->fetch_assoc()) {
-    $user_type = strtolower($row['user_type']);
-}
-
-// Step 2: Build the article query dynamically
-if ($user_type === 'writer') {
-    $query = "
-        SELECT a.*, w.*
-        FROM articles a
-        LEFT JOIN widgets w ON a.article_id = w.article_owner
-        WHERE a.completion_status = 'draft'
-        AND a.user_owner = ?
-        ORDER BY a.date_updated DESC
-        LIMIT 5
-    ";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", $user_id);
-} else if ($user_type === 'reviewer') {
-    $query = "
-        SELECT a.*, w.*
-        FROM articles a
-        LEFT JOIN widgets w ON a.article_id = w.article_owner
-        INNER JOIN article_review_invites i ON a.article_id = i.article_id
-        WHERE a.completion_status = 'draft'
-        AND a.archive_status = 'active'
-        AND a.approve_status = 'no'
-        AND i.reviewer_id = ?
-        AND i.status = 'accepted'
-        ORDER BY a.date_updated DESC
-        LIMIT 5
-    ";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", $user_id);
-}
-
-// Step 3: Execute and fetch results
-$stmt->execute();
-$result = $stmt->get_result();
+$user_id = $_SESSION['user_id'];
+$user_type = strtolower($_SESSION['user_type']);
 
 $articles = [];
 $widgets = [];
 
-while ($row = $result->fetch_assoc()) {
-    // Add article to the articles array
-    $article = [
-        'article_id' => $row['article_id'],
-        'article_title' => $row['article_title'],
-        'article_content' => $row['article_content'],
-        'date_updated' => $row['date_updated'],
-    ];
-
-    // Add widget if it exists
-    if (!empty($row['widget_id'])) {
-        $widgets[] = [
-            'widget_id' => $row['widget_id'],
-            'widget_img' => $row['widget_img'],
-        ];
-    }
-
-    $articles[] = $article;
+if ($user_type === 'writer') {
+    $query = "
+        SELECT 
+        a.article_id, a.article_title, a.article_content, a.date_updated,
+        w.widget_id, w.widget_img
+        FROM articles a
+        LEFT JOIN widgets w ON a.article_id = w.article_owner
+        WHERE a.completion_status = 'draft' AND a.user_owner = ?
+        ORDER BY a.date_updated DESC
+        LIMIT 5
+    ";
+} elseif ($user_type === 'reviewer') {
+    $query = "
+        SELECT 
+            a.article_id, a.article_title, a.article_content, a.date_updated,
+            w.widget_id, w.widget_img
+        FROM articles a
+        LEFT JOIN widgets w ON a.article_id = w.article_owner
+        INNER JOIN article_review_invites i ON a.article_id = i.article_id
+        WHERE a.completion_status = 'draft'
+          AND a.archive_status = 'active'
+          AND a.approve_status = 'no'
+          AND i.reviewer_id = ?
+          AND i.status = 'accepted'
+        ORDER BY a.date_updated DESC
+        LIMIT 5
+    ";
+} else {
+    echo json_encode(['error' => 'Invalid user type']);
+    exit;
 }
+
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$widget_ids = [];
+
+if(!empty($articles) && !empty($widgets)){
+    while ($row = $result->fetch_assoc()) {
+        $articles[] = [
+            'article_id' => $row['article_id'],
+            'article_title' => $row['article_title'],
+            'article_content' => $row['article_content'],
+            'date_updated' => $row['date_updated'],
+        ];
+
+        // Add widget if it's unique
+        if (!empty($row['widget_id']) && !in_array($row['widget_id'], $widget_ids)) {
+            $widgets[] = [
+                'widget_id' => $row['widget_id'],
+                'widget_img' => $row['widget_img'],
+            ];
+            $widget_ids[] = $row['widget_id'];
+        }
+    }
+}
+
+$stmt->close();
+$conn->close();
 
 echo json_encode([
     'articles' => $articles,

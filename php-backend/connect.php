@@ -1,6 +1,6 @@
 <?php
 
-// Localhost, usernam, pass, db_name
+// Host, usernam, pass, db_name
 $conn = mysqli_connect("localhost", "root", "", "cms_db");
 
 if ($conn == false) {

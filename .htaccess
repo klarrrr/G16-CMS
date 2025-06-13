@@ -3,3 +3,4 @@ RewriteBase /G16-CMS/
 
 # Rewrite /article/12 to lundayan-site-article.php?article_id=12
 RewriteRule ^article/([0-9]+)$ lundayan-site-article.php?article_id=$1 [L,QSA]
+php_value date.timezone Asia/Manila

@@ -17,18 +17,18 @@ $.ajax({
         recentDraftsContainer.innerHTML = '';
 
         // Fallback message
-        if (articles.length === 0) {
-            const emptyMsg = document.createElement('p');
-            emptyMsg.textContent = "No recent draft articles found.";
-            emptyMsg.style.color = '#999';
-            emptyMsg.style.textAlign = 'center';
-            emptyMsg.style.padding = '1rem';
-            emptyMsg.style.fontStyle = 'italic';
-            recentDraftsContainer.appendChild(emptyMsg);
+        if (!articles || articles.length === 0) {
+            const emptyMsgDraft = document.createElement('p');
+            emptyMsgDraft.textContent = "No recent draft articles found.";
+            emptyMsgDraft.style.color = '#999';
+            emptyMsgDraft.style.textAlign = 'center';
+            emptyMsgDraft.style.padding = '1rem';
+            emptyMsgDraft.style.fontStyle = 'italic';
+            recentDraftsContainer.appendChild(emptyMsgDraft);
             return; // Stop further execution
         }
 
-        const fragment = document.createDocumentFragment();
+        const draftFragment = document.createDocumentFragment();
 
         for (let i = 0; i < articles.length; i++) {
             const articleId = articles[i].article_id;
@@ -41,16 +41,16 @@ $.ajax({
             const img = document.createElement('img');
             img.src = pic ? pic : 'pics/plp-outside.jpg';
             img.alt = title;
+            img.loading = 'lazy';
 
             const p = document.createElement('p');
             p.textContent = htmlEntityDecode(title);
-            p.style.color = '#f4f4f4';
+            p.style.color = '#161616';
             p.title = title;
 
             const date = document.createElement('span');
             date.textContent = formatDateOnly(articles[i].date_updated);
             date.style.fontSize = '0.7rem';
-            date.style.opacity = '0.7';
 
             recentArticleLayout.appendChild(img);
             recentArticleLayout.appendChild(p);
@@ -67,10 +67,10 @@ $.ajax({
                 });
             }
 
-            fragment.appendChild(recentArticleLayout);
+            draftFragment.appendChild(recentArticleLayout);
         }
 
-        recentDraftsContainer.appendChild(fragment);
+        recentDraftsContainer.appendChild(draftFragment);
     },
     error: (error) => {
         console.log(error);
@@ -80,13 +80,13 @@ $.ajax({
 
 function editArticle(thisContainer) {
     const article_id = thisContainer.getAttribute('articleid');
-    window.location.href = `/G16-CMS/edit-article.php?article_id=${article_id}`;
+    window.location.href = `/edit-article.php?article_id=${article_id}`;
 }
 
 
 function reviewArticleDashboard(thisContainer) {
     const article_id = thisContainer.getAttribute('articleid');
-    window.location.href = `/G16-CMS/review-article.php?article_id=${article_id}`;
+    window.location.href = `/review-article.php?article_id=${article_id}`;
 }
 
 

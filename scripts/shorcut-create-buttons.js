@@ -2,7 +2,9 @@ const addArticleBtn = document.getElementById('shortcut-create-article');
 
 const reviewArticle = document.getElementById('shortcut-review-article');
 
-const auditBtn = document.getElementById('shortcut-audit-log');
+const moreArticle = document.getElementById('shortcut-more-articles');
+
+const inviteInbox = document.getElementById('shortcut-inbox');
 
 const accountSettingsBtn = document.getElementById('shortcut-account-settings');
 
@@ -46,8 +48,12 @@ reviewArticle.addEventListener('click', () => {
     window.location.href = 'for-review-article-page.php';
 });
 
-auditBtn.addEventListener('click', () => {
-    window.location.href = 'audit-log-page.php';
+moreArticle.addEventListener('click', () => {
+    window.location.href = 'add-article-page.php';
+});
+
+inviteInbox.addEventListener('click', () => {
+    window.location.href = 'inbox-page.php';
 });
 
 accountSettingsBtn.addEventListener('click', () => {

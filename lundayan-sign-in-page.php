@@ -110,8 +110,9 @@ if (isset($_SESSION['user_id'])) {
 
 <body>
     <main class='sign-in-main'>
-        <a href="lundayan-site-home.php" id='sign-in-home'>« Go Back</a>
+        <a href="index.php" id='sign-in-home'>« Go Back</a>
         <section class='sign-in-details'>
+
             <div class="sign-in-title-container">
                 <h1>LUNDAYAN</h1>
                 <p id='sign-in-paragraph'>Sign in to modify, create and share <br>exciting news and posts</p>
@@ -119,6 +120,11 @@ if (isset($_SESSION['user_id'])) {
 
             <!-- Sign In Form -->
             <form id="sign-in-form" class="sign-in-user-input" style='display: flex;' novalidate>
+                <div class="sign-in-title-container" style='display: none;' id='sign-in-title-inside'>
+                    <h1>LUNDAYAN</h1>
+                    <p id='sign-in-paragraph'>Sign in to modify, create and share <br>exciting news and posts</p>
+                </div>
+
                 <label class="error-msg" id="sign-in-email-error"></label>
                 <input type="email" class='sign-in-input-box' placeholder="Enter your email here" id='sign-in-email' autocomplete="email" title="Input valid email">
 
@@ -129,10 +135,14 @@ if (isset($_SESSION['user_id'])) {
                 <a href="#" id='forgot-pass'>Forgot Password?</a>
 
                 <hr>
+
+                <div style='display: none;' id='sign-in-footer-inside'>
+                    <p>&copy; 2025 Lundayan - Student Publication - Pamantasan ng Lungsod ng Pasig. All rights reserved.</p>
+                </div>
             </form>
         </section>
 
-        <footer class='sign-in-footer'>
+        <footer class='sign-in-footer' id='sign-in-footer-outside'>
             <p>&copy; 2025 Lundayan - Student Publication - Pamantasan ng Lungsod ng Pasig. All rights reserved.</p>
         </footer>
     </main>

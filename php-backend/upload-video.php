@@ -1,6 +1,6 @@
 <?php
 $targetDir = "../video/";
-$publicDir = "/G16-CMS/video/"; // Public URL path (relative to your localhost)
+$publicDir = "/video/"; // Public URL path (relative to your localhost)
 
 if (!file_exists($targetDir)) {
     mkdir($targetDir, 0777, true);

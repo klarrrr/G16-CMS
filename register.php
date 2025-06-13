@@ -44,8 +44,10 @@ $check->close();
 // Hash password
 $hashed_pass = password_hash($pass, PASSWORD_DEFAULT);
 
+$now = date('Y-m-d H:i:s', time());
+
 // Insert user
-$stmt = $conn->prepare("INSERT INTO users (user_first_name, user_last_name, user_email, user_pass, user_type, date_created) VALUES (?, ?, ?, ?, ?, NOW())");
+$stmt = $conn->prepare("INSERT INTO users (user_first_name, user_last_name, user_email, user_pass, user_type, date_created) VALUES (?, ?, ?, ?, ?, '$now')");
 $stmt->bind_param("sssss", $first, $last, $email, $hashed_pass, $user_type);
 
 if ($stmt->execute()) {

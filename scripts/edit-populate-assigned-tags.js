@@ -41,4 +41,3 @@ function loadAssignedTags(article_id) {
     });
 }
 
-loadAssignedTags(article_id);
