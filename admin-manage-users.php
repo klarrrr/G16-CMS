@@ -3,24 +3,91 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Admin Manage Users</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Manage Users - Lundayan Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="stylesheet" href="styles-admin.css">
   <link rel="icon" href="pics/lundayan-logo.png">
-  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <style>
-    .manager-users {
-      overflow-y: scroll;
-      height: 100vh;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    main.manager-users {
-      width: calc(100% - 250px);
+    :root {
+      --sidebar-width: 250px;
+      --header-height: 70px;
+      --transition-speed: 0.3s;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Mobile menu toggle button */
+    .mobile-menu-toggle {
+      display: none;
+      background: white;
+      color: #222;
+      border: none;
+      padding: 1rem;
+      width: 100%;
+      text-align: left;
+      font-size: 1rem;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .mobile-menu-toggle i {
+      margin-right: 8px;
+    }
+
+    /* Main container layout */
+    .main-container {
+      display: flex;
+      flex: 1;
+      min-height: 0; /* Fix for flexbox scrolling */
+    }
+
+    /* Sidebar styling */
+    .left-editor-container {
+      width: var(--sidebar-width);
+      background: #222;
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      overflow-y: auto;
+      transition: transform var(--transition-speed) ease;
+      z-index: 1000;
+    }
+
+    /* Main content area */
+    .right-editor-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      margin-left: var(--sidebar-width);
+      transition: margin-left var(--transition-speed) ease;
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden;
     }
 
     .page-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       background: white;
       padding: 1.5rem 2rem;
       border-bottom: 1px solid #e0e0e0;
@@ -39,29 +106,118 @@
       margin-top: 0.5rem;
     }
 
+    .main-content {
+      flex: 1;
+      padding: 2rem;
+      width: 100%;
+      overflow-y: auto;
+    }
+
+    /* Modern Black & White Card Styles */
+    .card {
+      background: white;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e0e0e0;
+      width: 100%;
+    }
+
+    .card h2 {
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid #eee;
+      color: #222;
+      font-weight: 600;
+    }
+
+    .card h3 {
+      font-size: 1.2rem;
+      margin: 1.5rem 0 1rem 0;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .card label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      color: #555;
+      font-weight: 500;
+    }
+
+    .card input,
+    .card select,
+    .card textarea {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1.25rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+    }
+
+    .card input:focus,
+    .card select:focus,
+    .card textarea:focus {
+      outline: none;
+      border-color: #999;
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .card textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #eee;
+      gap: 0.5rem;
+    }
+
+    .save-btn {
+      background: #222;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .save-btn:hover {
+      background: #111;
+      transform: translateY(-1px);
+    }
+
+    /* User Grid Styles */
     .user-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 1.5rem;
-      padding: 2rem;
-
-      * {
-        font-family: sub;
-      }
     }
 
     .user-card {
       background: #fff;
       border-radius: 10px;
       overflow: hidden;
-      /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); */
-      border: 1px solid lightgray;
+      border: 1px solid #e0e0e0;
       cursor: pointer;
       transition: transform 0.2s;
     }
 
     .user-card:hover {
       transform: translateY(-5px);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
     .user-cover-photo {
@@ -113,13 +269,13 @@
 
     .user-email {
       font-size: 0.9rem;
-      color: gray;
+      color: #666;
     }
 
     .user-type {
       display: inline-block;
       padding: 0.2rem 0.5rem;
-      background: #14452F;
+      background: #222;
       color: #f4f4f4;
       border-radius: 4px;
       font-size: 0.7rem;
@@ -127,6 +283,7 @@
       text-transform: capitalize;
     }
 
+    /* Modal Styles */
     .modal {
       display: none;
       position: fixed;
@@ -151,15 +308,10 @@
       width: 100%;
       max-width: 400px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-
-      * {
-        font-family: sub;
-      }
     }
 
     .modal-content h2 {
       margin-bottom: 1rem;
-      font-family: main;
     }
 
     .modal-content input,
@@ -167,8 +319,8 @@
       width: 100%;
       padding: 0.6rem;
       margin-bottom: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
     }
 
     .modal-actions {
@@ -179,53 +331,41 @@
       padding: 0.5rem 1rem;
       margin-left: 0.5rem;
       border: none;
-      border-radius: 5px;
+      border-radius: 4px;
       cursor: pointer;
     }
 
     .cancel-btn {
       background: #ccc;
-
-      &:hover {
-        background-color: #bbb;
-      }
+      color: #333;
     }
 
-    .save-btn {
-      background-color: #161616;
-      color: #f4f4f4;
-      border: 1px solid #161616 !important;
-
-      &:hover {
-        background-color: #f4f4f4;
-        color: #161616;
-      }
+    .cancel-btn:hover {
+      background: #bbb;
     }
 
     .add-user-btn {
       position: fixed;
       bottom: 30px;
       right: 30px;
-      background: #161616;
+      background: #222;
       color: white;
-      font-size: 2rem;
+      font-size: 1.5rem;
       border: none;
       width: 50px;
       height: 50px;
-      border-radius: 5px;
+      border-radius: 50%;
       cursor: pointer;
-      margin: 1rem;
-      box-shadow: rgba(22, 22, 22, 0.4) 5px 5px,
-        rgba(22, 22, 22, 0.3) 10px 10px,
-        rgba(22, 22, 22, 0.2) 15px 15px,
-        rgba(22, 22, 22, 0.1) 20px 20px,
-        rgba(22, 22, 22, 0.05) 25px 25px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
       z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-      &:hover {
-        transform: scale(1.05);
-        box-shadow: rgba(14, 63, 126, 0.04) 0px 0px 0px 1px, rgba(42, 51, 69, 0.04) 0px 1px 1px -0.5px, rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px, rgba(42, 51, 70, 0.04) 0px 6px 6px -3px, rgba(14, 63, 126, 0.04) 0px 12px 12px -6px, rgba(14, 63, 126, 0.04) 0px 24px 24px -12px;
-      }
+    .add-user-btn:hover {
+      background: #111;
+      transform: translateY(-2px);
     }
 
     /* Fallback icon styles */
@@ -237,15 +377,161 @@
       color: #888;
       font-size: 24px;
     }
+
+    /* Status Messages */
+    .success,
+    .error {
+      border-radius: 4px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid;
+      background: #f8f8f8;
+    }
+
+    .success {
+      color: #155724;
+      border-left-color: #28a745;
+    }
+
+    .error {
+      color: #721c24;
+      border-left-color: #dc3545;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+      .mobile-menu-toggle {
+        display: block;
+      }
+
+      .left-editor-container {
+        transform: translateX(-100%);
+        width: 250px;
+        position: fixed;
+        z-index: 1001;
+      }
+
+      .left-editor-container.active {
+        transform: translateX(0);
+      }
+
+      .right-editor-container {
+        margin-left: 0;
+      }
+
+      body.sidebar-open {
+        overflow: hidden;
+      }
+
+      .card,
+      .main-content {
+        padding: 1rem;
+      }
+
+      .user-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+    }
+
+    /* Phone adjustments (≤ 768px) */
+    @media (max-width: 768px) {
+      .page-header {
+        padding: 1rem 1.25rem;
+      }
+
+      .page-header h1 {
+        font-size: 1.4rem;
+      }
+
+      .main-content {
+        padding: 1rem;
+      }
+
+      .card {
+        padding: 1rem;
+      }
+
+      .card h2 {
+        font-size: 1.2rem;
+      }
+
+      .user-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .add-user-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+      }
+    }
+
+    /* Small devices (≤ 480px) */
+    @media (max-width: 480px) {
+      .mobile-menu-toggle {
+        font-size: 0.95rem;
+        padding: 0.75rem 1rem;
+      }
+
+      .card h2,
+      .card h3 {
+        font-size: 1rem;
+      }
+
+      .user-name {
+        font-size: 1rem;
+      }
+
+      .user-email {
+        font-size: 0.85rem;
+      }
+
+      .modal-content {
+        padding: 1.5rem;
+        margin: 0 1rem;
+      }
+    }
+
+    /* Overlay background when sidebar is open */
+    .sidebar-overlay {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      display: none;
+    }
+
+    body.sidebar-open .sidebar-overlay {
+      display: block;
+    }
+
+    .left-editor-container {
+      top: 0;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+    }
   </style>
 </head>
 
 <body>
+  <!-- Mobile menu toggle button -->
+  <button class="mobile-menu-toggle" id="mobileMenuToggle">
+    <i class="fas fa-bars"></i> Menu
+  </button>
 
-  <?php include 'admin-side-bar.php'; ?>
+  <div class="main-container">
+    <div class="left-editor-container" id="sidebar">
+      <?php include 'admin-side-bar.php'; ?>
+    </div>
 
-  <main class="manager-users">
-    <div class="container">
+    <div class="right-editor-container" id="mainContent">
       <div class="page-header">
         <div style='display:flex; flex-direction:column;'>
           <h1>Manage Users</h1>
@@ -253,33 +539,113 @@
         </div>
       </div>
 
-      <div class="user-grid" id="userGrid">
-        <!-- User cards will be injected here -->
-      </div>
-    </div>
+      <div class="main-content">
+        <?php if (isset($_SESSION['success'])): ?>
+          <div class="success"><?= htmlspecialchars($_SESSION['success']);
+                                unset($_SESSION['success']); ?></div>
+        <?php endif; ?>
 
-    <button class="add-user-btn" onclick="openUserModal()">+</button>
+        <?php if (isset($_SESSION['error'])): ?>
+          <div class="error"><?= htmlspecialchars($_SESSION['error']);
+                              unset($_SESSION['error']); ?></div>
+        <?php endif; ?>
 
-    <div class="modal" id="userModal">
-      <div class="modal-content">
-        <h2 id="modalTitle">Edit User</h2>
-
-        <input type="text" id="firstName" placeholder="First Name">
-        <input type="text" id="lastName" placeholder="Last Name">
-        <input type="email" id="email" placeholder="Email">
-        <input type="password" id="password" placeholder="Password (leave blank to keep current)">
-        <select id="userType">
-          <option value="writer">Writer</option>
-          <option value="reviewer">Reviewer</option>
-        </select>
-
-        <div class="modal-actions">
-          <button class="cancel-btn" onclick="closeUserModal()">Cancel</button>
-          <button class="save-btn" onclick="saveUser()">Save</button>
+        <div class="user-grid" id="userGrid">
+          <!-- User cards will be injected here -->
+          <div class="loading-spinner"></div>
         </div>
       </div>
     </div>
-  </main>
+  </div>
+
+  <button class="add-user-btn" onclick="openUserModal()">+</button>
+
+  <div class="modal" id="userModal">
+    <div class="modal-content">
+      <h2 id="modalTitle">Edit User</h2>
+
+      <input type="text" id="firstName" placeholder="First Name">
+      <input type="text" id="lastName" placeholder="Last Name">
+      <input type="email" id="email" placeholder="Email">
+      <input type="password" id="password" placeholder="Password (leave blank to keep current)">
+      <select id="userType">
+        <option value="writer">Writer</option>
+        <option value="reviewer">Reviewer</option>
+      </select>
+
+      <div class="modal-actions">
+        <button class="cancel-btn" onclick="closeUserModal()">Cancel</button>
+        <button class="save-btn" onclick="saveUser()">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileToggle = document.getElementById('mobileMenuToggle');
+      const sidebar = document.getElementById('sidebar');
+      const mainContent = document.getElementById('mainContent');
+      const body = document.body;
+      
+      // Initialize sidebar state
+      function initSidebar() {
+        if (window.innerWidth > 992) {
+          sidebar.classList.add('active');
+          mainContent.classList.add('shifted');
+        }
+      }
+      
+      // Toggle sidebar
+      mobileToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        sidebar.classList.toggle('active');
+        body.classList.toggle('sidebar-open');
+        
+        // Change icon
+        const icon = this.querySelector('i');
+        if (sidebar.classList.contains('active')) {
+          icon.classList.remove('fa-bars');
+          icon.classList.add('fa-times');
+        } else {
+          icon.classList.remove('fa-times');
+          icon.classList.add('fa-bars');
+        }
+      });
+      
+      // Close sidebar when clicking outside on mobile
+      document.addEventListener('click', function(e) {
+        if (window.innerWidth <= 992 && 
+            !sidebar.contains(e.target) && 
+            e.target !== mobileToggle && 
+            sidebar.classList.contains('active')) {
+          closeSidebar();
+        }
+      });
+      
+      // Handle window resize
+      window.addEventListener('resize', function() {
+        if (window.innerWidth > 992) {
+          sidebar.classList.add('active');
+          mainContent.classList.add('shifted');
+        } else {
+          if (sidebar.classList.contains('active')) {
+            mainContent.classList.remove('shifted');
+          }
+        }
+      });
+      
+      function closeSidebar() {
+        sidebar.classList.remove('active');
+        body.classList.remove('sidebar-open');
+        const icon = mobileToggle.querySelector('i');
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+      
+      // Initialize
+      initSidebar();
+    });
+  </script>
 
   <script>
     let users = [];
@@ -287,7 +653,7 @@
 
     function renderUsers() {
       const grid = document.getElementById('userGrid');
-      grid.innerHTML = '';
+      grid.innerHTML = '<div class="loading-spinner"></div>';
 
       $.ajax({
         url: 'php-backend/admin-populate-users.php',
@@ -295,6 +661,12 @@
         dataType: 'json',
         success: (res) => {
           users = res;
+          grid.innerHTML = '';
+
+          if (res.length === 0) {
+            grid.innerHTML = '<p class="no-users">No users found</p>';
+            return;
+          }
 
           res.forEach(user => {
             const card = document.createElement('div');
@@ -368,6 +740,7 @@
         },
         error: (error) => {
           console.error('Error fetching users:', error);
+          grid.innerHTML = '<p class="error-message">Failed to load users. Please try again.</p>';
         }
       });
     }
@@ -430,17 +803,22 @@
         url: url,
         type: 'POST',
         data: data,
-        success: () => {
-          closeUserModal();
-          renderUsers();
+        success: (response) => {
+          if (response.success) {
+            closeUserModal();
+            renderUsers();
+          } else {
+            alert(response.message || 'Failed to save user');
+          }
         },
         error: (err) => {
           console.error('Error saving user:', err);
-          alert('Failed to save user.');
+          alert('Failed to save user. Please try again.');
         }
       });
     }
 
+    // Initialize
     renderUsers();
   </script>
 
