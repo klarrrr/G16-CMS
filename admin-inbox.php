@@ -852,16 +852,13 @@
     function viewMessage(id) {
       currentMessageId = id;
       
-      // On mobile, switch to detail view
       if (window.innerWidth <= 992) {
         showMessageDetailView();
       }
       
-      // Highlight in list
       $('.message-item').removeClass('active');
       $(`.message-item[data-id="${id}"]`).addClass('active');
 
-      // Show the fixed reply button
       document.getElementById('fixedReplyButton').style.display = 'flex';
 
       // Load message details

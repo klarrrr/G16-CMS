@@ -38,14 +38,12 @@ $default_image = 'pics/no-pic.jpg';
 // Only proceed if current image is not already the default
 if (!empty($user['profile_picture']) && $user['profile_picture'] !== $default_image) {
     try {
-        // Delete the old file if it exists and isn't the default
         if (file_exists($user['profile_picture']) && $user['profile_picture'] !== $default_image) {
             if (!unlink($user['profile_picture'])) {
                 throw new Exception('Failed to delete old image file');
             }
         }
         
-        // Update database
         $update_query = "UPDATE users SET profile_picture = ? WHERE user_id = ?";
         $update_stmt = $conn->prepare($update_query);
         $update_stmt->bind_param("si", $default_image, $user_id);
@@ -63,7 +61,6 @@ if (!empty($user['profile_picture']) && $user['profile_picture'] !== $default_im
         echo json_encode(['success' => false, 'error' => $e->getMessage()]);
     }
 } else {
-    // Already using default image - return success
     echo json_encode(['success' => true]);
 }
 

@@ -23,13 +23,12 @@ $.ajax({
                 container.appendChild(imgElement);
                 container.className = "gallery-image-container";
 
-                // Append the image element to the gallery
                 galleryContainer.appendChild(container);
 
                 // Add the 'show' class with a slight delay for staggered effect
                 setTimeout(() => {
                     container.classList.add('show');
-                }, index * 100); // Delay each image slightly (100ms for each image)
+                }, index * 100); 
             });
         } else {
             console.log('Error fetching gallery images');

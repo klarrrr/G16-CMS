@@ -79,11 +79,6 @@
             </div>
         </section>
 
-        <!-- <div class="news-banner">
-            <div class="scrolling-text">
-                <span> | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | LATEST NEWS | </span>
-            </div>
-        </div> -->
         <section class="news-cards">
             <div class="extras-container">
                 <div class="remaining-texts">
@@ -92,7 +87,6 @@
                 </div>
                 <!-- Upcoming Events -->
                 <div class="events" id="upcoming-events-container" style='border: 1px solid #fcb404; background-color: #fff; border-radius: 0.5rem;' title="Stay tuned!">
-                    <!-- JS will inject events here -->
                 </div>
 
                 <div class="remaining-texts">
@@ -111,10 +105,8 @@
                     <h2>Latest News</h2>
                 </div>
                 <div class="card-news-container" id='card-news-container'>
-                    <!-- To be filled up -->
 
                 </div>
-                <!-- Add this pagination container -->
                 <div class="pagination" id='pagination'></div>
             </div>
 

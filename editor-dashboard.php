@@ -76,7 +76,6 @@ while ($row = mysqli_fetch_assoc($result)) {
 
             <!-- Quick Action Buttons -->
             <div class="dashboard-quick-action-buttons">
-                <!-- Shortcut for all the main buttons of all pages -->
 
                 <!-- Create Article Button -->
                 <button id='shortcut-create-article'><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -136,7 +135,6 @@ while ($row = mysqli_fetch_assoc($result)) {
 
             </div>
             <div class="dashboard-draft-articles">
-                <!-- All the unposted/unfinished articles of the user -->
                 <h2 style='color:#161616;'>
                     <?php echo ($user_type == 'Reviewer') ? 'Pending Draft For Review Articles' : 'Recent Drafts'; ?>
                 </h2>
@@ -167,9 +165,6 @@ while ($row = mysqli_fetch_assoc($result)) {
 
     <!-- Populate recent drafts -->
     <script src='scripts/dashboard-get-recent-draft-articles.js'></script>
-
-    <!-- Get Recent Articles both Submitted and Drafts -->
-    <!-- <script src="scripts/loadRecentArticles.js"></script> -->
 
     <!-- Remove Create Article is Reviewer -->
     <script>

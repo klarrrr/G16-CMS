@@ -26,9 +26,9 @@ const observer = new MutationObserver(function (mutations) {
 });
 
 observer.observe(contentBox, {
-    childList: true, // Observe direct children
-    subtree: true, // Observe descendants 
-    attributes: true, // Observe attribute schanges 
+    childList: true,
+    subtree: true, 
+    attributes: true, 
 });
 
 function updateContentBox(content, article_id) {
@@ -41,7 +41,6 @@ function updateContentBox(content, article_id) {
             article_id: article_id
         },
         success: (res) => {
-            // console.log(res.status);
             updateDateUpdated(article_id, "Article Content is Updated");
         },
         error: (error) => {
@@ -53,14 +52,11 @@ function updateContentBox(content, article_id) {
 contentBox.addEventListener('paste', function (event) {
     const updatedContent = contentBox.innerHTML;
 
-    // If want to access raw pasted text/data
-    // const clipboardData = (event.clipboardData || window.clipboardData).getData('text');
 
     if (window.updateTimeout) clearTimeout(window.updateTimeout);
 
     window.updateTimeout = setTimeout(() => {
         updateContentBox(updatedContent, article_id);
-        // console.log('Paste triggered update');
         updateDateUpdated(article_id, "Pasted something in content");
     }, 500);
 });

@@ -16,7 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// Get form data
 $firstName = $_POST['first_name'] ?? '';
 $lastName = $_POST['last_name'] ?? '';
 $email = $_POST['email'] ?? '';
@@ -24,7 +23,6 @@ $phone = $_POST['phone'] ?? '';
 $subject = $_POST['subject'] ?? '';
 $message = $_POST['message'] ?? '';
 
-// Validate required fields
 if (empty($firstName) || empty($lastName) || empty($email) || empty($subject) || empty($message)) {
     echo json_encode(['status' => 'error', 'message' => 'All fields except phone number are required']);
     exit;
@@ -60,7 +58,6 @@ $stmt->bind_param(
     $formattedMessage
 );
 try {
-    // Dynamically get the Website's Admin Email and App Pass
     $emailQuery = $conn->query("
                 SELECT setting_value 
                 FROM site_settings 

@@ -83,7 +83,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 
-// Check if article has any reviewers assigned
 
 function hasReviewers($article_id, $conn)
 {
@@ -97,7 +96,6 @@ function hasReviewers($article_id, $conn)
 }
 
 
-// Check if article can be published (all reviewers approved)
 
 function canPublishArticle($article_id, $conn)
 {

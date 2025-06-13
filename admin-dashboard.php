@@ -77,11 +77,10 @@ $draftCount = getCount($conn, "SELECT COUNT(*) FROM articles WHERE completion_st
       margin-right: 8px;
     }
 
-    /* Main container layout */
     .main-container {
       display: flex;
       flex: 1;
-      min-height: 0; /* Fix for flexbox scrolling */
+      min-height: 0; 
     }
 
     /* Sidebar styling */
@@ -318,7 +317,6 @@ $draftCount = getCount($conn, "SELECT COUNT(*) FROM articles WHERE completion_st
       }
     }
 
-    /* Overlay background when sidebar is open */
     .sidebar-overlay {
       content: '';
       position: fixed;
@@ -456,7 +454,6 @@ $draftCount = getCount($conn, "SELECT COUNT(*) FROM articles WHERE completion_st
         }
       });
       
-      // Close sidebar when clicking outside on mobile
       document.addEventListener('click', function(e) {
         if (window.innerWidth <= 992 && 
             !sidebar.contains(e.target) && 
@@ -523,7 +520,6 @@ $draftCount = getCount($conn, "SELECT COUNT(*) FROM articles WHERE completion_st
     function updateDateTime() {
       const now = new Date();
 
-      // Format date: e.g., June 1, 2025
       const date = now.toLocaleDateString('en-US', {
         weekday: 'long',
         year: 'numeric',
@@ -531,7 +527,6 @@ $draftCount = getCount($conn, "SELECT COUNT(*) FROM articles WHERE completion_st
         day: 'numeric'
       });
 
-      // Format time: e.g., 12:45:03 PM
       const time = now.toLocaleTimeString('en-US', {
         hour: 'numeric',
         minute: '2-digit',
@@ -541,7 +536,6 @@ $draftCount = getCount($conn, "SELECT COUNT(*) FROM articles WHERE completion_st
       document.getElementById('datetime').textContent = `${date} • ${time}`;
     }
 
-    // Update immediately and then every second
     updateDateTime();
     setInterval(updateDateTime, 1000);
   </script>

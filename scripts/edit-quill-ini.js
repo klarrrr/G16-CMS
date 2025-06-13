@@ -21,7 +21,7 @@ $('#custom-video-button').on('click', function () {
             formData.append('video', file);
 
             $.ajax({
-                url: 'php-backend/upload-video.php', // your upload script
+                url: 'php-backend/upload-video.php', 
                 type: 'POST',
                 data: formData,
                 contentType: false,
@@ -31,7 +31,6 @@ $('#custom-video-button').on('click', function () {
                     if (res.success) {
                         let range = quill.getSelection();
                         if (!range) {
-                            // No selection, insert at the end
                             range = {
                                 index: quill.getLength(),
                                 length: 0
@@ -52,7 +51,6 @@ $('#custom-video-button').on('click', function () {
     });
 });
 
-// Automatically delete video file when removed from editor
 
 let previousVideos = new Set();
 

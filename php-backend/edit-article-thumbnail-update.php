@@ -13,9 +13,9 @@ if (isset($_FILES['image']) && isset($_POST['article_id'])) {
     }
 
     $fileName = basename($file['name']);
-    $fileName = time() . '_' . preg_replace("/[^a-zA-Z0-9\._-]/", "", $fileName); // sanitize 99.9999% germs
+    $fileName = time() . '_' . preg_replace("/[^a-zA-Z0-9\._-]/", "", $fileName); 
     $targetFilePath = $uploadDir . $fileName;
-    $relativePath = 'uploaded-pics/' . $fileName; // stored in DB and sent to frontend
+    $relativePath = 'uploaded-pics/' . $fileName; 
 
     // Validate file type
 
@@ -24,8 +24,6 @@ if (isset($_FILES['image']) && isset($_POST['article_id'])) {
     if (!in_array($file['type'], $allowedTypes)) {
         $response['message'] = 'Invalid file type.';
     } elseif (move_uploaded_file($file['tmp_name'], $targetFilePath)) {
-
-        // Update widgets table with file path
 
         $stmt = $conn->prepare("UPDATE widgets SET widget_img = ? WHERE article_owner = ?");
         $stmt->bind_param("si", $relativePath, $article_id);

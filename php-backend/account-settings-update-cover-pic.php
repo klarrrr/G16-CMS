@@ -16,14 +16,11 @@ if ($file && $file['error'] === UPLOAD_ERR_OK) {
     $row = mysqli_fetch_assoc($res);
     $old_path = $row['cover_photo'];
 
-    // Move uploaded file
     if (move_uploaded_file($file['tmp_name'], $targetFilePath)) {
-        // Delete old file if not default
         if ($old_path && $old_path != 'pics/plp-outside.jpg' && file_exists('../' . $old_path)) {
             unlink('../' . $old_path);
         }
 
-        // Update DB and session
         $query = "UPDATE users SET cover_photo = '$relativePath' WHERE user_id = $user_id";
         mysqli_query($conn, $query);
         $_SESSION['cover_photo'] = $relativePath;

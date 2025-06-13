@@ -494,7 +494,6 @@
       }
     }
 
-    /* Overlay background when sidebar is open */
     .sidebar-overlay {
       content: '';
       position: fixed;

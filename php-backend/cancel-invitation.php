@@ -11,7 +11,6 @@ if (!$invite_id) {
     die(json_encode(['error' => 'Invite ID required']));
 }
 
-// Verify user owns the invitation
 $checkQuery = "SELECT i.inviter_id 
                FROM article_review_invites i
                JOIN articles a ON i.article_id = a.article_id
@@ -26,7 +25,6 @@ if ($result->num_rows === 0) {
     die(json_encode(['error' => 'You cannot cancel this invitation']));
 }
 
-// Update status to rejected
 $updateQuery = "UPDATE article_review_invites SET status = 'rejected' WHERE invite_id = ?";
 $stmt = $conn->prepare($updateQuery);
 $stmt->bind_param("i", $invite_id);
@@ -39,9 +37,7 @@ if ($stmt->execute()) {
     echo json_encode(['error' => 'Failed to cancel invitation']);
 }
 
-// Function to check if all reviewers have approved
 function checkAllReviewsApproved($conn, $articleId) {
-    // Get all accepted invitations for this article
     $query = "
     SELECT 
     COUNT(DISTINCT ari.invite_id) AS total_reviewers,
@@ -62,15 +58,12 @@ function checkAllReviewsApproved($conn, $articleId) {
     $result = $stmt->get_result();
     $stats = $result->fetch_assoc();
     
-    // If all reviewers have approved, update article status
     if ($stats['total_reviewers'] > 0 && $stats['approved_reviews'] == $stats['total_reviewers']) {
-        // If greater than 0 and total reviews and total reviewers are equal, set approve status to yes
         $updateArticle = "UPDATE articles SET approve_status = 'yes' WHERE article_id = ?";
         $stmt = $conn->prepare($updateArticle);
         $stmt->bind_param("i", $articleId);
         $stmt->execute();
     }else{
-        // If 0 or less, update approve status to no
         $updateArticle = "UPDATE articles SET approve_status = 'no' WHERE article_id = ?";
         $stmt = $conn->prepare($updateArticle);
         $stmt->bind_param("i", $articleId);

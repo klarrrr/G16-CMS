@@ -4,7 +4,6 @@ shortDescBox.addEventListener('input', () => {
 
     window.updateTimeout = setTimeout(() => {
         updateShortDesc(article_id);
-        // console.log(updatedContent);
     }, 500);
 });
 

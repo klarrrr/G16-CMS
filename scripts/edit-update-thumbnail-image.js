@@ -12,7 +12,6 @@ function updateThumbnailImg(article_id, event) {
     const file = event.target.files[0];
 
     if (file) {
-        // Check file size (10MB max)
         if (file.size > 10 * 1024 * 1024) {
             warningLbl.style.display = 'block';
             return;
@@ -36,7 +35,6 @@ function updateThumbnailImg(article_id, event) {
 
                     container.innerHTML = '';
 
-                    // Recreate <img> tag
                     const img = document.createElement('img');
                     img.id = 'show-thumbnail-image';
                     img.alt = 'Thumbnail Image';

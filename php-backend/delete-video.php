@@ -5,12 +5,11 @@ if (isset($_POST['url'])) {
     $storageDir = "../video/";
 
     $url = $_POST['url'];
-    $filename = basename($url); // Secure: prevents path traversal
+    $filename = basename($url); 
     $filePath = $storageDir . $filename;
 
     if (file_exists($filePath)) {
 
-        // Delete in server storage
 
         if (unlink($filePath)) {
             echo json_encode(["success" => true]);

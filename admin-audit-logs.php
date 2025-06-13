@@ -580,7 +580,6 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
         icon.classList.add('fa-bars');
       }
 
-      // Initialize
       initSidebar();
 
       // Initialize date filters to last 30 days
@@ -634,7 +633,7 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
       actionFilter.empty();
       actionFilter.append('<option value="">All Actions</option>');
 
-      // Add only actions from database (no default actions)
+      // Add only actions from database 
       if (actions && actions.length > 0) {
         actions.forEach(action => {
           actionFilter.append(`<option value="${action}">${action.charAt(0).toUpperCase() + action.slice(1)}</option>`);
@@ -667,7 +666,7 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
 
           if (!response.success || response.data.length === 0) {
             $('#noRecords').show();
-            return response; // Return response for promise chain
+            return response; 
           }
 
           response.data.forEach(log => {
@@ -686,7 +685,7 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
           });
 
           renderPagination(response.total, response.per_page, page);
-          return response; // Return response for promise chain
+          return response; 
         },
         error: function(xhr, status, error) {
           console.error('Error loading audit logs:', error);
@@ -763,7 +762,6 @@ if (!isset($_SESSION['user_id']) || strtolower($_SESSION['user_type']) !== 'admi
         pagination.append(`<a href="#" onclick="loadAuditLogs(${currentPage - 1})"><i class="fas fa-chevron-left"></i></a>`);
       }
 
-      // Show limited page numbers (max 5 around current page)
       const startPage = Math.max(1, currentPage - 2);
       const endPage = Math.min(totalPages, currentPage + 2);
 

@@ -5,7 +5,6 @@ include 'connect.php';
 
 $user_id = $_SESSION['user_id'];
 
-// Select latest article
 $query = "SELECT MAX(article_id) FROM articles WHERE user_owner = $user_id";
 $result = mysqli_query($conn, $query);
 if ($row = mysqli_fetch_assoc($result)) {

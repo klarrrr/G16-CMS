@@ -4,7 +4,6 @@ const months = [
 ];
 
 function formatDateTime(datetimeString) {
-    // Convert the space to a 'T' to create an ISO-compatible datetime string
     const isoString = datetimeString.replace(" ", "T");
     const date = new Date(isoString);
 

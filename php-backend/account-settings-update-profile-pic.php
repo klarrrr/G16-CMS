@@ -23,7 +23,6 @@ if ($file && $file['error'] === UPLOAD_ERR_OK) {
             unlink('../' . $old_path);
         }
 
-        // Update DB and session
         $query = "UPDATE users SET profile_picture = '$relativePath' WHERE user_id = $user_id";
         mysqli_query($conn, $query);
         $_SESSION['profile_picture'] = $relativePath;

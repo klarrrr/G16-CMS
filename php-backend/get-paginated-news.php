@@ -24,7 +24,7 @@ $countQuery = "
 ";
 $countResult = mysqli_query($conn, $countQuery);
 $totalRecords = mysqli_fetch_assoc($countResult)['total'];
-$totalPages = ceil(($totalRecords > 0 ? $totalRecords - 1 : 0) / $limit); // Subtract 1 for highlight
+$totalPages = ceil(($totalRecords > 0 ? $totalRecords - 1 : 0) / $limit); 
 
 // Then get paginated results (skip the first/latest article)
 $query = "
@@ -57,7 +57,7 @@ foreach ($widgetArray as &$widget) {
 
 $jsonOutput = json_encode([
     'widget' => $widgetArray,
-    'totalRecords' => $totalRecords > 0 ? $totalRecords - 1 : 0, // Subtract highlight
+    'totalRecords' => $totalRecords > 0 ? $totalRecords - 1 : 0, 
     'totalPages' => $totalPages,
     'currentPage' => $page
 ]);

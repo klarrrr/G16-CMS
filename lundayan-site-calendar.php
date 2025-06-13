@@ -35,7 +35,6 @@
                             <h2>Upcoming Events</h2>
                         </div>
                         <div class="events" id="upcoming-events-container">
-                            <!-- JS will inject events here -->
                         </div>
                     </div>
 
@@ -67,7 +66,6 @@
                             <div class="year-container" title="Year">
                                 <div class="select">
                                     <select id="year-select">
-                                        <!-- Ppoulate with oldest year - 1 and year + 1 -->
                                     </select>
                                 </div>
                             </div>
@@ -101,7 +99,6 @@
                                     </tr>
                                 </thead>
                                 <tbody id="calendar-body">
-                                    <!-- JavaScript will populate this -->
                                 </tbody>
                             </table>
                         </div>

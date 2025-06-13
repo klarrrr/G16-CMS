@@ -137,9 +137,7 @@ $profile_pic = $_SESSION['profile_picture'];
     } else if (userType == 'reviewer') {
         addArticleIcon.remove();
         articleArchives.remove();
-        // Show inbox for reviewers
     } else if (userType == 'admin') {
-        // Show everything for admin
     }
 </script>
 

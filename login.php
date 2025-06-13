@@ -14,14 +14,12 @@ if (empty($email) || empty($pass)) {
     exit;
 }
 
-// First, try to fetch user from the `users` table
 $stmt = $conn->prepare("SELECT user_id, user_first_name, user_last_name, user_type, user_email, profile_picture, cover_photo, user_pass FROM users WHERE user_email = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
 $stmt->store_result();
 
 if ($stmt->num_rows > 0) {
-    // Found in users table
     $stmt->bind_result($user_id, $user_first, $user_last, $user_type, $user_email, $profile_picture, $cover_photo, $db_pass);
     $stmt->fetch();
 
@@ -49,9 +47,8 @@ if ($stmt->num_rows > 0) {
     exit;
 }
 
-$stmt->close(); // Close first statement
+$stmt->close(); 
 
-// If not found in users, try the admin table
 $stmt = $conn->prepare("SELECT id, first_name, last_name, email, password FROM admin WHERE email = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();

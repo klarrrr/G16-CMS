@@ -56,7 +56,7 @@ if ($userType === 'reviewer') {
                     ($_POST['decision'] ?? 'toggle') : 'no_change'
             ];
         } else {
-            // Create new review (default to approved)
+            // Create new review 
             $insertQuery = "INSERT INTO article_reviews 
                           (invite_id, decision, comments) 
                           VALUES (?, 'approved', 'Approved via system')";
@@ -103,15 +103,12 @@ function checkAllReviewsApproved($conn, $articleId) {
     $result = $stmt->get_result();
     $stats = $result->fetch_assoc();
     
-    // If all reviewers have approved, update article status
     if ($stats['total_reviewers'] > 0 && $stats['approved_reviews'] == $stats['total_reviewers']) {
-        // If greater than 0 and total reviews and total reviewers are equal, set approve status to yes
         $updateArticle = "UPDATE articles SET approve_status = 'yes' WHERE article_id = ?";
         $stmt = $conn->prepare($updateArticle);
         $stmt->bind_param("i", $articleId);
         $stmt->execute();
     }else{
-        // If 0 or less, update approve status to no
         $updateArticle = "UPDATE articles SET approve_status = 'no' WHERE article_id = ?";
         $stmt = $conn->prepare($updateArticle);
         $stmt->bind_param("i", $articleId);
